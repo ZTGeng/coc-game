@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { LanguageContext } from "../../App";
+import { FlagsContext } from "../Game";
 
 function Loading({ language }) {
   return language === "zh" ? <p>"加载中..."</p> : <p>"Loading..."</p>;
@@ -20,6 +21,7 @@ function ChapterHtml({chapter}) {
 
 export default function Chapter({ chapterKey, nextChapter, onAction }) {
   const { language } = useContext(LanguageContext);
+  const { conditionChecker, setFlag } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
 
   console.log(`Chapter: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
@@ -42,21 +44,55 @@ export default function Chapter({ chapterKey, nextChapter, onAction }) {
     return {
       key: json.key,
       jsx: (json.text[language] || json.text["en"]).map((item, index) => {
+        if (item.tag === "div") {
+          return item.imageOn === "left" ? (
+            <div key={index} className='row'>
+              <div className='col-md-4'><img src={item.imageSrc} className='img-fluid' /></div>
+              <div className='col-md-8'>{ item.text.map((line, i) => <p key={i}>{ line.content }</p>) }</div>
+            </div>
+          ) : (
+            <div key={index} className='row'>
+              <div className='col-md-8'>{ item.text.map((line, i) => <p key={i}>{ line.content }</p>) }</div>
+              <div className='col-md-4'><img src={item.imageSrc} className='img-fluid' /></div>
+            </div>
+          );
+        }
+        if (item.tag === "info") {
+          return (
+            <div key={index} className='alert alert-info'>
+              { item.text.map((line, i) => <p key={i}>{ line.content }</p>) }
+            </div>
+          )
+        }
+        // if (item.tag === "img") {
+        // }
+        // if (item.tag === "h") {
+        // }
         return <p key={index}>{ item.content }</p>
       }),
-      options: json.options.map(option => {
-        return {
-          key: option.key,
-          jsx: <a key={option.key} 
+      options: json.options
+        .filter(option => !option.show || conditionChecker(option.show))
+        .map(option => {
+          return {
+            key: option.key,
+            jsx: option.disabled && conditionChecker(option.disabled) ? (
+              <div key={option.key} 
+                  className="text-body-tertiary h5">
+                    &nbsp;{ (option.text[language] || option.text["en"]) }&nbsp;
+              </div>
+            ) : (
+              <a key={option.key} 
                   className="link link-secondary link-offset-2 h5" 
                   role="button"
                   href="#" 
                   onClick={(e) => { e.preventDefault();nextChapter(json.key, option.key); }}>
                     &nbsp;{ (option.text[language] || option.text["en"]) }&nbsp;
-               </a>
-        }
-      }),
+              </a>
+            )
+          }
+        }),
       onleave: json.onleave,
+      onload: json.onload
     }
   }
 

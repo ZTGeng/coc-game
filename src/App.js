@@ -51,7 +51,7 @@ function Footer() {
   return (
     <footer className="pb-3">
       <hr className="mb-0" />
-      <span className="text-muted">Game content belongs to the original creators. © 2024 by @ztgeng for the software.</span>
+      <span className="text-secondary">Game content belongs to the original creators. © 2024 by @ztgeng for the software.</span>
     </footer>
   )
 }
@@ -87,7 +87,7 @@ function App() {
       <div className="d-flex flex-column vh-100">
         <Header {...{ gameStarted, toggleShowCharacter }} />
         <div className="flex-grow-1">
-          {gameStarted ? <Game {...{ showCharacter }} /> : <Cover onStart={startGame} />}
+          {gameStarted ? <Game {...{ showCharacter, setShowCharacter }} /> : <Cover onStart={startGame} />}
         </div>
         <Footer />
       </div>
