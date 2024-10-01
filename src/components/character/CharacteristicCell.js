@@ -15,15 +15,15 @@ export default function CharacteristicCell({ characteristic, highlight, valueOpt
           { characteristic.key === "INT" ? (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
               (characteristic.name[language] || characteristic.name["en"])
-              .split('\n')
-              .map(( line, index ) => index === 0 ? <span className="d-block">{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }}>{ line }</span>)
+                .split('\n')
+                .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
             }</th>
           ) : (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characteristic.name[language] || characteristic.name["en"] }</th>
           ) }
           <td rowSpan="2" className="border p-2">
             <select className="border-0 mx-1" style={{ paddingTop: "3px", paddingRight: "1.5px" }} >
-              { valueOptions.map(v => <option>{ v }</option>) }
+              { valueOptions.map(v => <option key={v.key}>{ v }</option>) }
             </select>
           </td>
         </tr>
@@ -37,7 +37,7 @@ export default function CharacteristicCell({ characteristic, highlight, valueOpt
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
               (characteristic.name[language] || characteristic.name["en"])
               .split('\n')
-              .map(( line, index ) => index === 0 ? <span className="d-block">{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }}>{ line }</span>)
+              .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
             }</th>
           ) : (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characteristic.name[language] || characteristic.name["en"] }</th>
