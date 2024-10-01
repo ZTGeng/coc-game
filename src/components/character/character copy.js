@@ -106,15 +106,42 @@ export default function Character({ show }) {
                 <div className="col-4" style={{padding: "0px"}}>
                   <div>
                     <table className="table-bordered d-inline" style={{"line-height": 1, width: "100%"}}>
-                      <tbody><tr><td rowspan="2" className="align-middle" style={{}}><input type="checkbox" disabled="disabled" className="" /></td> <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>估价<small>.<br />Appraise</small></td> <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}><div>5</div></td> <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
-                    2
-                </td></tr><tr><td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
-                    1
-                </td></tr></tbody></table></div><div><table className="table-bordered d-inline" style={{"line-height": 1, width: "100%"}}><tbody><tr><td rowspan="2" className="align-middle" style={{}}><input type="checkbox" disabled="disabled" className="" /></td> <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>考古学<small>.<br />Archaeology</small></td> <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}><div>1</div></td> <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
+                      <tbody>
+                        <tr>
+                            <td rowspan="2" className="align-middle" style={{}}>
+                                <input type="checkbox" disabled="disabled" className="" />
+                            </td> 
+                            <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>
+                                估价<small>.<br />Appraise</small>
+                            </td> 
+                            <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}>
+                                <div>5</div>
+                            </td> 
+                            <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
+                                2
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
+                                1
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <table className="table-bordered d-inline" style={{"line-height": 1, width: "100%"}}>
+                      <tbody>
+                        <tr>
+                          <td rowspan="2" className="align-middle" style={{}}>
+                            <input type="checkbox" disabled="disabled" className="" />
+                          </td> 
+                          <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>考古学<small>.<br />Archaeology</small></td> <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}><div>1</div></td> <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
                     0
                 </td></tr><tr><td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
                     0
-                </td></tr></tbody></table></div><div><div>艺术/手艺<small>Art/Craft</small></div></div><div><table className="table-bordered d-inline" style={{"line-height": 1, width: "100%"}}><tbody><tr><td rowspan="2" className="align-middle" style={{}}><input type="checkbox" disabled="disabled" className="" /></td> <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>摄影<small>.<br />Photography</small></td> <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}><div>5</div></td> <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
+                </td></tr></tbody>
+                    </table></div><div><div>艺术/手艺<small>Art/Craft</small></div></div><div><table className="table-bordered d-inline" style={{"line-height": 1, width: "100%"}}><tbody><tr><td rowspan="2" className="align-middle" style={{}}><input type="checkbox" disabled="disabled" className="" /></td> <td rowspan="2" className="font-weight-bold align-middle" style={{ width: "4rem", height: "2rem", "line-height": 1.2}}>摄影<small>.<br />Photography</small></td> <td rowspan="2" className="table-bordered align-middle text-center" style={{width: "1.2rem"}}><div>5</div></td> <td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
                     2
                 </td></tr><tr><td className="table-bordered align-middle text-center" style={{width: "1rem"}}>
                     1

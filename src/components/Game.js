@@ -88,11 +88,11 @@ export default function Game({ showCharacter, setShowCharacter }) {
   
   return (
     <FlagsContext.Provider value={{conditionChecker, setFlag}}>
-      <div className="d-flex">
-        <div id="text-content" className="flex-fill px-2">
+      <div className="row">
+        <div id="text-content" className="col px-2">
           <Chapter {...{ chapterKey, nextChapter, onAction }}/>
         </div>
-        <div id="character" className="" hidden={!showCharacter}>
+        <div id="character" className="col" hidden={!showCharacter}>
           <Character />
         </div>
       </div>
