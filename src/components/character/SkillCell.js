@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { LanguageContext } from '../../App';
 import { FlagsContext } from "../Game";
+import { HighlightContext } from "../Game";
 
 const EDITABLE_FLAD = "flag_skills_editable";
 
-export default function SkillCell({ skill, highlight, valueOptions=[], onValueSelected }) {
+export default function SkillCell({ skill, valueOptions=[], onValueSelected }) {
   const { language } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
+  const { highlight } = useContext(HighlightContext);
 
   if (skill.key.startsWith("group_")) {
     return <div className="d-flex z-1" >
@@ -22,6 +24,10 @@ export default function SkillCell({ skill, highlight, valueOptions=[], onValueSe
     { skill.name ? skill.name[language] || skill.name["en"] : (skill.disabled ? <span>&nbsp;</span> : <input type="text" className="border-0 p-0" style={{ width: "95%" }} />) }
     { skill.line ? <hr className="m-0 mt-1" /> : null }
   </th>;
+
+  function shouldHighlight(level) {
+    return highlight && highlight.key === skill.key && highlight.level === level;
+  }
 
   if (skill.disabled) {
     return (
@@ -67,11 +73,11 @@ export default function SkillCell({ skill, highlight, valueOptions=[], onValueSe
             <input type="checkbox" className={ skill.noBox ? "invisible" : "" } disabled="disabled" checked={ skill.checked }/>
           </td> 
           { nameTh }
-          <td rowSpan="2" className="border border-end-0 p-0" style={{ fontSize: "0.75rem", width: "1.2rem" }}>{ skill.value }</td>
-          <td className="border border-bottom-0 small p-0" style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{ skill.value && Math.floor(skill.value / 2) }</td>
+          <td rowSpan="2" className={"border border-end-0 p-0" + (shouldHighlight("value") ? " table-warning" : "")} style={{ fontSize: "0.75rem", width: "1.2rem" }}>{ skill.value }</td>
+          <td className={"border border-bottom-0 small p-0" + (shouldHighlight("half") ? " table-warning" : "")} style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{ skill.value && Math.floor(skill.value / 2) }</td>
         </tr>
         <tr>
-          <td className="border small p-0" style={{ fontSize: "0.6rem", height: "1rem" }}>{ skill.value && Math.floor(skill.value / 5) }</td>
+          <td className={"border small p-0" + (shouldHighlight("fifth") ? " table-warning" : "")} style={{ fontSize: "0.6rem", height: "1rem" }}>{ skill.value && Math.floor(skill.value / 5) }</td>
         </tr>
       </tbody>
     </table>

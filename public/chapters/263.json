@@ -38,11 +38,9 @@
         }
     ],
     "onload": [
-        { "action": "action_show_character_sheet", "param": true },
-        { "action": "action_set_flag", "param": { "flag": "flag_characteristics_editable", "value": true }}
+        { "action": "action_show_character_sheet", "param": true }
     ],
     "onleave": [
-        { "action": "action_set_flag", "param": { "flag": "flag_characteristics_editable", "value": false }},
         { "action": "action_set_char_related_values", "param": "" }
     ]
 }

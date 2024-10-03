@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { LanguageContext } from "../../App";
+import { FlagsContext } from "../Game";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 
@@ -41,6 +42,34 @@ function ChapterContent({ chapterText }) {
   });
 }
 
+function Interactions({ interactions, onAction }) {
+  const { language } = useContext(LanguageContext);
+  const { flagConditionCheck } = useContext(FlagsContext);
+
+  return (
+    <div className="alert alert-warning">
+      <div className="d-flex justify-content-center">
+        { 
+          interactions
+            .filter(interaction => !interaction.show || flagConditionCheck(interaction.show))
+            .map((interaction, i) => {
+              console.log("Interaction: ", interaction);
+              if (interaction.disable && flagConditionCheck(interaction.disable)) {
+                return <button key={i} className='btn btn-dark mx-2' disabled>{ interaction.text[language] || interaction.text["en"] }</button>
+              } else {
+                return (
+                  <button key={i} className='btn btn-dark mx-2' onClick={() => { onAction(interaction.action, interaction.param) }}>
+                    { interaction.text[language] || interaction.text["en"] }
+                  </button>
+                )
+              }
+            })
+        }
+      </div>
+    </div>
+  )
+}
+
 export default function Chapter({ chapterKey, nextChapter, onChapterAction }) {
   const { language } = useContext(LanguageContext);
   const [chapter, setChapter] = useState(null);
@@ -58,6 +87,18 @@ export default function Chapter({ chapterKey, nextChapter, onChapterAction }) {
     if (chapterJson.onload) {
       chapterJson.onload.forEach(action => onChapterAction(action.action, action.param));
     }
+  }
+
+  function onInteraction(action, param) {
+    console.log(`Chapter ${chapter.key} onInteraction: ${action}(${JSON.stringify(param)})`);
+    if (action === "action_roll_luck_and_update_chapter") {
+      // param is the new chapter json with the same key
+      setChapter(param);
+      // will do DEX check, highlisht is needed
+      onChapterAction("action_set_highlight", { "key": "DEX", "level": "value" });
+      // no return on purpose to let parent initial the Luck value
+    }
+    onChapterAction(action, param);
   }
 
   useEffect(() => {
@@ -95,6 +136,7 @@ export default function Chapter({ chapterKey, nextChapter, onChapterAction }) {
   return (
     <>
       <ChapterContent chapterText={chapter.text} />
+      {chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteraction} />}
       <br />
       <div className="px-2">
         <GoToOptions options={chapter.options} {...{ chapterKey, nextChapter }} />

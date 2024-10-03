@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import './App.css';
 import Cover from './components/Cover';
 import ConfigModal from './components/ConfigModal';
+import ToastMessage from './components/ToastMessage';
 import Game from './components/Game';
 
 export const LanguageContext = createContext();
@@ -58,23 +59,31 @@ function Footer() {
 
 function App() {
   const [language, setLanguage] = useState("zh");
-  const [volume, setVolume] = useState(1);
+  const [musicVolume, setMusicVolume] = useState(1);
+  const [sfxVolume, setSfxVolume] = useState(1);
   const [gameStarted, setGameStarted] = useState(false);
   const [showCharacter, setShowCharacter] = useState(false);
-  const audioRef = useRef();
+  const musicRef = useRef();
+  const sfxRef = useRef();
   
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
+    if (musicRef.current) {
+      musicRef.current.volume = musicVolume;
     }
-  }, [volume]);
+  }, [musicVolume]);
+
+  useEffect(() => {
+    if (sfxRef.current) {
+      sfxRef.current.volume = sfxVolume;
+    }
+  }, [sfxVolume]);
 
   function startGame() {
     console.log("Game started.");
     setGameStarted(true);
-    if (audioRef.current) {
-      // audioRef.current.stop();
-      // audioRef.current.play(); 
+    if (musicRef.current) {
+      // musicRef.current.stop();
+      // musicRef.current.play(); 
     }
   }
 
@@ -82,17 +91,27 @@ function App() {
     setShowCharacter(!showCharacter);
   }
 
+  function playSound(sound) {
+    const src = `./audio/${sound}.mp3`;
+    if (sfxRef.current) {
+      sfxRef.current.src = src;
+      sfxRef.current.play();
+    }
+  }
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       <div className="d-flex flex-column vh-100">
         <Header {...{ gameStarted, toggleShowCharacter }} />
         <div className="flex-grow-1">
-          {gameStarted ? <Game {...{ showCharacter, setShowCharacter }} /> : <Cover onStart={startGame} />}
+          {gameStarted ? <Game {...{ showCharacter, setShowCharacter, playSound }} /> : <Cover onStart={startGame} />}
         </div>
         <Footer />
       </div>
-      <ConfigModal {...{ gameStarted, onRestart: startGame, volume, setVolume }} />
-      <audio ref={audioRef} src="" type="audio/mpeg" loop volume={volume} />
+      <ToastMessage />
+      <ConfigModal {...{ gameStarted, onRestart: startGame, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
+      <audio ref={musicRef} src="" type="audio/mpeg" loop volume={musicVolume} />
+      <audio ref={sfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
     </LanguageContext.Provider>
   )
 }

@@ -118,24 +118,50 @@ function Characteristics({ character, onCharacterAction }) {
   )
 }
 
-function Attributes({ character }) {
+function Attributes({ character, attributes }) {
   const { language } = useContext(LanguageContext);
   return (
-    <div className="d-flex justify-content-center">
+    <div className="row">
+      <div className="col-xl-3 col-6">
       <table className="table table-borderless text-center align-middle">
-        <tbody>
-            <tr>
-              <th>{ character.HP.name[language] || character.HP.name["en"] }</th>
-              <td className="border">{ character.HP.value }/{ character.HP.maxValue }</td>
-              <th>{ character.San.name[language] || character.San.name["en"] }</th>
-              <td className="border">{ character.San.value }/{ character.San.maxValue }</td>
-              <th>{ character.Luck.name[language] || character.Luck.name["en"] }</th>
-              <td className="border">{ character.Luck.value }</td>
-              <th>{ character.MP.name[language] || character.MP.name["en"] }</th>
-              <td className="border">{ character.MP.value }/{ character.MP.maxValue }</td>
-            </tr>
-        </tbody>
-      </table>
+          <tbody>
+              <tr>
+                <th>{ character.HP.name[language] || character.HP.name["en"] }</th>
+                <td className="border">{ attributes.HP.value }/{ attributes.HP.maxValue }</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="col-xl-3 col-6">
+      <table className="table table-borderless text-center align-middle">
+          <tbody>
+              <tr>
+                <th>{ character.San.name[language] || character.San.name["en"] }</th>
+                <td className="border">{ attributes.San.value }/{ attributes.San.maxValue }</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="col-xl-3 col-6">
+      <table className="table table-borderless text-center align-middle">
+          <tbody>
+              <tr>
+                <th>{ character.Luck.name[language] || character.Luck.name["en"] }</th>
+                <td className="border">{ attributes.Luck.value }</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="col-xl-3 col-6">
+        <table className="table table-borderless text-center align-middle">
+          <tbody>
+              <tr>
+                <th>{ character.MP.name[language] || character.MP.name["en"] }</th>
+                <td className="border">{ attributes.MP.value }/{ attributes.MP.maxValue }</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
@@ -225,7 +251,7 @@ function Skills({ character }) {
   )
 }
 
-export default function Character({ character, onCharacterAction }) {
+export default function Character({ character, attributes, onCharacterAction }) {
   // console.log(`Character refresh: ${JSON.stringify(character)}`);
   console.log(`Character refresh`);
 
@@ -240,7 +266,7 @@ export default function Character({ character, onCharacterAction }) {
         </div>
       </div>
       <br />
-      <Attributes {...{ character }} />
+      <Attributes {...{ character, attributes }} />
       <Skills {...{ character }} />
     </div>
   )

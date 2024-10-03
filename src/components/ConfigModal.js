@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { LanguageContext } from '../App';
 
-export default function ConfigModal({ gameStarted, onRestart, volume, setVolume }) {
+export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }) {
   const { language, setLanguage } = useContext(LanguageContext);
   const title = {
     en: "Configuration",
@@ -15,10 +15,19 @@ export default function ConfigModal({ gameStarted, onRestart, volume, setVolume 
     english_option: "English",
     chinese_option: "中文",
   };
-  const volumeSetting = {
+  const musicVolumeSetting = {
     label: {
-      en: "Volume",
-      zh: "音量",
+      en: "Music",
+      zh: "音乐",
+    },
+    min: 0,
+    max: 1,
+    step: 0.2,
+  };
+  const sfxVolumeSetting = {
+    label: {
+      en: "Sound",
+      zh: "音效",
     },
     min: 0,
     max: 1,
@@ -56,11 +65,20 @@ export default function ConfigModal({ gameStarted, onRestart, volume, setVolume 
             </div>
 
             <div className="row mb-3">
-              <label htmlFor="volumeRange" className="col-sm-2 col-form-label">
-                {volumeSetting.label[language] || volumeSetting.label["en"]}
+              <label htmlFor="musicVolumeRange" className="col-sm-2 col-form-label">
+                { musicVolumeSetting.label[language] || musicVolumeSetting.label["en"] }
               </label>
               <div className="col-sm-10 d-flex align-items-center">
-                <input type="range" className="flex-fill" min={volumeSetting.min} max={volumeSetting.max} step={volumeSetting.step} id="volumeRange" value={volume} onChange={e => setVolume(e.target.value)} />
+                <input type="range" className="flex-fill" min={musicVolumeSetting.min} max={musicVolumeSetting.max} step={musicVolumeSetting.step} id="musicVolumeRange" value={musicVolume} onChange={e => setMusicVolume(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="row mb-3">
+              <label htmlFor="sfxVolumeRange" className="col-sm-2 col-form-label">
+                {sfxVolumeSetting.label[language] || sfxVolumeSetting.label["en"]}
+              </label>
+              <div className="col-sm-10 d-flex align-items-center">
+                <input type="range" className="flex-fill" min={sfxVolumeSetting.min} max={sfxVolumeSetting.max} step={sfxVolumeSetting.step} id="sfxVolumeRange" value={sfxVolume} onChange={e => setSfxVolume(e.target.value)} />
               </div>
             </div>
 

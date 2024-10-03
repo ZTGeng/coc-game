@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { LanguageContext } from '../../App';
 import { FlagsContext } from "../Game";
+import { HighlightContext } from "../Game";
 
 const EDITABLE_FLAD = "flag_characteristics_editable";
 
-export default function CharacteristicCell({ characteristic, highlight, availableValues=[], onValueSelected }) {
+export default function CharacteristicCell({ characteristic, availableValues=[], onValueSelected }) {
   const { language } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
+  const { highlight } = useContext(HighlightContext);
 
   const values = [...availableValues];
   if (characteristic.value) {
@@ -19,6 +21,10 @@ export default function CharacteristicCell({ characteristic, highlight, availabl
     if (characteristic.value !== newValue) {
       onValueSelected(characteristic.key, newValue);
     }
+  }
+
+  function shouldHighlight(level) {
+    return highlight && highlight.key === characteristic.key && highlight.level === level;
   }
 
   return flagConditionCheck(EDITABLE_FLAD) ? (
@@ -56,11 +62,21 @@ export default function CharacteristicCell({ characteristic, highlight, availabl
           ) : (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characteristic.name[language] || characteristic.name["en"] }</th>
           ) }
-          <td rowSpan="2" className="border border-end-0 p-2">{ characteristic.value }</td>
-          <td className="border border-bottom-0 small px-2 py-0" style={{ height: "1.5rem" }}>{ characteristic.value && Math.floor(characteristic.value / 2) }</td>
+          <td 
+            rowSpan="2" 
+            className={"border border-end-0 p-2" + (shouldHighlight("value") ? " table-warning" : "")}>
+              { characteristic.value }
+          </td>
+          <td className={"border border-bottom-0 small px-2 py-0" + (shouldHighlight("half") ? " table-warning" : "")} 
+              style={{ height: "1.5rem" }}>
+                { characteristic.value && Math.floor(characteristic.value / 2) }
+          </td>
         </tr>
         <tr>
-          <td className="border small px-2 py-0" style={{ height: "1.5rem" }}>{ characteristic.value && Math.floor(characteristic.value / 5) }</td>
+          <td className={"border small px-2 py-0" + (shouldHighlight("fifth") ? " table-warning" : "")} 
+            style={{ height: "1.5rem" }}>
+              { characteristic.value && Math.floor(characteristic.value / 5) }
+          </td>
         </tr>
       </tbody>
     </table>
