@@ -1,9 +1,20 @@
 {
     "key": 38,
-    "texts": [
-        "<p>司机继续享受他的烟卷，饶有兴致地看着你和箱子拼命。你咬咬牙，终于把第二个行李举起来，放到了位。兴许阿卡姆的人会比他有礼貌点儿。</p>"
-    ],
+    "text": {
+        "en": [
+            { "content": "The driver continues to enjoy his cigarette, watching with keen interest as you struggle with the cases. You grit your teeth and heave the second one into place. Perhaps the residents of Arkham will have better manners." }
+        ],
+        "zh": [
+            { "content": "司机继续享受他的烟卷，饶有兴致地看着你和箱子拼命。你咬咬牙，终于把第二个行李举起来，放到了位。兴许阿卡姆的人会比他有礼貌点儿。" }
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续" }
+        { 
+            "key": 0, 
+            "text": {
+                "en": "Continue",
+                "zh": "继续"
+            }
+        }
     ]
 }

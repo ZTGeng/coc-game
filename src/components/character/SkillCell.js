@@ -6,7 +6,7 @@ const EDITABLE_FLAD = "flag_skills_editable";
 
 export default function SkillCell({ skill, highlight, valueOptions=[], onValueSelected }) {
   const { language } = useContext(LanguageContext);
-  const { conditionChecker, setFlag } = useContext(FlagsContext);
+  const { flagConditionCheck } = useContext(FlagsContext);
 
   if (skill.key.startsWith("group_")) {
     return <div className="d-flex z-1" >
@@ -17,7 +17,7 @@ export default function SkillCell({ skill, highlight, valueOptions=[], onValueSe
 
   const nameWidth = skill.name ? Math.max(...(skill.name[language] || skill.name["en"]).split(" ").map(word => word.length)) : 0;
   const nameTh = <th rowSpan="2" scope="row"
-                     className={"text-start border-0 lh-1 px-1 py-0" + (skill.disabled ? " text-body-tertiary" : "")}
+                     className={"text-start border-0 lh-1 px-1 py-0" + (skill.disabled ? " text-body-tertiary" : "") + (skill.line && skill.name ? " fw-normal" : "")}
                      style={{ fontSize: nameWidth > 14 ? "0.6rem" : (nameWidth > 11 ? "0.65rem" : "0.75rem"), width: "5rem", height: "2rem" }}>
     { skill.name ? skill.name[language] || skill.name["en"] : (skill.disabled ? <span>&nbsp;</span> : <input type="text" className="border-0 p-0" style={{ width: "95%" }} />) }
     { skill.line ? <hr className="m-0 mt-1" /> : null }
@@ -43,7 +43,7 @@ export default function SkillCell({ skill, highlight, valueOptions=[], onValueSe
     )
   }
 
-  return conditionChecker(EDITABLE_FLAD) ? (
+  return flagConditionCheck(EDITABLE_FLAD) ? (
     <table className="table text-center align-middle cell m-0">
       <tbody>
         <tr>
@@ -53,7 +53,7 @@ export default function SkillCell({ skill, highlight, valueOptions=[], onValueSe
           { nameTh }
           <td rowSpan="2" className="border p-0" style={{ fontSize: "0.75rem", width: "2.35rem" }}>
             <select className="border-0 " style={{  }} >
-              { valueOptions.map(v => <option key={v.key}>{ v }</option>) }
+              { valueOptions.map(v => <option key={v.key} value={v}>{ v }</option>) }
             </select>
           </td>
         </tr>

@@ -34,14 +34,15 @@
                 "en": "Continue",
                 "zh": "继续"
             },
-            "disabled": "flag_characteristics_unfinished" }
+            "disabled": "flag_characteristics_unfinished"
+        }
     ],
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
-        { "action": "action_set_flag_true", "param": "flag_characteristics_editable" }
+        { "action": "action_set_flag", "param": { "flag": "flag_characteristics_editable", "value": true }}
     ],
     "onleave": [
-        { "action": "action_set_flag_false", "param": "flag_characteristics_editable" },
-        { "action": "action_set_dodge_and_lang_own", "param": "" }
+        { "action": "action_set_flag", "param": { "flag": "flag_characteristics_editable", "value": false }},
+        { "action": "action_set_char_related_values", "param": "" }
     ]
 }
