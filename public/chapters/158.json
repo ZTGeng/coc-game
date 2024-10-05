@@ -1,10 +1,14 @@
 {
     "key": 158,
-    "texts": [
-        "<p>你像箭一样地冲进小巷，突然转弯，拐到完全不同的方向。你身后脚步声响个不停。烬头村狭窄凌乱的小巷头一次为你提供了方便。你尝试迂回奔向南边的东盘山路。</p>",
-        "[guide-start]",
-        "<p>进行一次「潜行」检定。如果你成功了，你可以在「潜行」技能左边的小方框里打勾。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你像箭一样地冲进小巷，突然转弯，拐到完全不同的方向。你身后脚步声响个不停。烬头村狭窄凌乱的小巷头一次为你提供了方便。你尝试迂回奔向南边的东盘山路。" },
+            { "tag": "info", "text": [
+            { "content": "进行一次「潜行」检定。如果你成功了，你可以在「潜行」技能左边的小方框里打勾。" }
+            ] }
     ],
     "interactions": [
         {
@@ -30,10 +34,11 @@
             },
             "show": ["flag_check_unfinished", "flag_punish_dice"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": "flag_check_passed" },
-        { "key": 1, "text": "继续", "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "stealth", "level": "value" } }

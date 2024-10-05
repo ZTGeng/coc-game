@@ -5,9 +5,10 @@ import characterSheet from "./character/characterSheet";
 import Chapter from "./game/Chapter";
 import chapterMap from "./game/chapterMap";
 import { showToast } from "./ToastMessage";
-import { roll } from "../utils";
+import * as utils from "../utils";
 
 const initFlags = {
+  flag_characteristics_editable: false,
   flag_characteristics_unfinished: true,
   flag_skills_editable: false,
   flag_skills_editing_phase_2: false,
@@ -34,11 +35,38 @@ const initFlags = {
   flag_learned_magic_order: false
 };
 
+const initChars = {
+  STR: { key: "STR", value: 40 },
+  CON: { key: "CON", value: 50 },
+  SIZ: { key: "SIZ", value: 50 },
+  DEX: { key: "DEX", value: 50 },
+  APP: { key: "APP", value: 60 },
+  INT: { key: "INT", value: 60 },
+  POW: { key: "POW", value: 70 },
+  EDU: { key: "EDU", value: 80 },
+};
+
 const initAttributes = {
   HP: { value: "", maxValue: "" },
   San: { value: "", maxValue: "" },
   Luck: { value: "" },
   MP: { value: "", maxValue: "" },
+};
+
+const initSkills = Object.entries(characterSheet.skills).reduce((acc, [key, item]) => {
+  if (!(key.startsWith("group_") || item.disabled)) {
+    acc[key] = { key: key, value: item.value, checked: false };
+  }
+  return acc;
+}, {});
+
+const initOccupation = {
+  name: { en: "", zh: "" },
+  skills: [],
+  art: 0,
+  interpersonal: 0,
+  language: 0,
+  universal: 0
 };
 
 export const FlagsContext = createContext();
@@ -48,10 +76,13 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
   const { language } = useContext(LanguageContext);
   const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
+  const [chars, setChars] = useState(initChars);
   const [attributes, setAttributes] = useState(initAttributes);
-  const [highlight, setHighlight] = useState(null);
+  const [skills, setSkills] = useState(initSkills);
+  const [occupation, setOccupation] = useState(initOccupation);
+  const [highlight, setHighlight] = useState([]);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
-  console.log(`on Game refresh`);
+  console.log(`Game refresh`);
 
   function flagConditionCheck(condition) {
     if (Array.isArray(condition)) {
@@ -63,18 +94,17 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         return !flagConditionCheck(condition.slice(1));
       }
       // console.log(`Checking flag: ${condition} in ${JSON.stringify(flags)}`);
-      if (condition in flags) {
-        return flags[condition];
-      }
       switch (condition) {
-        case "flag_characteristics_editable":
-          return chapterKey === 263;
+        // Chapter needs information from Character
         case "flag_siz_greater_than_40":
-          return characterSheet.SIZ.value > 40;
+          return chars.SIZ.value > 40;
         case "flag_dex_greater_than_siz":
-          return characterSheet.DEX.value > characterSheet.SIZ.value;
+          return chars.DEX.value > chars.SIZ.value;
         case "flag_luck_unfinished":
           return attributes.Luck.value === "";
+      }
+      if (condition in flags) {
+        return flags[condition];
       }
     }
     console.log(`Un-handled condition: ${condition} in ${JSON.stringify(flags)}`);
@@ -93,53 +123,58 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
 
   function onAction(action, param) {
     switch (action) {
-      case "action_set_flag":
+      case "action_set_flag": // param: { flag, value }
         setFlags({ ...flags, [param.flag]: param.value });
         break;
-      case "action_show_character_sheet":
-        setShowCharacter(param);
+      case "action_show_character_sheet": // param: true/false/undefined
+        setShowCharacter(param !== false);
         break;
-      case "action_set_char_related_values":
-        characterSheet.skills.dodge.value = Math.floor(characterSheet.DEX.value / 2);
-        characterSheet.skills.lang_own.value = characterSheet.EDU.value;
-        break;
-      case "action_set_highlight":
+      case "action_set_highlight": // param: { key, level }
         if (param.level === "none") {
-          setHighlight(null);
+          setHighlight(highlight.filter(h => h.key !== param.key));
         } else {
-          setHighlight(param);
+          setHighlight([...highlight, param]);
         }
         break;
+      case "action_adjust_attribute": // param: { key, delta }
+        const newAttributes = { ...attributes };
+        newAttributes[param.key].value += param.delta;
+        setAttributes(newAttributes);
+        break;
+      case "action_show_dice_toast": // param: { num, dice, results, shouldPlaySound }
+        showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound);
+        break;
+      case "action_set_char_related_values":
+        setSkills({ 
+          ...skills, 
+          dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2) }, 
+          lang_own: { ...skills.lang_own, value: chars.EDU.value } 
+        });
+        break;
       case "action_initial_san_and_mp":
-        const san = characterSheet.POW.value;
-        const mp = Math.floor(characterSheet.POW.value / 5);
+        const san = chars.POW.value;
+        const mp = Math.floor(chars.POW.value / 5);
         setAttributes({ ...attributes, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } });
         break;
       case "action_initial_hp":
-        const hp = Math.floor((characterSheet.SIZ.value + characterSheet.CON.value) / 10);
+        const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
         setAttributes({ ...attributes, HP: { value: hp, maxValue: hp } });
-        setFlags({ ...flags });
         break;
       case "action_roll_luck_and_update_chapter":
-        const results = roll(3, 6);
+        const results = utils.roll(3, 6);
         const luck = results.reduce((a, b) => a + b, 0) * 5;
 
-        showToast({
-          title: language === "zh" ? "投掷3D6" : "Roll 3D6",
-          text: language === "zh" ? `结果：${results.join("、")}，幸运值：${luck}` : `Results: ${results.join(", ")}; Luck: ${luck}`
-        });
-        playSound("dice");
+        showDiceToast(3, 6, results, true);
         setAttributes({ ...attributes, Luck: { value: luck } });
+        break;
+      case "action_set_occupation": // param: { name, skills, art, interpersonal, language, universal }
+        setOccupation({ ...occupation, ...param });
+        break;
+      case "action_set_credit": // param: Int
+        setSkills({ ...skills, credit: { ...skills.credit, value: param } });
         break;
     }
   }
-
-  // Cheat
-  function goTo(chapterKey) {
-    console.log(`Game - goTo: to chapter ${chapterKey}`);
-    setChapterKey(chapterKey);
-  }
-  window.goTo = goTo;
 
   function nextChapter(chapterKey, optionKey) {
     const next = chapterMap[chapterKey][optionKey];
@@ -149,15 +184,35 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
     }
   }
 
+  function showDiceToast(num, dice, results, shouldPlaySound) {
+    showToast({
+      title: language === "zh" ? `投掷${num}D${dice}` : `Roll ${num}D${dice}`,
+      text: language === "zh" ? `结果：${results.join("、")}` : `Results: ${results.join(", ")}`
+    });
+    if (shouldPlaySound) {
+      num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
+    }
+  }
+  
+  // Cheating
+  window.goto = (chapterKey) => {
+    console.log(`Game - goto: to chapter ${chapterKey}`);
+    setChapterKey(chapterKey);
+  }
+  window.setattr = (key, value) => {
+    console.log(`Game - setattr: ${key} = ${value}`);
+    setAttributes({ ...attributes, [key]: { value } });
+  }
+
   return (
     <FlagsContext.Provider value={{ flagConditionCheck }}>
       <HighlightContext.Provider value={{ highlight }}>
         <div className="row">
-          <div id="text-content" className="col px-2">
-            <Chapter {...{ chapterKey, nextChapter, onChapterAction } }/>
+          <div id="chapter" className="col px-2">
+            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction } }/>
           </div>
           {showCharacter && <div id="character" className="col">
-            <Character character={characterSheet} {...{ attributes, onCharacterAction }} />
+            <Character {...{ characterSheet, chars, attributes, skills, occupation, onCharacterAction }} />
           </div>}
         </div>
       </HighlightContext.Provider>

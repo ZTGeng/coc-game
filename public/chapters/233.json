@@ -18,14 +18,9 @@
             ] }
         ]
     },
-    "options": [
-        { 
-            "key": 0, 
-            "text": {
-                "en": "Continue",
-                "zh": "继续"
-            }
-        }
-    ],
-    "onload": [{ "action": "action_initial_san_and_mp" }]
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_show_character_sheet", "param": true },
+        { "action": "action_initial_san_and_mp" }
+    ]
 }

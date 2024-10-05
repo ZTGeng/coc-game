@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import './App.css';
 import Cover from './components/Cover';
 import ConfigModal from './components/ConfigModal';
-import ToastMessage from './components/ToastMessage';
+import ToastMessages from './components/ToastMessage';
 import Game from './components/Game';
 
 export const LanguageContext = createContext();
@@ -108,7 +108,7 @@ function App() {
         </div>
         <Footer />
       </div>
-      <ToastMessage />
+      <ToastMessages />
       <ConfigModal {...{ gameStarted, onRestart: startGame, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
       <audio ref={musicRef} src="" type="audio/mpeg" loop volume={musicVolume} />
       <audio ref={sfxRef} src="" type="audio/mpeg" volume={sfxVolume} />

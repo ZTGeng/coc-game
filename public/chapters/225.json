@@ -1,10 +1,14 @@
 {
     "key": 225,
-    "texts": [
-        "<p>你检查了这个挂锁。它很老旧，也不是特别坚固。附近有很多金属碎片可以当作简易开锁器使用。但你真的会开锁吗？</p>",
-        "[guide-start]",
-        "<p>进行一次“锁匠”检定。这一次检定你可以将技能值加倍。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你检查了这个挂锁。它很老旧，也不是特别坚固。附近有很多金属碎片可以当作简易开锁器使用。但你真的会开锁吗？" },
+            { "tag": "info", "text": [
+                { "content": "进行一次“锁匠”检定。这一次检定你可以将技能值加倍。" }
+            ] }
     ],
     "interactions": [
         {
@@ -28,10 +32,11 @@
             },
             "show": ["flag_check_unfinished", "flag_punish_dice"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": "flag_check_passed" },
-        { "key": 1, "text": "继续", "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_double_skill_value", "param": "locksmith" },

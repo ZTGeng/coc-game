@@ -1,11 +1,15 @@
 {
     "key": 207,
-    "texts": [
-        "<p>你非常想拿走这本书，但它太大了根本无法裹藏。你把它推回架子里，将书架滑回原位。</p>",
-        "<p>马上你就听到会堂大门传来钥匙划动的声音。你冲向打开的窗户。</p>",
-        "[guide-start]",
-        "<p>进行一次“敏捷”检定。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你非常想拿走这本书，但它太大了根本无法裹藏。你把它推回架子里，将书架滑回原位。" },
+            { "content": "马上你就听到会堂大门传来钥匙划动的声音。你冲向打开的窗户。" },
+            { "tag": "info", "text": [
+            { "content": "进行一次“敏捷”检定。" }
+            ] }
     ],
     "interactions": [
         {
@@ -29,10 +33,11 @@
             },
             "show": ["flag_check_unfinished", "flag_punish_dice"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": "flag_check_passed" },
-        { "key": 1, "text": "继续", "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "DEX", "level": "value" } }

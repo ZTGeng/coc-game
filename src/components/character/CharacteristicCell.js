@@ -1,47 +1,78 @@
 import { useContext } from "react";
 import { LanguageContext } from '../../App';
-import { FlagsContext } from "../Game";
 import { HighlightContext } from "../Game";
 
-const EDITABLE_FLAD = "flag_characteristics_editable";
-
-export default function CharacteristicCell({ characteristic, availableValues=[], onValueSelected }) {
+export default function CharacteristicCell({ char, characterSheet, isEditable, availableValues = [], onValueSelected = () => {} }) {
   const { language } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
   const { highlight } = useContext(HighlightContext);
 
+  function shouldHighlight(level) {
+    return highlight && highlight.some(h => h.key === char.key && h.level === level);
+  }
+
+  if (!isEditable) {
+    return (
+      <table className="table text-center align-middle cell m-0">
+        <tbody>
+          <tr>
+            { char.key === "INT" ? (
+              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
+                (characterSheet[char.key].name[language] || characterSheet[char.key].name["en"])
+                .split('\n')
+                .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
+              }</th>
+            ) : (
+              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characterSheet[char.key].name[language] || characterSheet[char.key].name["en"] }</th>
+            ) }
+            <td 
+              rowSpan="2" 
+              className={"border border-end-0 p-2" + (shouldHighlight("value") ? " table-warning" : "")}>
+                { char.value }
+            </td>
+            <td className={"border border-bottom-0 small px-2 py-0" + (shouldHighlight("half") ? " table-warning" : "")} 
+                style={{ height: "1.5rem" }}>
+                  { char.value && Math.floor(char.value / 2) }
+            </td>
+          </tr>
+          <tr>
+            <td className={"border small px-2 py-0" + (shouldHighlight("fifth") ? " table-warning" : "")} 
+              style={{ height: "1.5rem" }}>
+                { char.value && Math.floor(char.value / 5) }
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
+  }
+
   const values = [...availableValues];
-  if (characteristic.value) {
-    values.push(characteristic.value);
-    values.sort().reverse();
+  if (char.value) {
+    values.push(char.value);
+    values.sort((a, b) => b - a);
   }
 
   function onSelectChange(e) {
     const newValue = e.target.value ? parseInt(e.target.value) : e.target.value; // Int or ""
-    if (characteristic.value !== newValue) {
-      onValueSelected(characteristic.key, newValue);
+    if (char.value !== newValue) {
+      onValueSelected(char.key, newValue);
     }
   }
 
-  function shouldHighlight(level) {
-    return highlight && highlight.key === characteristic.key && highlight.level === level;
-  }
-
-  return flagConditionCheck(EDITABLE_FLAD) ? (
+  return (
     <table className="table text-center align-middle cell m-0">
       <tbody>
         <tr>
-          { characteristic.key === "INT" ? (
+          { char.key === "INT" ? (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-              (characteristic.name[language] || characteristic.name["en"])
+              (characterSheet[char.key].name[language] || characterSheet[char.key].name["en"])
                 .split('\n')
                 .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
             }</th>
           ) : (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characteristic.name[language] || characteristic.name["en"] }</th>
+            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characterSheet[char.key].name[language] || characterSheet[char.key].name["en"] }</th>
           ) }
           <td rowSpan="2" className="border p-2">
-            <select className="border-0 mx-1" style={{ paddingTop: "3px", paddingRight: "1.5px" }} value={characteristic.value} onChange={onSelectChange}>
+            <select className="border-0 mx-1" style={{ paddingTop: "3px", paddingRight: "1.5px" }} value={char.value} onChange={onSelectChange}>
               <option key="empty" value="">{ "" }</option>
               { values.map((v, i) => <option key={i} value={v}>{ v }</option>) }
             </select>
@@ -49,36 +80,5 @@ export default function CharacteristicCell({ characteristic, availableValues=[],
         </tr>
       </tbody>
     </table>
-  ) : (
-    <table className="table text-center align-middle cell m-0">
-      <tbody>
-        <tr>
-          { characteristic.key === "INT" ? (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-              (characteristic.name[language] || characteristic.name["en"])
-              .split('\n')
-              .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
-            }</th>
-          ) : (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characteristic.name[language] || characteristic.name["en"] }</th>
-          ) }
-          <td 
-            rowSpan="2" 
-            className={"border border-end-0 p-2" + (shouldHighlight("value") ? " table-warning" : "")}>
-              { characteristic.value }
-          </td>
-          <td className={"border border-bottom-0 small px-2 py-0" + (shouldHighlight("half") ? " table-warning" : "")} 
-              style={{ height: "1.5rem" }}>
-                { characteristic.value && Math.floor(characteristic.value / 2) }
-          </td>
-        </tr>
-        <tr>
-          <td className={"border small px-2 py-0" + (shouldHighlight("fifth") ? " table-warning" : "")} 
-            style={{ height: "1.5rem" }}>
-              { characteristic.value && Math.floor(characteristic.value / 5) }
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  )
+  );
 }

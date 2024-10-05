@@ -1,10 +1,14 @@
 {
     "key": 67,
-    "texts": [
-        "<p>你以奇怪的角度落地，身上有哪里断掉了。你摸摸身下面，手指上沾上了湿湿的东西。你视野边缘的黑幕在徐徐关闭。</p>",
-        "[guide-start]",
-        "<p>你受到了重伤。如果你的耐久值已经归零，选择“继续”。否则进行一次“体质”检定。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你以奇怪的角度落地，身上有哪里断掉了。你摸摸身下面，手指上沾上了湿湿的东西。你视野边缘的黑幕在徐徐关闭。" },
+            { "tag": "info", "text": [
+            { "content": "你受到了重伤。如果你的耐久值已经归零，选择“继续”。否则进行一次“体质”检定。" }
+            ] }
     ],
     "interactions": [
         {
@@ -28,11 +32,12 @@
             },
             "show": ["!flag_hp_zero", "flag_check_unfinished", "flag_punish_dice"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": ["!flag_hp_zero", "flag_check_passed"] },
-        { "key": 1, "text": "继续", "show": ["!flag_hp_zero", "flag_check_failed"] },
-        { "key": 2, "text": "继续", "show": "flag_hp_zero" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": ["!flag_hp_zero", "flag_check_passed"] },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": ["!flag_hp_zero", "flag_check_failed"] },
+        { "key": 2, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_hp_zero" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "CON", "level": "value" } }

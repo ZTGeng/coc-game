@@ -5,9 +5,13 @@ import { LanguageContext } from "../../App";
 export default function GoToOptions({ chapterKey, options, nextChapter }) {
   const { flagConditionCheck } = useContext(FlagsContext);
 
-  return options
-    .filter(option => !option.show || flagConditionCheck(option.show))
-    .map(option => <GoToOption key={option.key} {...{ chapterKey, option, nextChapter }} />);
+  return (
+    <div className="d-flex flex-column">
+      {options
+        .filter(option => !option.show || flagConditionCheck(option.show))
+        .map(option => <GoToOption key={option.key} {...{ chapterKey, option, nextChapter }} />)}
+    </div>
+  );
 }
 
 export function GoToOption({ chapterKey, option, nextChapter }) {
@@ -21,7 +25,7 @@ export function GoToOption({ chapterKey, option, nextChapter }) {
     </div>
   ) : (
     <a key={option.key}
-      className="link link-secondary link-offset-2 h5"
+      className="link link-dark link-offset-2 h5 mb-3"
       role="button"
       href="#"
       onClick={(e) => { e.preventDefault(); nextChapter(chapterKey, option.key); }}>

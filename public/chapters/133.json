@@ -1,10 +1,14 @@
 {
     "key": 133,
-    "texts": [
-        "<p>房间里排满了书籍。角落里是狭小的盥洗室和食品储藏处。你快速搜索了一遍房间的其他部分，但没什么发现，所以你又回到了书架前。光线很暗，你难以看清书脊上的字。这里有什么有用的东西吗？</p>",
-        "[guide-start]",
-        "<p>进行一次「侦查」检定。如果你以前检查过这些书架，你可以获得一颗奖励骰。如有需要，可以参阅快速开始规则第11页（规则书第91页）获取说明。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "房间里排满了书籍。角落里是狭小的盥洗室和食品储藏处。你快速搜索了一遍房间的其他部分，但没什么发现，所以你又回到了书架前。光线很暗，你难以看清书脊上的字。这里有什么有用的东西吗？" },
+            { "tag": "info", "text": [
+            { "content": "进行一次「侦查」检定。如果你以前检查过这些书架，你可以获得一颗奖励骰。如有需要，可以参阅快速开始规则第11页（规则书第91页）获取说明。" }
+            ] }
     ],
     "interactions": [
         {
@@ -31,10 +35,11 @@
             "param": { "key": "spot", "isSkill": true, "level": "value", "bonus": -1 },
             "show": ["flag_check_unfinished", "flag_punish_dice", "!flag_searched_book_shelf"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": "flag_check_passed" },
-        { "key": 1, "text": "继续", "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "spot", "level": "value" } }

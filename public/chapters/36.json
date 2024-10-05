@@ -1,10 +1,14 @@
 {
     "key": 36,
-    "texts": [
-        "<p>泥土随着你的踩踏下陷，断崖的边缘崩落了。你开始下坠，感觉自己的脏腑都在倾斜。</p>",
-        "[guide-start]",
-        "<p>进行一次「攀爬」检定。</p>",
-        "[guide-end]"
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "泥土随着你的踩踏下陷，断崖的边缘崩落了。你开始下坠，感觉自己的脏腑都在倾斜。" },
+            { "tag": "info", "text": [
+            { "content": "进行一次「攀爬」检定。" }
+            ] }
     ],
     "interactions": [
         {
@@ -28,10 +32,11 @@
             },
             "show": ["flag_check_unfinished", "flag_punish_dice"]
         }
-    ],
+        ]
+    },
     "options": [
-        { "key": 0, "text": "继续", "show": "flag_check_passed" },
-        { "key": 1, "text": "继续", "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "climb", "level": "value" } }
