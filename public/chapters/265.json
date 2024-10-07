@@ -24,9 +24,10 @@
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
         { 
-            "action": "action_set_occupation", 
+            "action": "action_set_occupation_and_credit", 
             "param": {
                 "name": { "en": "Professor", "zh": "教授" },
+                "credit": 30,
                 "skills": ["library", "lang_own", "psychology"],
                 "interpersonal": 0, 
                 "language": 1, 
@@ -34,7 +35,6 @@
                 "universal": 4 
             }
         },
-        { "action": "action_set_credit", "param": 30 },
         { "action": "action_set_flag", "param": { "flag": "flag_skills_editable", "value": true } }
     ]
 }

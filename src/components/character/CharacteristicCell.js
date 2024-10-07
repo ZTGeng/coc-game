@@ -72,7 +72,7 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characterSheet[char.key].name[language] || characterSheet[char.key].name["en"] }</th>
           ) }
           <td rowSpan="2" className="border p-2">
-            <select className="border-0 mx-1" style={{ paddingTop: "3px", paddingRight: "1.5px" }} value={char.value} onChange={onSelectChange}>
+            <select className="border-0 mx-1" style={{ paddingTop: "3px" }} value={char.value} onChange={onSelectChange}>
               <option key="empty" value="">{ "" }</option>
               { values.map((v, i) => <option key={i} value={v}>{ v }</option>) }
             </select>

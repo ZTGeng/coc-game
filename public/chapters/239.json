@@ -24,9 +24,10 @@
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
         { 
-            "action": "action_set_occupation", 
+            "action": "action_set_occupation_and_credit", 
             "param": {
                 "name": { "en": "Journalist", "zh": "记者" },
+                "credit": 20,
                 "skills": ["photography", "history", "library", "lang_own", "psychology"],
                 "interpersonal": 1, 
                 "language": 0, 
@@ -34,7 +35,6 @@
                 "universal": 2 
             }
         },
-        { "action": "action_set_credit", "param": 20 },
         { "action": "action_set_flag", "param": { "flag": "flag_skills_editable", "value": true } }
     ]
 }

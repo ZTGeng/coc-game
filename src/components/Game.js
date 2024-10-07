@@ -9,7 +9,7 @@ import * as utils from "../utils";
 
 const initFlags = {
   flag_characteristics_editable: false,
-  flag_characteristics_unfinished: true,
+  // flag_characteristics_unfinished: true,
   flag_skills_editable: false,
   flag_skills_editing_phase_2: false,
   flag_skills1_unfinished: true,
@@ -38,8 +38,8 @@ const initFlags = {
 const initChars = {
   STR: { key: "STR", value: 40 },
   CON: { key: "CON", value: 50 },
-  SIZ: { key: "SIZ", value: 50 },
-  DEX: { key: "DEX", value: 50 },
+  SIZ: { key: "SIZ", value: "" },
+  DEX: { key: "DEX", value: "" },
   APP: { key: "APP", value: 60 },
   INT: { key: "INT", value: 60 },
   POW: { key: "POW", value: 70 },
@@ -54,14 +54,15 @@ const initAttributes = {
 };
 
 const initSkills = Object.entries(characterSheet.skills).reduce((acc, [key, item]) => {
-  if (!(key.startsWith("group_") || item.disabled)) {
-    acc[key] = { key: key, value: item.value, checked: false };
+  if (!(item.group)) {
+    acc[key] = { value: item.value, baseValue: item.value, checked: false, occupation: false, hobby: false };
   }
   return acc;
 }, {});
 
 const initOccupation = {
   name: { en: "", zh: "" },
+  credit: "",
   skills: [],
   art: 0,
   interpersonal: 0,
@@ -96,6 +97,8 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
       // console.log(`Checking flag: ${condition} in ${JSON.stringify(flags)}`);
       switch (condition) {
         // Chapter needs information from Character
+        case "flag_characteristics_unfinished":
+          return Object.values(chars).some(char => char.value === "");
         case "flag_siz_greater_than_40":
           return chars.SIZ.value > 40;
         case "flag_dex_greater_than_siz":
@@ -147,8 +150,8 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
       case "action_set_char_related_values":
         setSkills({ 
           ...skills, 
-          dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2) }, 
-          lang_own: { ...skills.lang_own, value: chars.EDU.value } 
+          dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) }, 
+          lang_own: { ...skills.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value } 
         });
         break;
       case "action_initial_san_and_mp":
@@ -167,11 +170,9 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         showDiceToast(3, 6, results, true);
         setAttributes({ ...attributes, Luck: { value: luck } });
         break;
-      case "action_set_occupation": // param: { name, skills, art, interpersonal, language, universal }
+      case "action_set_occupation_and_credit": // param: { name, credit, skills, art, interpersonal, language, universal }
         setOccupation({ ...occupation, ...param });
-        break;
-      case "action_set_credit": // param: Int
-        setSkills({ ...skills, credit: { ...skills.credit, value: param } });
+        setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
         break;
     }
   }
@@ -212,7 +213,7 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
             <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction } }/>
           </div>
           {showCharacter && <div id="character" className="col">
-            <Character {...{ characterSheet, chars, attributes, skills, occupation, onCharacterAction }} />
+            <Character {...{ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, onCharacterAction }} />
           </div>}
         </div>
       </HighlightContext.Provider>

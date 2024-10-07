@@ -26,17 +26,17 @@
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
         { 
-            "action": "action_set_occupation", 
+            "action": "action_set_occupation_and_credit", 
             "param": {
                 "name": { "en": "Doctor of Medicine", "zh": "医生" },
-                "skills": ["aid", "latin", "medicine", "psychology", "biology", "pharmacy"],
+                "credit": 30,
+                "skills": ["first_aid", "latin", "medicine", "psychology", "biology", "pharmacy"],
                 "interpersonal": 0, 
                 "language": 0, 
                 "art": 0, 
                 "universal": 2 
             }
         },
-        { "action": "action_set_credit", "param": 30 },
         { "action": "action_set_flag", "param": { "flag": "flag_skills_editable", "value": true } }
     ]
 }

@@ -160,7 +160,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
-  console.log(`Chapter refresh: ${chapter ? chapter.key : "start"} => ${chapterKey}`);
+  console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, checkFlags: ${checkFlags.result}`);
 
   function onLeave(chapterJson) {
     console.log(`Chapter ${chapterJson.key} onLeave`);
@@ -212,7 +212,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
   }
 
   useEffect(() => {
-    console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}, language: ${language}`);
+    console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
 
     if (chapterKey === 0) return;
 
@@ -224,6 +224,8 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
         if (chapter && (chapter.key !== chapterKey)) {
           onLeave(chapter);
         }
+
+        // reset checkFlags for new chapter
         if (checkFlags.result) {
           setCheckFlags(initCheckFlags);
         }
@@ -236,7 +238,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
           onLoad(data);
         }
       });
-  }, [chapterKey, language]);
+  }, [chapterKey]);
 
   if (chapterKey === 0) {
     return <Chapter0 {...{ nextChapter }} />;
