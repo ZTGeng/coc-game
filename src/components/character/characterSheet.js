@@ -19,7 +19,7 @@ const characterSheet = {
         appraise:         { key: "appraise",         value: 5, name: { zh: "估价", en: "Appraise" }, description: { en: "Can estimate the value of a particular item, including the quality, material used, and workmanship." } },
         archaeology:      { key: "archaeology",      value: 1, name: { zh: "考古学", en: "Archaeology" }, description: { en: "Allows dating and identification of artifacts from past cultures, and the detection of fakes." } },
         group_art:        { key: "group_art",        name: { zh: "艺术/手艺", en: "Art/Craft" }, description: { en: "An ability with this skill enables the creation, making, or repair of an item, which could be artistic (like painting or singing) or craft (like woodwork or cookery). Choose a suitable specialization and write this in the space provided on the sheet." }, group: true },
-        photography:      { key: "photography",      value: 5, name: { zh: "摄影", en: "Photography" }, line: true, custom: true },
+        photography:      { key: "photography",      value: 5, name: { zh: "摄影", en: "Photography" }, line: true },
         custom_art1:      { key: "custom_art1",      value: 5, unused: true, line: true, custom: true },
         custom_art2:      { key: "custom_art2",      value: 5, unused: true, line: true, custom: true },
         charm:            { key: "charm",            value: 15, name: { zh: "魅惑", en: "Charm" }, description: { en: "Charm takes many forms, including physical attraction, seduction, flattery, or simply warmth of personality. Charm may be used to compel someone to act in a certain way, but not in a manner completely contrary to that person’s normal behavior. This skill can be opposed by Charm or Psychology." } },
@@ -90,7 +90,7 @@ const characterSheet = {
     occupationTitie: { zh: "职业", en: "Occupation" },
     characteristicsTitle: { zh: "属性", en: "CHARACTERISTICS" },
     skillsTitle: { zh: "调查员技能", en: "INVESTIGATOR SKILLS" },
-    lockUnusedButtonText: { zh: "锁定本游戏中未使用的技能", en: "Lock Skills Unused in Game" },
+    lockUnusedButtonText: { zh: "锁定用不到的技能", en: "Lock Those You Won't Use" },
 };
 
 export default characterSheet;

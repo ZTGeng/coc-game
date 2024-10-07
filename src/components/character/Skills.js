@@ -32,6 +32,7 @@ export default function Skills({ characterSheet, skills, setSkills, occupation, 
 }
 
 function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupation, onCharacterAction }) {
+  const { language } = useContext(LanguageContext);
   const isEditable = true;
   const initAvailableValues = [70, 60, 60, 50, 50, 50, 40, 40];
   const initAvailableSkills = {
@@ -83,8 +84,69 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
   const [availableSkills, setAvailableSkills] = useState(initAvailableSkills);
   const [lockUnused, setLockUnused] = useState(false);
 
+  function unselectSkills(skillKeys) {
+    const availableValuesCopy = [...availableValues];
+    const availableSkillsCopy = { ...availableSkills };
+    const skillsChanges = {};
+    skillKeys.forEach(skillKey => {
+      const indexInSelected = selectedSkills.indexOf(skillKey);
+      if (indexInSelected === -1) {
+        // console.log(`${skillKey} is not in selectedSkills ${selectedSkills} when unselecting`);
+        return;
+      }
+      if (occupation.skills.includes(skillKey)) {
+        if (availableSkillsCopy[skillKey] !== 0) {
+          console.error(`${skillKey} occupation skill is not 0 when unselecting`);
+        }
+        availableSkillsCopy[skillKey] = 1;
+      } else if (artSkills.includes(skillKey)) {
+        const selectedArtSkillsNum = selectedSkills.filter(key => artSkills.includes(key)).length;
+        if (selectedArtSkillsNum > occupation.art) {
+          availableSkillsCopy.universal += 1;
+        } else {
+          availableSkillsCopy.art += 1;
+        }
+      } else if (languageSkills.includes(skillKey)) {
+        const selectedLangSkillsNum = selectedSkills.filter(key => languageSkills.includes(key)).length;
+        if (selectedLangSkillsNum > occupation.language) {
+          availableSkillsCopy.universal += 1;
+        } else {
+          availableSkillsCopy.language += 1;
+        }
+      } else if (interpersonalSkills.includes(skillKey)) {
+        const selectedInterpersonalSkillsNum = selectedSkills.filter(key => interpersonalSkills.includes(key)).length;
+        if (selectedInterpersonalSkillsNum > occupation.interpersonal) {
+          availableSkillsCopy.universal += 1;
+        } else {
+          availableSkillsCopy.interpersonal += 1;
+        }
+      } else {
+        availableSkillsCopy.universal += 1;
+      }
+      if (availableSkillsCopy.art > occupation.art 
+        || availableSkillsCopy.language > occupation.language 
+        || availableSkillsCopy.interpersonal > occupation.interpersonal 
+        || availableSkillsCopy.universal > occupation.universal) {
+        console.error(`${skillKey} makes available skills point ${JSON.stringify(availableSkillsCopy)} more than in occupation ${JSON.stringify(occupation)} when unselecting`);
+      }
+
+      skillsChanges[skillKey] = { ...skills[skillKey], value: skills[skillKey].baseValue, occupation: false };
+      availableValuesCopy.push(skills[skillKey].value);
+      availableValuesCopy.sort((a, b) => b - a);
+      selectedSkills.splice(indexInSelected, 1);
+    });
+
+    if (availableValuesCopy.length !== availableValues.length) {
+      setSkills({ ...skills, ...skillsChanges });
+      setAvailableValues(availableValuesCopy);
+      setAvailableSkills(availableSkillsCopy);
+    }
+  }
+
   function toggleLockUnused() {
-    // tuidian
+    if (!lockUnused) {
+      unselectSkills(Object.keys(skills).filter(skillKey => characterSheet.skills[skillKey].unused && skills[skillKey].occupation));
+    }
     setLockUnused(!lockUnused);
   }
 
@@ -97,12 +159,11 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
     if (fromBase && toBase) {
       console.error(`Skill ${key} should not trigger onValueSelevted with the same value`);
       return
-    }
-
-    const availableValuesCopy = [...availableValues];
+    }    
 
     // Case 1, selected skill change to another value
     if (!fromBase && !toBase) {
+      const availableValuesCopy = [...availableValues];
       // No change to availableSkills and selectedSkills, just change values
       const index = availableValuesCopy.indexOf(newValue);
       if (index !== -1) {
@@ -118,69 +179,16 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
       return;
     }
 
-    const availableSkillsCopy = { ...availableSkills };
-
     // Case 2, selected skill change to baseValue
     if (toBase) {
-      // (1) recover the skill point in availableSkills; 
-      // (2) remove skill from selectedSkills;
-      // (3) put the value back to availableValues.
-      // (4) set finish flag if needed
-      if (occupation.skills.includes(key)) {
-        if (availableSkillsCopy[key] !== 0) {
-          console.error(`Occupation skill ${key} is not 0 before reset`);
-        }
-        availableSkillsCopy[key] = 1;
-      } else if (artSkills.includes(key)) {
-        const selectedArtSkillsNum = selectedSkills.filter(skillKey => artSkills.includes(skillKey)).length;
-        if (selectedArtSkillsNum > occupation.art) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.art += 1;
-        }
-      } else if (languageSkills.includes(key)) {
-        const selectedLangSkillsNum = selectedSkills.filter(skillKey => languageSkills.includes(skillKey)).length;
-        if (selectedLangSkillsNum > occupation.language) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.language += 1;
-        }
-      } else if (interpersonalSkills.includes(key)) {
-        const selectedInterpersonalSkillsNum = selectedSkills.filter(skillKey => interpersonalSkills.includes(skillKey)).length;
-        if (selectedInterpersonalSkillsNum > occupation.interpersonal) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.interpersonal += 1;
-        }
-      } else {
-        availableSkillsCopy.universal += 1;
-      }
-      if (availableSkillsCopy.art > occupation.art 
-        || availableSkillsCopy.language > occupation.language 
-        || availableSkillsCopy.interpersonal > occupation.interpersonal 
-        || availableSkillsCopy.universal > occupation.universal) {
-        console.error(`Available skills point is larger than occupation point ${JSON.stringify(availableSkillsCopy)} vs ${JSON.stringify(occupation)}`);
-      }
-
-      const index = selectedSkills.indexOf(key);
-      if (index !== -1) {
-        selectedSkills.splice(index, 1);
-      } else {
-        console.error(`Selected skill ${key}: ${curValue} is not in selectedSkills ${selectedSkills} - case 2`);
-      }
-      availableValuesCopy.push(curValue);
-      availableValuesCopy.sort((a, b) => b - a);
-
-      setSkills({ ...skills, [key]: { ...skills[key], value: newValue, occupation: false } });
-      setAvailableValues(availableValuesCopy);
-      setAvailableSkills(availableSkillsCopy);
-
-      onCharacterAction("action_set_flag", { flag: "flag_skills1_unfinished", value: true });
+      unselectSkills([key]);
       return;
     }
 
     // Case 3, unselected skill change to a new value
     // fromBase === true
+    const availableValuesCopy = [...availableValues];
+    const availableSkillsCopy = { ...availableSkills };
     // (1) check if having enough skill point, then consume point;
     // (2) add skill to selectedSkills
     // (3) remove the value from availableValues
@@ -235,22 +243,20 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
     setSkills({ ...skills, [key]: { ...skills[key], value: newValue, occupation: true } });
     setAvailableValues(availableValuesCopy);
     setAvailableSkills(availableSkillsCopy);
-
-    if (availableValuesCopy.length === 0) {
-      onCharacterAction("action_set_flag", { flag: "flag_skills1_unfinished", value: false });
-    }
   }
 
   return (
     <>
       <div className="card-header">
         <div className="d-flex flex-wrap">
-          { occupation.skills.map((skill, i) => <OccupationSkill key={skill} skillKey={skill} {...{characterSheet, availableSkills }} />) }
+          { occupation.skills.map((skillKey, i) => <OccupationSkill key={skillKey} skillKey={skillKey} {...{characterSheet, availableSkills }} />) }
           { occupation.art > 0 ? <OccupationSkill skillKey={"art"} {...{characterSheet, availableSkills }} /> : null }
           { occupation.language > 0 ? <OccupationSkill skillKey={"language"} {...{characterSheet, availableSkills}} /> : null }
           { occupation.interpersonal > 0 ? <OccupationSkill skillKey={"interpersonal"} {...{characterSheet, availableSkills}} /> : null }
           { occupation.universal > 0 ? <OccupationSkill skillKey={"universal"} {...{characterSheet, availableSkills}} /> : null }
-          <button className="btn btn-sm btn-secondary ms-auto" onClick={toggleLockUnused}>hide</button>
+          <button className={"btn btn-sm ms-auto" + (lockUnused ? " btn-outline-secondary" : " btn-outline-dark")} onClick={toggleLockUnused}>
+            { characterSheet.lockUnusedButtonText[language] || characterSheet.lockUnusedButtonText["en"] }
+          </button>
         </div>
       </div>
       <SkillsTable {...{ characterSheet, skills, isEditable, lockUnused, availableValues, availableSkills, onValueSelected }} />
@@ -263,63 +269,56 @@ function SkillsEditableForHobby({ characterSheet, skills, setSkills, onCharacter
 
 function OccupationSkill({ skillKey, characterSheet, availableSkills }) {
   const { language } = useContext(LanguageContext);
-  let text, selected;
+  let text, points;
   switch (skillKey) {
     case "art":
       text = characterSheet.skills.group_art.name;
-      selected = availableSkills.art === 0;
-      return (
-        <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
-          { text[language] || text["en"] }
-          <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ availableSkills.art }</span>
-        </div>
-      );
+      points = availableSkills.art;
+      break;
     case "language":
       text = characterSheet.skills.group_lang.name;
-      selected = availableSkills.language === 0;
-      return (
-        <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
-          { text[language] }
-          <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ availableSkills.language }</span>
-        </div>
-      );
+      points = availableSkills.language;
+      break;
     case "interpersonal":
       text = {
-        zh: `${interpersonalSkills.map(key => characterSheet.skills[key].name.zh).join("、")}其中一项`,
+        zh: `${interpersonalSkills.map(skillKey => characterSheet.skills[skillKey].name.zh).join("、")}其中一项`,
         en: `One of either ${
           interpersonalSkills
             .slice(0, -1)
-            .map(key => characterSheet.skills[key].name.en)
+            .map(skillKey => characterSheet.skills[skillKey].name.en)
             .join(", ")
             .concat(", or ")
             .concat(characterSheet.skills[interpersonalSkills[interpersonalSkills.length - 1]].name.en)
         }`,
       };
-      selected = availableSkills.interpersonal === 0;
-      return (
-        <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
-          { text[language] }
-          <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ availableSkills.interpersonal }</span>
-        </div>
-      );
+      points = availableSkills.interpersonal;
+      break;
     case "universal":
       text = { zh: "任意", en: "Any", };
-      selected = availableSkills.universal === 0;
-      return (
-        <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
-          { text[language] }
-          <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ availableSkills.universal }</span>
-        </div>
-      );
+      points = availableSkills.universal;
+      break;
     case "lang_own":
       text = characterSheet.skills.group_lang_own.name;
-      selected = availableSkills[skillKey] === 0;
-      return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ text[language] || text["en"] }</div>
+      points = availableSkills[skillKey];
+      break;
     default:
+      if (!characterSheet.skills[skillKey]) {
+        console.error(`Cannot find skill ${skillKey} in characterSheet.skills`);
+      }
       text = characterSheet.skills[skillKey].name;
-      selected = availableSkills[skillKey] === 0;
-      return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ text[language] || text["en"] }</div>;
+      points = availableSkills[skillKey];
   };
+
+  const selected = points === 0;
+  if ([ "art", "language", "interpersonal", "universal" ].includes(skillKey)) {
+    return (
+      <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
+        { text[language] || text["en"] }
+        <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ points }</span>
+      </div>
+    );
+  }
+  return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ text[language] || text["en"] }</div>;
 }
 
 function SkillsTable({ characterSheet, skills, isEditable, lockUnused, availableValues, availableSkills, onValueSelected }) {

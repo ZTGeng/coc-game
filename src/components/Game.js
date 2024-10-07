@@ -12,7 +12,7 @@ const initFlags = {
   // flag_characteristics_unfinished: true,
   flag_skills_editable: false,
   flag_skills_editing_phase_2: false,
-  flag_skills1_unfinished: true,
+  // flag_skills1_unfinished: true,
   flag_skills2_unfinished: true,
   flag_opposed_roll_phase2: false,
 
@@ -38,8 +38,8 @@ const initFlags = {
 const initChars = {
   STR: { key: "STR", value: 40 },
   CON: { key: "CON", value: 50 },
-  SIZ: { key: "SIZ", value: "" },
-  DEX: { key: "DEX", value: "" },
+  SIZ: { key: "SIZ", value: 50 },
+  DEX: { key: "DEX", value: 50 },
   APP: { key: "APP", value: 60 },
   INT: { key: "INT", value: 60 },
   POW: { key: "POW", value: 70 },
@@ -99,6 +99,10 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         // Chapter needs information from Character
         case "flag_characteristics_unfinished":
           return Object.values(chars).some(char => char.value === "");
+        case "flag_skills1_unfinished":
+          const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
+          const occupationSkillsMaxNum = occupation.skills.length + occupation.art + occupation.interpersonal + occupation.language + occupation.universal;
+          return occupationSkillsNum < occupationSkillsMaxNum;
         case "flag_siz_greater_than_40":
           return chars.SIZ.value > 40;
         case "flag_dex_greater_than_siz":
