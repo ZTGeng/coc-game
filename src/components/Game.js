@@ -99,10 +99,12 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         // Chapter needs information from Character
         case "flag_characteristics_unfinished":
           return Object.values(chars).some(char => char.value === "");
-        case "flag_skills1_unfinished":
+        case "flag_skills_occupation_unfinished":
           const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
           const occupationSkillsMaxNum = occupation.skills.length + occupation.art + occupation.interpersonal + occupation.language + occupation.universal;
           return occupationSkillsNum < occupationSkillsMaxNum;
+        case "flag_skills_hobby_unfinished":
+          return Object.keys(skills).filter(skillKey => skills[skillKey].hobby).length < 4;
         case "flag_siz_greater_than_40":
           return chars.SIZ.value > 40;
         case "flag_dex_greater_than_siz":
@@ -137,6 +139,7 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         setShowCharacter(param !== false);
         break;
       case "action_set_highlight": // param: { key, level }
+      console.log(`Game - onAction: action_set_highlight: ${JSON.stringify(param)}`);
         if (param.level === "none") {
           setHighlight(highlight.filter(h => h.key !== param.key));
         } else {

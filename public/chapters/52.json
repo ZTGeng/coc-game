@@ -20,7 +20,7 @@
                 "isSkill": false,
                 "level": "value",
                 "onFail": [
-                    { "action": "action_set_flag", "param": { "flag": "flag_punish_dice" }
+                    { "action": "action_set_flag", "param": { "flag": "flag_punish_dice" } }
                 ]
             },
             "show": "flag_check_unfinished"

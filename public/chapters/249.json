@@ -19,7 +19,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills1_unfinished" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills_occupation_unfinished" }
     ],
     "onload": [
         { "action": "action_show_character_sheet", "param": true },

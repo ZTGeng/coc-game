@@ -1,33 +1,26 @@
 import { useContext, useRef } from "react";
 import { LanguageContext } from '../../App';
 import { HighlightContext } from "../Game";
-import { artSkills, interpersonalSkills, languageSkills } from "./Skills";
 
-export default function SkillCell({ skillKey, characterSheet, skills, isEditable, lockUnused, availableValues, availableSkills, onValueSelected }) {
+export default function SkillCell({ skillKey, characterSheet, skills, cellType, isForHobby, availableValues, onValueSelected }) {
   const skillUI = characterSheet.skills[skillKey];
   if (skillUI.group) {
     return <GroupSkillCell skillUI={skillUI} />;
   }
 
   const skill = skills[skillKey];
-  // On non-editable page, the unselected custom skills are disabled
-  const isDisabled = !isEditable && skillUI.custom && !skill.occupation && !skill.hobby;
-  if (isDisabled) {
-    return <DisabledSkillCell skillUI={skillUI} />;
+  
+  const isEditable = cellType[skillKey] && cellType[skillKey].isEditable;
+  if (!isEditable) {
+    const isDisabled = cellType[skillKey] && cellType[skillKey].isDisabled;
+    if (isDisabled) {
+      return <DisabledSkillCell {...{ skillUI }} />;
+    }
+    return <PlainSkillCell {...{ skillKey, skillUI, skill }} />;
   }
-
-  // When lockUnused is true, the unused skills are not editable
-  if (isEditable && !(skillUI.unused && lockUnused)) {
-    const unselectable = !skill.occupation && !skill.hobby 
-      && !(availableSkills.universal > 0
-        || (artSkills.includes(skillKey) && availableSkills.art > 0)
-        || (interpersonalSkills.includes(skillKey) && availableSkills.interpersonal > 0)
-        || (languageSkills.includes(skillKey) && availableSkills.language > 0)
-        || (Object.keys(availableSkills).includes(skillKey) && availableSkills[skillKey] > 0));
-    return <EditableSkillCell {...{ skillKey, skillUI, skill, unselectable, availableValues, onValueSelected }} />;
-  }
-
-  return <PlainSkillCell {...{ skillKey, skillUI, skill }} />;
+  
+  const isClickable = cellType[skillKey] && cellType[skillKey].isClickable;
+  return <EditableSkillCell {...{ skillKey, skillUI, skill, isClickable, isForHobby, availableValues, onValueSelected }} />;
 }
 
 function GroupSkillCell({ skillUI }) {
@@ -101,14 +94,17 @@ function PlainSkillCell({ skillKey, skillUI, skill }) {
   );
 }
 
-function EditableSkillCell({ skillKey, skillUI, skill, unselectable, availableValues, onValueSelected }) {
+function EditableSkillCell({ skillKey, skillUI, skill, isClickable, isForHobby, availableValues, onValueSelected }) {
   const isSelectedValue = skill.occupation || skill.hobby;
 
   const values = [...availableValues];
-  if (isSelectedValue) {
+  if (isForHobby) {
+    values.forEach((v, i) => values[i] = v + skill.baseValue);
+  } else if (skill.occupation) {
     values.push(skill.value);
     values.sort((a, b) => b - a);
   }
+  values.splice(0, 0, skill.baseValue);
 
   function onSelectChange(e) {
     const newValue = e.target.value ? parseInt(e.target.value) : e.target.value; // Int or ""
@@ -126,9 +122,8 @@ function EditableSkillCell({ skillKey, skillUI, skill, unselectable, availableVa
           </td>
             <NameThTag isDisabled={false} skillUI={skillUI} />
           <td rowSpan="2" className={"border p-0" + (isSelectedValue ? " bg-warning" : "")} style={{ fontSize: "0.75rem", width: "2.35rem" }}>
-            <select className={"border-0" + (isSelectedValue ? " bg-warning" : "")} value={skill.value} onChange={onSelectChange} disabled={unselectable}>
-              <option key="origin" className="bg-light" value={skill.baseValue}>{ skill.baseValue }</option>
-              { values.map((v, i) => <option key={i} value={v}>{ v }</option>) }
+            <select className={"border-0" + (isSelectedValue ? " bg-warning" : "")} value={skill.value} onChange={onSelectChange} disabled={!isClickable}>
+              { values.map((v, i) => <option className="bg-light" key={i} value={v}>{ v }</option>) }
             </select>
           </td>
         </tr>

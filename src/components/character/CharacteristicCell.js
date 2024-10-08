@@ -5,6 +5,7 @@ import { HighlightContext } from "../Game";
 export default function CharacteristicCell({ char, characterSheet, isEditable, availableValues = [], onValueSelected = () => {} }) {
   const { language } = useContext(LanguageContext);
   const { highlight } = useContext(HighlightContext);
+  console.log(`CharacteristicCell refresh: ${char.key}, highlight: ${JSON.stringify(highlight)}`);
 
   function shouldHighlight(level) {
     return highlight && highlight.some(h => h.key === char.key && h.level === level);
