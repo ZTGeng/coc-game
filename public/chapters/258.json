@@ -10,7 +10,7 @@
             { "content": "失去1D2点理智值和1D3点耐久值。" }
             ] }
     ],
-    "interactions": [
+    "interactions": [//改成onload
         { "text": "投掷1D2点理智", "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" }, "show": "!flag_san_reduced" },
         { "text": "投掷1D3点耐久", "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d3" }, "show": "!flag_hp_reduced" }
         ]

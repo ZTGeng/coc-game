@@ -35,6 +35,9 @@
                 "universal": 4 
             }
         },
-        { "action": "action_set_flag", "param": { "flag": "flag_skills_editable", "value": true } }
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": true } }
+    ],
+    "onleave": [
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": false } }
     ]
 }

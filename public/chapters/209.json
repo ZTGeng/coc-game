@@ -10,7 +10,7 @@
             { "content": "失去1D3点理智值。" }
             ] }
     ],
-    "interactions": [
+    "interactions": [//改成onload
         { "text": "投掷1D3点理智", "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d3" }, "show": "!flag_san_reduced" }
         ]
     },

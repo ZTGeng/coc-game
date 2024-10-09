@@ -2,7 +2,13 @@
     "key": 14,
     "text": {
         "en": [
-
+            { "content": "May shakes her head and you glimpse a moment of deep-seated anger in her green eyes." },
+            { "content": "“He always drives too fast. Thinks the road is made for him and him alone. He hit a mare some years back, that was a terrible thing. You should have seen the state of the coach. You’d be surprised at the damage done.”" },
+            { "content": "She sips her tea and gazes past you, into the corner of the room." },
+            { "content": "“With living here, though, we can’t afford to antagonize the man. He’s about the only link we have to the world at large. And he’s not a bad soul at heart. I suppose that going the same route for fifteen years makes a man careless. You have to forgive him.”" },
+            { "content": "May goes silent for a long moment. Then her eyes flick back to you." },
+            { "content": "“But you didn’t come here to listen to me blather, and you must be hungry. I can rustle you up a bit of stew. How would that be?”" },
+            { "content": "You ask again about her rates, and May names a price so low you accept it without hesitation. The room is small but comfortable, and the stew dark and hearty. After dinner, you have a couple of hours before your usual bedtime." }
         ],
         "zh": [
             { "content": "梅摇了摇头，你瞥见她绿色的双眼里闪过一丝积攒已久的愤怒。" },
@@ -15,8 +21,26 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "和梅多聊聊天" },
-        { "key": 1, "text": "到外面转转，确认自己的方位" },
-        { "key": 2, "text": "提前上床早睡觉" }
+        {
+            "key": 0,
+            "text": {
+                "en": "Talk to May some more",
+                "zh": "和梅多聊聊天"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Walk around and get your bearings",
+                "zh": "到外面转转，确认自己的方位"
+            }
+        },
+        {
+            "key": 2,
+            "text": {
+                "en": "Turn in for an early night",
+                "zh": "提前上床早睡觉"
+            }
+        }
     ]
 }

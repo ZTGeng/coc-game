@@ -2,24 +2,30 @@
     "key": 31,
     "text": {
         "en": [
-
+            { "content": "May talks about life in Emberhead. “In her letters my sister always asks if I’m not bored, living in such a small place. She lives in New York. Then she writes about how frightened she is to walk home at night! I ask you.”" },
+            { "content": "You mention your hopes for a new life in Arkham. May doesn’t seem to hear you." },
+            { "content": "“It’s a small place here, yes, but that means we have real community. Everybody’s face is known. Everybody works together. Nobody is excluded. Except those who choose to exclude themselves, of course. I couldn’t live anywhere else now.”" },
+            { "tag": "info", "text": [
+                { "content": "Make a Charm roll." }
+            ] }
         ],
         "zh": [
             { "content": "梅开始说起她在烬头村的生活。“我妹妹每次来信都会问我有没有过够这种日子。她住在纽约。然后她就开始讲自己晚上走回家时有多么害怕！我也该问问你。”" },
             { "content": "你说到你希望在阿卡姆开始新生活。梅好像没有听进去你的话。" },
-            { "content": "“这里的确是小地方没错，但也就是说我们有真正的群体性。所有人的脸都是熟脸，所有人都一起工作。",
-        "我们不排斥任何人，当然，要刨掉那些自己选择离开群体的人。我现在已经不好再住到别的地方了。”" },
+            { "content": "“这里的确是小地方没错，但也就是说我们有真正的群体性。所有人的脸都是熟脸，所有人都一起工作。我们不排斥任何人，当然，要刨掉那些自己选择离开群体的人。我现在已经不好再住到别的地方了。”" },
             { "tag": "info", "text": [
-            { "content": "进行一次「魅惑」检定。" }
+                { "content": "进行一次「魅惑」检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "魅惑检定", "action": "action_check", "param": { "key": "charm", "isSkill" : true, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "charm",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "charm", "level": "value" } }

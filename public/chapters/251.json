@@ -2,7 +2,9 @@
     "key": 251,
     "text": {
         "en": [
-
+            { "content": "You ask about Silas’s plans. He gives the engine a sour glance before answering." },
+            { "content": "“I’ve got acquaintances here in the village. Reckon one of ‘em owes me a favor. Enough for bed and breakfast, in any case.” He stares at his grubby hands. “Probably won’t stretch to a hot bath.”" },
+            { "content": "You don’t seem to have a lot of options. You fetch your cases from the back of the motor coach. The last thing you need is for all your worldly possessions to disappear into some stranger’s hovel overnight." }
         ],
         "zh": [
             { "content": "你问西拉斯他要怎么办。他烦厌地看了一眼发动机，才回答道：" },

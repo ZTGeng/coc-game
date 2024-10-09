@@ -91,6 +91,31 @@ const characterSheet = {
     characteristicsTitle: { zh: "属性", en: "CHARACTERISTICS" },
     skillsTitle: { zh: "调查员技能", en: "INVESTIGATOR SKILLS" },
     lockUnusedButtonText: { zh: "锁定用不到的技能", en: "Lock Those You Won't Use" },
+    weaponsTitie: { zh: "武器", en: "WEAPONS" },
+    combatTitle: { zh: "战斗", en: "COMBAT" },
+
+    weapons: {
+        tableHeader: {
+            name: { zh: "武器", en: "Weapon" },
+            regular: { zh: "常规", en: "Regular" },
+            hard: { zh: "困难", en: "Hard" },
+            extreme: { zh: "极难", en: "Extreme" },
+            damage: { zh: "伤害", en: "Damage" },
+        },
+        unarmed: {
+            name: { zh: "徒手", en: "Unarmed" },
+            damage: { zh: "1D3+db", en: "1D3+db" },
+        },
+        knife: {
+            name: { zh: "小刀", en: "Knife" },
+            damage: { zh: "1D4+db", en: "1D4+db" },
+        },
+    },
+
+    combat: {
+        damageBonus: { zh: "伤害加值", en: "Damage Bonus" },
+        build: { zh: "体格", en: "Build" },
+    }
 };
 
 export default characterSheet;

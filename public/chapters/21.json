@@ -2,21 +2,43 @@
     "key": 21,
     "text": {
         "en": [
-
+            { "content": "“Well now, I suppose the festival is about the only reason folks come to Emberhead. I thought you had maybe come to study it or take photographs. Well, it’s not tomorrow night but the night after. I suppose it looks very strange to a passer-by.”" },
+            { "content": "May tops-up your tea. The spout chinks against your cup." },
+            { "content": "“We’ve got the Beacon, you see. One night every year there’s a torch-lit procession and we light the Beacon on the cliffs. You’ve never seen the like of it. They say it keeps the spirit of the village alive for another year. It’s a celebration. A celebration ...”" },
+            { "content": "She tails off for a moment, and blinks." },
+            { "content": "“But you didn’t come here to listen to me blather, and you must be hungry. I can rustle you up a bit of stew. How would that be?”" },
+            { "content": "You ask again about her rates, and May names a price so low you accept it without hesitation. The room is small but comfortable, and the stew dark and hearty. After dinner, you have a couple of hours before your usual bedtime." }
         ],
         "zh": [
             { "content": "“嗯，我觉得人们大概只可能是因为节日才会来烬头村。我以为你来这里也是来研究节日或者来拍照片的。不过，节日不是明天晚上，而是后天晚上。我想对于过路客来说，这很奇怪。”" },
             { "content": "梅又为你满上了茶水。壶嘴和茶杯相碰，发出清脆的铿声。" },
-            { "content": "“你知道吗，我们有一座灯塔。每年的这个晚上我们都要举行火把游行，点燃悬崖上的灯塔。",
-        "你以前肯定没见识过这类仪式。他们说这样可以保佑村庄全年平安无事。这是庆典。是庆典……”她沉吟了一会儿，眨了眨眼。" },
+            { "content": "“你知道吗，我们有一座灯塔。每年的这个晚上我们都要举行火把游行，点燃悬崖上的灯塔。你以前肯定没见识过这类仪式。他们说这样可以保佑村庄全年平安无事。这是庆典。是庆典……”她沉吟了一会儿，眨了眨眼。" },
             { "content": "“但你来这儿不是听我唠叨的，你肯定也饿了。我可以给你凑一点炖菜。你觉得如何？”" },
             { "content": "你又问了一遍她要价多少，梅讲了个相当便宜的价钱，你毫不犹豫地接受了。这间房子虽小但舒适，炖菜熟烂又丰盛。吃过饭以后，离你平常睡觉的时间还有几个小时。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "和梅多聊聊天" },
-        { "key": 1, "text": "到外面转转，确认自己的方位" },
-        { "key": 2, "text": "提前上床早睡觉" }
+        {
+            "key": 0,
+            "text": {
+                "en": "Talk to May some more",
+                "zh": "和梅多聊聊天"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Walk around and get your bearings",
+                "zh": "到外面转转，确认自己的方位"
+            }
+        },
+        {
+            "key": 2,
+            "text": {
+                "en": "Turn in for an early night",
+                "zh": "提前上床早睡觉"
+            }
+        }
     ]
 }
 

@@ -16,8 +16,8 @@ const cthulhuCellType = {
 export default function Skills({ characterSheet, skills, setSkills, occupation }) {
   const { language } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
-  const isEditable = flagConditionCheck("flag_skills_editable");
-  const isEditingPhase2 = flagConditionCheck("flag_skills_editing_phase_2");
+  const isOccupationSkillsEditing = flagConditionCheck("flag_occupation_skills_editable");
+  const isHobbySkillsEditing = flagConditionCheck("flag_hobby_skills_editable");
 
   return (
     <div className="row">
@@ -26,19 +26,19 @@ export default function Skills({ characterSheet, skills, setSkills, occupation }
           <h6 className="card-header">
             {characterSheet.skillsTitle[language] || characterSheet.skillsTitle["en"]}
           </h6>
-          {isEditable
-            ? (isEditingPhase2
+          {isOccupationSkillsEditing
+            ? <SkillsEditableForOccupation {...{ characterSheet, skills, setSkills, occupation }} />
+            : isHobbySkillsEditing
               ? <SkillsEditableForHobby {...{ characterSheet, skills, setSkills }} />
-              : <SkillsEditableForOccupation {...{ characterSheet, skills, setSkills, occupation }} />)
-            : <SkillsTable cellType={
-              Object.keys(skills)
-                .reduce((acc, key) => {
-                  // On non-editable page, the unselected custom skills are disabled
-                  const isDisabled = characterSheet.skills[key].custom && !skills[key].occupation && !skills[key].hobby;
-                  acc[key] = { isDisabled, isEditable: false, isClickable: false };
-                  return acc;
-                }, {})
-            } {...{ characterSheet, skills }} />}
+              : <SkillsTable cellType={
+                Object.keys(skills)
+                  .reduce((acc, key) => {
+                    // On non-editable page, the unselected custom skills are disabled
+                    const isDisabled = characterSheet.skills[key].custom && !skills[key].occupation && !skills[key].hobby;
+                    acc[key] = { isDisabled, isEditable: false, isClickable: false };
+                    return acc;
+                  }, {})
+              } {...{ characterSheet, skills }} />}
         </div>
       </div>
     </div>
@@ -72,25 +72,29 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
     if (occupation.skills.includes(skillKey)) {
       initAvailableSkills[skillKey] = 0;
     } else if (artSkills.includes(skillKey)) {
-      if (initAvailableSkills.art <= 0) {
-        console.error(`SkillsEditableForOccupation - Art skill point is not enough when removing ${skillKey} from ${JSON.stringify(initAvailableSkills)}`);
+      if (initAvailableSkills.art > 0) {
+        initAvailableSkills.art -= 1;
+      } else {
+        initAvailableSkills.universal -= 1;
       }
-      initAvailableSkills.art -= 1;
     } else if (languageSkills.includes(skillKey)) {
-      if (initAvailableSkills.language <= 0) {
-        console.error(`SkillsEditableForOccupation - Language skill point is not enough when removing ${skillKey} from ${JSON.stringify(initAvailableSkills)}`);
+      if (initAvailableSkills.language > 0) {
+        initAvailableSkills.language -= 1;
+      } else {
+        initAvailableSkills.universal -= 1;
       }
-      initAvailableSkills.language -= 1;
     } else if (interpersonalSkills.includes(skillKey)) {
-      if (initAvailableSkills.interpersonal <= 0) {
-        console.error(`SkillsEditableForOccupation - Interpersonal skill point is not enough when removing ${skillKey} from ${JSON.stringify(initAvailableSkills)}`);
+      if (initAvailableSkills.interpersonal > 0) {
+        initAvailableSkills.interpersonal -= 1;
+      } else {
+        initAvailableSkills.universal -= 1;
       }
-      initAvailableSkills.interpersonal -= 1;
     } else {
-      if (initAvailableSkills.universal <= 0) {
-        console.error(`SkillsEditableForOccupation - Universal skill point is not enough when removing ${skillKey} from ${JSON.stringify(initAvailableSkills)}`);
-      }
       initAvailableSkills.universal -= 1;
+    }
+    
+    if (initAvailableSkills.universal < 0) {
+      console.error(`SkillsEditableForOccupation initial - Universal not enough, selectedSkills ${selectedSkills} avaliableSkills ${JSON.stringify(initAvailableSkills)}`);
     }
   });
 

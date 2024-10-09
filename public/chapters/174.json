@@ -2,13 +2,17 @@
     "key": 174,
     "text": {
         "en": [
-
+            { "content": "The grinding noises you heard could of course indicate engine trouble, but they also seem consistent with bad gear selection and incorrect declutching. It seems highly unlikely that an experienced coach driver would suddenly get this wrong, even after a long day’s drive." },
+            { "content": "If this is a ruse to make you spend your time and money in a local shop, Silas will be sadly disappointed in your purchasing power." },
+            { "tag": "info", "text": [
+                { "content": "On your investigator sheet, check-mark the small box to the left of the words Drive Auto. If you successfully complete this adventure, you will have the opportunity to learn from your experience with Silas." }
+            ] }
         ],
         "zh": [
             { "content": "你听到的刺耳噪声当然可以表征引擎的故障，但这也可能和选错档位或者离合器故障有关。即使已经连续驾驶了一天，有经验的公交车司机也几乎不可能突然搞错这种事情。" },
             { "content": "如果这是个诡计，为了让你花钱花时间在路上的商店买东西的话，西拉斯会因为你空荡的钱包而非常失望的。" },
             { "tag": "info", "text": [
-            { "content": "在你的调查员角色卡上「汽车驾驶」左边的小方框里打勾。如果你成功完成了本次冒险，你有机会通过这次和西拉斯的经历，学到一些东西。" }
+                { "content": "在你的调查员角色卡上「汽车驾驶」左边的小方框里打勾。如果你成功完成了本次冒险，你有机会通过这次和西拉斯的经历，学到一些东西。" }
             ] }
         ]
     },
