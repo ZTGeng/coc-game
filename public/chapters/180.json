@@ -12,6 +12,6 @@
     "options": [
         { "key": 0, "text": "到外面眺望星空" },
         { "key": 1, "text": "试着和露丝说说话" },
-        { "key": 2, "text": "是时候赴约去见阿博加斯特了", "show": "flag_meet_aboganster", "highlight": true }
+        { "key": 2, "text": "是时候赴约去见阿博加斯特了", "show": "flag_meet_aboganster", "secret": true }
     ]
 }

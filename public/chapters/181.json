@@ -2,19 +2,23 @@
     "key": 181,
     "text": {
         "en": [
-
+            { "content": "Almost by accident, you discover a channel between two rocks that leads into the cliff face. The daylight is just enough to pick out a recessed chamber, and the man crouched there in silence, glaring at you." },
+            { "content": "“Damn you,” he snarls. “Haven’t I been tormented enough?” However, he seems a little calmer." },
+            { "tag": "info", "text": [
+                { "content": "你可以在「侦查」技能左边的小方框里打勾。" }
+            ] }
         ],
         "zh": [
             { "content": "几乎是巧合之下，你发现两块岩石之间有一道狭窄的通道通往悬崖之内。借着日光，你勉强能发现一片凹进去的石洞，那个男人无声无息地蹲在里面瞪着你。" },
-            { "content": "他低吼道：“你这混账，我还没被耍够吗？”不过，他现在看起来平静了一些。" },
+            { "content": "他低吼道：“你这混账，我被折磨得还不够吗？”不过，他现在看起来平静了一些。" },
             { "tag": "info", "text": [
-            { "content": "你可以在「侦查」技能左边的小方框里打勾。" }
+                { "content": "你可以在「侦查」技能左边的小方框里打勾。" }
             ] }
         ]
     },
     "options": [
-        { "key": 0, "text": "进入他的避难所" },
-        { "key": 1, "text": "不想冒险" }
+        { "key": 0, "text": { "en": "Enter his refuge", "zh": "进入他的避难所" } },
+        { "key": 1, "text": { "en": "You don’t wish to risk it", "zh": "你不想冒险" } }
     ],
     "onload": [
         { "action": "action_check_in_skill_box", "param": "spot" }

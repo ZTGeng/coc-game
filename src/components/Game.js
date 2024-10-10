@@ -4,17 +4,21 @@ import Character from "./character/Character";
 import characterSheet from "./character/characterSheet";
 import Chapter from "./game/Chapter";
 import chapterMap from "./game/chapterMap";
+import MapModal from "./map/MapModal";
 import { showToast } from "./ToastMessage";
 import flagConditionCheckProvider from "./flagCheck";
 import * as utils from "../utils";
 
 const initFlags = {
   flag_characteristics_editable: false,
-  // flag_characteristics_unfinished: true,
   flag_occupation_skills_editable: false,
   flag_hobby_skills_editable: false,
-  // flag_skills1_unfinished: true,
-  // flag_skills2_unfinished: true,
+
+  flag_bought_knife: false,
+  flag_found_cliff_ladder: false,
+  flag_meet_aboganster: false,
+
+
   flag_opposed_roll_phase2: false,
 
   flag_hp_reduced: false,
@@ -24,9 +28,6 @@ const initFlags = {
 
   flag_c25_tried_four_options: false,
   flag_c120_tried_three_options: false,
-  flag_found_cliff_ladder: false,
-  flag_bought_knife: false,
-  flag_meet_aboganster: false,
   flag_involved_fighting: false,
   flag_punish_dice: false,
   flag_searched_book_shelf: false,
@@ -37,9 +38,9 @@ const initFlags = {
 };
 
 const initChars = {
-  STR: { key: "STR", value: "" },
+  STR: { key: "STR", value: 40 },
   CON: { key: "CON", value: 50 },
-  SIZ: { key: "SIZ", value: "" },
+  SIZ: { key: "SIZ", value: 50 },
   DEX: { key: "DEX", value: 50 },
   APP: { key: "APP", value: 60 },
   INT: { key: "INT", value: 60 },
@@ -74,7 +75,7 @@ const initOccupation = {
 export const FlagsContext = createContext();
 export const HighlightContext = createContext();
 
-export default function Game({ showCharacter, setShowCharacter, playSound }) {
+export default function Game({ showCharacter, setShowCharacter, enableMap, playSound }) {
   const { language } = useContext(LanguageContext);
   const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
@@ -137,7 +138,7 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
       case "action_show_character_sheet": // param: true/false/undefined
         setShowCharacter(param !== false);
         break;
-      case "action_set_highlight": // param: { key, level }
+      case "action_set_highlight": // param: { key, level } level: none/value/half/fifth/all/danger/success
         highlightCopy = highlightCopy.filter(h => h.key !== param.key);
         if (param.level !== "none") {
           highlightCopy = [...highlightCopy, param];
@@ -160,7 +161,6 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
           }
           const [num, dice] = deltaString.split("d");
           const results = utils.roll(parseInt(num), parseInt(dice));
-          // newAttributes[param.key].value += results.reduce((a, b) => a + b, 0) * multiplier;
           newValue = attr.value + results.reduce((a, b) => a + b, 0) * multiplier;
           showDiceToast(parseInt(num), parseInt(dice), results, false);
         } else {
@@ -178,8 +178,11 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         newAttributes[param.key] = { ...attr, value: newValue };
         setAttributes(newAttributes);
         break;
-      case "action_show_dice_toast": // param: { num, dice, results, shouldPlaySound }
-        showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound);
+      case "action_adjust_skill":
+        setSkills({ ...skills, [param.key]: { ...skills[param.key], value: skills[param.key].value + param.delta } });
+        break;
+      case "action_show_dice_toast": // param: { num, dice, bonus, results, shouldPlaySound }
+        showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound, param.bonus);
         break;
       case "action_set_char_related_values":
         setSkills({ 
@@ -208,6 +211,9 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
         setOccupation({ ...occupation, ...param });
         setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
         break;
+      case "action_enable_map":
+        enableMap();
+        break;
     }
   }
 
@@ -219,9 +225,16 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
     }
   }
 
-  function showDiceToast(num, dice, results, shouldPlaySound) {
+  function showDiceToast(num, dice, results, shouldPlaySound, bonus="") {
+    let subtitle = "";
+    if (bonus && bonus > 0) {
+      subtitle = language === "zh" ? `奖励骰 x ${bonus}` : `Bonus Die x ${bonus}`;
+    } else if (bonus && bonus < 0) {
+      subtitle = language === "zh" ? `惩罚骰 x ${-bonus}` : `Penalty Die x ${-bonus}`;
+    }
     showToast({
       title: language === "zh" ? `投掷${num}D${dice}` : `Roll ${num}D${dice}`,
+      subtitle: subtitle,
       text: language === "zh" ? `结果：${results.join("、")}` : `Results: ${results.join(", ")}`
     });
     if (shouldPlaySound) {
@@ -248,12 +261,15 @@ export default function Game({ showCharacter, setShowCharacter, playSound }) {
       <HighlightContext.Provider value={{ highlight }}>
         <div className="row">
           <div id="chapter" className="col px-2">
-            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction } }/>
+            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction }} />
           </div>
-          {showCharacter && <div id="character" className="col">
-            <Character {...{ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, onCharacterAction }} />
-          </div>}
+          { showCharacter && (
+            <div id="character" className="col">
+              <Character {...{ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, onCharacterAction }} />
+            </div> 
+          )}
         </div>
+        <MapModal {...{ chapterKey }} />
       </HighlightContext.Provider>
     </FlagsContext.Provider>
   )

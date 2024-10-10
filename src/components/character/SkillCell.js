@@ -72,7 +72,7 @@ function PlainSkillCell({ skillKey, skillUI, skill }) {
   const { highlight } = useContext(HighlightContext);
 
   function shouldHighlight(level) {
-    return highlight && highlight.some(h => h.key === skillKey && h.level === level);
+    return highlight && highlight.some(h => h.key === skillKey && (h.level === "all" || h.level === level));
   }
 
   return (

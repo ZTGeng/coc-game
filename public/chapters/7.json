@@ -11,7 +11,7 @@
     "options": [
         { "key": 0, "text": "尝试靠口才通过把守村口的人群" },
         { "key": 1, "text": "尝试化装通过" },
-        { "key": 2, "text": "尝试沿着梯子爬下悬崖", "show": "flag_found_cliff_ladder", "highlight": true }
+        { "key": 2, "text": "尝试沿着梯子爬下悬崖", "show": "flag_found_cliff_ladder", "secret": true }
     ],
     "onload": [
         { "action": "action_c120_select_option", "param": 4 }

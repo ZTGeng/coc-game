@@ -22,7 +22,7 @@
     },
     "check": {
         "type": "roll",
-        "key": "Spot",
+        "key": "spot",
         "level": "value"
     },
     "options": [

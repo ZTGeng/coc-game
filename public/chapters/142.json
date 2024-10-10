@@ -2,7 +2,8 @@
     "key": 142,
     "text": {
         "en": [
-
+            { "content": "You follow the man around the outcrop. He glances up, then steps between two rocks and vanishes!" },
+            { "content": "Closer inspection reveals a narrow channel leading into the cliff. There is just enough light to see a small, natural chamber within. You will be uncomfortably close to this man if you go inside." }
         ],
         "zh": [
             { "content": "你绕着庄稼地跟随这个男人。他向上看了一眼，往两块岩石之间一迈步，居然消失了！" },
@@ -10,7 +11,19 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "跟着他进去" },
-        { "key": 1, "text": "保持距离" }
+        {
+            "key": 0,
+            "text": {
+                "en": "Follow him in",
+                "zh": "跟着他进去"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Keep your distance",
+                "zh": "保持距离"
+            }
+        }
     ]
 }

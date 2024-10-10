@@ -2,20 +2,24 @@
     "key": 259,
     "text": {
         "en": [
-
+            { "content": "Arbogast pauses in the shadows. “There’s something about you, something the previous ones never had. Perhaps you can make it through. If you want to hear more, meet me again after dark. Nine o’clock. The graveyard on the other side.” He lifts a gnarled finger. “Don’t be followed, else I won’t be there. This ain’t the time of year for a showdown.”" },
+            { "content": "Arbogast wipes his nose on his sleeve again. “Go now. Their eyes are on me. And, stranger? Don’t try to run. You’ll never make it.”" },
+            { "content": "You emerge into the sunlight blinking and more than a little shaken." },
+            { "tag": "info", "text": [
+                { "content": "You have discovered a secret. Later tonight, if you want to follow up on a previous appointment, the text will offer you a special option to meet with Arbogast again." }
+            ] }
         ],
         "zh": [
-            { "content": "阿博加斯特在阴影中停顿了一下：“你有以前那些人没有过的东西。也许你能挺过去。如果你想知道更多，今天晚上再来找我。九点钟，在另一边的坟地。”他举起一根枯瘦的手指。",
-        "“不要被人跟踪了，不然我就不去。这段时间可不是最后决战的时候。”" },
+            { "content": "阿博加斯特在阴影中停顿了一下：“你有以前那些人没有过的东西。也许你能挺过去。如果你想知道更多，今天晚上再来找我。九点钟，在另一边的坟地。”他举起一根枯瘦的手指。“不要被人跟踪了，不然我就不去。这段时间可不是最后决战的时候。”" },
             { "content": "阿博加斯特又用袖子抹了抹鼻子。“走吧。他们一直监视着我。还有，陌生人？别想着逃走。你成功不了的。”" },
             { "content": "你退回阳光下。阳光刺目，你十分地动摇。" },
             { "tag": "info", "text": [
-            { "content": "你发现了一个秘密。今天晚些时候，会有特殊选项提示你去继续之前的约定，再和阿博加斯特见面。" }
+                { "content": "你发现了一个秘密。今天晚些时候，如果你想继续之前的约定，这段文字将会给你一项特殊选项，允许你再次与阿博加斯特见面。" }
             ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
     "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_meet_aboganster" }
+        { "action": "action_set_flag", "param": { "flag": "flag_meet_aboganster", "value": true } }
     ]
 }

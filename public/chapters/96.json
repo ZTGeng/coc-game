@@ -20,7 +20,7 @@
     },
     "check": {
         "type": "roll",
-        "key": "Psychology",
+        "key": "psychology",
         "level": "value"
     },
     "options": [

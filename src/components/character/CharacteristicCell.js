@@ -8,7 +8,7 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
   // console.log(`CharacteristicCell refresh: ${char.key}, highlight: ${JSON.stringify(highlight)}`);
 
   function shouldHighlight(level) {
-    return highlight && highlight.some(h => h.key === char.key && h.level === level);
+    return highlight && highlight.some(h => h.key === char.key && (h.level === "all" || h.level === level));
   }
 
   if (!isEditable) {

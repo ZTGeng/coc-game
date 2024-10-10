@@ -3,43 +3,16 @@ import { LanguageContext } from "../../App";
 import { FlagsContext } from "../Game";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
+import Check from "./Check";
 import flagConditionCheckProvider from "../flagCheck";
-import * as utils from "../../utils";
-
-const characteristicsList = ["STR", "CON", "SIZ", "DEX", "APP", "INT", "POW", "EDU"];
-const attributesList = ["HP", "San", "Luck", "MP"];
-const checkLevelText = {
-  en: {
-    "value": "Regular",
-    "half": "Hard",
-    "fifth": "Extreme"
-  },
-  zh: {
-    "value": "普通",
-    "half": "困难",
-    "fifth": "极难"
-  }
-};
-const checkPassText = {
-  en: "Passed the Roll",
-  zh: "检定成功"
-};
-const checkFailText = {
-  en: "Failed the Roll",
-  zh: "检定失败"
-};
-const checkButtonText = {
-  en: "Roll 1D100",
-  zh: "掷骰1D100"
-};
 
 const initCheckFlags = {
   // status: "", // "", "ready", "done"
-  // roll: [], // roll results
+  diceNumber: "", // roll results
   rollKey: "", // "key"
   rollLevel: "", // "value", "half", "fifth"
-  result: "", // "", "pass", "fail"
-
+  result: "", // "pass", "fail"
+  resultLevel: "", // 0: fail, 1: value, 2: half, 3: fifth
 }
 
 function Loading({ language }) {
@@ -108,85 +81,6 @@ function Interactions({ interactions, onAction }) {
       </div>
     )
   );
-}
-
-function RollCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
-  const { language } = useContext(LanguageContext);
-
-  let name, value;
-  if (characteristicsList.includes(check.key)) {
-    name = characterSheet[check.key].name[language] || characterSheet[check.key].name["en"];
-    value = chars[check.key].value;
-  } else if (attributesList.includes(check.key)) {
-    name = characterSheet[check.key].name[language] || characterSheet[check.key].name["en"];
-    value = attributes[check.key].value;
-  } else {
-    name = characterSheet.skills[check.key].name[language] || characterSheet.skills[check.key].name["en"];
-    value = skills[check.key].value;
-  }
-  const target = check.level === "fifth" ? Math.floor(value / 5) : (check.level === "half" ? Math.floor(value / 2) : value);
-  const title = language === "zh" ? `${name}检定 - ${checkLevelText.zh[check.level]}` : `${name} Roll - ${checkLevelText.en[check.level]}`;
-
-  function doCheck() {
-    const diceNumber = utils.roll(1, 100);
-    const isPassed = diceNumber[0] <= target;
-    onAction("action_show_dice_toast", { num: 1, dice: 100, results: diceNumber, shouldPlaySound: true });
-    setCheckFlags({
-      // status: "done", 
-      // roll: diceNumber, 
-      rollKey: check.key,
-      rollLevel: check.level,
-      result: isPassed ? "pass" : "fail"
-    });
-    if (isPassed && check.onpass) {
-      check.onpass.forEach(action => onAction(action.action, action.param));
-    }
-    if (!isPassed && check.onfail) {
-      check.onfail.forEach(action => onAction(action.action, action.param));
-    }
-  }
-
-  return (
-    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
-      <div className="card-header">{title}</div>
-      <div className={"card-body" + (checkFlags.result ? (checkFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
-        {checkFlags.result && <strong>{checkFlags.result === "pass" ? (checkPassText[language] || checkPassText["en"]) : (checkFailText[language] || checkFailText["en"])}</strong>}
-        {!checkFlags.result && <button className="btn btn-dark mx-2" onClick={doCheck}>{checkButtonText[language] || checkButtonText["en"]}</button>}
-      </div>
-    </div>
-  )
-}
-
-function RollSelectCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
-  const initRolls = check.rolls;
-  const [rolls, setRolls] = useState(initRolls);
-  function rollSelectSetCheckFlags(checkFlagsToSet) {
-    if (checkFlagsToSet.result) {
-      setRolls(rolls.filter(roll => roll.key === checkFlagsToSet.rollKey && roll.level === checkFlagsToSet.rollLevel));
-    }
-    setCheckFlags(checkFlagsToSet);
-  }
-
-  return (
-    <div className="card-group">
-      { 
-        rolls
-          .filter(roll => !checkFlags.result || (checkFlags.rollKey === roll.key && checkFlags.rollLevel === roll.level))
-          .map((roll, i) => <RollCheck key={i} check={roll} setCheckFlags={rollSelectSetCheckFlags} {...{ characterSheet, chars, attributes, skills, onAction, checkFlags }} />) 
-      }
-    </div>
-  )
-}
-
-
-function Check({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
-  const { language } = useContext(LanguageContext);
-
-  if (check.type === "roll") {
-    return <RollCheck {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
-  } else if (check.type === "roll_select") {
-    return <RollSelectCheck {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
-  }
 }
 
 export default function Chapter({ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction }) {

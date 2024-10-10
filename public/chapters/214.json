@@ -2,11 +2,11 @@
     "key": 214,
     "text": {
         "en": [
-
+            { "content": "That swollen mouth gives a little twist downwards. “Son of a bitch has rats’ blood.” His fingers tighten into a fist." },
+            { "content": "“王八蛋，烂到骨子里了。”他攥紧了拳头。" }
         ],
         "zh": [
-            { "content": "他那肿胀的嘴唇向下歪了一点点。" },
-            { "content": "“王八蛋，烂到骨子里了。”他攥紧了拳头。" }
+            { "content": "他那肿胀的嘴唇向下歪了一点点。“王八蛋，烂到骨子里了。”他攥紧了拳头。" }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]

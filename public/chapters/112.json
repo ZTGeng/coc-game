@@ -38,7 +38,7 @@
         { "action": "action_check_in_skill_box", "param": "spot" },
         { "action": "action_adjust_attribute", "param": { "key": "San", "delta": 1 } },
         { "action": "action_set_highlight", "param": { "key": "San", "level": "success" } },
-        { "action": "action_set_flag", "param": { "flag": "flag_found_cliff_ladder" } }
+        { "action": "action_set_flag", "param": { "flag": "flag_found_cliff_ladder", "value": true } }
     ],
     "onleave": [
         { "action": "action_set_highlight", "param": { "key": "San", "level": "none" } }

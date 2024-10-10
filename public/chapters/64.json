@@ -9,7 +9,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "勘查昨天夜里的战斗后果", "show": "flag_involved_fighting", "highlight": true },
+        { "key": 0, "text": "勘查昨天夜里的战斗后果", "show": "flag_involved_fighting", "secret": true },
         { "key": 1, "text": { "en": "Continue", "zh": "继续" } }
     ]
 }

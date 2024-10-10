@@ -42,7 +42,6 @@ function Attributes({ characterSheet, attributes }) {
 
   function getHighlightClassName(attr) {
     const attrHighlight = highlight.find(h => h.key === attr);
-    console.log(attrHighlight)
     if (!attrHighlight) return "";
     switch (attrHighlight.level) {
       case "danger":
