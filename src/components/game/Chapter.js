@@ -13,6 +13,7 @@ const initCheckFlags = {
   rollLevel: "", // "value", "half", "fifth"
   result: "", // "pass", "fail"
   resultLevel: "", // 0: fail, 1: value, 2: half, 3: fifth
+  isFumble: false,
 }
 
 function Loading({ language }) {
@@ -88,6 +89,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
+  const [c25OptionsSelected, setC25OptionsSelected] = useState([false, false, false, false, false, false]);
   console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, checkFlags: ${checkFlags.result}`);
 
   function onLeave(chapterJson) {
@@ -100,12 +102,19 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
   function onLoad(chapterJson) {
     console.log(`Chapter ${chapterJson.key} onLoad`);
     if (chapterJson.onload) {
-      chapterJson.onload.forEach(action => onChapterAction(action.action, action.param));
+      chapterJson.onload.forEach(action => {
+        if (action.action === "action_c25_select_option") { // param: Int 0-5
+          const c25OptionsSelectedCopy = [...c25OptionsSelected];
+          c25OptionsSelectedCopy[action.param] = true;
+          setC25OptionsSelected(c25OptionsSelectedCopy);
+          return;
+        }
+        onChapterAction(action.action, action.param)
+      });
     }
   }
 
   function onInteractionAction(action, param) {
-    console.log(`Chapter ${chapter.key} onInteraction: ${action}(${JSON.stringify(param)})`);
     if (action === "action_roll_luck_and_update_chapter") {
       // param is the new chapter json with the same key
       setChapter(param);
@@ -129,6 +138,21 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
         return checkFlags.result === "fail";
       case "flag_check_finished":
         return checkFlags.result;
+      case "flag_check_fumble":
+        return checkFlags.isFumble;
+      case "flag_c25_option_0_disabled":
+        return c25OptionsSelected[0] || c25OptionsSelected.filter(b => b).length >= 4;
+      case "flag_c25_option_1_disabled":
+        return c25OptionsSelected[1] || c25OptionsSelected.filter(b => b).length >= 4;
+      case "flag_c25_option_2_disabled":
+        return c25OptionsSelected[2] || c25OptionsSelected.filter(b => b).length >= 4;
+      case "flag_c25_option_3_disabled":
+        return c25OptionsSelected[3] || c25OptionsSelected.filter(b => b).length >= 4;
+      case "flag_c25_option_4_disabled":
+        return c25OptionsSelected[4] || c25OptionsSelected.filter(b => b).length >= 4;
+      case "flag_c25_option_5_disabled":
+        return c25OptionsSelected[5] || c25OptionsSelected.filter(b => b).length >= 4;
+
     }
     if (flag.startsWith("flag_check_match")) { // "flag_check_match:key-value"
       const [rollKey, rollLevel] = flag.split(":")[1].split("-");

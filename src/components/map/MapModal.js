@@ -8,13 +8,13 @@ const title = {
 const locations = [
   {
     name: "Street",
-    chapterKeys: [6, 25],
+    chapterKeys: [3, 6, 9, 15, 25],
     position: [34, 52]
   },
   {
     name: "Ledbetter",
     chapterKeys: [],
-    position: [23, 21]
+    position: [21, 22, 23]
   },
   {
     name: "General Store",
@@ -28,7 +28,7 @@ const locations = [
   },
   {
     name: "Eastern Road",
-    chapterKeys: [115, 127, 135, 150, 160, 172],
+    chapterKeys: [47, 115, 127, 135, 150, 160, 161, 167, 172],
     position: [48, 94]
   },
   {
@@ -50,7 +50,12 @@ const locations = [
     name: "Chamber",
     chapterKeys: [87, 142, 181, 187, 191, 199, 206, 214, 221, 227, 237, 245, 253, 259, ],
     position: [75, 60]
-  }
+  },
+  {
+    name: "Woodland",
+    chapterKeys: [28, 35, 41, 54, 60, 66, 72, 79, 85, 91, 97, 103, 110, 116, 122, 129, 136, 143, 149, 155, 173, 193, 201],
+    position: [99, 87]
+  },
 ];
 
 export default function MapModal({ chapterKey }) {

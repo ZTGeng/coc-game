@@ -2,14 +2,14 @@
     "key": 41,
     "text": {
         "en": [
-
+            { "content": "You hesitate. You have grown up in the familiar landscape of the town. Wild animals are a little outside your experience. Is it unwise to head on into the unknown by yourself?" }
         ],
         "zh": [
             { "content": "你犹豫不决。你是在镇子里长大的，只熟悉城里。你可从来没和野生动物打过交道。独自走进未知的树林是不是不太明智呢？" }
         ]
     },
     "options": [
-        { "key": 0, "text": "决意前行" },
-        { "key": 1, "text": "回到烬头村确保安全" }
+        { "key": 0, "text": { "en": "Press on", "zh": "决意前行" } },
+        { "key": 1, "text": { "en": "Return to the safety of Emberhead", "zh": "回到烬头村确保安全" } }
     ]
 }

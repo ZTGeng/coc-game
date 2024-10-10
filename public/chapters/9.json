@@ -2,7 +2,9 @@
     "key": 9,
     "text": {
         "en": [
-
+            { "content": "You crouch down and ask Ruth what she meant." },
+            { "content": "“It’s scary at the festival,” Ruth says. “It’s bright and hot and the flames go all over!” Her face and voice are both childlike. This abrupt shift is disturbing. You suppose all children do unfathomable things." },
+            { "content": "May rolls her eyes and tousles her daughter’s hair. Ruth looks at the ground." }
         ],
         "zh": [
             { "content": "你蹲下来问露丝她说的是什么意思。" },

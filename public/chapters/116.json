@@ -1,20 +1,31 @@
 {
     "key": 116,
-    "texts": [
-        "<div class='row'><div class='col-8'>",
-            { "content": "你屏息凝神看着这头熊。它停下来环视空地。" },
-            { "tag": "info", "text": [
-            { "content": "进行一次“幸运”检定。" }
-            ] },
-        "</div><div class='col-4'><img src='images/bear.jpg' class='img-fluid'></div></div>"
-    ],
-    "interactions": [
-        { "text": "幸运检定", "action": "action_check", "param": { "key": "Luck", "isSkill" : false, "level": "value" }, "show": "flag_check_unfinished" }
+    "text": {
+        "en": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "You keep your breath shallow and watch the creature. It pauses and looks around the clearing." },
+                { "tag": "info", "text": [
+                    { "content": "Make a Luck roll." }
+                ] }
+            ] }
+        ],
+        "zh": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "你屏息凝神看着这头熊。它停下来环视空地。" },
+                { "tag": "info", "text": [
+                    { "content": "进行一次“幸运”检定。" }
+                ] }
+            ] }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "Luck",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "Luck", "level": "value" } }

@@ -1,67 +1,39 @@
 {
     "key": 167,
-    "texts": [
-        "<div class='row'><div class='col-8'>",
-            { "content": "就在你离道路还有差不多十步的时候，熊在你身后几寸远的地方咆哮一声，爪子撕破了你的夹克。" },
-            { "tag": "info", "text": [
-            { "content": "熊会用双爪攻击，每一爪都是一次单独的攻击。它每次都有35%的概率击中你，造成3D6点伤害。",
-        "若任一次攻击对你造成的伤害大于等于你最大耐久值的一半，你就受到了重伤。" }
-            ] },
-        "</div><div class='col-4'><img src='images/bear.jpg' class='img-fluid'></div></div>"
-    ],
-    "interactions": [
-        {
-            "text": "爪击x1",
-            "action": "action_general_roll_check",
-            "param": {
-                "target": 35,
-                "onPass": {
-                    "text": "熊的左爪击中了你。",
-                    "actions": [
-                        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-3d6" } },
-                        { "action": "action_set_flag", "param": { "flag": "flag_attack_1_finished" }
-                    ]
-                },
-                "onFail": {
-                    "text": "熊的左爪没有击中。",
-                    "actions": [
-                        { "action": "action_set_flag", "param": { "flag": "flag_attack_1_finished" }
-                    ]
-                }
-            },
-            "show": "!flag_attack_1_finished"
-        },
-        {
-            "text": "爪击x1",
-            "action": "action_general_roll_check",
-            "param": {
-                "target": 35,
-                "onPass": {
-                    "text": "熊的右爪击中了你。",
-                    "actions": [
-                        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-3d6" } },
-                        { "action": "action_set_flag", "param": { "flag": "flag_attack_2_finished" }
-                    ]
-                },
-                "onFail": {
-                    "text": "熊的右爪没有击中。",
-                    "actions": [
-                        { "action": "action_set_flag", "param": { "flag": "flag_attack_2_finished" }
-                    ]
-                }
-            },
-            "show": "!flag_attack_2_finished"
-        }
+    "text": {
+        "en": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "You are less than ten paces from the road when the bear snarls, inches behind you, and its claws rip through your jacket." },
+                { "tag": "info", "text": [
+                    { "content": "Each claw is a separate attack. It hits you 35% of the time, and it does 3D6 worth of damage. If either claw does half, or more, of your original hit points in damage, you have taken a major wound" }
+                ] }
+            ] }
+        ],
+        "zh": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "就在你离道路还有差不多十步的时候，熊在你身后几寸远的地方咆哮一声，爪子撕破了你的夹克。" },
+                { "tag": "info", "text": [
+                    { "content": "熊会用双爪攻击，每一爪都是一次单独的攻击。它每次都有35%的概率击中你，造成3D6点伤害。若任一次攻击对你造成的伤害大于等于你最大耐久值的一半，你就受到了重伤。" }
+                ] }
+            ] }
         ]
     },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_attack_1_finished", "flag_attack_2_finished", "flag_major_wound"] },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_attack_1_finished", "flag_attack_2_finished", "!flag_major_wound"] }
+    "interactions": [
+        { 
+            "text": {
+                "en": "Endure the bear's attack",
+                "zh": "承受熊爪攻击"
+            }, 
+            "action": "action_c167_bear_attack", 
+            "param": "", 
+            "disabled": "flag_c167_bear_attack_finished" 
+        }
     ],
-    "onload": [
-        { "action": "action_add_temp_flag", "param": ["flag_attack_1_finished", "flag_attack_2_finished"] }
+    "options": [
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_c167_bear_attack_finished", "flag_major_wound"] },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_c167_bear_attack_finished", "!flag_major_wound"] }
     ],
     "onleave": [
-        { "action": "action_remove_temp_flag", "param": ["flag_attack_1_finished", "flag_attack_2_finished"] }
+        { "action": "action_set_flag", "param": { "flag": "flag_major_wound", "value": false } }
     ]
 }

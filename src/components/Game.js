@@ -17,16 +17,15 @@ const initFlags = {
   flag_bought_knife: false,
   flag_found_cliff_ladder: false,
   flag_meet_aboganster: false,
+  flag_major_wound: false,
 
+  flag_c167_bear_attack_finished: false,
 
-  flag_opposed_roll_phase2: false,
 
   flag_hp_reduced: false,
   flag_san_reduced: false,
-  flag_major_wound: false,
   flag_mp_used: false,
 
-  flag_c25_tried_four_options: false,
   flag_c120_tried_three_options: false,
   flag_involved_fighting: false,
   flag_punish_dice: false,
@@ -213,6 +212,26 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
         break;
       case "action_enable_map":
         enableMap();
+        break;
+      case "action_c167_bear_attack":
+        let hpDelta = 0;
+        for (let i = 0; i < 2; i++) {
+          const attackCheck = utils.roll(1, 100);
+          showDiceToast(1, 100, attackCheck, false);
+          if (results[0] <= 35) {
+            const damage = utils.roll(3, 6);
+            showDiceToast(3, 6, damage, false);
+            const newHP = attributes.HP.value - damage[0];
+            setAttributes({ ...attributes, HP: { value: newHP, maxValue: attributes.HP.maxValue } });
+            if (newHP <= 0) {
+              flagsCopy = {...flagsCopy, flag_c167_bear_attack_finished: true};
+              setFlags(flagsCopy);
+              break;
+            }
+          }
+        }
+        flagsCopy = {...flagsCopy, flag_c167_bear_attack_finished: true};
+        setFlags(flagsCopy);
         break;
     }
   }

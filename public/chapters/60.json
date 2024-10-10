@@ -2,23 +2,28 @@
     "key": 60,
     "text": {
         "en": [
-
+            { "content": "The gentle incline is misleading, and your forehead is damp by the time you reach the top of the hill. You pause for a moment to get your breath back, and look east. The valley ahead is thick with forest, although you catch glimpses of a narrow waterway. There is still no sign of a settlement. That might be something on the horizon—a spire, maybe? But it is surely another eight or nine hours’ walk." },
+            { "content": "You look back at Emberhead. The hilltop village is black, a rough silhouette against the shimmering orb of sunset." },
+            { "tag": "info", "text": [
+                { "content": "You may make an Archaeology roll." }
+            ] }
         ],
         "zh": [
-            { "content": "平缓的坡度使人误入歧途，等于你抵达山顶的时候，额头都湿透了。你停了一会儿喘口气，又向东面望去。前方的山谷是郁郁葱葱的树林，不过你可以瞧见一条狭窄的水流。",
-        "但仍旧没有村庄的迹象。地平线上似乎有什么东西——也许是座尖塔？但肯定又要走八九个小时才能到达。" },
+            { "content": "平缓的坡度使人误入歧途，等于你抵达山顶的时候，额头都湿透了。你停了一会儿喘口气，又向东面望去。前方的山谷是郁郁葱葱的树林，不过你可以瞧见一条狭窄的水流。但仍旧没有村庄的迹象。地平线上似乎有什么东西——也许是座尖塔？但肯定又要走八九个小时才能到达。" },
             { "content": "你回头看向烬头村。山顶的村庄漆黑一片，只有落日的余晖映衬出它的大概轮廓。" },
             { "tag": "info", "text": [
-            { "content": "你可以进行一次「考古学」检定。" }
+                { "content": "你可以进行一次「考古学」检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "考古学检定", "action": "action_check", "param": { "key": "archaeology", "isSkill" : true, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "archaeology",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "archaeology", "level": "value" } }

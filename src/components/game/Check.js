@@ -210,7 +210,7 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
     let diceNumber = diceNumbers[0];
     if (check.bonus) {
       for (let i = 0; i < Math.abs(check.bonus); i++) {
-        diceNumbers.push(utils.roll(1, 10) * 10 + diceNumber % 10);
+        diceNumbers.push((utils.roll(1, 10) - 1) * 10 + diceNumber % 10);
       }
       if (check.bonus > 0) {
         diceNumber = Math.max(...diceNumbers);
@@ -226,7 +226,8 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
       rollKey: check.key,
       rollLevel: check.level,
       result: isPassed ? "pass" : "fail",
-      resultLevel: calculateLevel(diceNumber, value)
+      resultLevel: calculateLevel(diceNumber, value),
+      isFumble: value < 50 ? diceNumber >= 96 : diceNumber === 100,
     });
     if (isPassed && check.onpass) {
       check.onpass.forEach(action => onAction(action.action, action.param));

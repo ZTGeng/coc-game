@@ -1,13 +1,23 @@
 {
     "key": 136,
-    "texts": [
-        "<div class='row'><div class='col-8'>",
-            { "content": "这头熊把爪子放上树干，爬上了树，动作敏捷得惊人。它在树杈上稳住身形，开始从枝叶上扯下黑色的果子——大概是李子？——塞进嘴里。" },
-            { "content": "你看了大概十分钟，这头熊似乎吃腻了，从树上落回地面。它朝空地四周望望，打了个呵欠，甩开屁股迈进了森林当中。" },
-            { "tag": "info", "text": [
-            { "content": "观察熊是次非常有教育意义的经历。你可以在你的「博物学」技能上永久增加1 点。" }
-            ] },
-        "</div><div class='col-4'><img src='images/bear.jpg' class='img-fluid'></div></div>"
+    "text": {
+        "en": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "The bear plunges its claws into the trunk and scales the tree with surprising agility. It steadies itself on a fork and proceeds to tear fruit from the branches, cramming the dark morsels—plums?—into its mouth." },
+                { "content": "You watch for perhaps ten minutes, until the animal seems to tire of eating and drops from the tree to the ground. It looks around the clearing and yawns before heading off into the forest, its rump swinging." },
+                { "tag": "info", "text": [
+                    { "content": "Watching the bear has been an educational experience. You may permanently add one skill point to your Natural World skill." }
+                ] }
+            ] }
+        ],
+        "zh": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "这头熊把爪子放上树干，爬上了树，动作敏捷得惊人。它在树杈上稳住身形，开始从枝叶上扯下黑色的果子——大概是李子？——塞进嘴里。" },
+                { "content": "你看了大概十分钟，这头熊似乎吃腻了，从树上落回地面。它朝空地四周望望，打了个呵欠，甩开屁股迈进了森林当中。" },
+                { "tag": "info", "text": [
+                    { "content": "观察熊是次非常有教育意义的经历。你可以在你的「博物学」技能上永久增加1点。" }
+                ] }
+            ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],

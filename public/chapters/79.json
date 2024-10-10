@@ -2,22 +2,25 @@
     "key": 79,
     "text": {
         "en": [
-
+            { "content": "You return to the road and resume your walk east. At least, you hope you are still heading east. The curves of the road become disorienting when the light begins to fade. Clouds hide the stars. It seems you will not reach another settlement before dark, and you feel weariness in your legs. The air is much cooler now." },
+            { "tag": "info", "text": [
+                { "content": "Make a Hard Listen roll." }
+            ] }
         ],
         "zh": [
-            { "content": "你回到道路上，继续向东走。至少，你希望自己仍然在向东走。道路的转弯使人难以辨认方向，而且天色也渐渐暗下来，云彩遮住了星光。",
-        "看起来天黑之前你无法抵达下个村庄了，而且你的腿脚也已经疲劳。空气已经带上了凉意。" },
+            { "content": "你回到道路上，继续向东走。至少，你希望自己仍然在向东走。道路的转弯使人难以辨认方向，而且天色也渐渐暗下来，云彩遮住了星光。看起来天黑之前你无法抵达下个村庄了，而且你的腿脚也已经疲劳。空气已经带上了凉意。" },
             { "tag": "info", "text": [
-            { "content": "进行一次困难难度的「聆听」检定。" }
+                { "content": "进行一次困难难度的「聆听」检定。" }
             ] }
     ],
-    "interactions": [
-        { "text": "聆听检定-困难", "action": "action_check", "param": { "key": "listen", "isSkill" : true, "level": "half" }, "show": "flag_check_unfinished" }
-        ]
+    "check": {
+        "type": "roll",
+        "key": "listen",
+        "level": "half"
     },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
         { "action": "action_set_highlight", "param": { "key": "listen", "level": "half" } }
