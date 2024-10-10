@@ -1,0 +1,18 @@
+{
+    "key": 54,
+    "text": {
+        "en": [
+            { "content": "A second call answers the first, but it sounds further away. You follow the road through woodland. Branches lean over the road. The foliage is quite beautiful, from gold to russet and a deep, rich red. Fallen leaves crunch beneath your feet." },
+            { "content": "After about half an hour, you emerge from the trees. The road makes a lazy curve around foothills ahead, into another patch of woodland. A rough track seems to offer a short cut through the woods." }
+        ],
+        "zh": [
+            { "content": "第二声嗥叫回应着前一声，但听起来距离远一些。你在树林中沿着道路穿行。两侧的树枝斜伸到路的上方。树叶的颜色颇为美丽，有金色，有棕褐色，还有鲜艳的深红色。落叶在你的脚下喀吱作响。" },
+            { "content": "大约半小时以后，你走出了树丛。道路懒洋洋地转了一个弯，绕过前面的山麓，进入另一片树林。有一条崎岖的小径，似乎是穿越树林的近道。" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Head up the hill to try to spot another settlement", "zh": "上山辨认别的村庄" } },
+        { "key": 1, "text": { "en": "Try the track", "zh": "尝试小径" } },
+        { "key": 2, "text": { "en": "Stick to the safety of the road", "zh": "继续沿着道路走确保安全" } }
+    ]
+}

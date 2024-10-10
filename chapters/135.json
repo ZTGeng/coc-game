@@ -1,0 +1,15 @@
+{
+    "key": 135,
+    "text": {
+        "en": [
+            { "content": "The strange man breaks into a run, fleeing from you along the ridge. His gait is lopsided, but his movements have a maniacal intensity." }
+        ],
+        "zh": [
+            { "content": "这个怪男人拔腿就跑，沿着山路逃离你。他的步伐一瘸一拐，但步速简直激烈得像发了狂。" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Give chase", "zh": "追逐他" } },
+        { "key": 1, "text": { "en": "You have better things to do", "zh": "你有更重要的事情要做" } }
+    ]
+}

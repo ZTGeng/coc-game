@@ -1,0 +1,26 @@
+{
+    "key": 233,
+    "text": {
+        "en": [
+            { "content": "The driver flicks his cigarette into the gutter and steps into the motor coach. Its engine coughs into life. You board, grateful that you will be the only passenger for the initial part of your trip at least. With mixed emotions, you watch from the window as the tired avenues of your old home slip behind you, receding into the distance. For a few minutes, you can still see the church spire over the brow of a low hill. Then the road dips and it, too, is gone." },
+            { "content": "Arkham is your new home. You will travel there, and make a new start." },
+            { "tag": "info", "text": [
+                { "content": "You will see two smaller boxes to the right of each characteristic value. The upper right box is for half the characteristic value, rounding down. The lower right box is for one-fifth of the characteristic value, again rounding down. We will use these numbers later." },
+                { "content": "In the strip below, you will see Sanity and magic points. Beginning Sanity is equal to your original POW, and beginning magic points are equal to one-fifth of your POW." }
+            ] }
+        ],
+        "zh": [
+            { "content": "司机把他的烟卷弹进排水沟，走进了车厢。发动机咳嗽着开始运转。你也上了车，非常庆幸自己至少在旅程开始时是唯一的乘客。你怀着复杂的感情，隔着窗户看着那些早已看厌的街道缓缓退远，慢慢滑到你身后。最初几分钟你还能看见山坡顶上教堂的尖顶，但道路开始下坡，很快连尖顶也看不到了。" },
+            { "content": "阿卡姆将是你的新家。你会到那里，开始新的生活。" },
+            { "tag": "info", "text": [
+                { "content": "你在每个属性值的右侧会看见两个小方格。右上角的小格里是属性值的一半舍去小数。右下角的小格里是属性值的五分之一舍去小数。我们后面会用到这些数值。" },
+                { "content": "在属性的下面几行你会看到理智值和魔法值。你的初始理智值等于你的意志值，初始的魔法值等于意志值的五分之一。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_show_character_sheet", "param": true },
+        { "action": "action_initial_san_and_mp" }
+    ]
+}

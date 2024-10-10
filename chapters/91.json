@@ -1,0 +1,14 @@
+{
+    "key": 91,
+    "text": {
+        "en": [
+            { "content": "A root snags your ankle and you topple. Long grass cushions the impact and you climb back to your feet with no serious harm done. Your jacket will need some attention with a stiff brush and sponge at the next opportunity." },
+            { "content": "Ahead, you see the road again. This has not been as much of a shortcut as you hoped." }
+        ],
+        "zh": [
+            { "content": "根须绊住了你的脚踝，你一个趔趄摔倒了。茂密的草丛起到了缓冲作用，你没受什么伤，重新爬了起来。下次有机会的话，你的夹克需要用硬毛刷和海绵好好护理一下。" },
+            { "content": "你在前方又发现了道路。小径省下的路程并没有你想象的那样多。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

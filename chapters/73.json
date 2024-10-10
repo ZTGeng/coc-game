@@ -1,0 +1,15 @@
+{
+    "key": 73,
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你一下撞到地面上。肺里的空气直冲出你的喉咙，鲜血渗出你的头顶。" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_hp_zero" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "!flag_hp_zero" }
+    ]
+}

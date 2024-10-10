@@ -1,0 +1,37 @@
+{
+    "key": 110,
+    "text": {
+        "en": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "You slink towards the bear, trying to remain obscured by the trees." },
+                { "tag": "info", "text": [
+                    { "content": "Make an Extreme Stealth roll (you need to roll one-fifth of your Stealth skill or under). " }
+                ] }
+            ] }
+        ],
+        "zh": [
+            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
+                { "content": "你鬼鬼祟祟地靠近熊，想要在树后保持隐蔽。" },
+                { "tag": "info", "text": [
+                    { "content": "进行一次极难难度的「潜行」检定（你需要投出结果小于等于你「潜行」技能值的五分之一）。" }
+                ] }
+            ] }
+        ]
+    },
+    "check": {
+        "type": "roll",
+        "key": "stealth",
+        "level": "fifth"
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": ["flag_check_failed", "!flag_check_fumble"] },
+        { "key": 2, "text": { "en": "You roll 96 or over, this is a Fumble, continue", "zh": "检定大失败，继续" }, "show": "flag_check_fumble" }
+    ],
+    "onload": [
+        { "action": "action_set_highlight", "param": { "key": "stealth", "level": "fifth" } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "stealth", "level": "none" } }
+    ]
+}

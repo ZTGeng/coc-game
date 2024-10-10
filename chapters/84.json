@@ -1,0 +1,28 @@
+{
+    "key": 84,
+    "text": {
+        "en": [
+            { "content": "The village hall backs against a cliff at the east end of Silbury Street. It’s the largest building you’ve seen so far in Emberhead. It is, however, locked and shuttered. You walk around it, peering through gaps in the shutters. There seems to be one large room, presumably for community meetings, and a smaller annex which serves as an office and archive. One of the windows is bricked up. Back at the main door, you can see no posted opening hours." },
+            { "content": "“Mr. Winters doesn’t open up mornings, this time of year,” says a gray-garbed woman passing by. “Best come back this afternoon.”" },
+            { "content": "You ask whether the office has a telegraph." },
+            { "content": "“Don’t know.” She shrugs. “Who would we call?”" },
+            { "tag": "info", "text": [
+                { "content": "You will have to try again later" }
+            ] }
+        ],
+        "zh": [
+            { "content": "村会堂背靠着锡尔伯里街东头的悬崖。这是你到烬头村以来看见的最大的一座建筑物了。但它现在大门紧闭，还上着锁。你围着它走了一圈，从百叶窗的缝隙向里窥视。看上去里面有一间大厅，大概是用作村民集会；还有较小的配楼，用作办公室和档案室。有一扇窗户被砖头砌死了。你回到大门口后也看不到门口有任何开放时间表。" },
+            { "content": "一个灰衣女人经过说：“文特斯先生上午不开门，每年这时候都是。下午再来吧。”" },
+            { "content": "你问办公室里能不能拍电报。" },
+            { "content": "“不知道。”她耸耸肩，“我们要拍给谁？”" },
+            { "tag": "info", "text": [
+                { "content": "你得之后才能再来尝试。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_c25_select_option", "param": 1 }
+    ]
+}
+

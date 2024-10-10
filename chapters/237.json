@@ -1,0 +1,29 @@
+{
+    "key": 237,
+    "text": {
+        "en": [
+            { "content": "A smile of sickly rapture comes over Arbogast’s scarred features." },
+            { "content": "“The Great Old Ones? The Windwalker, Cthulhu, the Crawling Chaos. Like the rest of them, spread like gnats upon the Earth, you think your actions matter, yes? Your existence matters.” He shakes his head. “We are the dust that shifts in the breeze, the motes that drift in the last rays of sun. You are nothing. We are nothing.”" },
+            { "content": "He gathers himself into silence. Just when you think the sermon is over, he stirs." },
+            { "content": "“Here you are closest to the living flame. Not that belching green column beloved of Kingsport. I mean It which preceded all life on Earth! It which lit the void while our world was formed! It has infinite fuel, infinite patience. It will consume all!”" },
+            { "content": "Arbogast runs a hand through his hair. A wide strip is missing on the left side, displaced by scar tissue. He climbs to his feet." },
+            { "tag": "info", "text": [
+             { "content": "You may permanently add two points to your Cthulhu Mythos skill." }
+            ] }
+        ],
+        "zh": [
+            { "content": "阿博加斯特被疤痕覆盖的脸上浮现出病态的狂喜笑容。" },
+            { "content": "“旧日支配者？风行者、克苏鲁、伏行混沌。你，和其他那些人一样，地上爬来爬去的蚊蠓而已，你觉得你做的事很重要，是吗？你活着就是全部意义了。”他摇摇头。“我们不过是尘土浮沫，风一吹就飘起来，太阳一照就不见了。你什么也不是。我们都什么也不是。”" },
+            { "content": "他沉默起来。正当你以为他的说教要结束时，他又兴奋起来。" },
+            { "content": "“在这里你可以离活火焰最近。不是金斯波特人痴迷的那种喷火的绿焰柱。我是说它比地球上所有活物都早！开天辟地时是它点燃了虚空！它有无穷的燃料，无限的耐心。它会烧尽我们所有人！”" },
+            { "content": "阿博加斯特用手撩了撩头发。他左边的头发缺了一大片，只有伤疤留在上面。他直起身来。" },
+            { "tag": "info", "text": [
+             { "content": "你可以在你的「克苏鲁神话」技能上永久增加2点。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_adjust_skill", "param": { "key": "cthulhu", "delta": 2 } }
+    ]
+}

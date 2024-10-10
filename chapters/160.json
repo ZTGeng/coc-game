@@ -1,0 +1,14 @@
+{
+    "key": 160,
+    "text": {
+        "en": [
+            { "content": "You turn back to the road and your core business: getting out of Emberhead and onwards to Ossipee. The ridge gives you a good viewpoint from which you can see the course of the road. It winds with the hills, disappearing into woodland for a while before emerging further on. You lose sight of it somewhere towards a second patch of woodland. By your best estimation, that is at least six or seven miles distant. You see no other settlements or traffic." },
+            { "content": "It may be worth taking a chance and walking. The weather is still mild. But you will need supplies before you attempt it." }
+        ],
+        "zh": [
+            { "content": "你回到路上，继续你最重要的任务：离开烬头村，前往奥西皮。山脊上的视野很好，你可以从这里看到道路延伸的方向。它随着山峦弯曲，在林地里消失了一段，又再次浮现，继续向远方伸展。当它向第二片林地连接过去的时候，你终于看不到它了。你觉得往最少里说，整个距离都至少有六七英里。一路上既无村庄，又无车马。" },
+            { "content": "走过去碰碰运气也许值得尝试。天气还很好。但你在尝试之前，还需要不少补给。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

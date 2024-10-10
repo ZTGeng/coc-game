@@ -1,0 +1,12 @@
+{
+    "key": 161,
+    "text": {
+        "en": [
+            { "content": "Heart hammering in your chest, you outdistance the bear and make it to the road. You keep running for some minutes, until you are sure it has lost interest in you." }
+        ],
+        "zh": [
+            { "content": "你甩掉了熊，回到道路上，心脏咚咚地锤打着你的胸腔。你又奔跑了几分钟，直到你确认它不再理会你，才停了下来。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

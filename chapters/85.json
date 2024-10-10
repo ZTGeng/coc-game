@@ -1,0 +1,32 @@
+{
+    "key": 85,
+    "text": {
+        "en": [
+            { "content": "You set off along the track and make good progress. A few mossy tree stumps mark the route and you wonder if its course was planned. However, after about ten minutes, the boughs draw closer and it becomes harder to pick out a way forward. Just as you think you can see the path open up ahead, you miss your footing." },
+            { "tag": "info", "text": [
+                { "content": "Make a Luck roll." }
+            ] }
+        ],
+        "zh": [
+            { "content": "你开始沿小径行走，进展还不错。有几棵爬满青苔的树桩标示着路线，你怀疑这条小径的路线是精心选取的。可是大概十分钟以后，树枝越靠越近，辨认道路向前走变得越来越困难。正当你认为你能看见前方道路出口的时候，你脚底踩了个空。" },
+            { "tag": "info", "text": [
+                { "content": "进行一次“幸运”检定。" }
+            ] }
+        ]
+    },
+    "check": {
+        "type": "roll",
+        "key": "Luck",
+        "level": "value"
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+    ],
+    "onload": [
+        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "value" } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "none" } }
+    ]
+}

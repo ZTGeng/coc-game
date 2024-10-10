@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/coc-game/static/css/main.1c76cf87.css",
+    "main.js": "/coc-game/static/js/main.b55e582f.js",
+    "index.html": "/coc-game/index.html",
+    "main.1c76cf87.css.map": "/coc-game/static/css/main.1c76cf87.css.map",
+    "main.b55e582f.js.map": "/coc-game/static/js/main.b55e582f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1c76cf87.css",
+    "static/js/main.b55e582f.js"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+    "key": 102,
+    "text": {
+        "en": [
+            { "content": "You mention the assistant’s position you were offered at Arkham Rare Books and Maps on the strength of a recommendation by a distant friend of the family. Thinking about the treasures that must pass through that shop returns some of the excitement you felt upon receiving the letter of appointment. You feel a tingle in your palms; you cannot wait to get started." },
+            { "content": "“Books, eh?” Silas takes the conversation no further. You get the feeling he is not much of a reader." },
+            { "tag": "info", "text": [
+                { "content": "Your Credit Rating skill is 20%." },
+                { "content": "Your Occupation Skills are: Appraise, Art/Craft (specify a particular field), History, Library Use, Other Language (specify one), Spot Hidden, and one of either Charm, Fast Talk, Intimidate, or Persuade. You may also pick one other skill except Cthulhu Mythos as a personal specialty. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. " }
+            ] }
+        ],
+        "zh": [
+            { "content": "你说道，自己刚刚在亲戚的远方朋友强烈推荐下，得到了“阿卡姆珍本舆图行”的助理职位。收到录用通知函的时候的那份兴奋，只要想一想那些必须来店一游的文物，你就能回忆起来三分。你心里一阵痒痒；你恨不得马上就开始工作。" },
+            { "content": "“书，哈？”西拉斯没有再继续对话。你感觉他不像是喜欢读书的人。" },
+            { "tag": "info", "text": [
+                { "content": "你的「信用评级」技能是20%。" },
+                { "content": "你的本职技能是：「估价」，「艺术/手艺」（选择一个专业领域），「历史」，「图书馆使用」，「外语」（选择一种），「侦查」，还有「魅惑」、「话术」、「恐吓」、「说服」四项中其中一项。你还可以选择除了「克苏鲁神话」以外的其他任意一项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。" }
+            ] }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills_occupation_unfinished" }
+    ],
+    "onload": [
+        { "action": "action_show_character_sheet", "param": true },
+        { 
+            "action": "action_set_occupation_and_credit", 
+            "param": {
+                "name": { "en": "Antiquarian", "zh": "文物学家" },
+                "credit": 20,
+                "skills": ["appraise", "history", "library", "spot"], 
+                "interpersonal": 1, 
+                "language": 1, 
+                "art": 1, 
+                "universal": 1 
+            }
+        },
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": true } }
+    ],
+    "onleave": [
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": false } }
+    ]
+}

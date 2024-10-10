@@ -1,0 +1,46 @@
+{
+    "key": 112,
+    "text": {
+        "en": [
+            { "content": "Your keen eyes pick it up after a couple of minutes of scanning the cliff face. There are a series of protruding rocks, combined with what look like man-made incisions. The effect is an ingenious hidden stairway that leads down the cliff. No doubt the dark figure used this to descend safely." },
+            { "content": "You look along the lower shelf. You see only a few drab shacks, off to your right. This might have been an interesting find, were you not about to leave Emberhead for good." },
+            { "tag": "info", "text": [
+                { "content": "You have discovered a secret. If you ever need to climb or descend this northeasterly cliff, the text will offer you a special option to try the stairway." },
+                { "content": "Restore 1 Sanity point. You may check-mark the small box beside the Spot Hidden skill" }
+            ] }
+        ],
+        "zh": [
+            { "content": "你敏锐的眼睛在崖壁上搜索了几分钟以后有了发现。这里有一串突出的岩石，中间还夹杂看上去像是人工开凿的豁口。它们连起来就是一道巧妙的隐藏梯子，可以爬下悬崖。无疑，昨晚那个黑影正是使用它来安全下落的。" },
+            { "content": "你沿着底下的岩盘观察，但只能看见一些土褐色的小棚屋，在你右手边稍远的地方。若不是你马上要永远离开烬头村的话，这倒可以算是个有趣的发现。" },
+            { "tag": "info", "text": [
+                { "content": "你发现了一个秘密。如果有朝一日你需要爬上或爬下东北方的这段悬崖，这段文字可以为你提供一项特殊选项，允许你尝试这道梯子。" },
+                { "content": "回复1点理智值。你可以在自己「侦查」技能左边的小方框里打勾。" }
+            ] }
+        ]
+    },
+    "options": [
+        {
+            "key": 0,
+            "text": {
+                "en": "Leave",
+                "zh": "离开"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Try the staircase now",
+                "zh": "现在就尝试这道阶梯"
+            }
+        }
+    ],
+    "onload": [
+        { "action": "action_check_in_skill_box", "param": "spot" },
+        { "action": "action_adjust_attribute", "param": { "key": "San", "delta": 1 } },
+        { "action": "action_set_highlight", "param": { "key": "San", "level": "success" } },
+        { "action": "action_set_flag", "param": { "flag": "flag_found_cliff_ladder", "value": true } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "San", "level": "none" } }
+    ]
+}

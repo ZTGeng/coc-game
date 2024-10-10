@@ -1,0 +1,37 @@
+{
+    "key": 115,
+    "text": {
+        "en": [
+            { "content": "The air is fresh and the walk down to the lower ridge invigorating. You notice cultivated fields stretching through the lowlands around Emberhead, and among the crops some livestock, but no horses. Are you going to have to make your onward journey on foot?" },
+            { "content": "Further down, the road skirts the edge of the ridge and descends. There are a few scattered hovels here, with signs of habitation. They are set a substantial distance apart." },
+            { "content": "As you examine them, a door opens, and an older man steps out. He wears a bedraggled suit, but carries a piece of cloth, which he tosses over his head like a hood. As he does this, he sees you and freezes." },
+            { "tag": "info", "text": [
+                { "content": "Make a Luck roll" }
+            ] }
+        ],
+        "zh": [
+            { "content": "空气很是清新，沿路走下山坡令人精神鼓舞。你看到烬头村周围的低地上铺展着庄稼地，在庄稼之中还有些牲畜，但看不到马匹。接下来的旅途你要徒步而行吗？" },
+            { "content": "再走远一些，道路迂回越过山脊，开始下坡。这里有几间散乱的棚屋，有人在居住的迹象。它们之间的距离相当远。" },
+            { "content": "在你端详这些棚屋的时候，一扇门打开了，出来一个上了年纪的男人。他身穿一件破烂脏污的外套，但多了一块布；他把这块布扯过头顶，像头巾一样裹起头部。他正这样做的时候看见了你，愣住了。" },
+            { "tag": "info", "text": [
+                { "content": "进行一次“幸运”检定。" }
+            ] }
+        ]
+    },
+    "check": {
+        "type": "roll",
+        "key": "Luck",
+        "level": "value"
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+    ],
+    "onload": [
+        { "action": "action_c25_select_option", "param": 2 },
+        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "value" } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "none" } }
+    ]
+}

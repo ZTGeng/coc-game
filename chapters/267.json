@@ -1,0 +1,14 @@
+{
+    "key": 267,
+    "text": {
+        "en": [
+            { "content": "You drag your cases between the sullen buildings. You feel surprisingly weary, considering you have spent all day sitting down. Silas’s directions lead you to a modest dwelling with a slate roof. A nameplate reads LEDBETTER, and underneath, a sign in neat copperplate reads, LODGING ROOM. The lane around you is gloomy, but a lamp flickers in the window." },
+            { "content": "A breeze chills your face. You’re not about to begin your new life by sleeping in the street. You rap on the weather-beaten door." }
+        ],
+        "zh": [
+            { "content": "你拖着行李，走过这些阴郁的建筑物。你在车里坐了一整天，感觉疲惫不堪。按照西拉斯说的路走过去，有一座朴素的石板色房顶小楼。房前挂着名牌，上面写着“莱德贝特”，下面有一块洁净的铜牌，上面写着“住宿”。你四周的小巷昏暗无光，但窗户里有一盏灯火在闪烁。" },
+            { "content": "一阵冷风吹过你的脸颊。你还不想自己的新生活从露宿街头开始。你轻轻敲起了面前饱经风霜的房门。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

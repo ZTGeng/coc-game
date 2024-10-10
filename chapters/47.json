@@ -1,0 +1,14 @@
+{
+    "key": 47,
+    "text": {
+        "en": [
+            { "content": "A second call answers the first. You imagine yourself cornered by wolves in the forest, torn and bleeding on the ground as the leader stands over you, saliva dripping from between its glistening, pointed teeth. That merciless mouth flashes towards your neck–" },
+            { "content": "The return walk to town seems longer than the outward leg. You try not to keep looking behind you. As you ascend, the sun has dipped in the sky. You still have enough time to try the village hall." }
+        ],
+        "zh": [
+            { "content": "又有一阵呼啸响起，回应着前一阵呼啸。你想象自己在林子里被群狼逼入绝境，扑倒在地，衣不蔽体，皮开肉绽；狼王踱到你的面前，尖牙闪着寒光，对你垂涎三尺。它无情的大嘴直取你的喉咙——" },
+            { "content": "回村的路好像比出村时长得多。你尽量不去回头看走过的路。在你上坡时，日头渐渐下沉。你的时间还够，还可以去村会堂碰运气。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

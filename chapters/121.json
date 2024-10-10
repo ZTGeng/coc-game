@@ -1,0 +1,32 @@
+{
+    "key": 121,
+    "text": {
+        "en": [
+            { "content": "As you approach, the figure takes a pace back, then another. It slips down an alley between two buildings." },
+            { "tag": "info", "text": [
+                { "content": "To catch your target, you must make a Track roll." }
+            ] }
+        ],
+        "zh": [
+            { "content": "你接近这身影一步，它就后退一步。一步，两步。它溜进了两座房子之间的小巷。" },
+            { "tag": "info", "text": [
+                { "content": "要抓住你的目标，你必须进行一次「追踪」检定。" }
+            ] }
+        ]
+    },
+    "check": {
+        "type": "roll",
+        "key": "track",
+        "level": "value"
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+    ],
+    "onload": [
+        { "action": "action_set_highlight", "param": { "key": "track", "level": "value" } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "track", "level": "none" } }
+    ]
+}

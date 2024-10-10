@@ -1,0 +1,16 @@
+{
+    "key": 218,
+    "text": {
+        "en": [
+            { "content": "May is doing laundry, and looks surprised to see you again. “Forgot something?” When you explain the situation, she offers to store your bags while you try to arrange alternative transport. You are grateful to relinquish the load." },
+            { "content": "“Nobody here has anything like a car.” She strokes her chin and narrows her eyes. “Maybe you could find somebody with a horse and a cart for your bags. I could ask around later. Try Mr. Winters at the village hall, he’ll know if anyone will. Or ask among the artisans. Their workshops are first left on Silbury Street.” She reaches over and squeezes your wrist. “Don’t worry, I won’t see you sleeping in the street, money or no money.”" },
+            { "content": "You thank May, and turn to face the village." }
+        ],
+        "zh": [
+            { "content": "梅正在洗衣服，看到你回来了有点吃惊。“落下东西了？”当你解释了情况之后，她让你在寻找其他交通方式时，暂时把行李寄存下来。你卸下了重荷，十分感激。" },
+            { "content": "梅摸摸下巴，眯起双眼：“这村里没人有汽车。也许你能找到有马的人，还有马车装你的行李。我一会儿也四处问问。你可以试着去问村会堂的文特斯先生，他会知道谁愿意借的。或者问问那些工匠。他们的工坊在锡尔伯里街左边第一个门。”她凑过来握住你的双手，“不要担心，不管你有没有钱，我都不会让你睡在马路上的。”" },
+            { "content": "你谢过梅，转头面向村子。" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

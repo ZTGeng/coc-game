@@ -1,0 +1,44 @@
+{
+    "key": 194,
+    "text": {
+        "en": [
+            { "content": "Silas opens the engine compartment open and sticks his head inside. The hot metal pops and sizzles. He pokes at various components, then withdraws and wipes his brow, smearing it with dark grease." },
+            { "content": "“I ain’t sure what’s wrong. Might be the oil pressure. Might be something knocked off kilter when we took that spill. Can’t do much until the engine cools neither. And with the light failing… I reckon we’ll be here through the night.” He wipes his hands on a rag." },
+            { "content": "The shadows from your surroundings are already long, and the air is chilly. You feel stiff from the journey and a night in the rickety coach sounds unappealing. Silas sees your dismay." },
+            { "content": "“This here’s Emberhead. Miles from anyplace. I only come through twice a week. But the folks here are good people. May Ledbetter keeps a spare room. She’ll look after you. Up that alley, turn right, first house on the left.”" },
+            { "content": "He scratches his cheek, looks again into the engine compartment, and spits on the ground." },
+            { "content": "“Meet me back here at eight in the morning and we’ll see how’s we stand.”" }
+        ],
+        "zh": [
+            { "content": "西拉斯打开了引擎舱盖，把头伸了进去。这块烧热的铁疙瘩砰砰作响，咝咝有声。他把各个部位都戳了几下，然后伸出头来，擦了擦额头，额头上沾上了漆黑的油污。" },
+            { "content": "“我不知道是哪的问题。也许是油压不行。也许是刚才摔了一下的时候什么东西摔坏了。得两个气缸都凉下来才能修。天也晚了……我觉得我们应该在这里过夜。”他一边用破布擦手一边说。" },
+            { "content": "你四周的影子都已经很长，空气中也有了寒意。你因为旅途而感到浑身酸痛，在这摇摇晃晃的长途车里过一夜可一点也不好受。西拉斯看出了你的沮丧。" },
+            { "content": "“这里叫烬头村。别的村子要走好几里。我每星期才来两次。但这里的人都是好人。梅·莱德贝特有间空房。她会让你留宿的。顺着这条巷子，右转，左边第一间房。”" },
+            { "content": "他挠了挠脸颊，又把头探进发动机舱，往地上吐了口痰。" },
+            { "content": "“明天早上八点回来找我，再看看车的情况。”" }
+        ]
+    },
+    "options": [
+        {
+            "key": 0,
+            "text": {
+                "en": "Look for May Ledbetter’s house",
+                "zh": "寻找梅·莱德贝特的房子"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Ask Silas where he will spend the night",
+                "zh": "问西拉斯他在哪里过夜"
+            }
+        },
+        {
+            "key": 2,
+            "text": {
+                "en": "Challenge Silas about the breakdown",
+                "zh": "向西拉斯怀疑这次故障"
+            }
+        }
+    ]
+}

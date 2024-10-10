@@ -1,0 +1,23 @@
+{
+    "key": 162,
+    "text": {
+        "en": [
+            { "content": "You sense a falseness to Silas’s actions. He is acting. Either he is not as aggravated about the breakdown as his behavior suggests, or perhaps the breakdown itself is an act." },
+            { "content": "If this is a ruse to make you spend your time and money in a local shop, he will be sadly disappointed in your purchasing power." },
+            { "tag": "info", "text": [
+                { "content": "On your investigator sheet, check-mark the small box to the left of the word Psychology. If you successfully complete this adventure, you will have the opportunity to learn from your experience with Silas." }
+            ] }
+        ],
+        "zh": [
+            { "content": "你觉得西拉斯的行动有些不真实。他在演戏。也许他并不像他的行动显示的那样处理不了这次故障，也许这次故障整个儿都是假的。" },
+            { "content": "如果这是个诡计，为了让你花钱花时间在路上的商店买东西的话，西拉斯会因为你空荡的钱包而非常失望的。" },
+            { "tag": "info", "text": [
+                { "content": "在你的调查员角色卡上「心理学」左边的小方框里打勾。如果你成功完成了本次冒险，你有机会通过这次和西拉斯的经历，学到一些东西。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_check_in_skill_box", "param": "psychology" }
+    ]
+}

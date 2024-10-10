@@ -1,0 +1,15 @@
+{
+    "key": 64,
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "莱德贝特家的厨房空空荡荡，不过桌上摆出了面包和鸡蛋充当早餐。还有一张梅写的纸条，说她要带露丝出门几个小时。" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": "勘查昨天夜里的战斗后果", "show": "flag_involved_fighting", "secret": true },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" } }
+    ]
+}

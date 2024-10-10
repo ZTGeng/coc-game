@@ -1,0 +1,45 @@
+{
+    "key": 226,
+    "text": {
+        "en": [
+            { "content": "You mention the residency you will be taking up at St. Mary’s Hospital. The institution is well regarded, and you are both thrilled and slightly uneasy at the range of patients and maladies it receives. Still, as an old professor of yours used to say, “By practice alone can you become expert.”" },
+            { "content": "“A doctor, eh? Folks’ll always be needing those.”" },
+            { "content": "Did you catch a note of distrust in Silas’s voice? Or are you just being paranoid?" },
+            { "tag": "info", "text": [
+                { "content": "Your Credit Rating skill is 30%." },
+                { "content": "Your Occupation Skills are: First Aid, Other Language (Latin), Medicine, Psychology, Science (Biology), Science (Pharmacy) You may also pick two other skills (not Cthulhu Mythos) as relevant academic or personal specialties. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. " }
+            ] }
+        ],
+        "zh": [
+            { "content": "你说道，你要到圣玛丽医院去担任实习医生。这是所顶尖的医院，会接触到各种各样的病人和病例；这使你不仅激动，还有一点点不安。不过，就像你的一位老教授说过的那样，“只有实践才能让人成为专家。”" },
+            { "content": "“医生，哈？人们总是需要这些家伙。”" },
+            { "content": "你莫非在西拉斯的声音中听出了不信任的语气？或者只是你多虑了？" },
+            { "tag": "info", "text": [
+                { "content": "你的「信用评级」技能是30%。" },
+                { "content": "你的本职技能是：「急救」，「外语（拉丁文）」，「医学」，「心理学」，「科学（生物学）」，「科学（药学）」。你还可以选择除了「克苏鲁神话」以外的其他任意两项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。" }
+            ] }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills_occupation_unfinished" }
+    ],
+    "onload": [
+        { "action": "action_show_character_sheet", "param": true },
+        { 
+            "action": "action_set_occupation_and_credit", 
+            "param": {
+                "name": { "en": "Doctor of Medicine", "zh": "医生" },
+                "credit": 30,
+                "skills": ["first_aid", "latin", "medicine", "psychology", "biology", "pharmacy"],
+                "interpersonal": 0, 
+                "language": 0, 
+                "art": 0, 
+                "universal": 2 
+            }
+        },
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": true } }
+    ],
+    "onleave": [
+        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": false } }
+    ]
+}

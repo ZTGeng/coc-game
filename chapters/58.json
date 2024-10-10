@@ -1,0 +1,18 @@
+{
+    "key": 58,
+    "text": {
+        "en": [
+
+        ],
+        "zh": [
+            { "content": "你被房外街道上的脚步声吵醒了。一晚上的休息为你带来了新的目标。今天，你要凭借自己的努力面对烬头村。" },
+            { "tag": "info", "text": [
+            { "content": "如果你受过伤，你可以回复1点耐久值。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": 1 } }
+    ]
+}

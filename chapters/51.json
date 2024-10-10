@@ -1,0 +1,18 @@
+{
+    "key": 51,
+    "text": {
+        "en": [
+            { "content": "As the hour wears on, you are amused to hear May transform into a sort of tired tourist guide." },
+            { "content": "“Of course the views from here are spectacular on a good day. A clear view all the way round. If you’re a painter you’ll be right at home. If your tastes run more to the artisan, there are workshops on Silbury Street. Just at the end here and turn right. They’re not set up for visitors, you understand? But you’ll see the real craftsmen at work. The genuine article. Now, if you’re looking for freshly baked bread...”" },
+            { "content": "It seems a shame to point out that you intend to be on the road again shortly. You let May continue until she begins to yawn." },
+            { "content": "“Would you listen to me yapping? Time to turn in. When would you like your breakfast?” " }
+        ],
+        "zh": [
+            { "content": "随着时间流逝，梅的话语多少有些变成了疲累的游览指导，你听起来感觉有些好笑。" },
+            { "content": "“当然了，如果天气好，这里的景色真的相当壮观。每个方向的视野都清晰无阻。如果你是画家，你会感觉像回了家一样。如果你的口味更喜欢工艺品，锡尔伯里街上还有工坊。走到头右转就是了。他们不是为了游客干活的，你懂吧？但你可以看见真正在工作的工匠。真正的独具匠心。然后，如果你想吃新鲜出炉的面包……”" },
+            { "content": "你觉得不好意思去说自己不久还要继续上路。你让梅继续讲下去，直到她打起呵欠。" },
+            { "content": "“你还要听我瞎唠吗？不早了，我该睡觉了。你想几点钟吃早饭？”" }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+}

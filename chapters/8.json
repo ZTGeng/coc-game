@@ -1,0 +1,34 @@
+{
+    "key": 8,
+    "text": {
+        "en": [
+            { "content": "The driver smokes and watches as you drag your cases to the back of the motor coach. The rack is set inconveniently high on the vehicle. You get a grip on the heavier case." },
+            { "tag": "img", "imageSrc": "images/bus.png" },
+            { "tag": "info", "text": [{ "content": "Your “SIZ” value has influenced the game's branching paths." }] }
+        ],
+        "zh": [
+            { "content": "司机叼着烟，看着你把箱子拖到长途汽车的后面去。行李架装在车顶上，十分不便。你握紧了沉重的箱子。" },
+            { "tag": "img", "imageSrc": "images/bus.png" },
+            { "tag": "info", "text": [{ "content": "（你的“体型”数值对游戏分支产生了影响。）" }] }
+        ]
+    },
+    "options": [
+        { 
+            "key": 0, 
+            "text": {
+                "en": "Continue",
+                "zh": "继续"
+            },
+            "show": "!flag_siz_greater_than_40" 
+        },
+        { 
+            "key": 1, 
+            "text": {
+                "en": "Continue",
+                "zh": "继续"
+            },
+            "show": "flag_siz_greater_than_40" }
+    ],
+    "onload": [{ "action": "action_set_highlight", "param": { "key": "SIZ", "level": "value" } }],
+    "onleave": [{ "action": "action_set_highlight", "param": { "key": "SIZ", "level": "none" } }]
+}

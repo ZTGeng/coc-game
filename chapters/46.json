@@ -1,0 +1,21 @@
+{
+    "key": 46,
+    "text": {
+        "en": [
+            { "content": "The interior smells of earth and decay. But you catch an additional, distinctive whiff about the place: the scent of horses. You search around and in a dark corner find both the remnant of a hoof mark and some dried droppings. This ruined church was used as a stable–and quite recently. Where are the horses now?" },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Ride skill." }
+            ] }
+        ],
+        "zh": [
+            { "content": "这里面充斥着泥土和发霉的气息。但你察觉到一缕与之不同的气息：是马的气味。你四下里搜寻，在阴暗的角落里找到了残留的蹄印，还有些干燥的马粪。这座废弃的教堂曾经被用作马棚——而且还是不久之前。这些马现在去了哪里？" },
+            { "tag": "info", "text": [
+                { "content": "你可以在你的「骑术」技能左边的小方框里打勾。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_check_in_skill_box", "param": "ride" }
+    ]
+}

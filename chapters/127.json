@@ -1,0 +1,27 @@
+{
+    "key": 127,
+    "text": {
+        "en": [
+            { "content": "The man looks up at the village, scanning the clifftops. You get a brief flash of his face. There is something unsettling about it. Then he turns to walk away from the road. But as he does, he raises a hand and slowly beckons to you." }
+        ],
+        "zh": [
+            { "content": "这男人仰望村子的方向，视野扫过悬崖的顶部。一瞬间，你看到了他的脸。似乎有什么东西让你不安。然后他转过身，沿着路走远。但这时，他扬起一只手，慢慢地向你招手示意。" }
+        ]
+    },
+    "options": [
+        {
+            "key": 0,
+            "text": {
+                "en": "Follow the strange man",
+                "zh": "跟上这个奇怪的人"
+            }
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "It seems unwise to follow",
+                "zh": "跟上去并不明智"
+            }
+        }
+    ]
+}
