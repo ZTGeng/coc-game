@@ -14,7 +14,7 @@ const cthulhuCellType = {
 }
 
 export default function Skills({ characterSheet, skills, setSkills, occupation }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const isOccupationSkillsEditing = flagConditionCheck("flag_occupation_skills_editable");
   const isHobbySkillsEditing = flagConditionCheck("flag_hobby_skills_editable");
@@ -24,7 +24,7 @@ export default function Skills({ characterSheet, skills, setSkills, occupation }
       <div className="col px-0">
         <div className="card">
           <h6 className="card-header">
-            {characterSheet.skillsTitle[language] || characterSheet.skillsTitle["en"]}
+            { autoLang(characterSheet.skillsTitle) }
           </h6>
           {isOccupationSkillsEditing
             ? <SkillsEditableForOccupation {...{ characterSheet, skills, setSkills, occupation }} />
@@ -46,7 +46,7 @@ export default function Skills({ characterSheet, skills, setSkills, occupation }
 }
 
 function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupation }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const isForHobby = false;
   const initAvailableValues = [70, 60, 60, 50, 50, 50, 40, 40];
   const initAvailableSkills = {
@@ -284,7 +284,7 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
           { occupation.interpersonal > 0 ? <OccupationSkill skillKey={"interpersonal"} {...{characterSheet, availableSkills}} /> : null }
           { occupation.universal > 0 ? <OccupationSkill skillKey={"universal"} {...{characterSheet, availableSkills}} /> : null }
           <button className={"btn btn-sm ms-auto" + (lockUnused ? " btn-outline-secondary" : " btn-outline-dark")} onClick={toggleLockUnused}>
-            { characterSheet.lockUnusedButtonText[language] || characterSheet.lockUnusedButtonText["en"] }
+            { autoLang(characterSheet.lockUnusedButtonText) }
           </button>
         </div>
       </div>
@@ -294,7 +294,7 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
 }
 
 function SkillsEditableForHobby({ characterSheet, skills, setSkills }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const isForHobby = true;
   
   const occupationSkills = Object.keys(skills).filter(skillKey => skills[skillKey].occupation);
@@ -376,7 +376,7 @@ function SkillsEditableForHobby({ characterSheet, skills, setSkills }) {
         <div className="d-flex flex-wrap">
           <div className="ms-3">兴趣技能点：<span className="badge text-bg-light">{ availableNum - selectedSkills.length }</span></div>
           <button className={"btn btn-sm ms-auto" + (lockUnused ? " btn-outline-secondary" : " btn-outline-dark")} onClick={toggleLockUnused}>
-            { characterSheet.lockUnusedButtonText[language] || characterSheet.lockUnusedButtonText["en"] }
+            { autoLang(characterSheet.lockUnusedButtonText) }
           </button>
         </div>
       </div>
@@ -386,7 +386,7 @@ function SkillsEditableForHobby({ characterSheet, skills, setSkills }) {
 }
 
 function OccupationSkill({ skillKey, characterSheet, availableSkills }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   let text, points;
   switch (skillKey) {
     case "art":
@@ -431,12 +431,12 @@ function OccupationSkill({ skillKey, characterSheet, availableSkills }) {
   if ([ "art", "language", "interpersonal", "universal" ].includes(skillKey)) {
     return (
       <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>
-        { text[language] || text["en"] }
+        { autoLang(text) }
         <span className={ "badge" + (selected ? " text-body-tertiary" : " text-bg-light") }>{ points }</span>
       </div>
     );
   }
-  return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ text[language] || text["en"] }</div>;
+  return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ autoLang(text) }</div>;
 }
 
 function SkillsTable({ characterSheet, skills, cellType, isForHobby, availableValues, onValueSelected }) {

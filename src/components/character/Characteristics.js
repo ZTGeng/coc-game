@@ -43,12 +43,12 @@ function CharacteristicsEditable({ characterSheet, chars, setChars }) {
 }
 
 function CharacteristicsTable({ characterSheet, chars, isEditable, availableValues = [], onValueSelected = () => { } }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
 
   return (
     <div className="card">
       <h5 className="card-header">
-        {characterSheet.characteristicsTitle[language] || characterSheet.characteristicsTitle["en"]}
+        { autoLang(characterSheet.characteristicsTitle) }
       </h5>
       <div className="card-body">
         <div className="row">

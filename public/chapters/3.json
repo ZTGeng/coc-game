@@ -1,5 +1,6 @@
 {
     "key": 3,
+    "location": "street",
     "text": {
         "en": [
             { "content": "Your morning exertions have left you hungry. You roam the streets of Emberhead looking for sustenance. There is nothing resembling the busy cafés of your hometown, or anything that might be called a restaurant." },

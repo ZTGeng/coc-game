@@ -75,7 +75,7 @@ export const FlagsContext = createContext();
 export const HighlightContext = createContext();
 
 export default function Game({ showCharacter, setShowCharacter, enableMap, playSound }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
   const [chars, setChars] = useState(initChars);
@@ -83,6 +83,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
   const [skills, setSkills] = useState(initSkills);
   const [occupation, setOccupation] = useState(initOccupation);
   const [highlight, setHighlight] = useState([]);
+  const [mapLocation, setMapLocation] = useState(null);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   console.log(`Game refresh ${JSON.stringify(flags)}`);
 
@@ -117,122 +118,134 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
 
   function onChapterAction(action, param) {
     console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
-    onAction(action, param);
+    action in actions && actions[action](param);
   }
 
   function onCharacterAction(action, param) {
     console.log(`Game - onCharacterAction: ${action} with params: ${JSON.stringify(param)}`);
-    onAction(action, param);
+    action in actions && actions[action](param);
   }
 
   let flagsCopy = {...flags};
   let highlightCopy = [...highlight];
 
-  function onAction(action, param) {
-    switch (action) {
-      case "action_set_flag": // param: { flag, value }
-        flagsCopy = {...flagsCopy, [param.flag]: param.value};
-        setFlags(flagsCopy);
-        break;
-      case "action_show_character_sheet": // param: true/false/undefined
-        setShowCharacter(param !== false);
-        break;
-      case "action_set_highlight": // param: { key, level } level: none/value/half/fifth/all/danger/success
-        highlightCopy = highlightCopy.filter(h => h.key !== param.key);
-        if (param.level !== "none") {
-          highlightCopy = [...highlightCopy, param];
+  const addToHighlight = (key, level) => {
+    highlightCopy = highlightCopy.filter(h => h.key !== key);
+    if (level !== "none") {
+      highlightCopy = [...highlightCopy, { key, level }];
+    }
+    setHighlight(highlightCopy);
+  }
+
+  const actions = {
+    action_set_flag: (param) => { // param: { flag, value }
+      flagsCopy = { ...flagsCopy, [param.flag]: param.value };
+      setFlags(flagsCopy);
+    },
+    action_show_character_sheet: (param) => { // param: true/false/undefined
+      setShowCharacter(param !== false);
+    },
+    action_set_highlight: (param) => { // param: { key, level } level: none/value/half/fifth/all/danger/success
+      addToHighlight(param.key, param.level);
+    },
+    action_check_in_skill_box: (param) => { // param: key
+      setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
+    },
+    action_adjust_attribute: (param) => { // param: { key, delta }, delta: Int or String like "-1d2"
+      const newAttributes = { ...attributes };
+      const attr = newAttributes[param.key];
+      let newValue;
+      if (typeof param.delta === "string") {
+        let deltaString = param.delta;
+        let multiplier = 1;
+        if (deltaString.startsWith("-")) {
+          deltaString = deltaString.substring(1);
+          multiplier = -1;
         }
-        setHighlight(highlightCopy);
-        break;
-      case "action_check_in_skill_box": // param: key
-        setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
-        break;
-      case "action_adjust_attribute": // param: { key, delta }, delta: Int or String like "-1d2"
-        const newAttributes = { ...attributes };
-        const attr = newAttributes[param.key];
-        let newValue;
-        if (typeof param.delta === "string") {
-          let deltaString = param.delta;
-          let multiplier = 1;
-          if (deltaString.startsWith("-")) {
-            deltaString = deltaString.substring(1);
-            multiplier = -1;
+        const [num, dice] = deltaString.split("d");
+        const results = utils.roll(parseInt(num), parseInt(dice));
+        newValue = attr.value + results.reduce((a, b) => a + b, 0) * multiplier;
+        showDiceToast(parseInt(num), parseInt(dice), results, false);
+      } else {
+        newValue = attr.value + param.delta;
+      }
+      newValue = Math.min(newValue, newAttributes[param.key].maxValue);
+      newValue = Math.max(newValue, 0);
+
+      if (param.key === "HP" && newValue < attr.value) {
+        playSound("hp-reduced");
+      } else if (param.key === "San" && newValue < attr.value) {
+        // playSound("san-reduced");
+      }
+
+      newAttributes[param.key] = { ...attr, value: newValue };
+      setAttributes(newAttributes);
+    },
+    action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
+      setSkills({ ...skills, [param.key]: { ...skills[param.key], value: skills[param.key].value + param.delta } });
+    },
+    action_show_dice_toast: (param) => { // param: { num, dice, bonus, results, shouldPlaySound }
+      showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound, param.bonus);
+    },
+    action_set_char_related_values: () => {
+      setSkills({
+        ...skills,
+        dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) },
+        lang_own: { ...skills.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value }
+      });
+    },
+    action_initial_san_and_mp: () => {
+      const san = chars.POW.value;
+      const mp = Math.floor(chars.POW.value / 5);
+      setAttributes({ ...attributes, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } });
+    },
+    action_initial_hp: () => {
+      const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
+      setAttributes({ ...attributes, HP: { value: hp, maxValue: hp } });
+    },
+    action_roll_luck_and_update_chapter: () => {
+      const results = utils.roll(3, 6);
+      const luck = results.reduce((a, b) => a + b, 0) * 5;
+
+      showDiceToast(3, 6, results, true);
+      setAttributes({ ...attributes, Luck: { value: luck } });
+    },
+    action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
+      setOccupation({ ...occupation, ...param });
+      setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
+    },
+    action_enable_map: () => {
+      enableMap();
+    },
+    action_c167_bear_attack: () => {
+      let hpDelta = 0;
+      for (let i = 0; i < 2; i++) {
+        const attackCheck = utils.roll(1, 100);
+        showDiceToast(1, 100, attackCheck, false);
+        const title = autoLang({ zh: "熊的爪击", en: "Bear's Claw Attack" });
+        if (attackCheck[0] <= 35) {
+          const text = autoLang({ zh: "熊的爪击命中！", en: "The bear's claw attack hits!" });
+          showToast({ text: text, color: "danger" });
+          const damage = utils.roll(3, 6);
+          showDiceToast(3, 6, damage, false);
+          const damageNumber = damage.reduce((a, b) => a + b, 0);
+          if (damageNumber >= attributes.HP.maxValue / 2) {
+            flagsCopy = { ...flagsCopy, flag_major_wound: true };
           }
-          const [num, dice] = deltaString.split("d");
-          const results = utils.roll(parseInt(num), parseInt(dice));
-          newValue = attr.value + results.reduce((a, b) => a + b, 0) * multiplier;
-          showDiceToast(parseInt(num), parseInt(dice), results, false);
+          hpDelta -= damageNumber;
         } else {
-          newValue = attr.value + param.delta;
+          const text = autoLang({ zh: "熊的爪击未命中！", en: "The bear's claw attack misses!" });
+          showToast({ title: title, text: text, color: "success" });
         }
-        newValue = Math.min(newValue, newAttributes[param.key].maxValue);
-        newValue = Math.max(newValue, 0);
-
-        if (param.key === "HP" && newValue < attr.value) {
-          playSound("hp-reduced");
-        } else if (param.key === "San" && newValue < attr.value) {
-          // playSound("san-reduced");
-        }
-
-        newAttributes[param.key] = { ...attr, value: newValue };
-        setAttributes(newAttributes);
-        break;
-      case "action_adjust_skill":
-        setSkills({ ...skills, [param.key]: { ...skills[param.key], value: skills[param.key].value + param.delta } });
-        break;
-      case "action_show_dice_toast": // param: { num, dice, bonus, results, shouldPlaySound }
-        showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound, param.bonus);
-        break;
-      case "action_set_char_related_values":
-        setSkills({ 
-          ...skills, 
-          dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) }, 
-          lang_own: { ...skills.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value } 
-        });
-        break;
-      case "action_initial_san_and_mp":
-        const san = chars.POW.value;
-        const mp = Math.floor(chars.POW.value / 5);
-        setAttributes({ ...attributes, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } });
-        break;
-      case "action_initial_hp":
-        const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
-        setAttributes({ ...attributes, HP: { value: hp, maxValue: hp } });
-        break;
-      case "action_roll_luck_and_update_chapter":
-        const results = utils.roll(3, 6);
-        const luck = results.reduce((a, b) => a + b, 0) * 5;
-
-        showDiceToast(3, 6, results, true);
-        setAttributes({ ...attributes, Luck: { value: luck } });
-        break;
-      case "action_set_occupation_and_credit": // param: { name, credit, skills, art, interpersonal, language, universal }
-        setOccupation({ ...occupation, ...param });
-        setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
-        break;
-      case "action_enable_map":
-        enableMap();
-        break;
-      case "action_c167_bear_attack":
-        let hpDelta = 0;
-        for (let i = 0; i < 2; i++) {
-          const attackCheck = utils.roll(1, 100);
-          showDiceToast(1, 100, attackCheck, false);
-          if (results[0] <= 35) {
-            const damage = utils.roll(3, 6);
-            showDiceToast(3, 6, damage, false);
-            const newHP = attributes.HP.value - damage[0];
-            setAttributes({ ...attributes, HP: { value: newHP, maxValue: attributes.HP.maxValue } });
-            if (newHP <= 0) {
-              flagsCopy = {...flagsCopy, flag_c167_bear_attack_finished: true};
-              setFlags(flagsCopy);
-              break;
-            }
-          }
-        }
-        flagsCopy = {...flagsCopy, flag_c167_bear_attack_finished: true};
-        setFlags(flagsCopy);
-        break;
+      }
+      if (hpDelta < 0) {
+        const newHp = Math.max(attributes.HP.value + hpDelta, 0);
+        setAttributes({ ...attributes, HP: { ...attributes.HP, value: newHp } });
+        addToHighlight("HP", "danger");
+        playSound("hp-reduced");
+      }
+      flagsCopy = { ...flagsCopy, flag_c167_bear_attack_finished: true };
+      setFlags(flagsCopy);
     }
   }
 
@@ -247,14 +260,14 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
   function showDiceToast(num, dice, results, shouldPlaySound, bonus="") {
     let subtitle = "";
     if (bonus && bonus > 0) {
-      subtitle = language === "zh" ? `奖励骰 x ${bonus}` : `Bonus Die x ${bonus}`;
+      subtitle = autoLang({ zh: `奖励骰 x ${bonus}`, en: `Bonus Die x ${bonus}` });
     } else if (bonus && bonus < 0) {
-      subtitle = language === "zh" ? `惩罚骰 x ${-bonus}` : `Penalty Die x ${-bonus}`;
+      subtitle = autoLang({ zh: `惩罚骰 x ${-bonus}`, en: `Penalty Die x ${-bonus}` });
     }
     showToast({
-      title: language === "zh" ? `投掷${num}D${dice}` : `Roll ${num}D${dice}`,
+      title: autoLang({ zh: `投掷${num}D${dice}`, en: `Roll ${num}D${dice}` }),
       subtitle: subtitle,
-      text: language === "zh" ? `结果：${results.join("、")}` : `Results: ${results.join(", ")}`
+      text: autoLang({ zh: `结果：${results.join("、")}`, en: `Results: ${results.join(", ")}` })
     });
     if (shouldPlaySound) {
       num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
@@ -280,7 +293,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       <HighlightContext.Provider value={{ highlight }}>
         <div className="row">
           <div id="chapter" className="col px-2">
-            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction }} />
+            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, setMapLocation, onChapterAction }} />
           </div>
           { showCharacter && (
             <div id="character" className="col">
@@ -288,7 +301,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
             </div> 
           )}
         </div>
-        <MapModal {...{ chapterKey }} />
+        <MapModal {...{ mapLocation }} />
       </HighlightContext.Provider>
     </FlagsContext.Provider>
   )

@@ -1,13 +1,21 @@
 {
     "key": 173,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "The bear is not impressed by your bravery. It rears up and swipes." },
+            { "tag": "info", "text": [
+                { "content": "Conduct close-quarters combat using pages 12-13 of the Quick-Start Rules. You may need to refer to page 7 first to look up your damage bonus." },
+                { "content": "The combatant with the higher DEX acts first. You will take one action each combat round. You may fight back (rolling your Fighting (Brawl)) or dodge (using Dodge) against each of the bear’s attacks. Combat rolls are opposed rolls: whoever gets the best level of success wins." },
+                { "content": "The black bear has a DEX of 58, and 20 hit points. Its thick furry hide absorbs the first 3 points of damage you do in each round. On the first round, it attacks once with each claw. Its Claw skill is 35% (17% half / 7% one-fifth) and each successful hit does 2D6 damage. On the second round, it attacks with one claw and bites. Its Bite skill is 25% (12% half / 5% one-fifth) and does 1D8 damage. On the third round, it attacks with both claws again." },
+                { "content": "If you have a knife or similar weapon, each successful hit you make does 1D4 plus your damage bonus. If you are unarmed, the damage is 1D3 plus your damage bonus." },
+                { "content": "If you take a major wound, make a CON roll." }
+            ] }
         ],
         "zh": [
             { "content": "熊并没有被你的勇气打动。它立起身，挥爪向你袭来。" },
             { "tag": "info", "text": [
-                { "content": "开始近身战斗。" },
+                { "content": "处理近身战斗时，使用快速开始规则的第 14 ～ 16 页（规则书第 102 ～ 111 页）。你需要先阅读第 8 页（规则书第 33 页）来查询自己的伤害加值。" },
                 { "content": "参战者中“敏捷”最高的最先行动。你每个战斗轮可以进行一个动作。熊每向你攻击一次，你都可以选择反击（投掷「格斗( 斗殴)」）或者闪避（投掷「闪避」）。战斗技能检定是对抗检定：谁的成功度高，谁得手。" },
                 { "content": "黑熊的“敏捷”为58，耐久值为20。它浓密厚实的皮毛会吸收你每轮造成伤害的前3点。它第一轮会用两只爪子各攻击一次。它的「爪击」技能为35%（半值17%/五分之一值7%），每次攻击成功后都能造成2D6点伤害。第二轮它会用一只爪子攻击并用嘴咬。它的「啃咬」技能是25%（半值12%/五分之一值5%），造成1D8点伤害。第三轮它会再次使用双爪攻击。" },
                 { "content": "如果你带着小刀或类似的武器，你每次攻击成功都会造成1D4点加上伤害加值点数的伤害。如果你赤手空拳，伤害是1D3点加上伤害加值点数。" },
@@ -15,16 +23,39 @@
             ] }
         ]
     },
-    "interactions": [
-        {
-            "action": "action_combat",
-            "param": {
-                "enemy": {
-                    "name": "熊",
-                    "DEX": 58,
-                    "HP": 40
+    "check": {
+        "type": "combat",
+        "rounds": 3,
+        "opponent": {
+            "name": { "en": "Bear", "zh": "熊" },
+            "DEX": 58,
+            "HP": 40,
+            "armor": 3,
+            "skills": {
+                "claw": {
+                    "name": { "en": "Claw", "zh": "爪击" },
+                    "value": 35,
+                    "half": 17,
+                    "fifth": 7,
+                    "damage": "2D6"
+                },
+                "bite": {
+                    "name": { "en": "Bite", "zh": "啃咬" },
+                    "value": 25,
+                    "half": 12,
+                    "fifth": 5,
+                    "damage": "1D8"
                 }
-            }
+            },
+            "moves": [
+                ["claw", "claw"],
+                ["claw", "bite"],
+                ["claw", "claw"]
+            ]
         }
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You win the combat, continue", "zh": "战斗胜利，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You lose the combat, continue", "zh": "战斗失败，继续" }, "show": "flag_check_failed" }
     ]
 }

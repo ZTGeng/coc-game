@@ -24,18 +24,18 @@ export default function SkillCell({ skillKey, characterSheet, skills, cellType, 
 }
 
 function GroupSkillCell({ skillUI }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   return (
     <div className="d-flex z-1" >
-      <div className="fw-bold lh-1 ms-3" style={{ fontSize: "0.75rem", marginBottom: "-0.7rem", marginTop: "-0.3rem" }}>{ skillUI.name[language] || skillUI.name["en"] }</div>
+      <div className="fw-bold lh-1 ms-3" style={{ fontSize: "0.75rem", marginBottom: "-0.7rem", marginTop: "-0.3rem" }}>{ autoLang(skillUI.name) }</div>
       <div className="ms-5" ></div>
     </div>
   );
 }
 
 function NameThTag({ isDisabled, skillUI }) {
-  const { language } = useContext(LanguageContext);
-  const nameString = skillUI.name ? (skillUI.name[language] || skillUI.name["en"]) : "";
+  const { autoLang } = useContext(LanguageContext);
+  const nameString = skillUI.name ? autoLang(skillUI.name) : "";
   const nameWidth = Math.max(...nameString.split(" ").map(word => word.length)); // Length of the longest word
   return (
     <th rowSpan="2" 

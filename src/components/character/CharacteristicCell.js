@@ -3,7 +3,7 @@ import { LanguageContext } from '../../App';
 import { HighlightContext } from "../Game";
 
 export default function CharacteristicCell({ char, characterSheet, isEditable, availableValues = [], onValueSelected = () => {} }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const { highlight } = useContext(HighlightContext);
   // console.log(`CharacteristicCell refresh: ${char.key}, highlight: ${JSON.stringify(highlight)}`);
 
@@ -18,12 +18,12 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
           <tr>
             { char.key === "INT" ? (
               <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-                (characterSheet[char.key].name[language] || characterSheet[char.key].name["en"])
-                .split('\n')
-                .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
+                autoLang(characterSheet[char.key].name)
+                  .split('\n')
+                  .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
               }</th>
             ) : (
-              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characterSheet[char.key].name[language] || characterSheet[char.key].name["en"] }</th>
+              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(characterSheet[char.key].name) }</th>
             ) }
             <td 
               rowSpan="2" 
@@ -65,12 +65,12 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
         <tr>
           { char.key === "INT" ? (
             <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-              (characterSheet[char.key].name[language] || characterSheet[char.key].name["en"])
+              autoLang(characterSheet[char.key].name)
                 .split('\n')
                 .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
             }</th>
           ) : (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ characterSheet[char.key].name[language] || characterSheet[char.key].name["en"] }</th>
+            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(characterSheet[char.key].name) }</th>
           ) }
           <td rowSpan="2" className="border p-2">
             <select className="border-0 mx-1" style={{ paddingTop: "3px" }} value={char.value} onChange={onSelectChange}>

@@ -1,5 +1,6 @@
 {
     "key": 79,
+    "location": "woodland",
     "text": {
         "en": [
             { "content": "You return to the road and resume your walk east. At least, you hope you are still heading east. The curves of the road become disorienting when the light begins to fade. Clouds hide the stars. It seems you will not reach another settlement before dark, and you feel weariness in your legs. The air is much cooler now." },
@@ -12,7 +13,8 @@
             { "tag": "info", "text": [
                 { "content": "进行一次困难难度的「聆听」检定。" }
             ] }
-    ],
+        ]
+    },
     "check": {
         "type": "roll",
         "key": "listen",

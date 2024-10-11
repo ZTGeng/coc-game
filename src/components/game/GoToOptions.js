@@ -16,12 +16,12 @@ export default function GoToOptions({ chapterKey, options, nextChapter }) {
 
 export function GoToOption({ chapterKey, option, nextChapter }) {
   const { flagConditionCheck } = useContext(FlagsContext);
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
 
   return option.disabled && flagConditionCheck(option.disabled) ? (
     <div key={option.key}
       className="text-body-tertiary h5">
-      &nbsp;{(option.text[language] || option.text["en"])}&nbsp;
+      &nbsp;{ autoLang(option.text) }&nbsp;
     </div>
   ) : (
     <a key={option.key}
@@ -38,7 +38,7 @@ export function GoToOption({ chapterKey, option, nextChapter }) {
           </span>
         )
         : null}
-      &nbsp;{(option.text[language] || option.text["en"])}&nbsp;
+      &nbsp;{ autoLang(option.text) }&nbsp;
     </a>
   )
 }

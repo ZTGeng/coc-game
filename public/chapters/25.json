@@ -1,5 +1,6 @@
 {
     "key": 25,
+    "location": "street",
     "text": {
         "en": [
             { "tag": "img", "imageSrc": "images/map-zh.png" },

@@ -16,14 +16,14 @@ const initCheckFlags = {
   isFumble: false,
 }
 
-function Loading({ language }) {
-  return language === "zh" ? <p>"加载中..."</p> : <p>"Loading..."</p>;
+function Loading({ autoLang }) {
+  return autoLang({ zh: <p>"加载中..."</p>, en: <p>"Loading..."</p> });
 }
 
 function ChapterContent({ chapterText }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
 
-  return (chapterText[language] || chapterText["en"]).map((item, index) => {
+  return autoLang(chapterText).map((item, index) => {
     if (item.tag === "div") {
       return item.imageOn === "left" ? (
         <div key={index} className="row">
@@ -57,14 +57,14 @@ function ChapterContent({ chapterText }) {
 }
 
 function InteractionButton({ interaction, onAction }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
 
   return (
     interaction.disabled && flagConditionCheck(interaction.disabled)
-      ? <button className="btn btn-dark mx-2" disabled>{ interaction.text[language] || interaction.text["en"] }</button>
+      ? <button className="btn btn-dark mx-2" disabled>{ autoLang(interaction.text) }</button>
       : (<button className="btn btn-dark mx-2" onClick={() => { onAction(interaction.action, interaction.param) }}>
-        { interaction.text[language] || interaction.text["en"] }
+        { autoLang(interaction.text) }
       </button>)
   )
 }
@@ -84,8 +84,8 @@ function Interactions({ interactions, onAction }) {
   );
 }
 
-export default function Chapter({ chapterKey, characterSheet, chars, attributes, skills, nextChapter, onChapterAction }) {
-  const { language } = useContext(LanguageContext);
+export default function Chapter({ chapterKey, characterSheet, chars, attributes, skills, nextChapter, setMapLocation, onChapterAction }) {
+  const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
@@ -185,6 +185,10 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
 
         setChapter(data);
 
+        if (data.location) {
+          setMapLocation(data.location);
+        }
+
         // useEffect may be triggered multiple times with the same chapterKey
         // run onLoad only for the first time
         if (!chapter || (chapter.key !== chapterKey)) {
@@ -198,7 +202,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
   }
 
   if (!chapter || chapter.key !== chapterKey) {
-    return <Loading language={language} />;
+    return <Loading {...{ autoLang }} />;
   }
 
   return (

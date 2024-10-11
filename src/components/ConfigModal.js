@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { LanguageContext } from '../App';
 
 export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }) {
-  const { language, setLanguage } = useContext(LanguageContext);
+  const { language, setLanguage, autoLang } = useContext(LanguageContext);
   const title = {
     en: "Configuration",
     zh: "设置",
@@ -43,13 +43,13 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content text-primary">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="staticBackdropLabel">{title[language] || title["en"]}</h1>
+            <h1 className="modal-title fs-5" id="staticBackdropLabel">{ autoLang(title) }</h1>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body">
             <div className="row mb-3">
               <label htmlFor="btnradio1" className="col-sm-2 col-form-label">
-                {languageSetting.label[language] || languageSetting.label["en"]}
+                { autoLang(languageSetting.label) }
               </label>
               <div className="btn-group col-sm-10" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" className="btn-check" name="btnradio" id="btnradio1" autoComplete="off" onChange={() => setLanguage("en")} checked={language === "en"} />
@@ -66,7 +66,7 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
 
             <div className="row mb-3">
               <label htmlFor="musicVolumeRange" className="col-sm-2 col-form-label">
-                { musicVolumeSetting.label[language] || musicVolumeSetting.label["en"] }
+                { autoLang(musicVolumeSetting.label) }
               </label>
               <div className="col-sm-10 d-flex align-items-center">
                 <input type="range" className="flex-fill" min={musicVolumeSetting.min} max={musicVolumeSetting.max} step={musicVolumeSetting.step} id="musicVolumeRange" value={musicVolume} onChange={e => setMusicVolume(e.target.value)} />
@@ -75,7 +75,7 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
 
             <div className="row mb-3">
               <label htmlFor="sfxVolumeRange" className="col-sm-2 col-form-label">
-                {sfxVolumeSetting.label[language] || sfxVolumeSetting.label["en"]}
+                { autoLang(sfxVolumeSetting.label) }
               </label>
               <div className="col-sm-10 d-flex align-items-center">
                 <input type="range" className="flex-fill" min={sfxVolumeSetting.min} max={sfxVolumeSetting.max} step={sfxVolumeSetting.step} id="sfxVolumeRange" value={sfxVolume} onChange={e => setSfxVolume(e.target.value)} />
@@ -83,7 +83,7 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
             </div>
 
             <div className="row mb-3">
-              <button type="button" className="btn btn-primary col-sm-5 mx-auto" data-bs-dismiss="modal" onClick={onRestart} disabled={!gameStarted} >{reset[language] || reset["en"]}</button>
+              <button type="button" className="btn btn-primary col-sm-5 mx-auto" data-bs-dismiss="modal" onClick={onRestart} disabled={!gameStarted} >{ autoLang(reset) }</button>
             </div>
           </div>
         </div>

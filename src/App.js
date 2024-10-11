@@ -8,7 +8,7 @@ import Game from './components/Game';
 export const LanguageContext = createContext();
 
 function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const title = {
     en: "Alone Against the Flames",
     zh: "向火独行",
@@ -29,9 +29,9 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
   return (
     <nav className="navbar bg-body-tertiary shadow-sm mb-2">
       <div className="container-fluid">
-        <span className="navbar-brand mb-0 h1">{ title[language] || title["en"] }</span>
+        <span className="navbar-brand mb-0 h1">{ autoLang(title) }</span>
         
-        <div className="ms-auto" title={showCharacterTooltip[language] || showCharacterTooltip["en"]}>
+        <div className="ms-auto" title={ autoLang(showCharacterTooltip) }>
           <button className="btn btn-outline-light" onClick={toggleShowCharacter} disabled={!gameStarted}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"></path>
@@ -39,7 +39,7 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
           </button>
         </div>
 
-        <div title={showMapTooltip[language] || showMapTooltip["en"]}>
+        <div title={ autoLang(showMapTooltip) }>
           <button className="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#map-modal" disabled={!mapEnabled}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24">
               <path d="m29 6.94-8.52-2.83h-.06A1 1 0 0 0 20 4a.89.89 0 0 0-.43.11h-.08l-2.85 1.08a5 5 0 0 0-1-1.59 5 5 0 0 0-7.9.77 4.87 4.87 0 0 0-.47 1L3.94 4.26A1.47 1.47 0 0 0 2 5.66V7a1 1 0 0 0 2 0v-.61l3 1a5 5 0 0 0 .51 1.87l3.57 7.19a1 1 0 0 0 1.8 0l3.57-7.19A5.06 5.06 0 0 0 17 7.41a1.47 1.47 0 0 0 0-.21l2-.76v18.87l-6 2.25V20a1 1 0 0 0-2 0v7.61l-7-2.33V11a1 1 0 0 0-2 0v14.66a1.48 1.48 0 0 0 1 1.4l8.51 2.83h.07A.92.92 0 0 0 12 30a1 1 0 0 0 .44-.11h.07L20 27.06l2.66.89a1 1 0 0 0 .64-1.9l-2.3-.77V6.39l7 2.33v18.89l-.68-.23a1 1 0 0 0-.64 1.9l1.38.46a1.48 1.48 0 0 0 .46.08 1.53 1.53 0 0 0 .87-.28 1.5 1.5 0 0 0 .61-1.2v-20a1.48 1.48 0 0 0-1-1.4zM14.68 8.37 12 13.75 9.32 8.37a3 3 0 0 1 .14-2.95A3 3 0 0 1 14.19 5a3.07 3.07 0 0 1 .8 2.3 3.18 3.18 0 0 1-.31 1.07z"/>
@@ -48,7 +48,7 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
           </button>
         </div>
         
-        <div title={configTooltip[language] || configTooltip["en"]}>
+        <div title={ autoLang(configTooltip) }>
           <button className="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#config-modal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path d="M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm-1.5 0a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
@@ -79,6 +79,10 @@ function App() {
   const [mapEnabled, setMapEnabled] = useState(false);
   const musicRef = useRef();
   const sfxRef = useRef();
+
+  function autoLang(texts) { // texts = { en: "English", zh: "中文" }
+    return texts[language] || texts["en"];
+  }
   
   useEffect(() => {
     if (musicRef.current) {
@@ -118,7 +122,7 @@ function App() {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage, autoLang }}>
       <div className="d-flex flex-column vh-100">
         <Header {...{ gameStarted, toggleShowCharacter, mapEnabled }} />
         <div className="flex-grow-1">

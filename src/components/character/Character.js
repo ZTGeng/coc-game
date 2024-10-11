@@ -6,19 +6,19 @@ import Characteristics from './Characteristics';
 import Skills from './Skills';
 
 function Info({ characterSheet, occupation }) {
-  const { language } = useContext(LanguageContext);
-  const occupationName = occupation.name[language] || occupation.name["en"];
+  const { autoLang } = useContext(LanguageContext);
+  const occupationName = autoLang(occupation.name);
 
   return (
     <div className="row mt-4">
       <div className="col-xl-12 col-md-4 col-8 form-floating mb-2">
         <input type="text" className="form-control focus-ring focus-ring-light border-0 px-0" id="nameInput" placeholder="" />
-        <label htmlFor="nameInput" className="small form-label">{ characterSheet.nameTitie[language] || characterSheet.nameTitie["en"] }</label>
+        <label htmlFor="nameInput" className="small form-label">{ autoLang(characterSheet.nameTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
       <div className="col-xl-12 col-md-2 col-4 form-floating mb-2">
         <input type="number" className="form-control focus-ring focus-ring-light border-0 px-0" id="ageInput" placeholder="" />
-        <label htmlFor="ageInput" className="small form-label">{ characterSheet.ageTitie[language] || characterSheet.ageTitie["en"] }</label>
+        <label htmlFor="ageInput" className="small form-label">{ autoLang(characterSheet.ageTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
       <div className="col-xl-12 col-md-6 col-12 form-floating mb-2">
@@ -29,7 +29,7 @@ function Info({ characterSheet, occupation }) {
                placeholder="" 
                readOnly={true} 
                value={ occupationName } />
-        <label htmlFor="occupationInput" className="small form-label">{ characterSheet.occupationTitie[language] || characterSheet.occupationTitie["en"] }</label>
+        <label htmlFor="occupationInput" className="small form-label">{ autoLang(characterSheet.occupationTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
     </div>
@@ -37,7 +37,7 @@ function Info({ characterSheet, occupation }) {
 }
 
 function Attributes({ characterSheet, attributes }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const { highlight } = useContext(HighlightContext);
 
   function getHighlightClassName(attr) {
@@ -59,7 +59,7 @@ function Attributes({ characterSheet, attributes }) {
         <table className="table table-borderless text-center align-middle">
           <tbody>
               <tr>
-                <th>{ characterSheet.HP.name[language] || characterSheet.HP.name["en"] }</th>
+                <th>{ autoLang(characterSheet.HP.name) }</th>
                 <td className={"border" + getHighlightClassName("HP")}>{ attributes.HP.value }/{ attributes.HP.maxValue }</td>
               </tr>
           </tbody>
@@ -67,7 +67,7 @@ function Attributes({ characterSheet, attributes }) {
         <table className="table table-borderless text-center align-middle">
           <tbody>
               <tr>
-                <th>{ characterSheet.San.name[language] || characterSheet.San.name["en"] }</th>
+                <th>{ autoLang(characterSheet.San.name) }</th>
                 <td className={"border" + getHighlightClassName("San")}>{ attributes.San.value }/{ attributes.San.maxValue }</td>
               </tr>
           </tbody>
@@ -77,7 +77,7 @@ function Attributes({ characterSheet, attributes }) {
         <table className="table table-borderless text-center align-middle">
           <tbody>
               <tr>
-                <th>{ characterSheet.Luck.name[language] || characterSheet.Luck.name["en"] }</th>
+                <th>{ autoLang(characterSheet.Luck.name) }</th>
                 <td className={"border" + getHighlightClassName("Luck")}>{ attributes.Luck.value }</td>
               </tr>
           </tbody>
@@ -85,7 +85,7 @@ function Attributes({ characterSheet, attributes }) {
         <table className="table table-borderless text-center align-middle">
           <tbody>
               <tr>
-                <th>{ characterSheet.MP.name[language] || characterSheet.MP.name["en"] }</th>
+                <th>{ autoLang(characterSheet.MP.name) }</th>
                 <td className={"border" + getHighlightClassName("MP")}>{ attributes.MP.value }/{ attributes.MP.maxValue }</td>
               </tr>
           </tbody>
@@ -96,7 +96,7 @@ function Attributes({ characterSheet, attributes }) {
 }
 
 function Weapons({ characterSheet, skills }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const hasKnife = flagConditionCheck("flag_bought_knife");
 
@@ -112,37 +112,37 @@ function Weapons({ characterSheet, skills }) {
 
   const knifeRow = (
     <tr className="table-active">
-      <td className="pb-0">{ characterSheet.weapons.knife.name[language] || characterSheet.weapons.knife.name["en"] }</td>
+      <td className="pb-0">{ autoLang(characterSheet.weapons.knife.name) }</td>
       <td className="pb-0">{ skills.fighting.value }</td>
       <td className="pb-0">{ Math.floor(skills.fighting.value / 2) }</td>
       <td className="pb-0">{ Math.floor(skills.fighting.value / 5) }</td>
-      <td className="pb-0">{ characterSheet.weapons.knife.damage[language] || characterSheet.weapons.knife.damage["en"] }</td>
+      <td className="pb-0">{ autoLang(characterSheet.weapons.knife.damage) }</td>
     </tr>
   );
 
   return (
     <div className="card h-100">
       <h6 className="card-header">
-        { characterSheet.weaponsTitie[language] || characterSheet.weaponsTitie["en"] }
+        { autoLang(characterSheet.weaponsTitie) }
       </h6>
       <div className="card-body py-0 px-2">
         <table className="table table-sm text-center align-bottom" style={{ fontSize: "0.8rem" }}>
           <thead>
             <tr>
-              <th className="border-bottom-0">{ characterSheet.weapons.tableHeader.name[language] || characterSheet.weapons.tableHeader.name["en"]}</th>
-              <th className="border-bottom-0">{ characterSheet.weapons.tableHeader.regular[language] || characterSheet.weapons.tableHeader.regular["en"]}</th> 
-              <th className="border-bottom-0">{ characterSheet.weapons.tableHeader.hard[language] || characterSheet.weapons.tableHeader.hard["en"]}</th>
-              <th className="border-bottom-0">{ characterSheet.weapons.tableHeader.extreme[language] || characterSheet.weapons.tableHeader.extreme["en"]}</th>
-              <th className="border-bottom-0">{ characterSheet.weapons.tableHeader.damage[language] || characterSheet.weapons.tableHeader.damage["en"]}</th>
+              <th className="border-bottom-0">{ autoLang(characterSheet.weapons.tableHeader.name) }</th>
+              <th className="border-bottom-0">{ autoLang(characterSheet.weapons.tableHeader.regular) }</th> 
+              <th className="border-bottom-0">{ autoLang(characterSheet.weapons.tableHeader.hard) }</th>
+              <th className="border-bottom-0">{ autoLang(characterSheet.weapons.tableHeader.extreme) }</th>
+              <th className="border-bottom-0">{ autoLang(characterSheet.weapons.tableHeader.damage) }</th>
             </tr>
           </thead>
           <tbody>
             <tr className={ hasKnife ? "" : "table-active"}>
-              <td className="pb-0">{ characterSheet.weapons.unarmed.name[language] || characterSheet.weapons.unarmed.name["en"] }</td>
+              <td className="pb-0">{ autoLang(characterSheet.weapons.unarmed.name) }</td>
               <td className="pb-0">{ skills.fighting.value }</td>
               <td className="pb-0">{ Math.floor(skills.fighting.value / 2) }</td>
               <td className="pb-0">{ Math.floor(skills.fighting.value / 5) }</td>
-              <td className="pb-0">{ characterSheet.weapons.unarmed.damage[language] || characterSheet.weapons.unarmed.damage["en"] }</td>
+              <td className="pb-0">{ autoLang(characterSheet.weapons.unarmed.damage) }</td>
             </tr>
             { hasKnife ? knifeRow : blankRow }
             { blankRow }
@@ -155,7 +155,7 @@ function Weapons({ characterSheet, skills }) {
 }
 
 function Combat({ characterSheet, chars, skills }) {
-  const { language } = useContext(LanguageContext);
+  const { autoLang } = useContext(LanguageContext);
   let damageBonus, build;
   if (!chars.SIZ.value || !chars.STR.value) {
     damageBonus = "";
@@ -180,7 +180,7 @@ function Combat({ characterSheet, chars, skills }) {
   return (
     <div className="card">
       <h6 className="card-header">
-        {characterSheet.combatTitle[language] || characterSheet.combatTitle["en"]}
+        { autoLang(characterSheet.combatTitle) }
       </h6>
       <div className="card-body px-0 py-2">
         <div className="d-flex flex-column">
@@ -188,7 +188,7 @@ function Combat({ characterSheet, chars, skills }) {
             <tbody>
               <tr>
                 <th className="border-0 py-0 ps-0 lh-1"  scope="row">
-                  <small>{ characterSheet.combat.damageBonus[language] || characterSheet.combat.damageBonus["en"] }</small>
+                  <small>{ autoLang(characterSheet.combat.damageBonus) }</small>
                 </th>
                 <td className="border p-2" style={{ width: "4rem", height: "2.4rem", borderRadius : "2rem" }}>
                   { damageBonus }
@@ -200,7 +200,7 @@ function Combat({ characterSheet, chars, skills }) {
             <tbody>
               <tr>
                 <th className="border-0 py-0 ps-0" scope="row">
-                  { characterSheet.combat.build[language] || characterSheet.combat.build["en"] }
+                  { autoLang(characterSheet.combat.build) }
                 </th>
                 <td className="border p-2" style={{ width: "4rem", height: "2.4rem", borderRadius : "2rem" }}>
                   { build }
@@ -212,7 +212,7 @@ function Combat({ characterSheet, chars, skills }) {
             <tbody>
               <tr>
                 <th rowSpan="2" className="border-0 py-0 ps-0" scope="row">
-                  { characterSheet.skills.dodge.name[language] || characterSheet.skills.dodge.name["en"] }
+                  { autoLang(characterSheet.skills.dodge.name) }
                 </th>
                 <td rowSpan="2" className="border border-end-0 p-2" style={{ width: "2rem" }}>
                   { skills.dodge.value }
