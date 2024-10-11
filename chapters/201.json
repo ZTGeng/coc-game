@@ -1,20 +1,21 @@
 {
     "key": 201,
+    "location": "woodland",
     "text": {
         "en": [
             { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "The bear backs off, black eyes trained on you. It makes a low grumble in its throat, then turns and shambles into the trees." },
-                { "tag": "info", "text": [
-                    { "content": "You have somehow survived a fight with a bear. You may checkmark the small box beside your Fighting(Brawl) skill. If the bear hurt you, you may also attempt a First Aid roll and, if successful, restore 1 hit point" }
-                ] }
+                { "content": "The bear backs off, black eyes trained on you. It makes a low grumble in its throat, then turns and shambles into the trees." }
+            ] },
+            { "tag": "info", "text": [
+                { "content": "You have somehow survived a fight with a bear. You may checkmark the small box beside your Fighting(Brawl) skill. If the bear hurt you, you may also attempt a First Aid roll and, if successful, restore 1 hit point" }
             ] }
         ],
         "zh": [
             { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "熊退后几步，漆黑的眼珠直瞪着你。它从喉咙深处发出低沉的咕哝声，转头蹒跚返回了树林。" },
-                { "tag": "info", "text": [
-                    { "content": "不管怎样，你已经在和熊的搏斗当中活了下来。你可以在你的「格斗( 斗殴)」技能左边的小方框里打勾。如果熊击伤了你，你还可以尝试进行一次「急救」检定，若成功可以回复1点耐久值。" }
-                ] }
+                { "content": "熊退后几步，漆黑的眼珠直瞪着你。它从喉咙深处发出低沉的咕哝声，转头蹒跚返回了树林。" }
+            ] },
+            { "tag": "info", "text": [
+                { "content": "不管怎样，你已经在和熊的搏斗当中活了下来。你可以在你的「格斗( 斗殴)」技能左边的小方框里打勾。如果熊击伤了你，你还可以尝试进行一次「急救」检定，若成功可以回复1点耐久值。" }
             ] }
         ]
     },
@@ -23,19 +24,21 @@
         "key": "first_aid",
         "level": "value",
         "onSuccess": [
+            { "action": "action_set_highlight", "param": { "key": "HP", "level": "success" } },
             { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": 1 } },
             { "action": "action_check_in_skill_box", "param": "first_aid" }
         ]
     },
-
     "options": [
         { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_finished" }
     ],
     "onload": [
         { "action": "action_check_in_skill_box", "param": "fighting" },
-        { "action": "action_set_highlight", "param": { "key": "first_aid", "level": "value" } }
+        { "action": "action_set_highlight", "param": { "key": "first_aid", "level": "value" } },
+        { "action": "action_trophy", "param": "win_bear" }
     ],
     "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "HP", "level": "none" } },
         { "action": "action_set_highlight", "param": { "key": "first_aid", "level": "none" } }
     ]
 }

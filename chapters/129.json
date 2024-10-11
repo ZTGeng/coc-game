@@ -1,5 +1,6 @@
 {
     "key": 129,
+    "location": "woodland",
     "text": {
         "en": [
             { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [

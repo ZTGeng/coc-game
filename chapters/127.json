@@ -1,5 +1,6 @@
 {
     "key": 127,
+    "location": "eastern_road",
     "text": {
         "en": [
             { "content": "The man looks up at the village, scanning the clifftops. You get a brief flash of his face. There is something unsettling about it. Then he turns to walk away from the road. But as he does, he raises a hand and slowly beckons to you." }
@@ -9,19 +10,7 @@
         ]
     },
     "options": [
-        {
-            "key": 0,
-            "text": {
-                "en": "Follow the strange man",
-                "zh": "跟上这个奇怪的人"
-            }
-        },
-        {
-            "key": 1,
-            "text": {
-                "en": "It seems unwise to follow",
-                "zh": "跟上去并不明智"
-            }
-        }
+        { "key": 0, "text": { "en": "Follow the strange man", "zh": "跟上这个奇怪的人" } },
+        { "key": 1, "text": { "en": "It seems unwise to follow", "zh": "跟上去并不明智" } }
     ]
 }

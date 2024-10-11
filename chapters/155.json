@@ -1,22 +1,23 @@
 {
     "key": 155,
+    "location": "woodland",
     "text": {
         "en": [
             { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "You scramble between the trees, fighting panic as you run for the road." },
-                { "tag": "info", "text": [
-                    { "content": "To escape from the bear, you must make an opposed roll, with your DEX versus the bear’s DEX. The bear has DEX 58. It scores a Hard success on a roll of 29 and under, and an Extreme success on a roll of 11 and under. Make the bear’s DEX roll, then make your DEX roll." },
-                    { "content": "Compare your level of success. An Extreme success beats a Hard success, which beats a Regular (normal) success, which beats a failure. If there is a draw, the higher skill value wins." }
-                ] }
+                { "content": "You scramble between the trees, fighting panic as you run for the road." }
+            ] },
+            { "tag": "info", "text": [
+                { "content": "To escape from the bear, you must make an opposed roll, with your DEX versus the bear’s DEX. The bear has DEX 58. It scores a Hard success on a roll of 29 and under, and an Extreme success on a roll of 11 and under. Make the bear’s DEX roll, then make your DEX roll." },
+                { "content": "Compare your level of success. An Extreme success beats a Hard success, which beats a Regular (normal) success, which beats a failure. If there is a draw, the higher skill value wins." }
             ] }
         ],
         "zh": [
             { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "你慌忙在树丛间攀爬，强行抑制恐惧感，想要回到道路上。" },
-                { "tag": "info", "text": [
-                    { "content": "想要从熊掌下逃脱，你必须用你的“敏捷”和熊的“敏捷”进行一次对抗检定。熊的“敏捷”是58。它掷出小于等于29点为困难成功，小于等于11点为极难成功。先进行熊的“敏捷”检定，再做你的“敏捷”检定。" },
-                    { "content": "比较你们两方的成功等级。极难成功胜过困难成功，困难成功胜过常规（普通）成功，常规成功胜过失败。如果成功等级相同，技能值高的一方胜出。" }
-                ] }
+                { "content": "你慌忙在树丛间攀爬，强行抑制恐惧感，想要回到道路上。" }
+            ] },
+            { "tag": "info", "text": [
+                { "content": "想要从熊掌下逃脱，你必须用你的“敏捷”和熊的“敏捷”进行一次对抗检定。熊的“敏捷”是58。它掷出小于等于29点为困难成功，小于等于11点为极难成功。先进行熊的“敏捷”检定，再做你的“敏捷”检定。" },
+                { "content": "比较你们两方的成功等级。极难成功胜过困难成功，困难成功胜过常规（普通）成功，常规成功胜过失败。如果成功等级相同，技能值高的一方胜出。" }
             ] }
         ]
     },
