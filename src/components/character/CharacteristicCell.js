@@ -20,10 +20,14 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
               <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
                 autoLang(characterSheet[char.key].name)
                   .split('\n')
-                  .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
+                  .map(( line, index ) => index === 0 
+                    ? <span className="d-block" key={ index }>{ line }</span> 
+                    : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
               }</th>
             ) : (
-              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(characterSheet[char.key].name) }</th>
+              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">
+                { autoLang(characterSheet[char.key].name) }
+              </th>
             ) }
             <td 
               rowSpan="2" 

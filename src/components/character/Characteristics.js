@@ -35,7 +35,9 @@ function CharacteristicsEditable({ characterSheet, chars, setChars }) {
       availables.push(characteristic.value);
       availables.sort((a, b) => b - a);
     }
-    setChars({ ...chars, [key]: { ...characteristic, value } });
+    const half = Math.floor(value / 2);
+    const fifth = Math.floor(value / 5);
+    setChars({ ...chars, [key]: { ...characteristic, value, half, fifth } });
     setAvailableValues(availables);
   }
 

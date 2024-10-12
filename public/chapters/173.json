@@ -51,11 +51,19 @@
                 ["claw", "claw"],
                 ["claw", "bite"],
                 ["claw", "claw"]
-            ]
+            ],
+            "moveDefend": "bite"
         }
     },
     "options": [
         { "key": 0, "text": { "en": "You win the combat, continue", "zh": "战斗胜利，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "You lose the combat, continue", "zh": "战斗失败，继续" }, "show": "flag_check_failed" }
+    ],
+    "onload": [
+        { "action": "action_set_flag", "param": { "flag": "flag_major_wound", "value": false } }
+    ],
+    "onleave": [
+        { "action": "action_set_highlight", "param": { "key": "HP", "level": "none" } },
+        { "action": "action_set_flag", "param": { "flag": "flag_major_wound", "value": false } }
     ]
 }

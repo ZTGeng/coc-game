@@ -108,9 +108,18 @@ function EditableSkillCell({ skillKey, skillUI, skill, isClickable, isForHobby, 
 
   function onSelectChange(e) {
     const newValue = e.target.value ? parseInt(e.target.value) : e.target.value; // Int or ""
-    if (skill.value !== newValue) {
-      onValueSelected(skillKey,  newValue);
+    // if (skill.value !== newValue) {
+    //   onValueSelected(skillKey, newValue);
+    // }
+    const fromBase = !skill.occupation && !isForHobby;
+    const toBase = e.target.selectedIndex === 0;
+    if (fromBase && toBase) {
+      return;
     }
+    if (!fromBase && !toBase && skill.value === newValue) {
+      return;
+    }
+    onValueSelected(skillKey, newValue, fromBase, toBase);
   }
 
   return (

@@ -8,8 +8,8 @@ import flagConditionCheckProvider from "../flagCheck";
 
 const initCheckFlags = {
   // status: "", // "", "ready", "done"
-  diceNumber: "", // roll results
-  rollKey: "", // "key"
+  diceNumber: "", // [number]
+  rollKey: "", // key
   rollLevel: "", // "value", "half", "fifth"
   result: "", // "pass", "fail"
   resultLevel: "", // 0: fail, 1: value, 2: half, 3: fifth
@@ -177,6 +177,8 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
         if (chapter && (chapter.key !== chapterKey)) {
           onLeave(chapter);
         }
+
+        onChapterAction("action_clear_highlight", ""); // reset highlight
 
         // reset checkFlags for new chapter
         if (checkFlags.result) {

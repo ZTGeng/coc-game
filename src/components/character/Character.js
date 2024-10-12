@@ -4,6 +4,7 @@ import { HighlightContext } from "../Game";
 import { FlagsContext } from "../Game";
 import Characteristics from './Characteristics';
 import Skills from './Skills';
+import * as utils from '../../utils';
 
 function Info({ characterSheet, occupation }) {
   const { autoLang } = useContext(LanguageContext);
@@ -156,26 +157,12 @@ function Weapons({ characterSheet, skills }) {
 
 function Combat({ characterSheet, chars, skills }) {
   const { autoLang } = useContext(LanguageContext);
-  let damageBonus, build;
-  if (!chars.SIZ.value || !chars.STR.value) {
-    damageBonus = "";
-    build = "";
-  } else if (chars.SIZ.value + chars.STR.value > 164) {
-    damageBonus = "1d6";
-    build = 2;
-  } else if (chars.SIZ.value + chars.STR.value > 124) {
-    damageBonus = "1d4";
-    build = 1;
-  } else if (chars.SIZ.value + chars.STR.value > 84) {
-    damageBonus = 0;
-    build = 0;
-  } else if (chars.SIZ.value + chars.STR.value > 64) {
-    damageBonus = -1;
-    build = -1;
-  } else {
-    damageBonus = -2;
-    build = -2;
-  }
+  const [damageBonus, build] = !chars.SIZ.value || !chars.STR.value
+    ? ["", ""]
+    : [
+      utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value), 
+      utils.calculateBuild(chars.STR.value, chars.SIZ.value)
+    ];
 
   return (
     <div className="card">

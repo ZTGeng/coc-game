@@ -78,7 +78,8 @@ function App() {
   const [showCharacter, setShowCharacter] = useState(false);
   const [mapEnabled, setMapEnabled] = useState(false);
   const musicRef = useRef();
-  const sfxRef = useRef();
+  const diceSfxRef = useRef();
+  const hpSfxRef = useRef();
 
   function autoLang(texts) { // texts = { en: "English", zh: "中文" }
     return texts[language] || texts["en"];
@@ -91,8 +92,11 @@ function App() {
   }, [musicVolume]);
 
   useEffect(() => {
-    if (sfxRef.current) {
-      sfxRef.current.volume = sfxVolume;
+    if (diceSfxRef.current) {
+      diceSfxRef.current.volume = sfxVolume;
+    }
+    if (hpSfxRef.current) {
+      hpSfxRef.current.volume = sfxVolume;
     }
   }, [sfxVolume]);
 
@@ -115,9 +119,20 @@ function App() {
 
   function playSound(sound) {
     const src = `./audio/${sound}.mp3`;
-    if (sfxRef.current) {
-      sfxRef.current.src = src;
-      sfxRef.current.play().catch(error => console.error(`Failed to play sound: ${error}`));
+    if (sound === "dice" || sound === "one-die") {
+      if (diceSfxRef.current) {
+        diceSfxRef.current.pause();
+        diceSfxRef.current.currentTime = 0;
+        diceSfxRef.current.src = src;
+        diceSfxRef.current.play().catch(error => console.error(`Failed to play sound: ${error}`));
+      }
+    } else {
+      if (hpSfxRef.current) {
+        hpSfxRef.current.pause();
+        hpSfxRef.current.currentTime = 0;
+        hpSfxRef.current.src = src;
+        hpSfxRef.current.play().catch(error => console.error(`Failed to play sound: ${error}`));
+      }
     }
   }
 
@@ -133,7 +148,8 @@ function App() {
       <ToastMessages />
       <ConfigModal {...{ gameStarted, onRestart: startGame, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
       <audio ref={musicRef} src="" type="audio/mpeg" loop volume={musicVolume} />
-      <audio ref={sfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
+      <audio ref={diceSfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
+      <audio ref={hpSfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
     </LanguageContext.Provider>
   )
 }

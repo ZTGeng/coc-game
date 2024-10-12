@@ -5,20 +5,9 @@ import * as utils from "../../utils";
 
 const characteristicsList = ["STR", "CON", "SIZ", "DEX", "APP", "INT", "POW", "EDU"];
 const attributesList = ["HP", "San", "Luck", "MP"];
-const resultLevels = ["fail", "value", "half", "fifth"];
-const resultLevelTexts = {
-  en: {
-    "fail": "Failure",
-    "value": "Regular Success",
-    "half": "Hard Success",
-    "fifth": "Extreme Success"
-  },
-  zh: {
-    "fail": "失败",
-    "value": "普通成功",
-    "half": "困难成功",
-    "fifth": "极难成功"
-  }
+export const resultLevelTexts = {
+  en: ["Failure", "Regular Success", "Hard Success", "Extreme Success"],
+  zh: ["失败", "普通成功", "困难成功", "极难成功"],
 };
 const checkLevelTexts = {
   en: {
@@ -48,7 +37,7 @@ const opposedCheckLoseText = {
   en: "Lose the Opposed Roll",
   zh: "对抗检定落败"
 };
-const checkButtonText = {
+export const checkButtonText = {
   en: "Roll 1D100",
   zh: "掷骰1D100"
 };
@@ -67,7 +56,7 @@ function getNameAndValueByKey(key, characterSheet, chars, attributes, skills, au
   }
 }
 
-function calculateLevel(diceNumber, value, half, fifth) { // 0: fail, 1: value, 2: half, 3: fifth
+export function calculateLevel(diceNumber, value, half, fifth) { // 0: fail, 1: value, 2: half, 3: fifth
   if (!half && half !== 0) half = Math.floor(value / 2);
   if (!fifth && fifth !== 0) fifth = Math.floor(value / 5);
   return diceNumber <= fifth ? 3 : diceNumber <= half ? 2 : diceNumber <= value ? 1 : 0;
@@ -76,8 +65,22 @@ function calculateLevel(diceNumber, value, half, fifth) { // 0: fail, 1: value, 
 function OpposedCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
   console.log(`OpposedCheck: ${check.key} vs ${check.opponent.key}`);
   const { autoLang } = useContext(LanguageContext);
-  const [opponentResult, setOpponentResult] = useState({ diceNumber: "", level: "" });
+  const [opponentResult, setOpponentResult] = useState({ diceNumber: "", resultLevel: "" });
   const loaded = useRef(false);
+
+  useEffect(() => {
+    console.log(`OpposedCheck useEffect: ${check.key} vs ${check.opponent.key}`);
+    if (loaded.current) return;
+    loaded.current = true;
+    
+    const opponentDiceNumber = utils.roll(1, 100);
+    const opponentLevel = calculateLevel(opponentDiceNumber[0], check.opponent.value, check.opponent.half, check.opponent.fifth);
+    setOpponentResult({ diceNumber: opponentDiceNumber[0], resultLevel: opponentLevel });
+    onAction("action_dice_message", {
+      title: autoLang(utils.TEXTS.opponentRoll), num: 1, dice: 100, bonus: 0, results: opponentDiceNumber, shouldPlaySound: true 
+    });
+
+  }, []);
 
   const [yourSkillName, yourSkillValue] = getNameAndValueByKey(check.key, characterSheet, chars, attributes, skills, autoLang);
   const yourSkillHalf = Math.floor(yourSkillValue / 2);
@@ -90,28 +93,8 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     en: `Opposed Roll - ${yourSkillName} vs ${opponentSkillName} ${check.bonus && check.bonus > 0 ? `- Bonus Die x ${check.bonus}` : (check.bonus && check.bonus < 0 ? `- Penalty Die x ${-check.bonus}` : "")}`
   });
 
-  const yourResultLevel = resultLevels[checkFlags.resultLevel || 0];
-  const yourText = autoLang({
-    zh: `${checkFlags.diceNumber} - ${resultLevelText[yourResultLevel]}`,
-    en: `${checkFlags.diceNumber} - ${resultLevelText[yourResultLevel]}`
-  });
-
-  const opponentResultLevel = resultLevels[opponentResult.level || 0];
-  const opponentText = autoLang({
-    zh: `${opponentResult.diceNumber} - ${resultLevelText[opponentResultLevel]}`,
-    en: `${opponentResult.diceNumber} - ${resultLevelText[opponentResultLevel]}`
-  });
-
-  useEffect(() => {
-    console.log(`OpposedCheck useEffect: ${check.key} vs ${check.opponent.key}`);
-    if (loaded.current) return;
-    loaded.current = true;
-    const opponentDiceNumber = utils.roll(1, 100);
-    const opponentLevel = calculateLevel(opponentDiceNumber[0], check.opponent.value, check.opponent.half, check.opponent.fifth);
-    setOpponentResult({ diceNumber: opponentDiceNumber[0], level: opponentLevel });
-    onAction("action_show_dice_toast", { num: 1, dice: 100, results: opponentDiceNumber, shouldPlaySound: true });
-
-  }, []);
+  const yourText = `${checkFlags.diceNumber} - ${resultLevelText[checkFlags.resultLevel || 0]}`;
+  const opponentText = `${opponentResult.diceNumber} - ${resultLevelText[opponentResult.resultLevel || 0]}`;
 
   function doCheck() {
     const diceNumbers = utils.roll(1, 100);
@@ -127,13 +110,14 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
       }
     }
     const resultLevel = calculateLevel(diceNumber, yourSkillValue, yourSkillHalf, yourSkillFifth);
-    const isPassed = resultLevel === opponentResult.level ? yourSkillValue > check.opponent.value : resultLevel > opponentResult.level;
-    onAction("action_show_dice_toast", { num: 1, dice: 100, bonus: check.bonus, results: diceNumbers, shouldPlaySound: true });
+    const isPassed = resultLevel === opponentResult.resultLevel ? yourSkillValue > check.opponent.value : resultLevel > opponentResult.resultLevel;
+    onAction("action_dice_message", { 
+      title: autoLang(utils.TEXTS.yourRoll), num: 1, dice: 100, bonus: check.bonus, results: diceNumbers, shouldPlaySound: true 
+    });
     setCheckFlags({
       // status: "done", 
       diceNumber: diceNumber,
       rollKey: check.key,
-      rollLevel: check.level,
       result: isPassed ? "pass" : "fail",
       resultLevel: resultLevel,
     });
@@ -159,16 +143,16 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
                 {checkFlags.result && (
                   <div>
                     { autoLang({ zh: `掷骰1D100：`, en: `Roll 1D100: ` }) }
-                    <p className="lead text-end">{yourText}</p>
+                    <div className="h5 fw-light text-end">{yourText}</div>
                   </div>
                 )}
                 {!checkFlags.result && <button className="btn btn-dark mx-2" onClick={doCheck}>{ autoLang(checkButtonText) }</button>}
               </div>
               <ul className="list-group list-group-flush">
-                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 3 ? " active" : "")}>{resultLevelText["fifth"]}: &le;{yourSkillFifth}</li>
-                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 2 ? " active" : "")}>{resultLevelText["half"]}: &le;{yourSkillHalf}</li>
-                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 1 ? " active" : "")}>{resultLevelText["value"]}: &le;{yourSkillValue}</li>
-                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 0 ? " active" : "")}>{resultLevelText["fail"]}: &gt;{yourSkillValue}</li>
+                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 3 ? " active" : "")}>{resultLevelText[3]}: &le;{yourSkillFifth}</li>
+                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 2 ? " active" : "")}>{resultLevelText[2]}: &le;{yourSkillHalf}</li>
+                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 1 ? " active" : "")}>{resultLevelText[1]}: &le;{yourSkillValue}</li>
+                <li className={"list-group-item list-group-item-secondary" + (checkFlags.resultLevel === 0 ? " active" : "")}>{resultLevelText[0]}: &gt;{yourSkillValue}</li>
               </ul>
             </div>
           </div>
@@ -180,13 +164,13 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
             <div className="card-body">
               <div>
                 { autoLang({ zh: `掷骰1D100：`, en: `Roll 1D100: ` }) }
-                <p className="lead text-end">{opponentText}</p>
+                <p className="lead text-end">{ opponentText }</p>
               </div>
               <ul className="list-group list-group-flush">
-                <li className={"list-group-item list-group-item-dark" + (opponentResult.level === 3 ? " active" : "")}>{resultLevelText["fifth"]}: &le;{check.opponent.fifth}</li>
-                <li className={"list-group-item list-group-item-dark" + (opponentResult.level === 2 ? " active" : "")}>{resultLevelText["half"]}: &le;{check.opponent.half}</li>
-                <li className={"list-group-item list-group-item-dark" + (opponentResult.level === 1 ? " active" : "")}>{resultLevelText["value"]}: &le;{check.opponent.value}</li>
-                <li className={"list-group-item list-group-item-dark" + (opponentResult.level === 0 ? " active" : "")}>{resultLevelText["fail"]}: &gt;{check.opponent.value}</li>
+                <li className={"list-group-item list-group-item-dark" + (opponentResult.resultLevel === 3 ? " active" : "")}>{resultLevelText[3]}: &le;{check.opponent.fifth}</li>
+                <li className={"list-group-item list-group-item-dark" + (opponentResult.resultLevel === 2 ? " active" : "")}>{resultLevelText[2]}: &le;{check.opponent.half}</li>
+                <li className={"list-group-item list-group-item-dark" + (opponentResult.resultLevel === 1 ? " active" : "")}>{resultLevelText[1]}: &le;{check.opponent.value}</li>
+                <li className={"list-group-item list-group-item-dark" + (opponentResult.resultLevel === 0 ? " active" : "")}>{resultLevelText[0]}: &gt;{check.opponent.value}</li>
               </ul>
             </div>
           </div>
@@ -225,7 +209,9 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
       }
     }
     const isPassed = diceNumber <= target;
-    onAction("action_show_dice_toast", { num: 1, dice: 100, bonus: check.bonus, results: diceNumbers, shouldPlaySound: true });
+    onAction("action_dice_message", { 
+      title: autoLang({ zh: `${name}检定`, en: `${name} Roll` }), num: 1, dice: 100, bonus: check.bonus, results: diceNumbers, shouldPlaySound: true 
+    });
     setCheckFlags({
       // status: "done", 
       diceNumber: diceNumber,

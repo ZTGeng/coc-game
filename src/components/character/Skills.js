@@ -168,11 +168,12 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
     setLockUnused(!lockUnused);
   }
 
-  function onValueSelected(key, newValue) {
-    const baseValue = skills[key].baseValue;
+  function onValueSelected(key, newValue, fromBase, toBase) {
+    console.log(`SkillsEditableForOccupation - onValueSelected: ${key} ${newValue} fromBase: ${fromBase} toBase: ${toBase}`);
+    // const baseValue = skills[key].baseValue;
     const curValue = skills[key].value;
-    const fromBase = baseValue === curValue;
-    const toBase = baseValue === newValue;
+    // const fromBase = baseValue === curValue;
+    // const toBase = baseValue === newValue;
 
     if (fromBase && toBase) {
       console.error(`SkillsEditableForOccupation - Skill ${key} should not trigger onValueSelevted with the same value`);
@@ -328,11 +329,11 @@ function SkillsEditableForHobby({ characterSheet, skills, setSkills }) {
     setLockUnused(!lockUnused);
   }
 
-  function onValueSelected(key, newValue) {
-    const baseValue = skills[key].baseValue;
-    const curValue = skills[key].value;
-    const fromBase = baseValue === curValue;
-    const toBase = baseValue === newValue;
+  function onValueSelected(key, newValue, fromBase, toBase) {
+    // const baseValue = skills[key].baseValue;
+    // const curValue = skills[key].value;
+    // const fromBase = baseValue === curValue;
+    // const toBase = baseValue === newValue;
 
     if (fromBase && toBase) {
       console.error(`SkillsEditableForHobby - Skill ${key} should not trigger onValueSelevted with the same value`);
