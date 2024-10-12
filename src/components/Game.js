@@ -37,14 +37,14 @@ const initFlags = {
 };
 
 const initChars = {
-  STR: { key: "STR", value: 40 },
+  STR: { key: "STR", value: 80 },
   CON: { key: "CON", value: 50 },
   SIZ: { key: "SIZ", value: 50 },
   DEX: { key: "DEX", value: 50 },
   APP: { key: "APP", value: 60 },
   INT: { key: "INT", value: 60 },
   POW: { key: "POW", value: 70 },
-  EDU: { key: "EDU", value: 80 },
+  EDU: { key: "EDU", value: 40 },
 };
 
 const initAttributes = {
@@ -170,8 +170,9 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
         const [num, dice] = deltaString.toLowerCase().split("d");
         const results = utils.roll(parseInt(num), parseInt(dice));
         newValue = attr.value + results.reduce((a, b) => a + b, 0) * multiplier;
+        const attrName = autoLang(characterSheet[param.key].name);
         showDiceTitleToast(
-          autoLang({ zh: `${param.key} ${param.delta}`, en: `${param.key} ${param.delta}` }), 
+          autoLang({ zh: `${attrName} ${param.delta}`, en: `${attrName} ${param.delta}` }), 
           parseInt(num), parseInt(dice), 0, results, false);
       } else {
         newValue = attr.value + param.delta;
@@ -228,7 +229,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       const results = utils.roll(3, 6);
       const luck = results.reduce((a, b) => a + b, 0) * 5;
 
-      showDiceTitleToast(autoLang({ zh: "掷骰幸运", en: "Roll Luck" }), 3, 6, 0, results, true);
+      showDiceTitleToast(autoLang({ zh: "投掷幸运", en: "Roll Luck" }), 3, 6, 0, results, true);
       setAttributes({ ...attributes, Luck: { value: luck } });
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }

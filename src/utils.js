@@ -39,7 +39,7 @@ export function calculateBuild(STR, SIZ) {
 
 export const TEXTS = {
     damage: { zh: "伤害", en: "Damage" },
-    yourRoll: { zh: "你的掷骰", en: "Your roll" },
-    opponentRoll: { zh: "对手的掷骰", en: "Opponent's roll" },
+    yourRoll: { zh: "你的检定", en: "Your roll" },
+    opponentRoll: { zh: "对手检定", en: "Opponent's roll" },
     combat: { zh: "战斗", en: "Combat" },
 }
