@@ -1,8 +1,10 @@
 {
     "key": 228,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "You ease yourself onto the widest branch you can see. It is less than comfortable, but you do at least feel safer in this elevated position." },
+            { "content": "Night settles slowly around you. The woods come alive with small noises: scratching nearby, distant bird calls, and the gentle rustle of leaves. Although resigned to a long, tedious night of wakefulness, after a few hours you find yourself yawning. You loop your belt around the branch and your clothing, to hold yourself in place as best you can. Then you close your eyes." }
         ],
         "zh": [
             { "content": "你小心翼翼地能爬到见到的最宽阔的树枝上。上面不是很舒服，但在这么高的位置至少你能感觉安全一些。" },

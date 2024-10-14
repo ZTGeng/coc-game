@@ -1,21 +1,26 @@
 {
     "key": 252,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "Something is not right here. Even as your fingers find the clasp of the belt and open it, some rational part of your mind recognizes that this fire does not look natural. And trees don’t move by themselves." },
+            { "content": "The belt releases and you drop through air. Can you see figures there? Coming out of the dark—" },
+            { "tag": "info", "text": [
+                { "content": "Lose 1D3 hit points." }
+            ] }
         ],
         "zh": [
             { "content": "这里有些东西不太对劲。即使你的手摸到、解开了腰带扣，你头脑中的一点理性还记得这火焰的样子并不自然。而且树不会自己挪动。" },
             { "content": "腰带已经松脱，你从高空坠落。你能看到下面的影子吗？它们从黑暗中出现——" },
             { "tag": "info", "text": [
-            { "content": "失去1D3点耐久值。" }
+                { "content": "失去1D3点耐久值。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "投掷1D3点耐久", "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d3" }, "show": "!flag_hp_reduced" }
         ]
     },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_hp_reduced" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+    ],
+    "onload": [
+        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d3" } }
     ]
 }

@@ -1,17 +1,21 @@
 {
     "key": 269,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "Even as the beasts fan out around you, and black fear rises in your chest, you sense something is wrong here. The pack makes irritable, awkward movements; not the patient, predatory approach you might expect. They draw closer, circling you. You hear the rasp of their throats, smell their thick musky scent—" },
+            { "content": "They burst into flame." },
+            { "content": "You gape, fumes filling your mouth and nostrils, as the creatures ignite. Eyes wild, their fur blazes, waves of red-tinged fire dripping from their slavering jaws. They howl, a woeful cacophony, and one springs at you with insane, burning eyes. You stagger back, gulping the choking vapors, and you fall—" },
+            { "tag": "info", "text": [
+                { "content": "Lose 1 Sanity point." }
+            ] }
         ],
         "zh": [
-            { "content": "虽然这些野兽成扇形面对你排开阵势，你的胸中升起黑暗的绝望，但你仍感觉有不对劲的地方。兽群的动作急躁而怪异，不像你想象的捕食者那样耐心地接近。",
-        "它们越靠越近，绕着你转圈。你听到它们喉咙里发出刺耳的嚓嚓声，闻着它们带着麝香气的浓重气味——" },
+            { "content": "虽然这些野兽成扇形面对你排开阵势，你的胸中升起黑暗的绝望，但你仍感觉有不对劲的地方。兽群的动作急躁而怪异，不像你想象的捕食者那样耐心地接近。它们越靠越近，绕着你转圈。你听到它们喉咙里发出刺耳的嚓嚓声，闻着它们带着麝香气的浓重气味——" },
             { "content": "它们身忽然猛烈燃烧起来。" },
-            { "content": "你瞠目结舌，烟雾灌进了你的口鼻。这些生物燃烧着，瞪着眼睛，毛皮闪耀着火光，流着涎的下颌里滴落的也是泛红的火浪。",
-        "它们的嗥叫糅合成嘈杂刺耳的悲鸣，甚至有一只直扑向你，眼睛里满是疯狂的火焰。你想后退一步，却倒呛了一大口令人窒息的烟雾，身体直直倒下——" },
+            { "content": "你瞠目结舌，烟雾灌进了你的口鼻。这些生物燃烧着，瞪着眼睛，毛皮闪耀着火光，流着涎的下颌里滴落的也是泛红的火浪。它们的嗥叫糅合成嘈杂刺耳的悲鸣，甚至有一只直扑向你，眼睛里满是疯狂的火焰。你想后退一步，却倒呛了一大口令人窒息的烟雾，身体直直倒下——" },
             { "tag": "info", "text": [
-            { "content": "失去1点理智值" }
+                { "content": "失去1点理智值" }
             ] }
         ]
     },

@@ -18,6 +18,7 @@ const initFlags = {
   flag_found_cliff_ladder: false,
   flag_meet_aboganster: false,
   flag_c167_bear_attack_finished: false,
+  flag_involved_fighting: false,
   
   flag_major_wound: false,
   flag_penalty_die: false,
@@ -28,7 +29,6 @@ const initFlags = {
   flag_mp_used: false,
 
   flag_c120_tried_three_options: false,
-  flag_involved_fighting: false,
   flag_searched_book_shelf: false,
   flag_found_poem_book: false,
   flag_learned_magic_aboganster: false,
@@ -108,6 +108,8 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
         return attributes.Luck.value === "";
       case "flag_track_skill_box_checked":
         return skills.track.checked;
+      case "flag_hp_zero":
+        return attributes.HP.value === 0;
     }
     if (flag in flags) {
       return flags[flag];

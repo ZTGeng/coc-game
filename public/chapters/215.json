@@ -1,8 +1,9 @@
 {
     "key": 215,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "Unappealing as it is to keep walking through the dark, the idea of hiding up a tree while wild animals congregate to plan your slaughter is even less appealing. Sooner or later, this road must lead you to another settlement. You step up the pace." }
         ],
         "zh": [
             { "content": "虽然在黑暗中一直赶路听起来不怎样，但野兽聚集在树下盘算着杀了你，自己却在树上躲躲藏藏的主意更加让人不快。这条路迟早会领你到下一个村庄。你加快了步伐。" }
