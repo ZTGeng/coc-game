@@ -31,11 +31,5 @@
     "options": [
         { "key": 0, "text": { "en": "You win the opposed skill roll, continue", "zh": "你在对抗检定中胜出，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "You lose the opposed skill roll, continue", "zh": "你在对抗检定中落败，继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "DEX", "level": "all" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "DEX", "level": "none" } }
     ]
 }

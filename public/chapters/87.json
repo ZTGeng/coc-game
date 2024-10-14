@@ -23,12 +23,14 @@
     "options": [
         { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" },
-        { "key": 2, "text": { "en": "", "zh": "尝试沿着梯子爬下悬崖" }, "show": "flag_found_cliff_ladder", "secret": true }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "half" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "none" } }
+        { 
+            "key": 2, 
+            "text": { 
+                "en": "You think he may have escaped from the hidden stairway",
+                "zh": "你认为他可能是从隐藏的阶梯逃走了"
+            }, 
+            "show": "flag_found_cliff_ladder", 
+            "secret": true 
+        }
     ]
 }

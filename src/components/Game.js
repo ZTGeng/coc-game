@@ -17,9 +17,10 @@ const initFlags = {
   flag_bought_knife: false,
   flag_found_cliff_ladder: false,
   flag_meet_aboganster: false,
-  flag_major_wound: false,
-
   flag_c167_bear_attack_finished: false,
+  
+  flag_major_wound: false,
+  flag_penalty_die: false,
 
 
   flag_hp_reduced: false,
@@ -28,7 +29,6 @@ const initFlags = {
 
   flag_c120_tried_three_options: false,
   flag_involved_fighting: false,
-  flag_punish_dice: false,
   flag_searched_book_shelf: false,
   flag_found_poem_book: false,
   flag_learned_magic_aboganster: false,
@@ -151,12 +151,13 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       addToHighlight(param.key, param.level);
     },
     action_clear_highlight: () => { // param: key
+      highlightCopy = emptyHighlight
       setHighlight(emptyHighlight);
     },
     action_check_in_skill_box: (param) => { // param: key
       setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
     },
-    action_adjust_attribute: (param) => { // param: { key, delta, isHighlight }, delta: Int or String like "-1d2"
+    action_adjust_attribute: (param) => { // param: { key, delta, noHighlight }, delta: Int or String like "-1d2"
       const newAttributes = { ...attributes };
       const attr = newAttributes[param.key];
       let newValue;
@@ -181,14 +182,14 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       newValue = Math.max(newValue, 0);
 
       if (param.key === "HP") {
-        if (param.isHighlight) {
+        if (!param.noHighlight) {
           addToHighlight("HP", newValue < attr.value ? "danger" : "success");
         }
         if (newValue < attr.value) {
           playSound("hp-reduced");
         }
       } else if (param.key === "San") {
-        if (param.isHighlight) {
+        if (!param.noHighlight) {
           addToHighlight("San", newValue < attr.value ? "danger" : "success");
         }
         // playSound("san-reduced");
@@ -220,10 +221,14 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       const san = chars.POW.value;
       const mp = Math.floor(chars.POW.value / 5);
       setAttributes({ ...attributes, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } });
+      addToHighlight("San", "warning");
+      addToHighlight("MP", "warning");
+      addToHighlight("POW", "value");
     },
     action_initial_hp: () => {
       const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
       setAttributes({ ...attributes, HP: { value: hp, maxValue: hp } });
+      addToHighlight("HP", "warning");
     },
     action_roll_luck_and_update_chapter: () => {
       const results = utils.roll(3, 6);
@@ -279,23 +284,6 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
     }
   }
 
-  // function showDiceToast(num, dice, results, shouldPlaySound, bonus="") {
-  //   let subtitle = "";
-  //   if (bonus && bonus > 0) {
-  //     subtitle = autoLang({ zh: `奖励骰 x ${bonus}`, en: `Bonus Die x ${bonus}` });
-  //   } else if (bonus && bonus < 0) {
-  //     subtitle = autoLang({ zh: `惩罚骰 x ${-bonus}`, en: `Penalty Die x ${-bonus}` });
-  //   }
-  //   showToast({
-  //     title: autoLang({ zh: `投掷${num}D${dice}`, en: `Roll ${num}D${dice}` }),
-  //     subtitle: subtitle,
-  //     text: autoLang({ zh: `结果：${results.join("、")}`, en: `Results: ${results.join(", ")}` })
-  //   });
-  //   if (shouldPlaySound) {
-  //     num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
-  //   }
-  // }
-
   function showDiceTitleToast(title, num, dice, bonus, results, shouldPlaySound, alterNumDice = undefined) {
     let subtitle = `${num}D${dice}`;
     if (bonus && bonus > 0) {
@@ -306,7 +294,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
     showToast({
       title: title,
       subtitle: alterNumDice || subtitle,
-      text: autoLang({ zh: `结果：${results.join("、")}`, en: `Results: ${results.join(", ")}` })
+      text: autoLang({ zh: `骰子点数：${results.join("、")}`, en: `Dice Numbers: ${results.join(", ")}` })
     });
     if (shouldPlaySound) {
       num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");

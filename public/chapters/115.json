@@ -29,10 +29,6 @@
         { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
-        { "action": "action_c25_select_option", "param": 2 },
-        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "none" } }
+        { "action": "action_c25_select_option", "param": 2 }
     ]
 }

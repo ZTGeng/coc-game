@@ -37,9 +37,19 @@ export function calculateBuild(STR, SIZ) {
     }
 }
 
+export function calculateLevel(diceNumber, value, half, fifth) { // 0: fail, 1: value, 2: half, 3: fifth
+    if (!half && half !== 0) half = Math.floor(value / 2);
+    if (!fifth && fifth !== 0) fifth = Math.floor(value / 5);
+    return diceNumber <= fifth ? 3 : diceNumber <= half ? 2 : diceNumber <= value ? 1 : 0;
+  }
+  
+
 export const TEXTS = {
+    yourName: { zh: "你", en: "You" },
+    opponentName: { zh: "对手", en: "Opponent" },
     damage: { zh: "伤害", en: "Damage" },
     yourRoll: { zh: "你的检定", en: "Your roll" },
     opponentRoll: { zh: "对手检定", en: "Opponent's roll" },
+    opposed_roll: { zh: "对抗检定", en: "Opposed roll" },
     combat: { zh: "战斗", en: "Combat" },
 }

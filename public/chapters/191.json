@@ -26,11 +26,5 @@
     },
     "options": [
         { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_finished" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "none" } }
     ]
 }

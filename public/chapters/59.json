@@ -20,10 +20,6 @@
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
     "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": -1 } },
-        { "action": "action_set_highlight", "param": { "key": "HP", "level": "danger" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "HP", "level": "none" } }
+        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": -1 } }
     ]
 }

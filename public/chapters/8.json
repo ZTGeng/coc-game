@@ -11,22 +11,8 @@
         ]
     },
     "options": [
-        { 
-            "key": 0, 
-            "text": {
-                "en": "Continue",
-                "zh": "继续"
-            },
-            "show": "!flag_siz_greater_than_40" 
-        },
-        { 
-            "key": 1, 
-            "text": {
-                "en": "Continue",
-                "zh": "继续"
-            },
-            "show": "flag_siz_greater_than_40" }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "!flag_siz_greater_than_40" },
+        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_siz_greater_than_40" }
     ],
-    "onload": [{ "action": "action_set_highlight", "param": { "key": "SIZ", "level": "value" } }],
-    "onleave": [{ "action": "action_set_highlight", "param": { "key": "SIZ", "level": "none" } }]
+    "onload": [{ "action": "action_set_highlight", "param": { "key": "SIZ", "level": "value" } }]
 }

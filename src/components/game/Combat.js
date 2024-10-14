@@ -1,68 +1,38 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { LanguageContext } from "../../App";
 import { FlagsContext } from "../Game";
-import { resultLevelTexts, checkButtonText, calculateLevel } from "./Check";
+import { calculateBonus, rollCheck } from "./Check";
+import ActionCard, { CheckButton } from "./ActionCard";
 import * as utils from "../../utils";
 
 const fightAction =     { key: "fight", name: { zh: "攻击", en: "Fight" }, isInitiating: true };
 const fightBackAction = { key: "fight_back", name: { zh: "反击", en: "Fight Back" }, isInitiating: false };
 const dodgeAction =     { key: "dodge", name: { zh: "闪避", en: "Dodge" }, isInitiating: false };
 
-const yourName = { en: "You", zh: "你" };
 const initMoveResult = { diceNumber: "", resultLevel: "", skill: "", action: "" };
 const nextButtonText = { en: "Next", zh: "下一步" };
+const combatWinText = {
+  en: "Combat Win",
+  zh: "战斗胜利"
+};
+const combatLoseText = {
+  en: "Combat Lose",
+  zh: "战斗失败"
+};
+const conCheckText = {
+  en: "You have taken a major wound, make a CON roll",
+  zh: "你受了重伤，进行「体质」检定"
+};
+const conCheckPassText = {
+  en: "CON Roll Pass",
+  zh: "体质检定通过"
+};
+const conCheckFailText = {
+  en: "CON Roll Fail",
+  zh: "体质检定失败"
+};
 
-// role: { name, isOpponent }, action: { key, name, isInitiating }, skill: { name, value, half, fifth }, result: { diceNumber, resultLevel }
-function ActionCard({ role, action, skill, result, hpName, onAction, next }) {
-  const { autoLang } = useContext(LanguageContext);
-  const resultLevelText = autoLang(resultLevelTexts);
-
-  let cardContent, isDisabled = false;
-  if (role.isOpponent) {
-    cardContent = <div className="h5 fw-light ms-auto">{ `${result.diceNumber} - ${resultLevelText[result.resultLevel || 0]}` }</div>;
-  } else if (result.action === "") {
-    cardContent = <button className="btn btn-sm btn-dark" onClick={onAction}>{ autoLang(checkButtonText) }</button>;
-  } else if (result.action.key === action.key) {
-    cardContent = (
-      <>
-        <button className="btn btn-sm btn-dark" onClick={next}>{ autoLang(nextButtonText) }</button>
-        <div className="h5 fw-light ms-auto">{ `${result.diceNumber} - ${resultLevelText[result.resultLevel || 0]}` }</div>
-      </>
-    );
-  } else {
-    cardContent = <div className="h5 fw-light ms-auto">&nbsp;</div>;
-    isDisabled = true; // TODO to arg
-  }
-
-  function liTagClassName(level) {
-    return `list-group-item list-group-item-${role.isOpponent ? "dark" : "secondary"} ${isDisabled ? "text-secondary" : result.resultLevel === level ? "active" : ""}`;
-  }
-
-  return (
-    <div className={`flex-fill mx-1 ${action.isInitiating ? "" : "pt-4"}`} style={{ maxWidth: "20rem" }}>
-      <div className={`card ${role.isOpponent ? "text-bg-dark" : isDisabled ? "text-secondary" : "text-bg-light"} px-0`}>
-        <div className="card-header d-flex">
-          <h6>{ autoLang(role.name) }</h6>
-          <small className="mx-2">{ autoLang(hpName) } { role.HP }</small>
-          <small className="ms-auto">{ autoLang(skill.name) } { skill.value }</small>
-        </div>
-        <div className="card-body">
-          <div>{ autoLang(action.name) }</div>
-          <div className="mb-3 d-flex">
-            { cardContent }
-          </div>
-          <ul className="list-group list-group-flush">
-            <li className={liTagClassName(3)}>{ resultLevelText[3]}: &le;{skill.fifth || Math.floor(skill.value / 5) }</li>
-            <li className={liTagClassName(2)}>{ resultLevelText[2]}: &le;{skill.half || Math.floor(skill.value / 2) }</li>
-            <li className={liTagClassName(1)}>{ resultLevelText[1]}: &le;{skill.value }</li>
-            <li className={liTagClassName(0)}>{ resultLevelText[0]}: &gt;{skill.value }</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
+// chapter 173
 export default function Combat({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
@@ -70,6 +40,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   const [yourMoveResult, setYourMoveResult] = useState(initMoveResult);
   const [opponentMoveResult, setOpponentMoveResult] = useState(initMoveResult);
   const [opponentHp, setOpponentHp] = useState(check.opponent.HP);
+  const [showConCheck, setShowConCheck] = useState(false);
   const loaded = useRef(false);
   
   useEffect(() => {
@@ -80,7 +51,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     opponentRollResult();
   }, []);
 
-  const you = { name: yourName, isOpponent: false, HP: attributes.HP.value, DEX: chars.DEX.value };
+  const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attributes.HP.value, DEX: chars.DEX.value };
   const opponent = { ...check.opponent, isOpponent: true, HP: opponentHp };
   const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
   const isOpponentActing = turns[progress.turn] === "opponent";
@@ -90,17 +61,18 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     value: skills.dodge.value,
     half: Math.floor(skills.dodge.value / 2),
     fifth: Math.floor(skills.dodge.value / 5),
+    bonus: flagConditionCheck("flag_penalty_die") ? -1 : 0,
   };
   const fightSkill = { 
     name: characterSheet.skills.fighting.name,
     value: skills.fighting.value,
     half: Math.floor(skills.fighting.value / 2),
     fifth: Math.floor(skills.fighting.value / 5),
+    bonus: flagConditionCheck("flag_penalty_die") ? -1 : 0,
   };
-  const hpName = characterSheet.HP.name;
-
   const yourDamage = flagConditionCheck("flag_bought_knife") ? "1d4" : "1d3";
   const yourDamageBonus = utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value);
+  const bonus = calculateBonus(check, flagConditionCheck);
 
   function getOpponentCurrentMovel() {
     const moves = opponent.moves[progress.round % opponent.moves.length];
@@ -113,25 +85,22 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
 
   function opponentRollResult() {
     const opponentSkill = getOpponentCurrentSkill();
-    const opponentDiceNumber = utils.roll(1, 100);
-    const opponentLevel = calculateLevel(opponentDiceNumber[0], opponentSkill.value, opponentSkill.half, opponentSkill.fifth);
+    const opponentDiceNumbers = utils.roll(1, 100);
+    const opponentLevel = utils.calculateLevel(opponentDiceNumbers[0], opponentSkill.value, opponentSkill.half, opponentSkill.fifth);
     setOpponentMoveResult({ 
-      diceNumber: opponentDiceNumber[0], 
+      diceNumber: opponentDiceNumbers[0], 
       resultLevel: opponentLevel, 
       skill: opponentSkill,
     });
     onAction("action_dice_message", { 
-      title: autoLang(utils.TEXTS.opponentRoll), num: 1, dice: 100, bonus: 0, results: opponentDiceNumber, shouldPlaySound: true 
+      title: autoLang(utils.TEXTS.opponentRoll), num: 1, dice: 100, bonus: 0, results: opponentDiceNumbers, shouldPlaySound: true 
     });
   }
 
   function youRollResult(action, skill) {
-    const diceNumber = utils.roll(1, 100);
-    const resultLevel = calculateLevel(diceNumber[0], skill.value, skill.half, skill.fifth);
-    setYourMoveResult({ diceNumber: diceNumber[0], resultLevel, skill, action });
-    onAction("action_dice_message", {
-      title: autoLang(utils.TEXTS.yourRoll), num: 1, dice: 100, bonus: 0, results: diceNumber, shouldPlaySound: true 
-    });
+    const diceNumber = rollCheck(bonus, skill.name, onAction, autoLang);
+    const resultLevel = utils.calculateLevel(diceNumber, skill.value, skill.half, skill.fifth);
+    setYourMoveResult({ diceNumber: diceNumber, resultLevel, skill, action });
     return resultLevel;
   }
 
@@ -148,11 +117,12 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
       hpReduce = opponentMoveResult.skill.damage;
     }
     if (hpReduce > 0) {
-      if (hpReduce >= attributes.HP.maxValue / 2) {
-        onAction("action_set_flag", { flag: "flag_major_wound", value: true });
-      }
       if (hpReduce >= attributes.HP.value) {
         setCheckFlags({ result: "fail" });
+      } else if (hpReduce >= attributes.HP.maxValue / 2) {
+        onAction("action_set_flag", { flag: "flag_major_wound", value: true });
+        setShowConCheck(true);
+        onAction("action_set_highlight", { key: "CON", level: "value" });
       }
 
       onAction("action_adjust_attribute", { key: "HP", delta: -hpReduce });
@@ -160,9 +130,9 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     }
   }
 
-  function onYouHitOpponent(resultLevel) {
+  function onYouHitOpponent(resultLevel, isFightBack) {
     let hpReduce = 0, alterNumDice = "", diceNumbers = [];
-    if (resultLevel === 3) {
+    if (!isFightBack && resultLevel === 3) {
       // Extreme damage
       if (typeof yourDamage === "string") {
         const [num, dice] = yourDamage.toLowerCase().split("d").map(s => parseInt(s));
@@ -175,6 +145,13 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         hpReduce += num * dice;
       } else if (typeof yourDamageBonus === "number") {
         hpReduce += yourDamageBonus;
+      }
+      if (flagConditionCheck("flag_bought_knife")) {
+        const diceNumbers = utils.roll(1, 4);
+        hpReduce += diceNumbers.reduce((acc, cur) => acc + cur, 0);
+        onAction("action_dice_message", {
+          title: autoLang(utils.TEXTS.damage), num: 1, dice: 4, bonus: 0, results: diceNumbers, shouldPlaySound: true
+        });
       }
       if (hpReduce > opponent.armor) {
         const opponentNewHp = opponentHp - hpReduce + opponent.armor;
@@ -225,7 +202,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   }
 
   function onDodge() {
-    console.log("onDodge");
+    // console.log("onDodge");
     const resultLevel = youRollResult(dodgeAction, dodgeSkill);
     if (resultLevel < opponentMoveResult.resultLevel) {
       // dodge failed
@@ -238,7 +215,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   }
 
   function onFightBack() {
-    console.log("onFightBack");
+    // console.log("onFightBack");
     const resultLevel = youRollResult(fightBackAction, fightSkill);
     if (resultLevel <= opponentMoveResult.resultLevel) {
       // opponent hit you
@@ -247,12 +224,12 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     } else {
       // you hit opponent
       onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "反击成功", en: "Fight back succeeded" }), color: "success" });
-      onYouHitOpponent(resultLevel);
+      onYouHitOpponent(resultLevel, true);
     }
   }
 
   function onFight() {
-    console.log("onFight");
+    // console.log("onFight");
     const resultLevel = youRollResult(fightAction, fightSkill);
     const isOpponentDodging = getOpponentCurrentMovel() === dodgeAction.key;
     if (isOpponentDodging) {
@@ -261,8 +238,13 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "攻击被闪避", en: "Your attack was dodged" }), color: "danger" }); 
       } else {
         // opponent failed to dodge
-        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "攻击命中", en: "You hit" }), color: "success" });
-        onYouHitOpponent(resultLevel);
+        onAction("action_message", { 
+          title: autoLang(utils.TEXTS.combat), 
+          text: resultLevel === 3 
+            ? autoLang({ zh: "攻击命中，造成极限伤害", en: "You hit and dealt extreme damage" }) 
+            : autoLang({ zh: "攻击命中", en: "You hit" }), 
+          color: "success" });
+        onYouHitOpponent(resultLevel, false);
       }
     } else {
       if (resultLevel < opponentMoveResult.resultLevel) {
@@ -271,9 +253,32 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         onOpponentHitYou();
       } else {
         // you hit opponent
-        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "攻击命中", en: "You hit" }), color: "success" });
-        onYouHitOpponent(resultLevel);
+        onAction("action_message", { 
+          title: autoLang(utils.TEXTS.combat), 
+          text: resultLevel === 3 
+            ? autoLang({ zh: "攻击命中，造成极限伤害", en: "You hit and dealt extreme damage" }) 
+            : autoLang({ zh: "攻击命中", en: "You hit" }), 
+          color: "success" });
+        onYouHitOpponent(resultLevel, false);
       }
+    }
+  }
+
+  function onConCheck() {
+    // console.log("onConCheck");
+    setShowConCheck(false);
+    onAction("action_set_highlight", { key: "CON", level: "none" });
+    const diceNumber = rollCheck(bonus, characterSheet.CON.name, onAction, autoLang);
+    if (diceNumber > chars.CON.value) {
+      setCheckFlags({
+        // status: "done", 
+        diceNumber: diceNumber,
+        rollKey: "CON",
+        result: "fail",
+      });
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(conCheckFailText), color: "danger" });
+    } else {
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(conCheckPassText), color: "success" });
     }
   }
 
@@ -310,24 +315,43 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   window.next = next;
 
   function combatOver() {
-    console.log("combat over");
+    // console.log("combat over");
+    setCheckFlags({ result: "pass" });
   }
 
-  const cardTitle = `${autoLang({ zh: "战斗：", en: "Combat: " })}${autoLang(yourName)} vs ${autoLang(opponent.name)}`;
+  const cardTitle = `${autoLang(utils.TEXTS.combat)} ${autoLang(you.name)} vs ${autoLang(opponent.name)}`;
   const roundText = autoLang({ zh: `第 ${progress.round + 1} 轮`, en: `Round ${progress.round + 1}` });
 
   let yourCards = [], opponentCard;
   if (isOpponentActing) {
     const opponentSkill = getOpponentCurrentSkill();
-    opponentCard = { role: opponent, action: fightAction, skill: opponentSkill, result: opponentMoveResult, hpName };
+    opponentCard = { role: opponent, action: fightAction, skill: opponentSkill, result: opponentMoveResult, isDisabled: showConCheck };
 
-    yourCards.push({ role: you, action: fightBackAction, skill: fightSkill, result: yourMoveResult, onAction: onFightBack, hpName, next });
-    yourCards.push({ role: you, action: dodgeAction, skill: dodgeSkill, result: yourMoveResult, onAction: onDodge, hpName, next });
+    yourCards.push({ 
+      role: you, 
+      action: fightBackAction, 
+      skill: fightSkill, 
+      result: yourMoveResult, 
+      onAction: onFightBack, 
+      isDisabled: showConCheck || (yourMoveResult.action && yourMoveResult.action.key !== fightBackAction.key) });
+    yourCards.push({ 
+      role: you, 
+      action: dodgeAction, 
+      skill: dodgeSkill, 
+      result: yourMoveResult, 
+      onAction: onDodge, 
+      isDisabled: showConCheck || (yourMoveResult.action && yourMoveResult.action.key !== dodgeAction.key) });
   } else {
     const opponentSkill = opponent.skills[opponent.moveDefend];
-    opponentCard = { role: opponent, action: fightBackAction, skill: opponentSkill, result: opponentMoveResult, hpName };
+    opponentCard = { role: opponent, action: fightBackAction, skill: opponentSkill, result: opponentMoveResult, isDisabled: showConCheck };
 
-    yourCards.push({ role: you, action: fightAction, skill: fightSkill, result: yourMoveResult, onAction: onFight, hpName, next });
+    yourCards.push({ 
+      role: you, 
+      action: fightAction, 
+      skill: fightSkill, 
+      result: yourMoveResult, 
+      onAction: onFight, 
+      isDisabled: showConCheck });
   }
 
   return (
@@ -336,7 +360,19 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         <h6>{ cardTitle }</h6>
         <div className="ms-auto">{ roundText }</div>
       </div>
+      <div className="card-body">
+        <div className="d-flex justify-content-center align-items-center">
+          { checkFlags.result && <strong className={checkFlags.result === "pass" ? " text-success" : " text-danger"}>{ autoLang(checkFlags.result === "pass" ? combatWinText : combatLoseText) }</strong> }
+          { !checkFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} /></div></> }
+          { !checkFlags.result && !showConCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
+        </div>
+      </div>
+      <hr className="my-0" />
       <div className="card-body text-secondary">
+      <div className="d-flex justify-content-between align-items-center mb-1">
+          <div className="badge text-bg-light">{ `${autoLang(characterSheet.HP.name)} ${you.HP}` }</div>
+          <div className="badge text-bg-dark">{ `${autoLang(characterSheet.HP.name)} ${opponent.HP}` }</div>
+        </div>
         <div className="d-flex justify-content-center align-items-stretch">
           { 
             yourCards
@@ -349,4 +385,3 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     </div>
   );
 }
-        

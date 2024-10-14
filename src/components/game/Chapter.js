@@ -119,6 +119,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
       // param is the new chapter json with the same key
       setChapter(param);
       // will do DEX check, highlisht is needed
+      onChapterAction("action_clear_highlight", "");
       onChapterAction("action_set_highlight", { "key": "DEX", "level": "value" });
       // no return on purpose to let parent initial the Luck value
     }
@@ -179,6 +180,23 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
         }
 
         onChapterAction("action_clear_highlight", ""); // reset highlight
+        if (data.check) {
+          switch (data.check.type) {
+            case "roll":
+              onChapterAction("action_set_highlight", { "key": data.check.key, "level": data.check.level });
+              break;
+            case "roll_select":
+              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { "key": roll.key, "level": roll.level }));
+              break;
+            case "opposed_roll":
+              onChapterAction("action_set_highlight", { "key": data.check.key, "level": "all" });
+              break;
+            case "combat":
+              onChapterAction("action_set_highlight", { "key": "dodge", "level": "value" });
+              onChapterAction("action_set_highlight", { "key": "fighting", "level": "value" });
+              break;
+          }
+        }
 
         // reset checkFlags for new chapter
         if (checkFlags.result) {
