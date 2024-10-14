@@ -12,19 +12,7 @@
         ]
     },
     "options": [
-        {
-            "key": 0,
-            "text": {
-                "en": "Follow him in",
-                "zh": "跟着他进去"
-            }
-        },
-        {
-            "key": 1,
-            "text": {
-                "en": "Keep your distance",
-                "zh": "保持距离"
-            }
-        }
+        { "key": 0, "text": { "en": "Follow him in", "zh": "跟着他进去" } },
+        { "key": 1, "text": { "en": "Keep your distance", "zh": "保持距离" } }
     ]
 }

@@ -1,8 +1,12 @@
 {
     "key": 242,
+    "location": "school",
     "text": {
         "en": [
-
+            { "content": "May comes to the door in a plain bed jacket. She stares as you begin your story of bloodshed and fire. Almost immediately she steps back and closes the bedroom door so Ruth does not hear." },
+            { "content": "“Arbogast?” She shakes her head. “What possessed you to listen to his ravings?” She fetches a coat and lantern, and follows you through the night-shrouded village. When you reach the spot, you can see blood and scorch marks on the grass. But no body." },
+            { "content": "May looks at you for a long moment. “We can enquire further in the morning. I can’t leave Ruth alone.” She turns away." },
+            { "content": "You seem to have little option but to follow." }
         ],
         "zh": [
             { "content": "梅穿着一身朴素的睡衣开了门。你开始讲述关于鲜血和火焰的故事，她愣了一下，几乎马上就退回去，关上卧室门，不让露丝听到。" },

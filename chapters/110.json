@@ -28,11 +28,5 @@
         { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": ["flag_check_failed", "!flag_check_fumble"] },
         { "key": 2, "text": { "en": "You roll 96 or over, this is a Fumble, continue", "zh": "检定大失败，继续" }, "show": "flag_check_fumble" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "stealth", "level": "fifth" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "stealth", "level": "none" } }
     ]
 }

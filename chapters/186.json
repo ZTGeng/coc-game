@@ -12,5 +12,8 @@
             ] }
         ]
     },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_set_flag", "param": { "flag": "flag_major_wound", "value": false } }
+    ]
 }

@@ -29,18 +29,13 @@
         "key": "San",
         "level": "value",
         "onfail": [
-            { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" } },
-            { "action": "action_set_highlight", "param": { "key": "San", "level": "danger" } }
+            { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" } }
         ]
     },
     "options": [
         { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_finished" }
     ],
     "onload": [
-        { "action": "action_check_in_skill_box", "param": "track" },
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "none" } }
+        { "action": "action_check_in_skill_box", "param": "track" }
     ]
 }

@@ -1,18 +1,20 @@
 {
     "key": 230,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "Sleep presses down on you. You blink it back and sit up, trying to think through your situation. Everything in Emberhead seems to be working to stop you leaving. Perhaps the answer is to strike out at first light, to walk as far and as fast as you can. You can always return for your possessions, and if you lose them, you have nothing so precious that it could not be replaced." },
+            { "content": "A tiny creak draws your attention to the other side of the room." },
+            { "content": "Slowly, almost silently, the doorknob is turning." }
         ],
         "zh": [
-            { "content": "强大的睡意向你袭来。你不停地眨着眼睛，翻身坐起来，试图思考自己的处境。烬头村的一切东西好像都在阻止你离开。也许唯一的答案是明天天一亮就主动出击，走得越远越好。",
-        "以后你随时都能回来取走你的财物，就算这些财物都没有了，也没有什么是不可替代、特别值钱的东西。" },
+            { "content": "强大的睡意向你袭来。你不停地眨着眼睛，翻身坐起来，试图思考自己的处境。烬头村的一切东西好像都在阻止你离开。也许唯一的答案是明天天一亮就主动出击，走得越远越好。以后你随时都能回来取走你的财物，就算这些财物都没有了，也没有什么是不可替代、特别值钱的东西。" },
             { "content": "房间另一边咯吱响了一下，吸引了你的注意力。" },
             { "content": "门把手在慢慢地、悄悄地转动。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "抓住门把手，把门拉开" },
-        { "key": 1, "text": "假装睡下" }
+        { "key": 0, "text": { "en": "Grab it and wrench the door open", "zh": "抓住门把手，把门拉开" } },
+        { "key": 1, "text": { "en": "Pretend to be asleep", "zh": "假装睡下" } }
     ]
 }

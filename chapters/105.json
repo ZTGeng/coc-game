@@ -1,8 +1,10 @@
 {
     "key": 105,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "“I’m afraid I have some errands to run before dark. So I must close the library for today. I do hope you will return tomorrow afternoon if you are so inclined?”" },
+            { "content": "You leave the building with Winters, waiting as he locks up. You thank him for the coffee and the access to the library. He disappears off down an alley. You hope to be away from the village before tomorrow afternoon, but it’s good to know that there is a place you can occupy yourself." }
         ],
         "zh": [
             { "content": "“恐怕我天黑前有些差事要干，所以今天图书室必须关门了。如果您特别有需要的话，我希望您明天下午再来？”" },

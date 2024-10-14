@@ -1,30 +1,31 @@
 {
     "key": 17,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The floorboards creak beneath you as you cross the room. You feel a slight spring in your step. Perhaps this room is used as a gymnasium for the village children." },
+            { "content": "One noticeboard appears to be for the adults of the community, and one for the children. The former looks neglected, featuring handwritten advertisements for household items and a yellowed note about telegraph pricing. There is nothing about the festival." },
+            { "content": "The children’s noticeboard has a schedule for weekly crèche services, and a number of paintings obviously done by the children themselves. Most are incoherent, though colorful. As best you can tell, they depict fireworks, or perhaps the tale of Joseph from the Book of Genesis. One has lost a pin and hangs upside down. It shows a giant bird attacking Emberhead. Or it might simply be that the artist has not yet mastered the subtleties of scale." },
+            { "tag": "info", "text": [
+                { "content": "Make a Spot Hidden roll." }
+            ] }
         ],
         "zh": [
             { "content": "你走过房间，地板在你脚下吱嘎作响。你感觉到脚下略微有些弹力。这个房间可能是给村里的孩子们做体操房用的。" },
             { "content": "看起来，村里的大人们使用一块布告板，孩子们用另一块布告板。大人用的板子看上去很破旧，满是手写的字体，内容则是日用品的广告，还有一张泛黄的电报价目表。板上没有和节日相关的东西。" },
-            { "content": "孩子们的布告板上则写着托儿所的每周时间安排，还有一些明显由孩子们自己画出来的图画。这些画虽然五颜六色，但内容却支离破碎。你尽力分辨，也只能分辨他们在描绘焰火，或者是《创世纪》中约瑟的故事。",
-        "有一张画少了一枚图钉，倒吊在板上。上面画着一只巨鸟正在攻击烬头村。不过也有可能只是小画家还没有掌握透视的精妙之处。" },
+            { "content": "孩子们的布告板上则写着托儿所的每周时间安排，还有一些明显由孩子们自己画出来的图画。这些画虽然五颜六色，但内容却支离破碎。你尽力分辨，也只能分辨他们在描绘焰火，或者是《创世纪》中约瑟的故事。有一张画少了一枚图钉，倒吊在板上。上面画着一只巨鸟正在攻击烬头村。不过也有可能只是小画家还没有掌握透视的精妙之处。" },
             { "tag": "info", "text": [
-            { "content": "进行一次「侦查」检定。" }
+                { "content": "进行一次「侦查」检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "侦查检定", "action": "action_check", "param": { "key": "spot", "isSkill" : true, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "spot",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

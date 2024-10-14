@@ -19,20 +19,8 @@
         ]
     },
     "options": [
-        {
-            "key": 0,
-            "text": {
-                "en": "Leave",
-                "zh": "离开"
-            }
-        },
-        {
-            "key": 1,
-            "text": {
-                "en": "Try the staircase now",
-                "zh": "现在就尝试这道阶梯"
-            }
-        }
+        { "key": 0, "text": { "en": "Leave", "zh": "离开" } },
+        { "key": 1, "text": { "en": "Try the staircase now", "zh": "现在就尝试这道阶梯" } }
     ],
     "onload": [
         { "action": "action_check_in_skill_box", "param": "spot" },

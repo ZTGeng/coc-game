@@ -1,8 +1,10 @@
 {
     "key": 32,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "Anger flashes in May’s eyes. “Would you strike a woman in her own house?” she snaps. “Eighteen people live on this street. If I scream, every one of them will come running.”" },
+            { "content": "She scrambles from the guest room and into her bedroom. You consider pursuing the issue, but decide against it." }
         ],
         "zh": [
             { "content": "梅的眼中升起怒火，厉声喝道：“你敢在女人的家里打人吗？这街上可住着十八个人。只要我喊一声，所有人都会跑过来。”" },
@@ -10,7 +12,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "用椅子堵住门再小睡一会" },
-        { "key": 1, "text": "彻夜不眠" }
+        { "key": 0, "text": { "en": "Secure your door with a chair and get some sleep", "zh": "用椅子堵住门再小睡一会" } },
+        { "key": 1, "text": { "en": "Stay awake all night", "zh": "彻夜不眠" } }
     ]
 }

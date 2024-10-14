@@ -9,7 +9,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "尝试阿博加斯特的咒语", "show": "flag_learned_magic_aboganster", "secret": true },
+        { "key": 0, "text": "尝试阿博加斯特的咒语", "show": "flag_learned_magic_arbogast", "secret": true },
         { "key": 1, "text": "尝试“召唤天之火”", "show": "flag_learned_magic_summon", "secret": true },
         { "key": 2, "text": "尝试“号令天之火”", "show": "flag_learned_magic_order", "secret": true },
         { "key": 3, "text": "挣扎" }

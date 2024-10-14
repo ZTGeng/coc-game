@@ -1,17 +1,18 @@
 {
     "key": 68,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "Winters is happy for you to spend the rest of the afternoon in study and offers you an upright but comfortable chair. You have enough time to pursue one line of research in depth." }
         ],
         "zh": [
             { "content": "文特斯很高兴你能花掉整个下午的时间读书，找了一把直挺但舒适的椅子让你坐。你有足够的时间顺着一条线索做深入的研究。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "研读本地历史相关的内容" },
-        { "key": 1, "text": "研读节日相关的内容" },
-        { "key": 2, "text": "研读科学书籍" },
-        { "key": 3, "text": "研读怪诞小说" }
+        { "key": 0, "text": { "en": "Read about the history of the area", "zh": "研读本地历史相关的内容" } },
+        { "key": 1, "text": { "en": "Read about the festival", "zh": "研读节日相关的内容" } },
+        { "key": 2, "text": { "en": "Read something from the sciences", "zh": "研读科学书籍" } },
+        { "key": 3, "text": { "en": "Read some of the weird fiction", "zh": "研读怪诞小说" } }
     ]
 }

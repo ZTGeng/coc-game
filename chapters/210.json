@@ -1,8 +1,12 @@
 {
     "key": 210,
+    "location": "school",
     "text": {
         "en": [
-
+            { "content": "Arbogast howls, a choked, wet sound. He stabs his palm forward, fingers curled in a strange gesture." },
+            { "content": "Fire springs from the ground at his feet, a flickering blue wave. It rushes in a stream, as if following a line of gasoline, directly towards each attacker. Hungry, it climbs their clothing. They shriek as the flames touch their flesh." },
+            { "content": "Arbogast drops to one knee. His face is pale in the illumination from the fires. His head hangs forward. Yet even as his hand shudders, his eyes are alight with intractable will." },
+            { "content": "The assailants scream as they flee in different directions, eerie light playing off the buildings as they pass. They leave behind a terrible pungence of seared flesh. Tiny shoots of fire dance in the grass for seconds longer, then vanish. Arbogast drops." }
         ],
         "zh": [
             { "content": "阿博加斯特用哽咽嘶哑的声音嚎叫着。他的手掌直指前方，手指扭曲成怪异的手势。" },

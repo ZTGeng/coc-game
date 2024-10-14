@@ -1,8 +1,10 @@
 {
     "key": 45,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "You awake with a jolt, wrestling the blankets, ready for attack—" },
+            { "content": "The Ledbetter guest room is quiet, painted with morning light. There is nobody here but you. You release the blankets and wait for your heart to stop hammering." }
         ],
         "zh": [
             { "content": "你一个激灵醒了过来，手上和毯子角力，随时准备攻击——" },

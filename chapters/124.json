@@ -1,8 +1,10 @@
 {
     "key": 124,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The door opens and Winters re-enters the library. He wears a small, satisfied smile. His gaze shifts to you where you stand at the shelves. “Exhausted our stock already? Of course we accept donations.” He chuckles. “I’m afraid it’s closing time.”" },
+            { "content": "You leave the building with Winters and wait as he locks up. You thank him for the coffee and the access to the library. He strolls away down Silbury Street." }
         ],
         "zh": [
             { "content": "门打开了，文特斯重新回到了藏书室。他露出浅浅的满意笑容，视线落到站在书架前面的你身上。他吃吃地笑道：“已经没有想看的了？我们当然也接受捐赠。现在恐怕到关门的时间了。”" },

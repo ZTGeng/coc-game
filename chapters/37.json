@@ -1,8 +1,12 @@
 {
     "key": 37,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The door scrapes behind you. A middle-aged, bespectacled gentleman appears in the doorway. “May I help you?”" },
+            { "content": "You explain you are visiting on May Ledbetter’s recommendation." },
+            { "content": "“Ah. Well. I’m Clyde Winters. I’m not sure I can help you, but … would you care for some coffee? I’m partial to a cup in the afternoon.”" },
+            { "content": "He gestures to the open door behind him. This seems like a worthwhile opportunity, and you are a little thirsty." }
         ],
         "zh": [
             { "content": "你身后的门发出吱嘎的响声。一个戴眼镜的中年绅士出现在门前：“有什么需要吗？”" },

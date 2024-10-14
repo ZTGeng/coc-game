@@ -1,8 +1,12 @@
 {
     "key": 248,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "You heave the door open, ready for a confrontation." },
+            { "content": "May stands on the other side, wrapped in her bed jacket. She steps back in alarm." },
+            { "content": "“You seemed… not yourself,” she stammers. “I wanted to check up on you.”" },
+            { "content": "You assure May you are in fine health and watch as she returns to her own bedroom. Once the door has closed, you borrow a kitchen chair to wedge under your door handle. Perhaps this piece of fortification will permit you a few hours of restful sleep." }
         ],
         "zh": [
             { "content": "你一把拉开门，准备好面对门外的家伙。" },

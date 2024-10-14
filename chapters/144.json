@@ -48,13 +48,5 @@
             },
             "show": "flag_check_failed"
         }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "drive", "level": "value" } },
-        { "action": "action_set_highlight", "param": { "key": "psychology", "level": "half" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "drive", "level": "none" } },
-        { "action": "action_set_highlight", "param": { "key": "psychology", "level": "none" } }
     ]
 }

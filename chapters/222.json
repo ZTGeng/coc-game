@@ -1,19 +1,37 @@
 {
     "key": 222,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "Halfway up, your hand slips on a mossy branch and you tumble to the ground. The breath rushes out of you." },
+            { "tag": "info", "text": [
+                { "content": "Take 1 hit point damage." }
+            ] }
         ],
         "zh": [
             { "content": "你爬到半截，手从长满青苔的树枝上滑脱，跌落在地。肺里的空气直冲出你的喉咙。" },
             { "tag": "info", "text": [
-            { "content": "受到1点伤害。" }
+                { "content": "受到1点伤害。" }
             ] }
         ]
     },
     "options": [
-        { "key": 0, "text": "失去意识", "show": "flag_hp_zero" },
-        { "key": 1, "text": "一边留意脆弱的树枝一边继续攀爬", "show": "!flag_hp_zero" }
+        {
+            "key": 0,
+            "text": {
+                "en": "Lose consciousness",
+                "zh": "失去意识"
+            },
+            "show": "flag_hp_zero"
+        },
+        {
+            "key": 1,
+            "text": {
+                "en": "Make the climb with one eye on the weak branch",
+                "zh": "一边留意脆弱的树枝一边继续攀爬"
+            },
+            "show": "!flag_hp_zero"
+        }
     ],
     "onload": [
         { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": -1 } }
