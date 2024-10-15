@@ -73,9 +73,9 @@ export function rollCheck(bonus, skillName, onAction, autoLang) {
     title: autoLang({ zh: `${autoLang(skillName)}检定`, en: `${autoLang(skillName)} Roll` }), num: 1, dice: 100, bonus: bonus, results: diceNumbers, shouldPlaySound: true 
   });
   if (bonus > 0) {
-    return Math.max(...diceNumbers);
-  } else {
     return Math.min(...diceNumbers);
+  } else {
+    return Math.max(...diceNumbers);
   }
 }
 
@@ -115,7 +115,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     bonus: 0 };
   const yourCard = {
     role: { name: utils.TEXTS.yourName, isOpponent: false },
-    action: { key: "opposed_roll", name: utils.TEXTS.opposed_roll, isInitiating: true },
+    action: { key: "opposed_roll", name: utils.TEXTS.opposedRoll, isInitiating: true },
     skill: yourSkill,
     result: { diceNumber: checkFlags.diceNumber, resultLevel: checkFlags.resultLevel },
     isDisabled: false,
@@ -123,7 +123,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
   };
   const opponentCard = {
     role: { name: check.opponent.name, isOpponent: true },
-    action: { key: "opposed_roll", name: utils.TEXTS.opposed_roll, isInitiating: true },
+    action: { key: "opposed_roll", name: utils.TEXTS.opposedRoll, isInitiating: true },
     skill: opponentSkill,
     result: opponentResult,
     isDisabled: false,

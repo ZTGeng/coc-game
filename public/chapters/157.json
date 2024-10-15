@@ -1,8 +1,10 @@
 {
     "key": 157,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "The familiar surroundings of your guest room are becoming constrictive. The neat bed, small wardrobe and dressing mirror have the feel of a prison cell about them. What are you still doing here in Emberhead? Your new life is elsewhere." },
+            { "content": "You lie on the bed and stare at a small crack in the ceiling. You turn over the day’s events, thinking through the little details you spotted. You are certainly weary from the elevation and the fresh air. But do you still feel safe here?" }
         ],
         "zh": [
             { "content": "客房里熟悉的陈设似乎愈加狭小。干净的床铺、小巧的衣橱和穿衣镜却令你联想到牢房。你留在烬头村还有什么可做？你的新生活离这里还远得很。" },
@@ -10,7 +12,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "就这样睡觉" },
-        { "key": 1, "text": "还不睡" }
+        { "key": 0, "text": { "en": "Let yourself fall asleep", "zh": "就这样睡觉" } },
+        { "key": 1, "text": { "en": "Stay awake", "zh": "还不睡" } }
     ]
 }

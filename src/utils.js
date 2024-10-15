@@ -50,6 +50,7 @@ export const TEXTS = {
     damage: { zh: "伤害", en: "Damage" },
     yourRoll: { zh: "你的检定", en: "Your roll" },
     opponentRoll: { zh: "对手检定", en: "Opponent's roll" },
-    opposed_roll: { zh: "对抗检定", en: "Opposed roll" },
+    opposedRoll: { zh: "对抗检定", en: "Opposed roll" },
     combat: { zh: "战斗", en: "Combat" },
+    rollSuffix: { zh: "检定", en: " Roll" },
 }

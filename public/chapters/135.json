@@ -10,7 +10,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": { "en": "Give chase", "zh": "追逐他" } },
+        { "key": 0, "text": { "en": "Chase the man", "zh": "追逐这个男人" } },
         { "key": 1, "text": { "en": "You have better things to do", "zh": "你有更重要的事情要做" } }
     ]
 }

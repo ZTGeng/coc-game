@@ -5,6 +5,7 @@ import characterSheet from "./character/characterSheet";
 import Chapter from "./game/Chapter";
 import chapterMap from "./game/chapterMap";
 import MapModal from "./map/MapModal";
+import HistoryModal from "./HistoryModal";
 import { showToast } from "./ToastMessage";
 import flagConditionCheckProvider from "./flagCheck";
 import * as utils from "../utils";
@@ -16,9 +17,11 @@ const initFlags = {
 
   flag_bought_knife: false,
   flag_found_cliff_ladder: false,
-  flag_meet_aboganster: false,
+  flag_meet_arbogast: false,
   flag_c167_bear_attack_finished: false,
   flag_involved_fighting: false,
+  flag_searched_book_shelf: false,
+  flag_learned_magic_arbogast: false,
   
   flag_major_wound: false,
   flag_penalty_die: false,
@@ -29,9 +32,7 @@ const initFlags = {
   flag_mp_used: false,
 
   flag_c120_tried_three_options: false,
-  flag_searched_book_shelf: false,
   flag_found_poem_book: false,
-  flag_learned_magic_aboganster: false,
   flag_learned_magic_summon: false,
   flag_learned_magic_order: false
 };
@@ -71,54 +72,54 @@ const initOccupation = {
   universal: 0
 };
 
+const initInfo = {
+  name: "",
+  age: "",
+};
+
 export const FlagsContext = createContext();
 export const HighlightContext = createContext();
 
 const emptyHighlight = [];
 
-export default function Game({ showCharacter, setShowCharacter, enableMap, playSound }) {
+export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
   const { autoLang } = useContext(LanguageContext);
   const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
+  const [chapterHistory, setChapterHistory] = useState([]);
   const [chars, setChars] = useState(initChars);
   const [attributes, setAttributes] = useState(initAttributes);
   const [skills, setSkills] = useState(initSkills);
   const [occupation, setOccupation] = useState(initOccupation);
+  const [info, setInfo] = useState(initInfo);
   const [highlight, setHighlight] = useState(emptyHighlight);
   const [mapLocation, setMapLocation] = useState(null);
+  const [c25OptionsSelected, setC25OptionsSelected] = useState([false, false, false, false, false, false]);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   console.log(`Game refresh ${JSON.stringify(flags)}`);
 
-  function flagStringCheck(flag) {
-    console.log(`Game flagConditionCheck: ${flag}`);
-    switch (flag) {
-      case "flag_characteristics_unfinished":
-        return Object.values(chars).some(char => char.value === "");
-      case "flag_skills_occupation_unfinished":
-        const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
-        const occupationSkillsMaxNum = occupation.skills.length + occupation.art + occupation.interpersonal + occupation.language + occupation.universal;
-        return occupationSkillsNum < occupationSkillsMaxNum;
-      case "flag_skills_hobby_unfinished":
-        return Object.keys(skills).filter(skillKey => skills[skillKey].hobby).length < 4;
-      case "flag_siz_greater_than_40":
-        return chars.SIZ.value > 40;
-      case "flag_dex_greater_than_siz":
-        return chars.DEX.value > chars.SIZ.value;
-      case "flag_luck_unfinished":
-        return attributes.Luck.value === "";
-      case "flag_track_skill_box_checked":
-        return skills.track.checked;
-      case "flag_hp_zero":
-        return attributes.HP.value === 0;
+  useEffect(() => {
+    console.log(`Game - useEffect: chapterKey: ${chapterKey}, saveLoad: ${JSON.stringify(saveLoad)}`);
+    if (Object.keys(saveLoad).length > 0) {
+      loadState(saveLoad);
     }
-    if (flag in flags) {
-      return flags[flag];
-    }
-    console.log(`Un-handled flag in Game: ${flag} in ${JSON.stringify(flags)}`);
-    return false;
-  }
+  }, [saveLoad]);
 
-  const flagConditionCheck = flagConditionCheckProvider(flagStringCheck);
+  const flagFunctions = {
+    "flag_characteristics_unfinished": () => Object.values(chars).some(char => char.value === ""),
+    "flag_skills_occupation_unfinished": () => {
+      const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
+      const occupationSkillsMaxNum = occupation.skills.length + occupation.art + occupation.interpersonal + occupation.language + occupation.universal;
+      return occupationSkillsNum < occupationSkillsMaxNum;
+    },
+    "flag_skills_hobby_unfinished": () => Object.keys(skills).filter(skillKey => skills[skillKey].hobby).length < 4,
+    "flag_siz_greater_than_40": () => chars.SIZ.value > 40,
+    "flag_dex_greater_than_siz": () => chars.DEX.value > chars.SIZ.value,
+    "flag_luck_unfinished": () => attributes.Luck.value === "",
+    "flag_track_skill_box_checked": () => skills.track.checked,
+    "flag_hp_zero": () => attributes.HP.value === 0,
+  };
+  const flagConditionCheck = flagConditionCheckProvider(flags, flagFunctions);
 
   function onChapterAction(action, param) {
     console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
@@ -203,9 +204,6 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
       setSkills({ ...skills, [param.key]: { ...skills[param.key], value: skills[param.key].value + param.delta } });
     },
-    // action_show_dice_toast: (param) => { // param: { num, dice, bonus, results, shouldPlaySound } //deprecated
-    //   showDiceToast(param.num, param.dice, param.results, param.shouldPlaySound, param.bonus);
-    // },
     action_dice_message: (param) => { // param: { title, num, dice, results, shouldPlaySound, bonus, alterNumDice }
       showDiceTitleToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
     },
@@ -244,7 +242,7 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
     },
     action_enable_map: () => {
-      enableMap();
+      setMapEnabled(true);
     },
     action_c167_bear_attack: () => {
       let hpDelta = 0;
@@ -278,11 +276,15 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
     }
   }
 
-  function nextChapter(chapterKey, optionKey) {
+  function nextChapter(chapterKey, optionKey, historyItem, addToHistory) {
     const next = chapterMap[chapterKey][optionKey];
     if (next) {
       console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => chapter ${next}`);
       setChapterKey(next);
+      if (addToHistory) {
+        setChapterHistory([...chapterHistory, historyItem]);
+        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
+      }
     }
   }
 
@@ -302,6 +304,37 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
     }
   }
+
+  function saveState() {
+    const state = {
+      flags,
+      chapterKey,
+      chars,
+      attributes,
+      skills,
+      occupation,
+      info,
+      c25OptionsSelected,
+      mapEnabled,
+    };
+    localStorage.setItem("coc-state", JSON.stringify(state));
+  }
+  window.saveState = saveState;
+
+  function loadState(state) {
+    if (state) {
+      setFlags(state.flags);
+      setChapterKey(state.chapterKey);
+      setChars(state.chars);
+      setAttributes(state.attributes);
+      setSkills(state.skills);
+      setOccupation(state.occupation);
+      setInfo(state.info);
+      setC25OptionsSelected(state.c25OptionsSelected);
+      setMapEnabled(state.mapEnabled);
+    }
+  }
+  // window.loadState = loadState;
   
   // Cheating
   window.goto = (chapterKey) => {
@@ -322,15 +355,36 @@ export default function Game({ showCharacter, setShowCharacter, enableMap, playS
       <HighlightContext.Provider value={{ highlight }}>
         <div className="row">
           <div id="chapter" className="col px-2">
-            <Chapter {...{ chapterKey, characterSheet, chars, attributes, skills, nextChapter, setMapLocation, onChapterAction }} />
+            <Chapter {...{ 
+              chapterKey,
+              characterSheet,
+              chars,
+              attributes,
+              skills,
+              nextChapter,
+              setMapLocation,
+              c25OptionsSelected,
+              setC25OptionsSelected,
+              onChapterAction }} />
           </div>
           { showCharacter && (
             <div id="character" className="col">
-              <Character {...{ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, onCharacterAction }} />
+              <Character {...{ 
+                characterSheet, 
+                chars, 
+                setChars, 
+                attributes, 
+                skills, 
+                setSkills, 
+                occupation, 
+                info, 
+                setInfo, 
+                onCharacterAction }} />
             </div> 
           )}
         </div>
         <MapModal {...{ mapLocation }} />
+        <HistoryModal {...{ characterSheet, chapterHistory }} />
       </HighlightContext.Provider>
     </FlagsContext.Provider>
   )

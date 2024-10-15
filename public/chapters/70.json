@@ -1,8 +1,11 @@
 {
     "key": 70,
+    "location": "school",
     "text": {
         "en": [
-
+            { "content": "You feel skittish as you approach the spot where you and Arbogast were attacked. Your memory of the encounter is shaky, but you remember one or two vivid images." },
+            { "content": "At first you think there is nothing to see: no discarded weapons or figures lying unconscious. But upon closer examination, you find sticky, congealed patches and blackened lines in the grass." },
+            { "content": "If the village had a police station you could go there. But something tells you events have gone beyond that." }
         ],
         "zh": [
             { "content": "你如惊弓之鸟一般来到你和阿博加斯特被袭击的地方。你对战斗的记忆暧昧不明，但有几个生动的影像你记得非常清楚。" },

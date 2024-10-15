@@ -1,8 +1,12 @@
 {
     "key": 200,
+    "location": "church",
     "text": {
         "en": [
-
+            { "content": "Arbogast is not at the appointed meeting place. You give him ten minutes, but he doesn’t show. You curse the old crank and head back towards May’s house." },
+            { "content": "“Psssst.”" },
+            { "content": "A hand snakes from a doorway and grabs your arm. You jump at the sight of that half-face, glimpsed in starlight." },
+            { "content": "“One of them’s near,” he whispers. “Watching. Come with me.”" }
         ],
         "zh": [
             { "content": "阿博加斯特并不在约定见面的地点。你等了他十分钟，但他还是没有出现。你骂了一句老怪物，转头返回梅的房子。" },

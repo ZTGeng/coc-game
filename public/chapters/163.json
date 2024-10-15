@@ -1,8 +1,10 @@
 {
     "key": 163,
+    "location": "street",
     "text": {
         "en": [
-
+            { "content": "You advance on one of the figures, calling out. It slips into the shadows. By the time you round the corner, it is nowhere to be seen. You turn to the other figure, feeling a simmering anger. As you approach, it also melts away. But behind you, in a dim yard, the first figure has reappeared." },
+            { "content": "You could do this all night. The watchers know the village far better than you do. Perhaps it is enough to have shown them you will not be cowed. Frustrated, you head back to the Ledbetter house." }
         ],
         "zh": [
             { "content": "你追上一个黑影，大声呼喊。它滑进了阴影之中。等到你转过墙角，它已经不见踪影。你压住怒火，去追另一个黑影。在你接近时，它也融入黑暗。但第一个黑影又从你身后的阴暗院子里浮现出来。" },

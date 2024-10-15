@@ -1,30 +1,32 @@
 {
     "key": 195,
+    "location": "school",
     "text": {
         "en": [
-
+            { "content": "A second figure swings at you with some kind of blunt weapon. You shove it aside and scramble out, trying to find a more defensible position." },
+            { "content": "A gurgle draws your attention. Arbogast has a hand clapped to his neck. Blood drips between the fingers and spills from his mouth. His assailant stabs again, the wet blade slicing Arbogast’s wrist even as it sinks into his neck. You see faces now, low faces daubed in some kind of tarry substance, eyes gleaming with hatred. Arbogast shoves his attacker off, staggering back, more blood cascading down his arm. The old half-man has willpower. He plants his feet, and raises a hand." },
+            { "tag": "info", "text": [
+                { "content": "Make a Sanity roll." }
+            ] }
         ],
         "zh": [
             { "content": "另一个黑影手持某种钝器向你砸来。你一把将它推开，跳起身来寻找更适合防御的位置。" },
-            { "content": "液体冒出的声音吸引了你的注意力。阿博加斯特用手捂着脖子。血从手指缝里、从他的嘴里淌下来。攻击他的人再次挥刀刺去。沾着血渍的刀刃切破了阿博加斯特紧紧按住颈部的手腕。",
-        "现在你能看见攻击者的脸，他低着头，脸上涂着焦油一类的东西，眼中燃烧着仇恨。阿博加斯特挡开攻击者，蹒跚转身，更多的血液顺着他的手臂奔流而出。意志力支撑着这个不成人形的老头。他站直身体，抬起一只手。" },
+            { "content": "液体冒出的声音吸引了你的注意力。阿博加斯特用手捂着脖子。血从手指缝里、从他的嘴里淌下来。攻击他的人再次挥刀刺去。沾着血渍的刀刃切破了阿博加斯特紧紧按住颈部的手腕。现在你能看见攻击者的脸，他低着头，脸上涂着焦油一类的东西，眼中燃烧着仇恨。阿博加斯特挡开攻击者，蹒跚转身，更多的血液顺着他的手臂奔流而出。意志力支撑着这个不成人形的老头。他站直身体，抬起一只手。" },
             { "tag": "info", "text": [
-            { "content": "进行一次“理智”检定。" }
+                { "content": "进行一次“理智”检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "理智检定", "action": "action_check", "param": { "key": "San", "isSkill" : false, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "San",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
     "onload": [
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "value" } },
         { "action": "action_check_in_skill_box", "param": "dodge" }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "San", "level": "none" } }
     ]
 }

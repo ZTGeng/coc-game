@@ -21,6 +21,6 @@
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
     "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_meet_aboganster", "value": true } }
+        { "action": "action_set_flag", "param": { "flag": "flag_meet_arbogast", "value": true } }
     ]
 }

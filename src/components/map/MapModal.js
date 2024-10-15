@@ -16,6 +16,7 @@ const locations = {
   workshops: [47, 20],
   chamber: [75, 60],
   woodland: [99, 87],
+  school: [49, 80],
 };
 
 export default function MapModal({ mapLocation }) {

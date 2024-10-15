@@ -1,15 +1,17 @@
 {
     "key": 74,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "There is no single book on the history of the area, and you have to put together a picture from a variety of slim, specialized volumes." },
+            { "content": "There seems some suggestion that the hill upon which Emberhead is built was a place of reverence for the Abnaki, or Abenaki, a native tribe whose name means “people of the dawnlands.” The tribe made an annual journey to the hill “as the leaves turned the deepest hue of sunset.” There are some references to sun rituals performed in the area but these are not convincingly attributed." },
+            { "content": "The region was caught up in King George’s War, and in 1746 British colonial forces counterattacked in response to a raid by the Wabanaki Confederacy, which included the Abenaki. The King’s men gave no quarter and the few survivors among the natives were driven from the area permanently." },
+            { "content": "There seems no confirmed date when Emberhead itself was founded, although there are accounts of settlers on the hill from shortly after the end of the Revolutionary War. " }
         ],
         "zh": [
             { "content": "这里并没有单独记述本地历史的书籍，你只能从大量薄薄的专述卷册中拼凑出大概的模样。" },
-            { "content": "有些暗示表明，阿布纳基人，或者阿贝纳基人曾经将烬头村所在的山头当成祭祀场所。这个土著民族名字的意思是“黎明之地的人民”。",
-        "这个民族每年“在树叶的颜色变成日落最浓的颜色时”会上山举行仪式。有些文章涉及到当地的太阳崇拜，但并没有可信的证据证明仪式属于太阳崇拜。" },
-            { "content": "后来此地卷入了乔治王战争（译注：1744—1748年英法争夺北美殖民地的战争），1746年英国殖民军在被瓦巴纳基联盟袭击后发动了反击，阿布纳基人也是攻击目标。",
-        "英国人见人就杀，土著幸存者所剩无几，被永远驱离了这片地区。" },
+            { "content": "有些暗示表明，阿布纳基人，或者阿贝纳基人曾经将烬头村所在的山头当成祭祀场所。这个土著民族名字的意思是“黎明之地的人民”。这个民族每年“在树叶的颜色变成日落最浓的颜色时”会上山举行仪式。有些文章涉及到当地的太阳崇拜，但并没有可信的证据证明仪式属于太阳崇拜。" },
+            { "content": "后来此地卷入了乔治王战争（译注：1744—1748年英法争夺北美殖民地的战争），1746年英国殖民军在被瓦巴纳基联盟袭击后发动了反击，阿布纳基人也是攻击目标。英国人见人就杀，土著幸存者所剩无几，被永远驱离了这片地区。" },
             { "content": "烬头村建立的时间没有确凿的记载，但独立战争之后不久山上就有人定居的记录了。" }
         ]
     },

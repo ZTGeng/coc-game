@@ -1,27 +1,27 @@
 {
     "key": 99,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The afternoon wears on. You have not quite finished your reading when Winters glances out of the window and stands up. He clears his throat." },
+            { "tag": "info", "text": [
+                { "content": "Make a Credit Rating roll." }
+            ] }
         ],
         "zh": [
             { "content": "下午的时间在流逝。你还没彻底完成研读，文特斯就看看窗外，站起身来。他清了清嗓子。" },
             { "tag": "info", "text": [
-            { "content": "进行一次「信用评级」检定。" }
+                { "content": "进行一次「信用评级」检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "信用评级检定", "action": "action_check", "param": { "key": "credit", "isSkill" : true, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "credit",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "credit", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "credit", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

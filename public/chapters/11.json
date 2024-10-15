@@ -1,17 +1,18 @@
 {
     "key": 11,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The village hall overlooks the lower north ridge of the village. You walk along Silbury Street to find it, conscious of the oppressive black metal structure framed at the end of the road. The shutters of the hall are open and some windows left ajar. There is no knocker, but a little bell over the entrance tinkles as you push the front door." },
+            { "content": "Inside, a sturdy door to your right is marked PRIVATE. To your left, an opening leads through to a bright room. You take a few steps inside. Benches line the walls and there are two noticeboards mounted between the windows." }
         ],
         "zh": [
-            { "content": "村会堂俯瞰着村子北面较低的山脊。你沿着锡尔伯里街走到它门前，一路上都在注意着道路尽头那座令人压抑的黑色金属建筑物。",
-        "会堂的百叶窗打开了，还有些窗户半掩着。门上没有门环，但你推开前门时，门顶上挂着的小铃铛发出了清脆的响声。" },
+            { "content": "村会堂俯瞰着村子北面较低的山脊。你沿着锡尔伯里街走到它门前，一路上都在注意着道路尽头那座令人压抑的黑色金属建筑物。会堂的百叶窗打开了，还有些窗户半掩着。门上没有门环，但你推开前门时，门顶上挂着的小铃铛发出了清脆的响声。" },
             { "content": "进屋以后，你右手边有一扇紧闭的门，上面写着“私用”。左手边则是一条通路，通往一个敞亮的房间。你几步就走了过去。许多长凳沿墙整齐排列，两扇窗户之间挂着一块布告板。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "检查布告板" },
-        { "key": 1, "text": "去敲紧闭的门" }
+        { "key": 0, "text": { "en": "Examine the noticeboards", "zh": "检查布告板" } },
+        { "key": 1, "text": { "en": "Knock on the closed door", "zh": "去敲紧闭的门" } }
     ]
 }

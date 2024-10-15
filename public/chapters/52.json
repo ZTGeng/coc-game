@@ -1,39 +1,31 @@
 {
     "key": 52,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "You stare out the window and watch as the sun reaches the horizon, bathing the village in sickly orange. It has been a long night and you feel stiff and irritable. You rub your eyes." },
+            { "content": "A few minutes later, you hear May bustling in the kitchen. Then the front door opens and closes." },
+            { "tag": "info", "text": [
+                { "content": "进行一次“体质”检定。如果你失败了，今天你的技能检定受到一颗惩罚骰。额外投一颗十位骰，分别计算结果后取最高值。这不影响幸运、理智和伤害检定。" }
+            ] }
         ],
         "zh": [
             { "content": "你瞪着窗外，看太阳从地平线升起，给村子笼罩上病态的橙色。这一夜格外漫长，你身体僵硬、心烦意乱，不停地搓着眼睛。" },
             { "content": "几分钟以后，你听到梅在厨房忙碌，还有前门打开又关上的声音。" },
             { "tag": "info", "text": [
-            { "content": "进行一次“体质”检定。如果你失败了，今天你的技能检定受到一颗惩罚骰。额外投一颗十位骰，分别计算结果后取最高值。这不影响幸运、理智和伤害检定。" }
+                { "content": "进行一次“体质”检定。如果你失败了，今天你的技能检定受到一颗惩罚骰。额外投一颗十位骰，分别计算结果后取最高值。这不影响幸运、理智和伤害检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "体质检定",
-            "action": "action_check",
-            "param": {
-                "key": "CON",
-                "isSkill": false,
-                "level": "value",
-                "onFail": [
-                    { "action": "action_set_flag", "param": { "flag": "flag_punish_dice" } }
-                ]
-            },
-            "show": "flag_check_unfinished"
-        }
+        ]
+    },
+    "check": {
+        "type": "roll",
+        "key": "CON",
+        "level": "value",
+        "onfail": [
+            { "action": "action_set_flag", "param": { "flag": "flag_penalty_die", "param": true } }
         ]
     },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "!flag_check_unfinished" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "CON", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "CON", "level": "none" } }
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_finished" }
     ]
 }

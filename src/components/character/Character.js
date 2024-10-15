@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LanguageContext } from '../../App';
 import { HighlightContext } from "../Game";
 import { FlagsContext } from "../Game";
@@ -6,19 +6,31 @@ import Characteristics from './Characteristics';
 import Skills from './Skills';
 import * as utils from '../../utils';
 
-function Info({ characterSheet, occupation }) {
+
+
+function Info({ characterSheet, occupation, info, setInfo }) {
   const { autoLang } = useContext(LanguageContext);
   const occupationName = autoLang(occupation.name);
 
   return (
     <div className="row mt-4">
       <div className="col-xl-12 col-md-4 col-8 form-floating mb-2">
-        <input type="text" className="form-control focus-ring focus-ring-light border-0 px-0" id="nameInput" placeholder="" />
+        <input type="text" 
+               className="form-control focus-ring focus-ring-light border-0 px-0" 
+               id="nameInput" 
+               placeholder="" 
+               value={info.name}
+               onChange={e => setInfo({...info, name: e.target.value})} />
         <label htmlFor="nameInput" className="small form-label">{ autoLang(characterSheet.nameTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
       <div className="col-xl-12 col-md-2 col-4 form-floating mb-2">
-        <input type="number" className="form-control focus-ring focus-ring-light border-0 px-0" id="ageInput" placeholder="" />
+        <input type="number"
+               className="form-control focus-ring focus-ring-light border-0 px-0" 
+               id="ageInput" 
+               placeholder="" 
+               value={info.age}
+               onChange={e => setInfo({...info, age: e.target.value})} />
         <label htmlFor="ageInput" className="small form-label">{ autoLang(characterSheet.ageTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
@@ -221,7 +233,7 @@ function Combat({ characterSheet, chars, skills }) {
   );
 }
 
-export default function Character({ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, onCharacterAction }) {
+export default function Character({ characterSheet, chars, setChars, attributes, skills, setSkills, occupation, info, setInfo, onCharacterAction }) {
   // console.log(`Character refresh: ${JSON.stringify(character)}`);
   console.log(`Character refresh`);
 
@@ -229,7 +241,7 @@ export default function Character({ characterSheet, chars, setChars, attributes,
     <div className="d-flex flex-column ms-2">
       <div className="row">
         <div className="col-xl-3">
-          <Info {...{ characterSheet, occupation }} />
+          <Info {...{ characterSheet, occupation, info, setInfo }} />
         </div>
         <div className="col mb-3 px-0">
           <Characteristics {...{ characterSheet, chars, setChars }} />

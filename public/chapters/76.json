@@ -1,20 +1,25 @@
 {
     "key": 76,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "The distinctive whiff from the powder recalls a demonstration of dangerous herbs from one of your old professors. Although there is probably more than one component, you are fairly sure that the powder contains henbane, which has soporific and hallucinogenic properties." },
+            { "content": "You extinguish the small mound of powder and scatter it throughout the grate." },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Science (Botany) skill." }
+            ] }
         ],
         "zh": [
             { "content": "这种粉末散发的独特气味，令你联想到以前你的一位老教授做过的关于危险草药的演示实验。虽然原料可能不只一种，但你相当肯定这种粉末含有莨菪，具有催眠和致幻的作用。" },
             { "content": "你扑灭了这一小堆粉末，把它分散撒到壁炉的各处。" },
             { "tag": "info", "text": [
-            { "content": "你可以在自己「科学( 生物学)」技能左边的小方框里打勾。" }
+                { "content": "你可以在自己「科学( 生物学)」技能左边的小方框里打勾。" }
             ] }
         ]
     },
     "options": [
-        { "key": 0, "text": "小睡一会" },
-        { "key": 1, "text": "彻夜不眠" }
+        { "key": 0, "text": { "en": "Get some sleep", "zh": "小睡一会" } },
+        { "key": 1, "text": { "en": "Stay awake all night", "zh": "彻夜不眠" } }
     ],
     "onload": [
         { "action": "action_check_in_skill_box", "param": "biology" }

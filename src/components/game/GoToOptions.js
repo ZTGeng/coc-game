@@ -2,19 +2,19 @@ import { useContext } from "react";
 import { FlagsContext } from "../Game";
 import { LanguageContext } from "../../App";
 
-export default function GoToOptions({ chapterKey, options, nextChapter }) {
+export default function GoToOptions({ chapterKey, options, onOptionSelected }) {
   const { flagConditionCheck } = useContext(FlagsContext);
 
   return (
     <div className="d-flex flex-column">
       {options
         .filter(option => !option.show || flagConditionCheck(option.show))
-        .map(option => <GoToOption key={option.key} {...{ chapterKey, option, nextChapter }} />)}
+        .map(option => <GoToOption key={option.key} {...{ chapterKey, option, onOptionSelected }} />)}
     </div>
   );
 }
 
-export function GoToOption({ chapterKey, option, nextChapter }) {
+export function GoToOption({ chapterKey, option, onOptionSelected }) {
   const { flagConditionCheck } = useContext(FlagsContext);
   const { autoLang } = useContext(LanguageContext);
 
@@ -28,7 +28,7 @@ export function GoToOption({ chapterKey, option, nextChapter }) {
       className={"link link-offset-2 h5 mb-3" + (option.secret ? " link-primary": " link-dark")}
       role="button"
       href="#"
-      onClick={(e) => { e.preventDefault(); nextChapter(chapterKey, option.key); }}>
+      onClick={(e) => { e.preventDefault(); onOptionSelected(chapterKey, option.key, option.text); }}>
       { option.secret 
         ? (
           <span className="pe-2">

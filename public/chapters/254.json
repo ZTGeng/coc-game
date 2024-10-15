@@ -1,8 +1,11 @@
 {
     "key": 254,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "You slide onto the bed and lie on your side, eyes closed. The hinges creak as the door opens. There is a long pause." },
+            { "content": "A footfall sounds inside the room, then another. The steps are careful and feminine. You give it a moment, then open one eye a crack." },
+            { "content": "May crouches with her back to you. She is fiddling with something in the fireplace." }
         ],
         "zh": [
             { "content": "你悄悄溜回床上侧身躺下，闭上眼睛。门打开的时候，合页也跟着发出响声。然后好一会儿没有动静。" },
@@ -11,7 +14,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "和梅对质" },
-        { "key": 1, "text": "静观其变" }
+        { "key": 0, "text": { "en": "Confront May", "zh": "和梅对质" } },
+        { "key": 1, "text": { "en": "Wait and see what happens", "zh": "静观其变" } }
     ]
 }

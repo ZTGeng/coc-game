@@ -1,28 +1,29 @@
 {
     "key": 111,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "“I’m happy to leave you in charge for a half-hour or so.” He smiles. “Please don’t issue any books without a valid library card.”" },
+            { "content": "You thank Winters for his trust and continue with your reading for a time. As the light dims, you find yourself yawning in the closeness of the room. Perhaps it is time for a change of material." },
+            { "tag": "info", "text": [
+                { "content": "Make a Spot Hidden roll." }
+            ] }
         ],
         "zh": [
             { "content": "他笑道：“我很高兴留您在这里再看半个小时左右。如果没有借书卡，不要带走这里的书。”" },
             { "content": "你感谢文特斯的信任，继续读了一会儿。在光线逐渐昏暗时，你在闭塞的房间里开始打呵欠。现在也许该换本书读了。" },
             { "tag": "info", "text": [
-            { "content": "进行一次「侦查」检定。" }
+                { "content": "进行一次「侦查」检定。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "侦查检定", "action": "action_check", "param": { "key": "spot", "isSkill" : true, "level": "value" }, "show": "flag_check_unfinished" }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "spot",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

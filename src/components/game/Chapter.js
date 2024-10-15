@@ -5,6 +5,7 @@ import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
 import flagConditionCheckProvider from "../flagCheck";
+import * as utils from "../../utils";
 
 const initCheckFlags = {
   // status: "", // "", "ready", "done"
@@ -18,6 +19,16 @@ const initCheckFlags = {
 
 function Loading({ autoLang }) {
   return autoLang({ zh: <p>"加载中..."</p>, en: <p>"Loading..."</p> });
+}
+
+function getExcerpt(text) {
+  return Object.keys(text)
+    .map(lang => {
+      const firstItem = text[lang].filter(item => item.tag !== "img" && item.tag !== "info")[0];
+      const content = firstItem.tag === "div" ? firstItem.text[0].content : firstItem.content;
+      return { [lang]: content.slice(0, 20) };
+    })
+    .reduce((acc, cur) => ({ ...acc, ...cur }), {});
 }
 
 function ChapterContent({ chapterText }) {
@@ -84,13 +95,89 @@ function Interactions({ interactions, onAction }) {
   );
 }
 
-export default function Chapter({ chapterKey, characterSheet, chars, attributes, skills, nextChapter, setMapLocation, onChapterAction }) {
+export default function Chapter({ 
+  chapterKey,
+  characterSheet,
+  chars,
+  attributes,
+  skills,
+  nextChapter,
+  setMapLocation,
+  c25OptionsSelected,
+  setC25OptionsSelected,
+  onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
-  const [c25OptionsSelected, setC25OptionsSelected] = useState([false, false, false, false, false, false]);
   console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, checkFlags: ${checkFlags.result}`);
+
+  useEffect(() => {
+    console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
+
+    if (chapterKey === 0) return;
+
+    fetch(`./chapters/${chapterKey}.json`)
+      .then(response => response.json())
+      .then(data => {
+        // useEffect may be triggered multiple times with the same chapterKey
+        // run onLeave only for the first time
+        if (chapter && (chapter.key !== chapterKey)) {
+          onLeave(chapter);
+        }
+
+        onChapterAction("action_clear_highlight", ""); // reset highlight
+        if (data.check) {
+          switch (data.check.type) {
+            case "roll":
+              onChapterAction("action_set_highlight", { "key": data.check.key, "level": data.check.level });
+              break;
+            case "roll_select":
+              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { "key": roll.key, "level": roll.level }));
+              break;
+            case "opposed_roll":
+              onChapterAction("action_set_highlight", { "key": data.check.key, "level": "all" });
+              break;
+            case "combat":
+              onChapterAction("action_set_highlight", { "key": "dodge", "level": "all" });
+              onChapterAction("action_set_highlight", { "key": "fighting", "level": "all" });
+              break;
+          }
+        }
+
+        // reset checkFlags for new chapter
+        if (checkFlags.result) {
+          setCheckFlags(initCheckFlags);
+        }
+
+        setChapter(data);
+
+        // addChapterHistory({ key: chapterKey, text: getExcerpt(data.text) });
+
+        if (data.location) {
+          setMapLocation(data.location);
+        }
+
+        // useEffect may be triggered multiple times with the same chapterKey
+        // run onLoad only for the first time
+        if (!chapter || (chapter.key !== chapterKey)) {
+          onLoad(data);
+        }
+      });
+  }, [chapterKey]);
+
+  const flagFunctions = {
+    "flag_check_passed": () => checkFlags.result === "pass",
+    "flag_check_failed": () => checkFlags.result === "fail",
+    "flag_check_finished": () => checkFlags.result,
+    "flag_check_fumble": () => checkFlags.isFumble,
+    "flag_check_match": (keyLevel) => {
+      const [rollKey, rollLevel] = keyLevel.split("-");
+      return checkFlags.rollKey === rollKey && (!rollLevel || checkFlags.rollLevel === rollLevel);
+    },
+    "flag_c25_option_disabled": (option) => c25OptionsSelected[option] || c25OptionsSelected.filter(b => b).length >= 4,
+  };
+  const chapterFlagConditionCheck = flagConditionCheckProvider({}, flagFunctions, flagConditionCheck);
 
   function onLeave(chapterJson) {
     console.log(`Chapter ${chapterJson.key} onLeave`);
@@ -130,95 +217,34 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
     onChapterAction(action, param);
   }
 
-  function chapterFlagStringCheck(flag) {
-    console.log(`Chapter ${chapter.key} flagConditionCheck: ${flag}`);
-    switch (flag) {
-      case "flag_check_passed":
-        return checkFlags.result === "pass";
-      case "flag_check_failed":
-        return checkFlags.result === "fail";
-      case "flag_check_finished":
-        return checkFlags.result;
-      case "flag_check_fumble":
-        return checkFlags.isFumble;
-      case "flag_c25_option_0_disabled":
-        return c25OptionsSelected[0] || c25OptionsSelected.filter(b => b).length >= 4;
-      case "flag_c25_option_1_disabled":
-        return c25OptionsSelected[1] || c25OptionsSelected.filter(b => b).length >= 4;
-      case "flag_c25_option_2_disabled":
-        return c25OptionsSelected[2] || c25OptionsSelected.filter(b => b).length >= 4;
-      case "flag_c25_option_3_disabled":
-        return c25OptionsSelected[3] || c25OptionsSelected.filter(b => b).length >= 4;
-      case "flag_c25_option_4_disabled":
-        return c25OptionsSelected[4] || c25OptionsSelected.filter(b => b).length >= 4;
-      case "flag_c25_option_5_disabled":
-        return c25OptionsSelected[5] || c25OptionsSelected.filter(b => b).length >= 4;
-
+  function onOptionSelected(chapterKey, optionKey, optionText) {
+    if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
+      const historyItem = { chapterKey, optionText, type: chapter.check.type };
+      switch (chapter.check.type) {
+        case "roll":
+          historyItem.keys = [chapter.check.key];
+          break;
+        case "roll_select":
+          historyItem.keys = chapter.check.rolls.map(roll => roll.key);
+          break;
+        case "opposed_roll":
+        case "combat":
+          historyItem.opponentName = chapter.check.opponent.name;
+          break;
+      }
+      nextChapter(chapterKey, optionKey, historyItem, true);
+      return;
     }
-    if (flag.startsWith("flag_check_match")) { // "flag_check_match:key-value"
-      const [rollKey, rollLevel] = flag.split(":")[1].split("-");
-      return checkFlags.rollKey === rollKey && checkFlags.rollLevel === rollLevel;
+    if (chapter.interactions) { // { chapterKey, optionText, type=interaction, texts }
+      const texts = chapter.interactions.map(interaction => interaction.text);
+      nextChapter(chapterKey, optionKey, { chapterKey, optionText, type: "interaction", texts }, true);
+      return;
     }
-    // Fall back to the Game flagConditionCheck
-    return flagConditionCheck(flag);
+    nextChapter(chapterKey, optionKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
   }
 
-  const chapterFlagConditionCheck = flagConditionCheckProvider(chapterFlagStringCheck);
-
-  useEffect(() => {
-    console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
-
-    if (chapterKey === 0) return;
-
-    fetch(`./chapters/${chapterKey}.json`)
-      .then(response => response.json())
-      .then(data => {
-        // useEffect may be triggered multiple times with the same chapterKey
-        // run onLeave only for the first time
-        if (chapter && (chapter.key !== chapterKey)) {
-          onLeave(chapter);
-        }
-
-        onChapterAction("action_clear_highlight", ""); // reset highlight
-        if (data.check) {
-          switch (data.check.type) {
-            case "roll":
-              onChapterAction("action_set_highlight", { "key": data.check.key, "level": data.check.level });
-              break;
-            case "roll_select":
-              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { "key": roll.key, "level": roll.level }));
-              break;
-            case "opposed_roll":
-              onChapterAction("action_set_highlight", { "key": data.check.key, "level": "all" });
-              break;
-            case "combat":
-              onChapterAction("action_set_highlight", { "key": "dodge", "level": "value" });
-              onChapterAction("action_set_highlight", { "key": "fighting", "level": "value" });
-              break;
-          }
-        }
-
-        // reset checkFlags for new chapter
-        if (checkFlags.result) {
-          setCheckFlags(initCheckFlags);
-        }
-
-        setChapter(data);
-
-        if (data.location) {
-          setMapLocation(data.location);
-        }
-
-        // useEffect may be triggered multiple times with the same chapterKey
-        // run onLoad only for the first time
-        if (!chapter || (chapter.key !== chapterKey)) {
-          onLoad(data);
-        }
-      });
-  }, [chapterKey]);
-
   if (chapterKey === 0) {
-    return <Chapter0 {...{ nextChapter }} />;
+    return <Chapter0 onOptionSelected={nextChapter} />;
   }
 
   if (!chapter || chapter.key !== chapterKey) {
@@ -232,7 +258,7 @@ export default function Chapter({ chapterKey, characterSheet, chars, attributes,
       { chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ characterSheet, chars, attributes, skills, checkFlags, setCheckFlags }}/> }
       <br />
       <div className="px-2">
-        <GoToOptions options={chapter.options} {...{ chapterKey, nextChapter }} />
+        <GoToOptions options={chapter.options} {...{ chapterKey, onOptionSelected }} />
       </div>
     </FlagsContext.Provider>
   )
