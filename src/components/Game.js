@@ -2,13 +2,17 @@ import { useState, useEffect, useRef, useContext, createContext } from "react";
 import { LanguageContext } from "../App";
 import Character from "./character/Character";
 import characterSheet from "./character/characterSheet";
-import Chapter from "./game/Chapter";
-import chapterMap from "./game/chapterMap";
-import MapModal from "./map/MapModal";
+import Chapter from "./chapter/Chapter";
+import chapterMap from "./chapter/chapterMap";
+import MapModal from "./MapModal";
 import HistoryModal from "./HistoryModal";
+import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
 import flagConditionCheckProvider from "./flagCheck";
 import * as utils from "../utils";
+
+export const FlagsContext = createContext();
+export const HighlightContext = createContext();
 
 const initFlags = {
   flag_characteristics_editable: false,
@@ -38,14 +42,14 @@ const initFlags = {
 };
 
 const initChars = {
-  STR: { key: "STR", value: 80 },
-  CON: { key: "CON", value: 50 },
-  SIZ: { key: "SIZ", value: 50 },
-  DEX: { key: "DEX", value: 50 },
-  APP: { key: "APP", value: 60 },
-  INT: { key: "INT", value: 60 },
-  POW: { key: "POW", value: 70 },
-  EDU: { key: "EDU", value: 40 },
+  STR: { value: 80 },
+  CON: { value: 50 },
+  SIZ: { value: 50 },
+  DEX: { value: 50 },
+  APP: { value: 60 },
+  INT: { value: 60 },
+  POW: { value: 70 },
+  EDU: { value: 40 },
 };
 
 const initAttributes = {
@@ -77,8 +81,8 @@ const initInfo = {
   age: "",
 };
 
-export const FlagsContext = createContext();
-export const HighlightContext = createContext();
+const initChapterStatus = new Uint32Array(9);
+initChapterStatus[0] = 1;
 
 const emptyHighlight = [];
 
@@ -95,6 +99,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [highlight, setHighlight] = useState(emptyHighlight);
   const [mapLocation, setMapLocation] = useState(null);
   const [c25OptionsSelected, setC25OptionsSelected] = useState([false, false, false, false, false, false]);
+  const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   console.log(`Game refresh ${JSON.stringify(flags)}`);
 
@@ -234,7 +239,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       const results = utils.roll(3, 6);
       const luck = results.reduce((a, b) => a + b, 0) * 5;
 
-      showDiceTitleToast(autoLang({ zh: "投掷幸运", en: "Roll Luck" }), 3, 6, 0, results, true);
+      showDiceTitleToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
       setAttributes({ ...attributes, Luck: { value: luck } });
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
@@ -276,18 +281,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
 
-  function nextChapter(chapterKey, optionKey, historyItem, addToHistory) {
-    const next = chapterMap[chapterKey][optionKey];
-    if (next) {
-      console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => chapter ${next}`);
-      setChapterKey(next);
-      if (addToHistory) {
-        setChapterHistory([...chapterHistory, historyItem]);
-        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
-      }
-    }
-  }
-
   function showDiceTitleToast(title, num, dice, bonus, results, shouldPlaySound, alterNumDice = undefined) {
     let subtitle = `${num}D${dice}`;
     if (bonus && bonus > 0) {
@@ -302,6 +295,21 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     });
     if (shouldPlaySound) {
       num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
+    }
+  }
+  
+  function nextChapter(chapterKey, optionKey, historyItem, addToHistory) {
+    const next = chapterMap[chapterKey][optionKey];
+    if (next) {
+      console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => chapter ${next}`);
+      setChapterKey(next);
+      if (!isChapterVisited(next)) {
+        markChapterVisited(next);
+      }
+      if (addToHistory) {
+        setChapterHistory([...chapterHistory, historyItem]);
+        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
+      }
     }
   }
 
@@ -335,6 +343,23 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
   // window.loadState = loadState;
+
+  // 标记某个章节已访问
+  function markChapterVisited(chapterIndex) {
+    const chapterStatusCopy = new Uint32Array(chapterStatus);
+    const arrayIndex = Math.floor(chapterIndex / 32); // 找到所在的 Uint32Array 的元素
+    const bitPosition = chapterIndex % 32;           // 找到在这个元素中对应的位
+    chapterStatusCopy[arrayIndex] |= (1 << bitPosition); // 将该位设置为 1
+    setChapterStatus(chapterStatusCopy);
+  }
+
+  // 检查某个章节是否已访问
+  function isChapterVisited(chapterIndex) {
+    const arrayIndex = Math.floor(chapterIndex / 32);
+    const bitPosition = chapterIndex % 32;
+    return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0; // 检查该位是否为 1
+  }
+  window.isChapterVisited = isChapterVisited;
   
   // Cheating
   window.goto = (chapterKey) => {
@@ -385,6 +410,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         </div>
         <MapModal {...{ mapLocation }} />
         <HistoryModal {...{ characterSheet, chapterHistory }} />
+        <AchievementModal {...{ chapterStatus }} />
       </HighlightContext.Provider>
     </FlagsContext.Provider>
   )

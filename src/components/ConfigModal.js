@@ -43,7 +43,7 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content text-primary">
           <div className="modal-header">
-            <h1 className="modal-title fs-5" id="staticBackdropLabel">{ autoLang(title) }</h1>
+            <h1 className="modal-title fs-5" id="configModalLabel">{ autoLang(title) }</h1>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body">
@@ -89,5 +89,5 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
         </div>
       </div>
     </div>
-  )
+  );
 }

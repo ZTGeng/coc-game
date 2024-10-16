@@ -2,13 +2,30 @@ import { useContext } from "react";
 import { LanguageContext } from '../../App';
 import { HighlightContext } from "../Game";
 
-export default function CharacteristicCell({ char, characterSheet, isEditable, availableValues = [], onValueSelected = () => {} }) {
+export default function CharacteristicCell({ charKey, characterSheet, chars, isEditable, availableValues = [], onValueSelected = () => {} }) {
   const { autoLang } = useContext(LanguageContext);
   const { highlight } = useContext(HighlightContext);
-  // console.log(`CharacteristicCell refresh: ${char.key}, highlight: ${JSON.stringify(highlight)}`);
+  // console.log(`CharacteristicCell refresh: ${charKey}, highlight: ${JSON.stringify(highlight)}`);
+
+  const char = chars[charKey];
+  const charName = characterSheet[charKey].name;
+
+  const nameThTag = charKey === "INT" ? (
+    <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">
+      { 
+        autoLang(charName)
+          .split('\n')
+          .map(( line, index ) => index === 0 
+            ? <span className="d-block" key={ index }>{ line }</span> 
+            : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
+      }
+    </th>
+  ) : (
+    <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(charName) }</th>
+  );
 
   function shouldHighlight(level) {
-    return highlight && highlight.some(h => h.key === char.key && (h.level === "all" || h.level === level));
+    return highlight && highlight.some(h => h.key === charKey && (h.level === "all" || h.level === level));
   }
 
   if (!isEditable) {
@@ -16,19 +33,7 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
       <table className="table text-center align-middle cell m-0">
         <tbody>
           <tr>
-            { char.key === "INT" ? (
-              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-                autoLang(characterSheet[char.key].name)
-                  .split('\n')
-                  .map(( line, index ) => index === 0 
-                    ? <span className="d-block" key={ index }>{ line }</span> 
-                    : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
-              }</th>
-            ) : (
-              <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">
-                { autoLang(characterSheet[char.key].name) }
-              </th>
-            ) }
+            { nameThTag }
             <td 
               rowSpan="2" 
               className={"border border-end-0 p-2" + (shouldHighlight("value") ? " table-warning" : "")}>
@@ -59,7 +64,7 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
   function onSelectChange(e) {
     const newValue = e.target.value ? parseInt(e.target.value) : e.target.value; // Int or ""
     if (char.value !== newValue) {
-      onValueSelected(char.key, newValue);
+      onValueSelected(charKey, newValue);
     }
   }
 
@@ -67,15 +72,7 @@ export default function CharacteristicCell({ char, characterSheet, isEditable, a
     <table className="table text-center align-middle cell m-0">
       <tbody>
         <tr>
-          { char.key === "INT" ? (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ 
-              autoLang(characterSheet[char.key].name)
-                .split('\n')
-                .map(( line, index ) => index === 0 ? <span className="d-block" key={ index }>{ line }</span> : <span className="d-block" style={{ fontSize: "0.6rem" }} key={ index }>{ line }</span>)
-            }</th>
-          ) : (
-            <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(characterSheet[char.key].name) }</th>
-          ) }
+          { nameThTag }
           <td rowSpan="2" className="border p-2">
             <select className="border-0 mx-1" style={{ paddingTop: "3px" }} value={char.value} onChange={onSelectChange}>
               <option key="empty" value="">{ "" }</option>

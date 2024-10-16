@@ -53,4 +53,5 @@ export const TEXTS = {
     opposedRoll: { zh: "对抗检定", en: "Opposed roll" },
     combat: { zh: "战斗", en: "Combat" },
     rollSuffix: { zh: "检定", en: " Roll" },
+    rollLuck: { zh: "投掷幸运", en: "Roll Luck" },
 }

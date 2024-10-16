@@ -55,28 +55,28 @@ function CharacteristicsTable({ characterSheet, chars, isEditable, availableValu
       <div className="card-body">
         <div className="row">
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.STR} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"STR"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.DEX} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"DEX"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.INT} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"INT"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.CON} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"CON"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.APP} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"APP"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.POW} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"POW"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.SIZ} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"SIZ"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell char={chars.EDU} {...{ characterSheet, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"EDU"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
           </div>
         </div>
       </div>

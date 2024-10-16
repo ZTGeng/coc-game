@@ -1,5 +1,5 @@
 import { useContext, useRef } from 'react';
-import { LanguageContext } from '../../App';
+import { LanguageContext } from '../App';
 
 const title = {
   en: "Emberhead Map",

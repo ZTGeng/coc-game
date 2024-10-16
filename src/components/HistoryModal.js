@@ -7,13 +7,32 @@ const historyTitle = {
   zh: "章节历史",
 };
 
-function HistoryItem({ characterSheet, historyItem }) {
+const firstItem = {
+  en: "Game Start",
+  zh: "游戏开始",
+};
+
+const jumpToConfirmText = {
+  en: "Jump to previous chapter?",
+  zh: "跳转到以前的章节？",
+};
+
+function HistoryItem({ characterSheet, historyItem, historyIndex }) {
   const { autoLang } = useContext(LanguageContext);
+
+  function jumpToChapter() {
+    if (window.confirm(autoLang(jumpToConfirmText))) {
+      console.log(`history chapter key: ${historyItem.chapterKey}, index: ${historyIndex}`);
+    }
+  }
 
   if (!historyItem.type) {
     return (
-      <button className="list-group-item list-group-item-action" type="button" onClick={() => console.log(`history key: ${historyItem.chapterKey}`)}>
-        { autoLang(historyItem.optionText) }
+      <button className="list-group-item list-group-item-action" type="button" onClick={jumpToChapter}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+          <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path>
+        </svg>
+        <small className="ms-2">{ autoLang(historyItem.optionText) }</small>
       </button>
     );
   }
@@ -41,8 +60,11 @@ function HistoryItem({ characterSheet, historyItem }) {
       break;
   }
   return (
-    <button className="list-group-item list-group-item-action" type="button" onClick={() => {console.log(`history key: ${historyItem.chapterKey}`)}}>
-      { `${description} - ${ autoLang(historyItem.optionText) }` }
+    <button className="list-group-item list-group-item-action" type="button" onClick={jumpToChapter}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+        <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path>
+      </svg>
+      <small className="ms-2">{ `${description} - ${ autoLang(historyItem.optionText) }` }</small>
     </button>
   );
 }
@@ -58,7 +80,13 @@ export default function HistoryModal({ characterSheet, chapterHistory }) {
       </div>
       <div className="offcanvas-body">
         <div className="list-group">
-        { chapterHistory.map((historyItem, i) => <HistoryItem key={i} {...{ characterSheet, historyItem }} />)}
+          <button className="list-group-item list-group-item-action" type="button" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+              <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path>
+            </svg>
+            <small className="ms-2">{ autoLang(firstItem) }</small>
+          </button>
+          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ characterSheet, historyItem }} />)}
         </div>
       </div>
     </div>

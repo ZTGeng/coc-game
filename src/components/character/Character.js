@@ -167,7 +167,7 @@ function Weapons({ characterSheet, skills }) {
   );
 }
 
-function Combat({ characterSheet, chars, skills }) {
+function CombatData({ characterSheet, chars, skills }) {
   const { autoLang } = useContext(LanguageContext);
   const [damageBonus, build] = !chars.SIZ.value || !chars.STR.value
     ? ["", ""]
@@ -250,12 +250,11 @@ export default function Character({ characterSheet, chars, setChars, attributes,
       <Attributes {...{ characterSheet, attributes }} />
       <Skills {...{ characterSheet, skills, setSkills, occupation, onCharacterAction }} />
       <div className="row mt-1">
-
         <div className="col-8 px-0">
           <Weapons {...{ characterSheet, skills }} />
         </div>
         <div className="col-4 pe-0 ps-1">
-          <Combat {...{ characterSheet, chars, skills }} />
+          <CombatData {...{ characterSheet, chars, skills }} />
         </div>
       </div>
     </div>

@@ -17,6 +17,21 @@ const initCheckFlags = {
   isFumble: false,
 }
 
+const interactionChapters = {
+  134: {
+    chapterKey: 134,
+    optionText: utils.TEXTS.rollLuck,
+  },
+  263: {
+    chapterKey: 263,
+    optionText: {
+      "zh": "设定人物属性",
+      "en": "Set up characteristics",
+    },
+  },
+
+};
+
 function Loading({ autoLang }) {
   return autoLang({ zh: <p>"加载中..."</p>, en: <p>"Loading..."</p> });
 }
@@ -218,6 +233,10 @@ export default function Chapter({
   }
 
   function onOptionSelected(chapterKey, optionKey, optionText) {
+    if (interactionChapters[chapterKey]) {
+      nextChapter(chapterKey, optionKey, interactionChapters[chapterKey], true);
+      return;
+    }
     if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
       const historyItem = { chapterKey, optionText, type: chapter.check.type };
       switch (chapter.check.type) {
