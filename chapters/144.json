@@ -27,18 +27,18 @@
         {
             "key": 0,
             "text": {
-                "en": "You passed the Drive Auto roll, continue",
-                "zh": "「汽车驾驶」检定成功，继续"
+                "en": "You passed the roll, continue",
+                "zh": "检定成功，继续"
             },
-            "show": [ "flag_check_passed", "flag_check_match:drive-value" ]
+            "show": [ "flag_check_passed", { "flag": "flag_check_match", "param": "drive-value" } ]
         },
         {
             "key": 1,
             "text": {
-                "en": "You passed the Pychology roll, continue",
-                "zh": "「心理学」检定成功，继续"
+                "en": "You passed the roll, continue",
+                "zh": "检定成功，继续"
             },
-            "show": [ "flag_check_passed", "flag_check_match:psychology-half" ]
+            "show": [ "flag_check_passed", { "flag": "flag_check_match", "param": "psychology-half" } ]
         },
         {
             "key": 2,
