@@ -8,8 +8,8 @@ const historyTitle = {
 };
 
 const firstItem = {
-  en: "Game Start",
-  zh: "游戏开始",
+  en: "Start the adventure",
+  zh: "开始冒险",
 };
 
 const jumpToConfirmText = {
@@ -17,12 +17,13 @@ const jumpToConfirmText = {
   zh: "跳转到以前的章节？",
 };
 
-function HistoryItem({ characterSheet, historyItem, historyIndex }) {
+function HistoryItem({ characterSheet, historyItem, historyIndex, onJumpToChapter }) {
   const { autoLang } = useContext(LanguageContext);
 
   function jumpToChapter() {
     if (window.confirm(autoLang(jumpToConfirmText))) {
       console.log(`history chapter key: ${historyItem.chapterKey}, index: ${historyIndex}`);
+      onJumpToChapter(historyIndex);
     }
   }
 
@@ -69,7 +70,7 @@ function HistoryItem({ characterSheet, historyItem, historyIndex }) {
   );
 }
 
-export default function HistoryModal({ characterSheet, chapterHistory }) {
+export default function HistoryModal({ characterSheet, chapterHistory, onJumpToChapter }) {
   const { autoLang } = useContext(LanguageContext);
 
   return (
@@ -86,7 +87,7 @@ export default function HistoryModal({ characterSheet, chapterHistory }) {
             </svg>
             <small className="ms-2">{ autoLang(firstItem) }</small>
           </button>
-          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ characterSheet, historyItem }} />)}
+          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ characterSheet, historyItem, onJumpToChapter }} />)}
         </div>
       </div>
     </div>

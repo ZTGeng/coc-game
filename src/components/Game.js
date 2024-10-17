@@ -30,6 +30,13 @@ const initFlags = {
   flag_major_wound: false,
   flag_penalty_die: false,
 
+  flag_c25_option_selected_0: false,
+  flag_c25_option_selected_1: false,
+  flag_c25_option_selected_2: false,
+  flag_c25_option_selected_3: false,
+  flag_c25_option_selected_4: false,
+  flag_c25_option_selected_5: false,
+
 
   flag_hp_reduced: false,
   flag_san_reduced: false,
@@ -90,7 +97,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const { autoLang } = useContext(LanguageContext);
   const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
-  const [chapterHistory, setChapterHistory] = useState([]);
   const [chars, setChars] = useState(initChars);
   const [attributes, setAttributes] = useState(initAttributes);
   const [skills, setSkills] = useState(initSkills);
@@ -98,15 +104,17 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [info, setInfo] = useState(initInfo);
   const [highlight, setHighlight] = useState(emptyHighlight);
   const [mapLocation, setMapLocation] = useState(null);
-  const [c25OptionsSelected, setC25OptionsSelected] = useState([false, false, false, false, false, false]);
   const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
+  const [chapterHistory, setChapterHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  // const [skillHistory, setSkillHistory] = useState([{}]);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
-  console.log(`Game refresh ${JSON.stringify(flags)}`);
+  // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
 
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}, saveLoad: ${JSON.stringify(saveLoad)}`);
     if (Object.keys(saveLoad).length > 0) {
-      loadState(saveLoad);
+      // loadState(saveLoad);
     }
   }, [saveLoad]);
 
@@ -230,12 +238,13 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       addToHighlight("MP", "warning");
       addToHighlight("POW", "value");
     },
-    action_initial_hp: () => {
+    action_initial_hp_and_reset_luck: () => {
       const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
-      setAttributes({ ...attributes, HP: { value: hp, maxValue: hp } });
+      setAttributes({ ...attributes, HP: { value: hp, maxValue: hp }, Luck: { value: "" } });
       addToHighlight("HP", "warning");
+      addToHighlight("Luck", "warning");
     },
-    action_roll_luck_and_update_chapter: () => {
+    action_init_luck: () => {
       const results = utils.roll(3, 6);
       const luck = results.reduce((a, b) => a + b, 0) * 5;
 
@@ -298,66 +307,163 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
   
-  function nextChapter(chapterKey, optionKey, historyItem, addToHistory) {
+  function nextChapter(optionKey, historyItem, addToHistory) {
     const next = chapterMap[chapterKey][optionKey];
     if (next) {
-      console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => chapter ${next}`);
+      console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => c${next}`);
+      if (addToHistory) {
+        historyItem.states = stateSnapshot();
+        if (historyIndex !== -1) {
+          setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
+          setHistoryIndex(-1);
+        } else {
+          setChapterHistory([...chapterHistory, historyItem]);
+        }
+        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
+      }
       setChapterKey(next);
       if (!isChapterVisited(next)) {
         markChapterVisited(next);
       }
-      if (addToHistory) {
-        setChapterHistory([...chapterHistory, historyItem]);
-        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
-      }
     }
   }
 
-  function saveState() {
-    const state = {
-      flags,
+  function onJumpToChapter(historyIndex) {
+    console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
+    loadHistoryStates(historyIndex);
+    setHistoryIndex(historyIndex);
+  }
+
+  function stateSnapshot(doIncludeSkillSnapshot = false) {
+    const snapshot = {
       chapterKey,
-      chars,
+      flags: Object.keys(flags)
+        .filter(flag => flags[flag] !== initFlags[flag])
+        .reduce((acc, flag) => {
+          acc[flag] = flags[flag];
+          return acc;
+        }, {}),
+      // chars: { ...chars },
       attributes,
-      skills,
-      occupation,
-      info,
-      c25OptionsSelected,
+      occupationName: occupation.name,
+      info: info,
       mapEnabled,
+      chapterStatus: Array.from(chapterStatus),
+      checkedSkills: Object.keys(skills).filter(skillKey => skills[skillKey].checked),
     };
-    localStorage.setItem("coc-state", JSON.stringify(state));
-  }
-  window.saveState = saveState;
 
-  function loadState(state) {
-    if (state) {
-      setFlags(state.flags);
-      setChapterKey(state.chapterKey);
-      setChars(state.chars);
-      setAttributes(state.attributes);
-      setSkills(state.skills);
-      setOccupation(state.occupation);
-      setInfo(state.info);
-      setC25OptionsSelected(state.c25OptionsSelected);
-      setMapEnabled(state.mapEnabled);
+    const currentSkillSnapshot = Object.keys(skills)
+      .filter(skillKey => skills[skillKey].value !== initSkills[skillKey].value 
+        || skills[skillKey].customName
+        || skills[skillKey].occupation
+        || skills[skillKey].hobby)
+      .reduce((acc, skillKey) => {
+        acc[skillKey] = {};
+        skills[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skills[skillKey].value);
+        skills[skillKey].customName && (acc[skillKey].customName = skills[skillKey].customName);
+        skills[skillKey].occupation && (acc[skillKey].occupation = skills[skillKey].occupation);
+        skills[skillKey].hobby && (acc[skillKey].hobby = skills[skillKey].hobby);
+        return acc;
+      }, {});
+    const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
+    if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
+      snapshot.skills = currentSkillSnapshot;
+    }
+
+    return snapshot;
+  }
+
+  function loadHistoryStates(historyIndex) {
+    const states = chapterHistory[historyIndex].states;
+
+    const skillSnapshot = findLastSkillSnapshot(historyIndex + 1);
+    console.log(`load chrpterKey: ${states.chapterKey}, states.skillHistoryIndex: ${states.skillHistoryIndex}, initSkills: ${JSON.stringify(initSkills)}`);
+    console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
+    setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
+
+    setFlags({ ...initFlags, ...states.flags });
+    // setChars(states.chars);
+    setAttributes(states.attributes);
+    setOccupation({ name: states.occupationName });
+    setInfo(states.info);
+    setMapEnabled(states.mapEnabled);
+    setChapterStatus(new Uint32Array(states.chapterStatus));
+    setChapterKey(states.chapterKey);
+  }
+
+  function findLastSkillSnapshot(historyItemIndex) {
+    const lastItem = chapterHistory.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states && historyItem.states.skills);
+    return lastItem ? lastItem.states.skills : {};
+  }
+
+  function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
+    const skillsCopy = Object.keys(skillSnapshot)
+      .reduce((acc, skillKey) => {
+        acc[skillKey] = { ...initSkills[skillKey] };
+        (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
+          && (acc[skillKey].value = skillSnapshot[skillKey].value);
+        skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
+        skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
+        skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
+        return acc;
+      }, { ...initSkills });
+    checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
+    setSkills(skillsCopy);
+  }
+
+  function save() {
+    const saveData = {
+      chapterHistory,
+      chars,
+      currentStates: stateSnapshot(true),
+    }
+    localStorage.setItem("coc-history", JSON.stringify(saveData));
+  }
+  window.save = save;
+
+  function load() {
+    const saveData = localStorage.getItem("coc-history");
+    if (saveData) {
+      const {
+        chapterHistory: chapterHistoryToLoad,
+        chars: charsToLoad,
+        currentStates: statesToLoad
+      } = JSON.parse(saveData);
+      setChapterHistory(chapterHistoryToLoad);
+      setChars(charsToLoad);
+
+      const skillSnapshot = statesToLoad.skills;
+      setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
+
+      setFlags({ ...initFlags, ...statesToLoad.flags });
+      setAttributes(statesToLoad.attributes);
+      setOccupation({ name: statesToLoad.occupationName });
+      setInfo(statesToLoad.info);
+      setMapEnabled(statesToLoad.mapEnabled);
+      setChapterStatus(new Uint32Array(statesToLoad.chapterStatus));
+      setChapterKey(statesToLoad.chapterKey);
     }
   }
-  // window.loadState = loadState;
+  window.load = load;
 
   // 标记某个章节已访问
   function markChapterVisited(chapterIndex) {
+    console.log(`Game - markChapterVisited: chapterStatusCopy ${JSON.stringify(chapterStatus)} `);
     const chapterStatusCopy = new Uint32Array(chapterStatus);
-    const arrayIndex = Math.floor(chapterIndex / 32); // 找到所在的 Uint32Array 的元素
-    const bitPosition = chapterIndex % 32;           // 找到在这个元素中对应的位
-    chapterStatusCopy[arrayIndex] |= (1 << bitPosition); // 将该位设置为 1
+    const arrayIndex = Math.floor(chapterIndex / 32);
+    const bitPosition = chapterIndex % 32;
+    chapterStatusCopy[arrayIndex] |= (1 << bitPosition);
     setChapterStatus(chapterStatusCopy);
+    for (let i = 0; i < chapterStatusCopy.length; i++) {
+    console.log(`Game - markChapterVisited: chapterStatusCopy ${chapterStatusCopy[i]} `);
+    }
   }
 
   // 检查某个章节是否已访问
   function isChapterVisited(chapterIndex) {
     const arrayIndex = Math.floor(chapterIndex / 32);
     const bitPosition = chapterIndex % 32;
-    return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0; // 检查该位是否为 1
+    return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
   }
   window.isChapterVisited = isChapterVisited;
   
@@ -388,8 +494,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
               skills,
               nextChapter,
               setMapLocation,
-              c25OptionsSelected,
-              setC25OptionsSelected,
               onChapterAction }} />
           </div>
           { showCharacter && (
@@ -409,7 +513,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
           )}
         </div>
         <MapModal {...{ mapLocation }} />
-        <HistoryModal {...{ characterSheet, chapterHistory }} />
+        <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
         <AchievementModal {...{ chapterStatus }} />
       </HighlightContext.Provider>
     </FlagsContext.Provider>

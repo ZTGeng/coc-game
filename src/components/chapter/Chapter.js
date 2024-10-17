@@ -118,8 +118,6 @@ export default function Chapter({
   skills,
   nextChapter,
   setMapLocation,
-  c25OptionsSelected,
-  setC25OptionsSelected,
   onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
@@ -190,14 +188,39 @@ export default function Chapter({
       const [rollKey, rollLevel] = keyLevel.split("-");
       return checkFlags.rollKey === rollKey && (!rollLevel || checkFlags.rollLevel === rollLevel);
     },
-    "flag_c25_option_disabled": (option) => c25OptionsSelected[option] || c25OptionsSelected.filter(b => b).length >= 4,
+    "flag_c25_option_disabled": (option) => flagConditionCheck(`flag_c25_option_selected_${option}`)
+      || Array
+        .from({ length: 6 }, (_, i) => i)
+        .map(i => `flag_c25_option_selected_${i}`)
+        .filter(flag => flagConditionCheck(flag))
+        .length >= 4,
   };
   const chapterFlagConditionCheck = flagConditionCheckProvider({}, flagFunctions, flagConditionCheck);
+
+  const actions = {
+    action_c25_select_option: (option) => {
+      onChapterAction("action_set_flag", { flag: `flag_c25_option_selected_${option}`, value: true });
+    },
+    action_roll_luck_and_update_chapter: (param) => {
+      setChapter(param);
+      onChapterAction("action_clear_highlight", "");
+      onChapterAction("action_set_highlight", { "key": "DEX", "level": "value" });
+      onChapterAction("action_init_luck", param);
+    },
+    action_clear_c25_flags: () => {
+      Array
+        .from({ length: 6 }, (_, i) => i)
+        .map(i => `flag_c25_option_selected_${i}`)
+        .forEach(flag => onChapterAction("action_set_flag", { flag, value: false }));
+    },
+  }
 
   function onLeave(chapterJson) {
     console.log(`Chapter ${chapterJson.key} onLeave`);
     if (chapterJson.onleave) {
-      chapterJson.onleave.forEach(action => onChapterAction(action.action, action.param));
+      chapterJson.onleave.forEach(action => {
+        action.action in actions ? actions[action.action](action.param) : onChapterAction(action.action, action.param);
+      });
     }
   }
 
@@ -205,36 +228,22 @@ export default function Chapter({
     console.log(`Chapter ${chapterJson.key} onLoad`);
     if (chapterJson.onload) {
       chapterJson.onload.forEach(action => {
-        if (action.action === "action_c25_select_option") { // param: Int 0-5
-          const c25OptionsSelectedCopy = [...c25OptionsSelected];
-          c25OptionsSelectedCopy[action.param] = true;
-          setC25OptionsSelected(c25OptionsSelectedCopy);
-          return;
-        }
-        onChapterAction(action.action, action.param)
+        action.action in actions ? actions[action.action](action.param) : onChapterAction(action.action, action.param);
       });
     }
   }
 
   function onInteractionAction(action, param) {
-    if (action === "action_roll_luck_and_update_chapter") {
-      // param is the new chapter json with the same key
-      setChapter(param);
-      // will do DEX check, highlisht is needed
-      onChapterAction("action_clear_highlight", "");
-      onChapterAction("action_set_highlight", { "key": "DEX", "level": "value" });
-      // no return on purpose to let parent initial the Luck value
-    }
-    onChapterAction(action, param);
+    action in actions ? actions[action](param) : onChapterAction(action, param);
   }
 
   function onCheckAction(action, param) {
-    onChapterAction(action, param);
+    action in actions ? actions[action](param) : onChapterAction(action, param);
   }
 
-  function onOptionSelected(chapterKey, optionKey, optionText) {
+  function onOptionSelected(optionKey, optionText) {
     if (interactionChapters[chapterKey]) {
-      nextChapter(chapterKey, optionKey, interactionChapters[chapterKey], true);
+      nextChapter(optionKey, interactionChapters[chapterKey], true);
       return;
     }
     if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
@@ -251,15 +260,15 @@ export default function Chapter({
           historyItem.opponentName = chapter.check.opponent.name;
           break;
       }
-      nextChapter(chapterKey, optionKey, historyItem, true);
+      nextChapter(optionKey, historyItem, true);
       return;
     }
     if (chapter.interactions) { // { chapterKey, optionText, type=interaction, texts }
       const texts = chapter.interactions.map(interaction => interaction.text);
-      nextChapter(chapterKey, optionKey, { chapterKey, optionText, type: "interaction", texts }, true);
+      nextChapter(optionKey, { chapterKey, optionText, type: "interaction", texts }, true);
       return;
     }
-    nextChapter(chapterKey, optionKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
+    nextChapter(optionKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
   }
 
   if (chapterKey === 0) {
@@ -277,7 +286,7 @@ export default function Chapter({
       { chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ characterSheet, chars, attributes, skills, checkFlags, setCheckFlags }}/> }
       <br />
       <div className="px-2">
-        <GoToOptions options={chapter.options} {...{ chapterKey, onOptionSelected }} />
+        <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
       </div>
     </FlagsContext.Provider>
   )

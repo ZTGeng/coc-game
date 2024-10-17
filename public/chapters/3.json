@@ -27,5 +27,8 @@
         { "key": 0, "text": { "en": "Ask Ruth about what she said", "zh": "问露丝：她说的是什么意思" } },
         { "key": 1, "text": { "en": "Ask May about what Ruth said", "zh": "问梅：露丝说的是什么意思" } },
         { "key": 2, "text": { "en": "Say nothing", "zh": "一言不发" } }
+    ],
+    "onload": [
+        { "action": "action_clear_c25_flags", "param": "" }
     ]
 }
