@@ -6,33 +6,55 @@ import ToastMessages from './components/ToastMessage';
 import Game from './components/Game';
 
 export const LanguageContext = createContext();
+const localStorageKey = "coc-state";
 
-function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
+const title = {
+  en: "Alone Against the Flames",
+  zh: "向火独行",
+};
+const showCharacterTooltip = {
+  en: "Show Character Sheet",
+  zh: "显示人物卡",
+};
+const showHistoryTooltip = {
+  en: "Show Chapter History",
+  zh: "显示章节历史",
+};
+const showMapTooltip = {
+  en: "Show Map",
+  zh: "显示地图",
+};
+const showAchievementTooltip = {
+  en: "Show Achievement",
+  zh: "显示成就",
+};
+const saveTooltip = {
+  en: "Save Game",
+  zh: "保存游戏",
+};
+const loadTooltip = {
+  en: "Load Game",
+  zh: "读取存档",
+};  
+const configTooltip = {
+  en: "Configuration",
+  zh: "设置",
+};
+const saveConfirmText = {
+  en: "Save progress?",
+  zh: "保存进度？",
+};
+const overwriteConfirmText = {
+  zh: "覆盖之前的存档？",
+  en: "Overwrite the previous save?"
+};
+const loadConfirmText = {
+  zh: "舍弃未保存的进度？",
+  en: "Discard unsaved progress?"
+};
+
+function Header({ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }) {
   const { autoLang } = useContext(LanguageContext);
-  const title = {
-    en: "Alone Against the Flames",
-    zh: "向火独行",
-  };
-  const showCharacterTooltip = {
-    en: "Show Character Sheet",
-    zh: "显示人物卡",
-  };
-  const showHistoryTooltip = {
-    en: "Show Chapter History",
-    zh: "显示章节历史",
-  };
-  const showMapTooltip = {
-    en: "Show Map",
-    zh: "显示地图",
-  };
-  const showAchievementTooltip = {
-    en: "Show Achievement",
-    zh: "显示成就",
-  };
-  const configTooltip = {
-    en: "Configuration",
-    zh: "设置",
-  };
 
   return (
     <nav className="navbar bg-body-tertiary shadow-sm mb-2">
@@ -69,6 +91,24 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
           <button className="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#achievement-modal" disabled={!gameStarted}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path d="M5.09 10.121A5.251 5.251 0 0 1 1 5V3.75C1 2.784 1.784 2 2.75 2h2.364c.236-.586.81-1 1.48-1h10.812c.67 0 1.244.414 1.48 1h2.489c.966 0 1.75.784 1.75 1.75V5a5.252 5.252 0 0 1-4.219 5.149 7.01 7.01 0 0 1-4.644 5.478l.231 3.003a.5.5 0 0 0 .034.031c.079.065.303.203.836.282.838.124 1.637.81 1.637 1.807v.75h2.25a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1 0-1.5H7v-.75c0-.996.8-1.683 1.637-1.807.533-.08.757-.217.836-.282a.5.5 0 0 0 .034-.031l.231-3.003A7.012 7.012 0 0 1 5.09 10.12ZM6.5 2.594V9a5.5 5.5 0 1 0 11 0V2.594a.094.094 0 0 0-.094-.094H6.594a.094.094 0 0 0-.094.094Zm4.717 13.363-.215 2.793-.001.021-.003.043a1.212 1.212 0 0 1-.022.147c-.05.237-.194.567-.553.86-.348.286-.853.5-1.566.605a.478.478 0 0 0-.274.136.264.264 0 0 0-.083.188v.75h7v-.75a.264.264 0 0 0-.083-.188.478.478 0 0 0-.274-.136c-.713-.105-1.218-.32-1.567-.604-.358-.294-.502-.624-.552-.86a1.22 1.22 0 0 1-.025-.19l-.001-.022-.215-2.793a7.069 7.069 0 0 1-1.566 0ZM19 8.578A3.751 3.751 0 0 0 21.625 5V3.75a.25.25 0 0 0-.25-.25H19ZM5 3.5H2.75a.25.25 0 0 0-.25.25V5A3.752 3.752 0 0 0 5 8.537Z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div title={ autoLang(saveTooltip) }>
+          <button className="btn btn-outline-light" onClick={onSaveGame} disabled={!gameStarted}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M4.75 0A2.75 2.75 0 0 0 2 2.75v16.5A2.75 2.75 0 0 0 4.75 22h11a.75.75 0 0 0 0-1.5h-11c-.69 0-1.25-.56-1.25-1.25V18A1.5 1.5 0 0 1 5 16.5h7.25a.75.75 0 0 0 0-1.5H5c-.546 0-1.059.146-1.5.401V2.75c0-.69.56-1.25 1.25-1.25H18.5v7a.75.75 0 0 0 1.5 0V.75a.75.75 0 0 0-.75-.75H4.75Z"></path>
+              <path d="m20 13.903 2.202 2.359a.75.75 0 0 0 1.096-1.024l-3.5-3.75a.75.75 0 0 0-1.096 0l-3.5 3.75a.75.75 0 1 0 1.096 1.024l2.202-2.36v9.348a.75.75 0 0 0 1.5 0v-9.347Z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div title={ autoLang(loadTooltip) }>
+          <button className="btn btn-outline-light" onClick={onLoadGame} disabled={!(localStorageKey in localStorage)}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path d="M1.875 2.875a2.5 2.5 0 0 1 2.5-2.5h14a.75.75 0 0 1 .75.75v9.125a.75.75 0 0 1-1.5 0V1.875H4.375a1 1 0 0 0-1 1v11.208a2.486 2.486 0 0 1 1-.208h5.937a.75.75 0 1 1 0 1.5H4.375a1 1 0 0 0-1 1v1.75a1 1 0 0 0 1 1h6a.75.75 0 0 1 0 1.5h-6a2.5 2.5 0 0 1-2.5-2.5V2.875Z"></path>
+              <path d="M18.643 20.484a.749.749 0 1 0 1.061 1.06l3.757-3.757a.75.75 0 0 0 0-1.06l-3.757-3.757a.75.75 0 0 0-1.061 1.06l2.476 2.477H13a.75.75 0 0 0 0 1.5h8.12l-2.477 2.477Z"></path>
             </svg>
           </button>
         </div>
@@ -111,16 +151,6 @@ function App() {
     return texts[language] || texts["en"];
   }
 
-  // window.setSaveLoad = setSaveLoad;
-  window.load = () => {
-    const state = JSON.parse(localStorage.getItem("coc-state"));
-    if (state) {
-      setSaveLoad(state);
-      // setMapEnabled(state.mapEnabled);
-      setGameStarted(true);
-    }
-  }
-
   useEffect(() => {
     if (musicRef.current) {
       musicRef.current.volume = musicVolume;
@@ -154,6 +184,22 @@ function App() {
     setShowCharacter(!showCharacter);
   }
 
+  function onSaveGame() {
+    if (window.confirm(autoLang(saveConfirmText))) {
+      setSaveLoad({ action: "save", saveKey: localStorageKey });
+    }
+  }
+
+  function onLoadGame() {
+    console.log("Load game.");
+    if (localStorageKey in localStorage) {
+      if (window.confirm(autoLang(loadConfirmText))) {
+        setGameStarted(true);
+        setSaveLoad({ action: "load", saveKey: localStorageKey });
+      }
+    }
+  }
+
   function playSound(sound) {
     const src = `./audio/${sound}.mp3`;
     if (sound === "dice" || sound === "one-die") {
@@ -176,7 +222,7 @@ function App() {
   return (
     <LanguageContext.Provider value={{ language, setLanguage, autoLang }}>
       <div className="d-flex flex-column vh-100">
-        <Header {...{ gameStarted, toggleShowCharacter, mapEnabled }} />
+        <Header {...{ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }} />
         <div className="flex-grow-1">
           {gameStarted ? <Game {...{ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }} /> : <Cover onStart={startGame} />}
         </div>

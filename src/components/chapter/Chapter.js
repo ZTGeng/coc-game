@@ -118,12 +118,13 @@ export default function Chapter({
   skills,
   nextChapter,
   setMapLocation,
+  isReloading,
   onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
-  console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, checkFlags: ${checkFlags.result}`);
+  console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}`);
 
   useEffect(() => {
     console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
@@ -228,6 +229,7 @@ export default function Chapter({
     console.log(`Chapter ${chapterJson.key} onLoad`);
     if (chapterJson.onload) {
       chapterJson.onload.forEach(action => {
+        if (action.action === "action_adjust_attribute" && isReloading) return;
         action.action in actions ? actions[action.action](action.param) : onChapterAction(action.action, action.param);
       });
     }

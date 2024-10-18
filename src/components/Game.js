@@ -108,13 +108,16 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [chapterHistory, setChapterHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   // const [skillHistory, setSkillHistory] = useState([{}]);
+  const [isReloading, setIsReloading] = useState(false);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
 
   useEffect(() => {
-    console.log(`Game - useEffect: chapterKey: ${chapterKey}, saveLoad: ${JSON.stringify(saveLoad)}`);
-    if (Object.keys(saveLoad).length > 0) {
-      // loadState(saveLoad);
+    console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
+    if (saveLoad.action === "save") {
+      save(saveLoad.saveKey);
+    } else if (saveLoad.action === "load") {
+      load(saveLoad.saveKey);
     }
   }, [saveLoad]);
 
@@ -321,6 +324,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         }
         // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
       }
+      setIsReloading(false);
       setChapterKey(next);
       if (!isChapterVisited(next)) {
         markChapterVisited(next);
@@ -388,6 +392,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setInfo(states.info);
     setMapEnabled(states.mapEnabled);
     setChapterStatus(new Uint32Array(states.chapterStatus));
+
+    setIsReloading(true);
     setChapterKey(states.chapterKey);
   }
 
@@ -411,18 +417,17 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setSkills(skillsCopy);
   }
 
-  function save() {
+  function save(saveKey) {
     const saveData = {
       chapterHistory,
       chars,
       currentStates: stateSnapshot(true),
     }
-    localStorage.setItem("coc-history", JSON.stringify(saveData));
+    localStorage.setItem(saveKey, JSON.stringify(saveData));
   }
-  window.save = save;
 
-  function load() {
-    const saveData = localStorage.getItem("coc-history");
+  function load(saveKey) {
+    const saveData = localStorage.getItem(saveKey);
     if (saveData) {
       const {
         chapterHistory: chapterHistoryToLoad,
@@ -441,10 +446,11 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setInfo(statesToLoad.info);
       setMapEnabled(statesToLoad.mapEnabled);
       setChapterStatus(new Uint32Array(statesToLoad.chapterStatus));
+
+      setIsReloading(true);
       setChapterKey(statesToLoad.chapterKey);
     }
   }
-  window.load = load;
 
   // 标记某个章节已访问
   function markChapterVisited(chapterIndex) {
@@ -494,6 +500,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
               skills,
               nextChapter,
               setMapLocation,
+              isReloading,
               onChapterAction }} />
           </div>
           { showCharacter && (
