@@ -136,16 +136,14 @@ function Footer() {
 }
 
 function App() {
-  const [language, setLanguage] = useState("zh");
-  const [musicVolume, setMusicVolume] = useState(1);
+  const [language, setLanguage] = useState("en");
+  const [musicVolume, setMusicVolume] = useState(0);
   const [sfxVolume, setSfxVolume] = useState(1);
   const [gameStarted, setGameStarted] = useState(false);
   const [showCharacter, setShowCharacter] = useState(false);
   const [mapEnabled, setMapEnabled] = useState(false);
   const [saveLoad, setSaveLoad] = useState({});
   const musicRef = useRef();
-  const diceSfxRef = useRef();
-  const hpSfxRef = useRef();
 
   function autoLang(texts) { // texts = { en: "English", zh: "中文" }
     return texts[language] || texts["en"];
@@ -153,18 +151,14 @@ function App() {
 
   useEffect(() => {
     if (musicRef.current) {
+      if (musicRef.current.volume === 0 && musicVolume > 0) {
+        musicRef.current.play().catch(error => console.error(`Failed to play music: ${error}`));
+      } else if (musicRef.current.volume > 0 && musicVolume === 0) {
+        musicRef.current.pause();
+      }
       musicRef.current.volume = musicVolume;
     }
   }, [musicVolume]);
-
-  useEffect(() => {
-    if (diceSfxRef.current) {
-      diceSfxRef.current.volume = sfxVolume;
-    }
-    if (hpSfxRef.current) {
-      hpSfxRef.current.volume = sfxVolume;
-    }
-  }, [sfxVolume]);
 
   function startGame() {
     console.log("Game started.");
@@ -201,23 +195,14 @@ function App() {
   }
 
   function playSound(sound) {
-    const src = `./audio/${sound}.mp3`;
-    if (sound === "dice" || sound === "one-die") {
-      if (diceSfxRef.current) {
-        diceSfxRef.current.pause();
-        diceSfxRef.current.currentTime = 0;
-        diceSfxRef.current.src = src;
-        diceSfxRef.current.play().catch(error => console.error(`Failed to play sound: ${error}`));
-      }
-    } else {
-      if (hpSfxRef.current) {
-        hpSfxRef.current.pause();
-        hpSfxRef.current.currentTime = 0;
-        hpSfxRef.current.src = src;
-        hpSfxRef.current.play().catch(error => console.error(`Failed to play sound: ${error}`));
-      }
-    }
+    const src = `audio/${sound}.mp3`;
+    const audio = new Audio(src);
+    audio.volume = sfxVolume;
+    audio.play()
+      .finally(() => audio.remove())
+      .catch(error => console.error(`Failed to play sound: ${error}`));
   }
+  window.playSound = playSound;
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, autoLang }}>
@@ -230,9 +215,7 @@ function App() {
       </div>
       <ToastMessages />
       <ConfigModal {...{ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
-      <audio ref={musicRef} src="" type="audio/mpeg" loop volume={musicVolume} />
-      <audio ref={diceSfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
-      <audio ref={hpSfxRef} src="" type="audio/mpeg" volume={sfxVolume} />
+      <audio ref={musicRef} src="audio/music.mp3" type="audio/mpeg" loop volume={musicVolume} />
     </LanguageContext.Provider>
   )
 }
