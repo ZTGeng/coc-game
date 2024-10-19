@@ -24,7 +24,7 @@
         { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ],
-    "onleave": [
+    "onload": [
         { "action": "action_set_flag", "param": { "flag": "flag_involved_fighting", "value": true } }
     ]
 }

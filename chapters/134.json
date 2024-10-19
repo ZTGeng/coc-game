@@ -84,7 +84,6 @@
     "options": [],
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
-        { "action": "action_initial_hp" },
-        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "warning" } }
+        { "action": "action_initial_hp_and_reset_luck" }
     ]
 }
