@@ -14,7 +14,7 @@
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onleave": [
+    "onload": [
         { "action": "action_set_flag", "param": { "flag": "flag_found_poem_book" }
     ]
 }

@@ -119,6 +119,7 @@ export default function Chapter({
   nextChapter,
   setMapLocation,
   isReloading,
+  updateStateSnapshot,
   onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
@@ -139,6 +140,8 @@ export default function Chapter({
         if (chapter && (chapter.key !== chapterKey)) {
           onLeave(chapter);
         }
+
+        updateStateSnapshot();
 
         onChapterAction("action_clear_highlight", ""); // reset highlight
         if (data.check) {
@@ -229,7 +232,6 @@ export default function Chapter({
     console.log(`Chapter ${chapterJson.key} onLoad`);
     if (chapterJson.onload) {
       chapterJson.onload.forEach(action => {
-        if (action.action === "action_adjust_attribute" && isReloading) return;
         action.action in actions ? actions[action.action](action.param) : onChapterAction(action.action, action.param);
       });
     }

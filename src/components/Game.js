@@ -107,7 +107,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
   const [chapterHistory, setChapterHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  // const [skillHistory, setSkillHistory] = useState([{}]);
   const [isReloading, setIsReloading] = useState(false);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
@@ -120,6 +119,67 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       load(saveLoad.saveKey);
     }
   }, [saveLoad]);
+
+  // Source of Truth of current state during chapter transitions
+  const stateSnapshotRef = useRef({});
+  console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
+  let flagsCopy = {...flags};
+  let highlightCopy = [...highlight];
+  let attrCopy = {...attributes};
+  let skillsCopy = {...skills};
+
+  function gameSnapshot(doIncludeSkillSnapshot = false) {
+    const snapshot = {
+      chapterKey,
+      flags: Object.keys(flagsCopy)
+        .filter(flag => flagsCopy[flag] !== initFlags[flag])
+        .reduce((acc, flag) => {
+          acc[flag] = flagsCopy[flag];
+          return acc;
+        }, {}),
+      attributes: { ...attrCopy },
+      occupationName: occupation.name,
+      info,
+      mapEnabled,
+      chapterStatus: Array.from(chapterStatus),
+      checkedSkills: Object.keys(skillsCopy).filter(skillKey => skillsCopy[skillKey].checked),
+    };
+
+    const currentSkillSnapshot = Object.keys(skillsCopy)
+      .filter(skillKey => skillsCopy[skillKey].value !== initSkills[skillKey].value 
+        || skillsCopy[skillKey].customName
+        || skillsCopy[skillKey].occupation
+        || skillsCopy[skillKey].hobby)
+      .reduce((acc, skillKey) => {
+        acc[skillKey] = {};
+        skillsCopy[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skillsCopy[skillKey].value);
+        skillsCopy[skillKey].customName && (acc[skillKey].customName = skillsCopy[skillKey].customName);
+        skillsCopy[skillKey].occupation && (acc[skillKey].occupation = skillsCopy[skillKey].occupation);
+        skillsCopy[skillKey].hobby && (acc[skillKey].hobby = skillsCopy[skillKey].hobby);
+        return acc;
+      }, {});
+    const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
+    if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
+      snapshot.skills = currentSkillSnapshot;
+    }
+
+    return snapshot;
+  }
+
+  function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
+    skillsCopy = Object.keys(skillSnapshot)
+      .reduce((acc, skillKey) => {
+        acc[skillKey] = { ...initSkills[skillKey] };
+        (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
+          && (acc[skillKey].value = skillSnapshot[skillKey].value);
+        skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
+        skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
+        skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
+        return acc;
+      }, { ...initSkills });
+    checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
+    setSkills(skillsCopy);
+  }
 
   const flagFunctions = {
     "flag_characteristics_unfinished": () => Object.values(chars).some(char => char.value === ""),
@@ -146,9 +206,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     console.log(`Game - onCharacterAction: ${action} with params: ${JSON.stringify(param)}`);
     action in actions && actions[action](param);
   }
-
-  let flagsCopy = {...flags};
-  let highlightCopy = [...highlight];
 
   const addToHighlight = (key, level) => {
     highlightCopy = highlightCopy.filter(h => h.key !== key);
@@ -177,8 +234,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
     },
     action_adjust_attribute: (param) => { // param: { key, delta, noHighlight }, delta: Int or String like "-1d2"
-      const newAttributes = { ...attributes };
-      const attr = newAttributes[param.key];
+      const attr = attrCopy[param.key];
       let newValue;
       if (typeof param.delta === "string") {
         let deltaString = param.delta;
@@ -197,7 +253,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       } else {
         newValue = attr.value + param.delta;
       }
-      newValue = Math.min(newValue, newAttributes[param.key].maxValue);
+      newValue = Math.min(newValue, attrCopy[param.key].maxValue);
       newValue = Math.max(newValue, 0);
 
       if (param.key === "HP") {
@@ -214,11 +270,12 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         // playSound("san-reduced");
       }
 
-      newAttributes[param.key] = { ...attr, value: newValue };
-      setAttributes(newAttributes);
+      attrCopy[param.key] = { ...attr, value: newValue };
+      setAttributes(attrCopy);
     },
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
-      setSkills({ ...skills, [param.key]: { ...skills[param.key], value: skills[param.key].value + param.delta } });
+      skillsCopy = { ...skillsCopy, [param.key]: { ...skillsCopy[param.key], value: skillsCopy[param.key].value + param.delta } };
+      setSkills(skillsCopy);
     },
     action_dice_message: (param) => { // param: { title, num, dice, results, shouldPlaySound, bonus, alterNumDice }
       showDiceTitleToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
@@ -227,23 +284,26 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       showToast(param);
     },
     action_set_char_related_values: () => {
-      setSkills({
-        ...skills,
-        dodge: { ...skills.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) },
-        lang_own: { ...skills.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value }
-      });
+      skillsCopy = {
+        ...skillsCopy,
+        dodge: { ...skillsCopy.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) },
+        lang_own: { ...skillsCopy.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value }
+      }
+      setSkills(skillsCopy);
     },
     action_initial_san_and_mp: () => {
       const san = chars.POW.value;
       const mp = Math.floor(chars.POW.value / 5);
-      setAttributes({ ...attributes, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } });
+      attrCopy = { ...attrCopy, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } };
+      setAttributes(attrCopy);
       addToHighlight("San", "warning");
       addToHighlight("MP", "warning");
       addToHighlight("POW", "value");
     },
     action_initial_hp_and_reset_luck: () => {
       const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
-      setAttributes({ ...attributes, HP: { value: hp, maxValue: hp }, Luck: { value: "" } });
+      attrCopy = { ...attrCopy, HP: { value: hp, maxValue: hp }, Luck: { value: "" } };
+      setAttributes(attrCopy);
       addToHighlight("HP", "warning");
       addToHighlight("Luck", "warning");
     },
@@ -251,12 +311,14 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       const results = utils.roll(3, 6);
       const luck = results.reduce((a, b) => a + b, 0) * 5;
 
+      attrCopy = { ...attrCopy, Luck: { value: luck } };
+      setAttributes(attrCopy);
       showDiceTitleToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
-      setAttributes({ ...attributes, Luck: { value: luck } });
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
       setOccupation({ ...occupation, ...param });
-      setSkills({ ...skills, credit: { ...skills.credit, value: param.credit, baseValue: param.credit } });
+      skillsCopy = { ...skillsCopy, credit: { ...skillsCopy.credit, value: param.credit, baseValue: param.credit } }
+      setSkills(skillsCopy);
     },
     action_enable_map: () => {
       setMapEnabled(true);
@@ -283,8 +345,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         }
       }
       if (hpDelta < 0) {
-        const newHp = Math.max(attributes.HP.value + hpDelta, 0);
-        setAttributes({ ...attributes, HP: { ...attributes.HP, value: newHp } });
+        const newHp = Math.max(attrCopy.HP.value + hpDelta, 0);
+        attrCopy = { ...attrCopy, HP: { ...attrCopy.HP, value: newHp } };
+        setAttributes(attrCopy);
         addToHighlight("HP", "danger");
         playSound("hp-reduced");
       }
@@ -315,7 +378,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     if (next) {
       console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => c${next}`);
       if (addToHistory) {
-        historyItem.states = stateSnapshot();
+        historyItem.states = stateSnapshotRef.current;
         if (historyIndex !== -1) {
           setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
           setHistoryIndex(-1);
@@ -338,43 +401,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setHistoryIndex(historyIndex);
   }
 
-  function stateSnapshot(doIncludeSkillSnapshot = false) {
-    const snapshot = {
-      chapterKey,
-      flags: Object.keys(flags)
-        .filter(flag => flags[flag] !== initFlags[flag])
-        .reduce((acc, flag) => {
-          acc[flag] = flags[flag];
-          return acc;
-        }, {}),
-      // chars: { ...chars },
-      attributes,
-      occupationName: occupation.name,
-      info: info,
-      mapEnabled,
-      chapterStatus: Array.from(chapterStatus),
-      checkedSkills: Object.keys(skills).filter(skillKey => skills[skillKey].checked),
-    };
-
-    const currentSkillSnapshot = Object.keys(skills)
-      .filter(skillKey => skills[skillKey].value !== initSkills[skillKey].value 
-        || skills[skillKey].customName
-        || skills[skillKey].occupation
-        || skills[skillKey].hobby)
-      .reduce((acc, skillKey) => {
-        acc[skillKey] = {};
-        skills[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skills[skillKey].value);
-        skills[skillKey].customName && (acc[skillKey].customName = skills[skillKey].customName);
-        skills[skillKey].occupation && (acc[skillKey].occupation = skills[skillKey].occupation);
-        skills[skillKey].hobby && (acc[skillKey].hobby = skills[skillKey].hobby);
-        return acc;
-      }, {});
-    const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
-    if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
-      snapshot.skills = currentSkillSnapshot;
-    }
-
-    return snapshot;
+  function updateStateSnapshot() {
+    stateSnapshotRef.current = gameSnapshot();
   }
 
   function loadHistoryStates(historyIndex) {
@@ -386,7 +414,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
 
     setFlags({ ...initFlags, ...states.flags });
-    // setChars(states.chars);
     setAttributes(states.attributes);
     setOccupation({ name: states.occupationName });
     setInfo(states.info);
@@ -402,26 +429,11 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     return lastItem ? lastItem.states.skills : {};
   }
 
-  function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
-    const skillsCopy = Object.keys(skillSnapshot)
-      .reduce((acc, skillKey) => {
-        acc[skillKey] = { ...initSkills[skillKey] };
-        (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
-          && (acc[skillKey].value = skillSnapshot[skillKey].value);
-        skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
-        skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
-        skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
-        return acc;
-      }, { ...initSkills });
-    checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
-    setSkills(skillsCopy);
-  }
-
   function save(saveKey) {
     const saveData = {
       chapterHistory,
       chars,
-      currentStates: stateSnapshot(true),
+      currentStates: stateSnapshotRef.current,
     }
     localStorage.setItem(saveKey, JSON.stringify(saveData));
   }
@@ -437,7 +449,11 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setChapterHistory(chapterHistoryToLoad);
       setChars(charsToLoad);
 
-      const skillSnapshot = statesToLoad.skills;
+      let skillSnapshot = statesToLoad.skills;
+      if (!skillSnapshot) {
+        const lastItemWithSkillSnapshot = chapterHistoryToLoad.findLast((historyItem) => historyItem.states && historyItem.states.skills);
+        skillSnapshot = lastItemWithSkillSnapshot ? lastItemWithSkillSnapshot.states.skills : {};
+      }
       setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
 
       setFlags({ ...initFlags, ...statesToLoad.flags });
@@ -501,6 +517,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
               nextChapter,
               setMapLocation,
               isReloading,
+              updateStateSnapshot,
               onChapterAction }} />
           </div>
           { showCharacter && (
