@@ -1,48 +1,29 @@
 {
     "key": 125,
+    "location": "southern_road",
     "text": {
         "en": [
-
+            { "content": "On the other side of May Ledbetter’s street you see a washing line with some baggy, crumpled clothes. It’s not a lot to work with, but you use your own clothes as stuffing, improvise a hat, and change your gait to a stooped shamble." },
+            { "content": "Nobody gives you a second look as you limp towards the southern exit from the village. The guards are still at their station, scrutinizing passers-by. But they are beginning to look bored." },
+            { "tag": "info", "text": [
+                { "content": "Make a Hard Disguise roll." }
+            ] }
         ],
         "zh": [
             { "content": "你在梅·莱德贝特家的另一头看到一根晾衣绳，上面有些松垮垮皱巴巴的衣服。能用的衣服并不算多，但你把自己的衣服塞起来充当临时的帽子，走路也改成弓腰驼背地拖着脚走。" },
             { "content": "你跛着脚走到村子南边的出口，一路上再没有人打量你。那些守卫还守在原地，审视着出入的人。但他们看上去已经开始厌烦了。" },
             { "tag": "info", "text": [
-            { "content": "进行一次困难难度的「乔装」检定。" }
+                { "content": "进行一次困难难度的「乔装」检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "乔装检定-困难",
-            "action": "action_check",
-            "param": {
-                "key": "disguise",
-                "isSkill": true,
-                "level": "half"
-            },
-            "show": ["flag_check_unfinished", "!flag_punish_dice"]
-        },
-        {
-            "text": "乔装检定-困难-惩罚骰x1",
-            "action": "action_check",
-            "param": {
-                "key": "disguise",
-                "isSkill": true,
-                "level": "half",
-                "bonus": -1
-            },
-            "show": ["flag_check_unfinished", "flag_punish_dice"]
-        }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "disguise",
+        "level": "half"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "disguise", "level": "half" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "disguise", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

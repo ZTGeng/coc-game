@@ -1,8 +1,10 @@
 {
     "key": 256,
+    "location": "workshops",
     "text": {
         "en": [
-
+            { "content": "“So! I thought you looked like a snoop. Like what you found, did you?”" },
+            { "content": "A burly villager fills the doorway, blocking out much of the daylight. You can make out a dark apron, and a thick beard. He steps forward, fist raised." }
         ],
         "zh": [
             { "content": "“哟！我看你怎么偷偷摸摸的啊？喜不喜欢你的发现啊？”" },
@@ -10,7 +12,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "不战而降" },
-        { "key": 1, "text": "和工匠搏斗" }
+        { "key": 0, "text": { "en": "Surrender without a fight", "zh": "不战而降" } },
+        { "key": 1, "text": { "en": "Fight the artisan", "zh": "和工匠搏斗" } }
     ]
 }

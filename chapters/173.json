@@ -30,6 +30,7 @@
             "name": { "en": "Bear", "zh": "熊" },
             "DEX": 58,
             "HP": 40,
+            "thresholdHP": 0,
             "armor": 3,
             "skills": {
                 "claw": {
@@ -52,7 +53,7 @@
                 ["claw", "bite"],
                 ["claw", "claw"]
             ],
-            "moveDefend": "bite"
+            "moveDefend": ["bite"]
         }
     },
     "options": [

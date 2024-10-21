@@ -7,7 +7,7 @@
                 { "content": "Hot blood pours down your back. Your vision swims." }
             ] },
             { "tag": "info", "text": [
-                { "content": "Make a CON roll" }
+                { "content": "Make a CON roll." }
             ] }
         ],
         "zh": [
@@ -15,7 +15,7 @@
                 { "content": "温热的鲜血从你的后背汩汩流出。你一阵头晕目眩。" }
             ] },
             { "tag": "info", "text": [
-                { "content": "进行一次“体质”检定。" }
+                { "content": "进行一次「体质」检定。" }
             ] }
         ]
     },

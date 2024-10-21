@@ -1,8 +1,10 @@
 {
     "key": 61,
+    "location": "beacon_2",
     "text": {
         "en": [
-
+            { "content": "You lie concealed in the grass and watch the activity around the Beacon. Villagers bring in yet more bundles of tinder and stack them in neat bundles. Another shift passes the bundles up to a pair of men standing on the raised platform of the Beacon. They are constructing a triangular structure, resembling a gigantic campfire." },
+            { "content": "As you watch, you are struck by the manner of the laborers. This is their festival. You would expect a cheerful atmosphere and some light-hearted conversation. Yet the faces of some show resignation and detachment; others, a naked dread." }
         ],
         "zh": [
             { "content": "你静悄悄地趴在草丛里，观察着灯塔周围的活动。村民们扛来了更多的柴火，把它们整齐地捆扎成束。还有一组人负责把柴火束送给站在灯塔平台上的两个男人。他们在建造一种三角形的结构，看上去像是巨大的篝火。" },

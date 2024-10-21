@@ -1,20 +1,24 @@
 {
     "key": 159,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "You slip from the building, clutching some of the more portable volumes. In the shadows behind the artisans’ courtyard, you examine them." },
+            { "content": "To your disappointment two or three are in a script unknown to you. Another appears to be in Egyptian symbols. There is a spidery, handwritten copy of something named The Emerald Tablet. But perhaps most intriguing is a small book of strange poetry bound in black, published in Boston in 1919. The cover reads Azathoth and Others, by Edward Derby. You’ll have to hide the larger volumes, but you can pocket the Derby book." },
+            { "tag": "info", "text": [
+                { "content": "The Derby volume will require about a week of study to fully comprehend. If you survive this adventure, there will be a special option to offer you more information about it." }
+            ] }
         ],
         "zh": [
             { "content": "你抓上几本能带走的书，溜出了房子，来到工坊后身的阴影下开始查看这些书。" },
-            { "content": "其中两三本书用你看不懂的文字书写，你很失望。还有一本看上去像是埃及符号。还有一本细长的手写书，好像是从《翡翠石板》上抄写的东西。",
-        "但最吸引人的是一本小开本、黑封面的奇怪诗集，封面写着《阿撒托斯及其他》，作者是爱德华·德比，1919年在波士顿出版。你必须藏起其他的大型书，但这本书你可以随身携带。" },
+            { "content": "其中两三本书用你看不懂的文字书写，你很失望。还有一本看上去像是埃及符号。还有一本细长的手写书，好像是从《翡翠石板》上抄写的东西。但最吸引人的是一本小开本、黑封面的奇怪诗集，封面写着《阿撒托斯及其他》，作者是爱德华·德比，1919年在波士顿出版。你必须藏起其他的大型书，但这本书你可以随身携带。" },
             { "tag": "info", "text": [
-            { "content": "德比的诗集需要研读约一星期才能完全掌握。如果你度过此次冒险，会有特殊选项允许你阅读，得到关于它的更多信息。" }
+                { "content": "德比的诗集需要研读约一星期才能完全掌握。如果你度过此次冒险，会有特殊选项允许你阅读，得到关于它的更多信息。" }
             ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
     "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_found_poem_book" }
+        { "action": "action_set_flag", "param": { "flag": "flag_found_poem_book", "value": true } }
     ]
 }

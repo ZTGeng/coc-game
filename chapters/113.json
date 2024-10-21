@@ -1,8 +1,11 @@
 {
     "key": 113,
+    "location": "prison",
     "text": {
         "en": [
-
+            { "content": "You turn your face away, and when she tries again, you dash the cup from her hands using the side of your head. The clear liquid spills across the floor." },
+            { "content": "The woman gives a half-shrug and turns to leave the room. You shout after her, but she gives no reaction." },
+            { "content": "You soon become thirsty." }
         ],
         "zh": [
             { "content": "你扭过脸去，当她再次尝试的时候，你用头去撞她的手，把杯子打翻在地。清澈的液体洒在地面上。" },

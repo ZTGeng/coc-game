@@ -1,9 +1,15 @@
 {
-  "key": 139,
-  "texts": [
-          { "content": "村民可没你想得那么傻。他们捉住你，把你带回了村子中心。" }
-  ],
-  "options": [
-      { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
-  ]
+    "key": 139,
+    "location": "southern_road",
+    "text": {
+        "en": [
+            { "content": "These locals are not as stupid as you think. They grab you and march you back into the center of the village." }
+        ],
+        "zh": [
+            { "content": "村民可没你想得那么傻。他们捉住你，把你带回了村子中心。" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+    ]
 }

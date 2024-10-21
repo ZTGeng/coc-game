@@ -1,19 +1,20 @@
 {
     "key": 7,
+    "location": "southern_road",
     "text": {
         "en": [
-
+            { "content": "As you approach the southern road that descends to the lower ridge, you see four villagers blocking the route, with farm tools and clubs. You veer off and head towards the west road. Your heart sinks as you see exactly the same scene at the other exit from the village. You are trapped." }
         ],
         "zh": [
             { "content": "当你来到南边通往下山处的道路时，你看见四个村民手持农具和棍棒挡住了去路。你改变方向前往西盘山路。当你在另一边村口也看见了几乎同样的光景时，你的心凉透了。你被困住了。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "尝试靠口才通过把守村口的人群" },
-        { "key": 1, "text": "尝试化装通过" },
-        { "key": 2, "text": "尝试沿着梯子爬下悬崖", "show": "flag_found_cliff_ladder", "secret": true }
+        { "key": 0, "text": { "en": "Try to talk your way past one of the guard groups", "zh": "尝试靠口才通过把守村口的人群" } },
+        { "key": 1, "text": { "en": "Try to slip past in disguise", "zh": "尝试化装通过" } },
+        { "key": 2, "text": { "en": "Try to climb down the cliff", "zh": "尝试沿着梯子爬下悬崖" }, "show": "flag_found_cliff_ladder", "secret": true }
     ],
     "onload": [
-        { "action": "action_c120_select_option", "param": 4 }
+        { "action": "action_clear_c120_flags", "param": "" }
     ]
 }

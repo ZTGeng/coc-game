@@ -1,8 +1,11 @@
 {
     "key": 82,
+    "location": "prison",
     "text": {
         "en": [
-
+            { "content": "After five minutes, you are able to climb to your feet and stagger, leaning on the cliff for support. You emerge from behind a shack. Two passing villagers see you and run to your assistance. Each slings one of your arms around their shoulders and they walk you back up to the Emberhead plateau. You are too badly hurt to struggle." },
+            { "content": "One of the local women takes you to a house and tends to your wounds. The cool touch of a wet towel is welcome. Yet the men stand by, watching. And when she is done, they step out and lock the door" },
+            { "content": "You succumb to a wave of fatigue." }
         ],
         "zh": [
             { "content": "五分钟以后，你才勉强站起身来，一瘸一拐地挪到悬崖边上倚着。你的身影从棚屋后面露出来。两个路过的村民发现了你，跑过来帮忙。他们一人架住你一只胳膊，走回了烬头村高原。你受伤太重，连挣扎的力气都没有。" },

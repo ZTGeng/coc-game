@@ -1,21 +1,32 @@
 {
     "key": 223,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "You emerge onto a hilltop and take a moment to check your bearings. The sun will set in the west behind Emberhead, so you need to head—" },
+            { "content": "As you look at the village, several miles away now, you see the Beacon ablaze, an orange glow that lights up the sky and the surrounding woodland. Smoke billows towards the heavens, where the stars form a twinkling canopy against the midnight blue of eternity." },
+            { "content": "You watch the scene for a few minutes, then turn away to continue your journey. For a moment, you are left with a strange impression. You thought that as you turned, one of the stars above the village moved." },
+            { "content": "But that would be madness." },
+            { "tag": "info", "text": [
+                { "content": "Congratulations! You have survived this adventure. You may keep your investigator sheet and use it in another Call of Cthulhu scenario. If you have check-marked the small box beside any skills, you will have a chance to improve them through experience." }
+            ] },
+            { "tag": "h", "content": "The End." }
         ],
         "zh": [
             { "content": "你走上一片小山的山顶，歇息片刻确认自己的方位。夕阳西下，在烬头村的后面落山，所以你要朝——" },
-            { "content": "当你望向几里外的村庄时，能看到灯塔在燃烧;橘黄色的光芒照亮了夜空，也照亮了四周的树林。翻腾的烟雾直冲天际，群星点缀在深邃的午夜蓝上，就成了闪耀的天篷。" },
+            { "content": "当你望向几里外的村庄时，能看到灯塔在燃烧；橘黄色的光芒照亮了夜空，也照亮了四周的树林。翻腾的烟雾直冲天际，群星点缀在深邃的午夜蓝上，就成了闪耀的天篷。" },
             { "content": "你对着那里看了几分钟，然后转身回去，继续你的旅程。有一瞬间给你留下了奇怪的印象；你觉得当你转身时，村子上方有一颗星星在移动。" },
             { "content": "但那只意味着疯狂。" },
             { "tag": "info", "text": [
-            { "content": "恭喜!你已经度过了这次冒险。你可以保留自己的角色卡，在其他的《克苏鲁的呼唤》冒险中使用它。如果你在技能左边的方框里打过勾，你可以从经历中得到提升它们的机会。" }
+                { "content": "恭喜!你已经度过了这次冒险。你可以保留自己的角色卡，在其他的《克苏鲁的呼唤》冒险中使用它。如果你在技能左边的方框里打过勾，你可以从经历中得到提升它们的机会。" }
             ] },
-        "<h2>【剧终】</h2>"
+            { "tag": "h", "content": "【剧终】" }
         ]
     },
     "options": [
-        { "key": 0, "text": "研读德比的诗集", "show": "flag_found_poem_book" }
+        { "key": 0, "text": { "en": "Study the Derby volume", "zh": "研读德比的诗集" }, "show": "flag_found_poem_book", "secret": true }
+    ],
+    "onload": [
+        { "action": "action_ending", "param": "excape" }
     ]
 }

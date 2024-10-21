@@ -1,47 +1,27 @@
 {
     "key": 36,
+    "location": "narrow_path",
     "text": {
         "en": [
-
+            { "content": "The turf crumbles beneath your feet and the edge of the cliff collapses. Your stomach lurches as you feel yourself drop." },
+            { "tag": "info", "text": [
+                { "content": "Make a Climb roll." }
+            ] }
         ],
         "zh": [
             { "content": "泥土随着你的踩踏下陷，断崖的边缘崩落了。你开始下坠，感觉自己的脏腑都在倾斜。" },
             { "tag": "info", "text": [
-            { "content": "进行一次「攀爬」检定。" }
+                { "content": "进行一次「攀爬」检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "攀爬检定",
-            "action": "action_check",
-            "param": {
-                "key": "climb",
-                "isSkill": true,
-                "level": "value"
-            },
-            "show": ["flag_check_unfinished", "!flag_punish_dice"]
-        },
-        {
-            "text": "攀爬检定-惩罚骰x1",
-            "action": "action_check",
-            "param": {
-                "key": "climb",
-                "isSkill": true,
-                "level": "value",
-                "bonus": -1
-            },
-            "show": ["flag_check_unfinished", "flag_punish_dice"]
-        }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "climb",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "climb", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "climb", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

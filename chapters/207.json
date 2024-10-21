@@ -1,48 +1,29 @@
 {
     "key": 207,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "Tempting as it is to remove the book, it is too large to conceal. You slip it back onto the shelf and ease the bookcase back into place." },
+            { "content": "Immediately, you hear the scratch of a key in the hall door. You sprint for the open window." },
+            { "tag": "info", "text": [
+                { "content": "Make a DEX roll." }
+            ] }
         ],
         "zh": [
             { "content": "你非常想拿走这本书，但它太大了根本无法裹藏。你把它推回架子里，将书架滑回原位。" },
             { "content": "马上你就听到会堂大门传来钥匙划动的声音。你冲向打开的窗户。" },
             { "tag": "info", "text": [
-            { "content": "进行一次“敏捷”检定。" }
+                { "content": "进行一次“敏捷”检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "敏捷检定",
-            "action": "action_check",
-            "param": {
-                "key": "DEX",
-                "isSkill": false,
-                "level": "value"
-            },
-            "show": ["flag_check_unfinished", "!flag_punish_dice"]
-        },
-        {
-            "text": "敏捷检定-惩罚骰x1",
-            "action": "action_check",
-            "param": {
-                "key": "DEX",
-                "isSkill": false,
-                "level": "value",
-                "bonus": -1
-            },
-            "show": ["flag_check_unfinished", "flag_punish_dice"]
-        }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "DEX",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "DEX", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "DEX", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

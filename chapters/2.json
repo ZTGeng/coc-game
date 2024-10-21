@@ -1,0 +1,24 @@
+{
+    "key": 2,
+    "location": "workshops",
+    "text": {
+        "en": [
+            { "content": "You put up a spirited resistance, but the man’s bulk and determination wear you down. Finally he lands a crushing blow and you drop. Blackness floods in." },
+            { "content": "Later, you are dimly aware of your legs being lifted and your back scraping against the ground as you are dragged off." },
+            { "tag": "info", "text": [
+                { "content": "You may restore 1 hit point." }
+            ] }
+        ],
+        "zh": [
+            { "content": "你勇敢地抵抗，但这男人的块头和决心还是压服了你。最后他打出一记重拳，你摔倒在地，眼前顿时一片黑暗。" },
+            { "content": "过了一会儿，你朦朦胧胧地感觉到你的两腿被人抬着，后背刮蹭地面，就像被人拖着走一样。" },
+            { "tag": "info", "text": [
+                { "content": "你可以回复 1 点耐久值。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": 1 } }
+    ]
+}

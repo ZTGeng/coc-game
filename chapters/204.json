@@ -1,8 +1,11 @@
 {
     "key": 204,
+    "location": "church_inside",
     "text": {
         "en": [
-
+            { "content": "As you hoped, the body of the roof tips towards your assailants. It crashes to the ground, hiding them from view. Dust clouds billow in the air around you. You cannot see exactly what has happened, but you can hear a wail of agony. More than one, in fact." },
+            { "content": "The collapse has opened a break between the stones. With delicate steps, you squeeze out of the church building." },
+            { "content": "Villagers run towards the church from all directions. You crawl through the gravestones, keeping low in the overgrown grass. You head for the road. The sentries have joined the crowd at the church, and you are able to slip away down the eastern road." }
         ],
         "zh": [
             { "content": "屋顶如你所愿向袭击者倾倒过去。它猛撞到地面上，把他们从视野中遮蔽了。你附近的空气翻腾起大量烟尘。你没法仔细辨认情况，但你可以听见苦痛的哀号。而且，不止一声。" },

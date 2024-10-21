@@ -1,0 +1,36 @@
+{
+    "key": 247,
+    "location": "woodland",
+    "text": {
+        "en": [
+            { "content": "You drop to the ground among leaves and mud. Dizzy, you feel yourself dragged to a horse and draped over. A thick, animal smell fills your nostrils. There is a brief, sickening ride, where you drift in and out of consciousness… Then the horse stops. You see strange colors against its rump." },
+            { "content": "“That’s that then,” says one rider. “What should we do with this ‘un?”" },
+            { "content": "“I guess we have to hide the body.” His companion sounds unsure." },
+            { "content": "You find just enough strength to slide from the horse and stumble into the woods. The trunks loom towards you at strange angles and your legs carry you only a short distance. You fall. Your captors crash around in the leaves behind you." },
+            { "content": "“...Leave it. Let’s go.”" },
+            { "content": "The horsemen’s steps become fainter, and shortly you hear a clattering of hooves. You lie where you fell, face down on the mossy ground. But come the morning, you struggle to your feet. You see, glinting through the trees, the first traces of the rising sun." },
+            { "tag": "info", "text": [
+                { "content": "Congratulations! You have survived this adventure. You may keep your investigator sheet and use it in another Call of Cthulhu scenario. If you have check-marked the small box beside any skills, you will have a chance to improve them through experience." }
+            ] },
+            { "tag": "h", "content": "The End." }
+        ],
+        "zh": [
+            { "content": "你倒在了落叶和烂泥覆盖的地面上。你晕乎乎的感觉自己被拖到马车旁，搭上了马背。浓郁的动物气味腔充满了你的鼻腔。你在马车上待了一小会儿，感觉十分恶心，意识时断时续……然后马停住了。你在马屁股的间隙看到了奇异的色彩。" },
+            { "content": "第一个车夫问道：“现在只好这样了，我们要拿这家伙怎么办？”" },
+            { "content": "“我想我们得把人藏起来。”他的伙伴用不确定的口气回答。" },
+            { "content": "你用余下的一点力气滑下马背，跌跌撞撞地摸进树林。树干歪歪扭扭地向你迫近，你的双腿没法支撑你走太远。你摔倒了。抓你的两个人哗啦啦穿过枝叶，来到你身后。" },
+            { "content": "“……别管了。我们走。”" },
+            { "content": "车夫的声音越来越远，很快你就又听到了马蹄哒哒的响声。你趴在长满青苔的地上，动弹不得。等到早晨，你才挣扎着站起身来，看着晨曦透过树丛，宣示着太阳的升起。" },
+            { "tag": "info", "text": [
+                { "content": "恭喜!你已经度过了这次冒险。你可以保留自己的角色卡，在其他的《克苏鲁的呼唤》冒险中使用它。如果你在技能左边的方框里打过勾，你可以从经历中得到提升它们的机会。" }
+            ] },
+            { "tag": "h", "content": "【剧终】" }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Study the Derby volume", "zh": "研读德比的诗集" }, "show": "flag_found_poem_book", "secret": true }
+    ],
+    "onload": [
+        { "action": "action_ending", "param": "excape" }
+    ]
+}

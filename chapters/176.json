@@ -1,48 +1,29 @@
 {
     "key": 176,
+    "location": "church_inside",
     "text": {
         "en": [
-
+            { "content": "Even as you spin around and look for a weak point, you know this plan is deranged. Less than two days ago you were taking a coach ride to a new job, and now you are trying to demolish a church whilst still inside it." },
+            { "content": "Under one section of partially collapsed roof, you see a wooden pillar which is already bowed. You snatch up a piece of broken ironwork." },
+            { "tag": "info", "text": [
+                { "content": "Make a Hard STR roll." }
+            ] }
         ],
         "zh": [
             { "content": "尽管你转来转去寻找薄弱点，但你也知道这个计划过于痴心妄想。不到两天之前你还在长途车上赴任新职，现在你却呆在破教堂里还打算毁了它。" },
             { "content": "你在一段塌了一部分的房顶下发现了一根已经弯曲的木柱子。你抓起一段坏掉的铁棍。" },
             { "tag": "info", "text": [
-            { "content": "进行一次困难“力量”检定。" }
+                { "content": "进行一次困难“力量”检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "力量检定-困难",
-            "action": "action_check",
-            "param": {
-                "key": "STR",
-                "isSkill": false,
-                "level": "half"
-            },
-            "show": ["flag_check_unfinished", "!flag_punish_dice"]
-        },
-        {
-            "text": "力量检定-惩罚骰x1",
-            "action": "action_check",
-            "param": {
-                "key": "STR",
-                "isSkill": false,
-                "level": "half",
-                "bonus": -1
-            },
-            "show": ["flag_check_unfinished", "flag_punish_dice"]
-        }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "STR",
+        "level": "half"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "STR", "level": "half" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "STR", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

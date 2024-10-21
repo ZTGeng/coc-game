@@ -1,19 +1,24 @@
 {
     "key": 202,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "You try to commit the wording of “Command Ye Celestial Flames” to memory. The text is full of strange characters and you can only make a best guess as to their pronunciation. The full chant will take twenty seconds or so. The commentary offers some advice:" },
+            { "content": "“Turn ye not yr eye from the fire, tho it dost Water from the Heat. And commit yr Heart and Mind in full to the path which ye intend to walk, lest ye falter at the Tryal.” " },
+            { "tag": "info", "text": [
+                { "content": "You have discovered a secret. If the situation seems right for it, the text may offer you a spacial option to chant." }
+            ] }
         ],
         "zh": [
             { "content": "你试着把“号令天之火”的字词记到脑海里。这篇文字里尽是些奇怪的字眼，至于它们的发音你只能按最靠谱的猜测来。整篇咒语需要大概二十秒来朗读。注释里提供了一些建议：" },
             { "content": "“当其热中取水之时，万不可直视其火。欲行其道则务须身心俱入，以免自误于审判之中。”" },
             { "tag": "info", "text": [
-            { "content": "你发现了一个秘密。如果情形适宜，这段文字可以提供你施法的机会。到那时，如果你想尝试这个仪式，可选择特殊选项。" }
+                { "content": "你发现了一个秘密。如果情形适宜，这段文字可以提供你施法的机会。到那时，如果你想尝试这个仪式，可选择特殊选项。" }
             ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
     "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_learned_magic_order" }
+        { "action": "action_set_flag", "param": { "flag": "flag_learned_magic_order", "value": true } }
     ]
 }

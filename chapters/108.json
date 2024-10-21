@@ -1,16 +1,16 @@
 {
     "key": 108,
+    "location": "prison",
     "text": {
         "en": [
-
+            { "content": "The fading light from a narrow window tells you afternoon is giving way to evening. Your hands are shackled behind your back so you cannot even lie down on the rough bed. A woman you have not seen before comes in. Her face is wrinkled and her eyes dull. They do not meet yours, but she puts a cup to your lips." }
         ],
         "zh": [
-            { "content": "窄窗透进的光逐渐变暗，你明白下午已经过去，夜晚即将到来。你的手被反绑在背后，甚至无法在粗糙的床上躺下。一个陌生女人走进来。",
-        "她脸上满是皱纹，眼睛空洞无神。她并没有把视线朝向你，只是端出一个杯子碰到你嘴边。" }
+            { "content": "窄窗透进的光逐渐变暗，你明白下午已经过去，夜晚即将到来。你的手被反绑在背后，甚至无法在粗糙的床上躺下。一个陌生女人走进来。她脸上满是皱纹，眼睛空洞无神。她并没有把视线朝向你，只是端出一个杯子碰到你嘴边。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "接受饮料" },
-        { "key": 1, "text": "拒绝" }
+        { "key": 0, "text": { "en": "Accept the drink", "zh": "接受饮料" } },
+        { "key": 1, "text": { "en": "Reject it", "zh": "拒绝" } }
     ]
 }

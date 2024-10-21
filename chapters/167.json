@@ -27,11 +27,11 @@
             }, 
             "action": "action_c167_bear_attack", 
             "param": "", 
-            "disabled": "flag_c167_bear_attack_finished" 
+            "disabled": "flag_interaction_finished" 
         }
     ],
     "options": [
-        { "key": 0, "text": { "en": "You have taken a major wound, continue", "zh": "你受了重伤，继续" }, "show": ["flag_c167_bear_attack_finished", "flag_major_wound"] },
-        { "key": 1, "text": { "en": "You have not taken a major wound, continue", "zh": "你没有受重伤，继续" }, "show": ["flag_c167_bear_attack_finished", "!flag_major_wound"] }
+        { "key": 0, "text": { "en": "You have taken a major wound, continue", "zh": "你受了重伤，继续" }, "show": ["flag_interaction_finished", "flag_major_wound"] },
+        { "key": 1, "text": { "en": "You have not taken a major wound, continue", "zh": "你没有受重伤，继续" }, "show": ["flag_interaction_finished", "!flag_major_wound"] }
     ]
 }

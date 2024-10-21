@@ -1,11 +1,18 @@
 {
     "key": 146,
+    "location": "southern_road",
     "text": {
         "en": [
-
+            { "content": "One of the guards nods to you as you shuffle past. It is an effort to maintain this half-pace when your instincts tell you to run. But you keep it up until you are on the eastern road. Then you discard the disguise in a hole filled with mud." },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Disguise skill." }
+            ] }
         ],
         "zh": [
-            { "content": "你拖着脚走过去的时候，一个守卫对你点点头。你的本能要你赶快逃离，保持这种缓慢的步伐相当费力。但你一直没有加速，直到走上东边的盘山路，才将身上的伪装丢进了烂泥坑。" }
+            { "content": "你拖着脚走过去的时候，一个守卫对你点点头。你的本能要你赶快逃离，保持这种缓慢的步伐相当费力。但你一直没有加速，直到走上东边的盘山路，才将身上的伪装丢进了烂泥坑。" },
+            { "tag": "info", "text": [
+                { "content": "你可以在「乔装」技能左边的小方框里打勾。" }
+            ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],

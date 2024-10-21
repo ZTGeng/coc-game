@@ -1,14 +1,16 @@
 {
     "key": 148,
+    "location": "beacon",
     "text": {
         "en": [
-
+            { "content": "“Through your sacrifice the village will be reborn,” says the first dancer" },
+            { "content": "“You pass from earth to air for all our sakes,” says the second." },
+            { "content": "“Through incandescence may you find rapture,” says the third." },
+            { "content": "Their dance weaves off and disappears behind the buildings." }
         ],
         "zh": [
-            { "content": "第一名舞者说：" },
-            { "content": "“你的牺牲，会让村子重生；”" },
-            { "content": "第二名舞者说：" },
-            { "content": "“你为了我们大家，直升云霄；”" },
+            { "content": "第一名舞者说：“你的牺牲，会让村子重生；”" },
+            { "content": "第二名舞者说：“你为了我们大家，直升云霄；”" },
             { "content": "第三名舞者说：“愿你在这白热之中获得至福。”" },
             { "content": "她们迂回地跳着舞远去，消失在房子后面。" }
         ]

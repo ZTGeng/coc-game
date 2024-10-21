@@ -1,5 +1,6 @@
 {
     "key": 123,
+    "location": "beacon_center",
     "texts": [
         "<div class='row'><div class='col-8'>",
             { "content": "他们把你推回了火堆。狂热和恐惧蒙蔽了他们的双眼。即使火焰在他们身上蔓延、在你的衣服上肆虐，即使热度越来越强烧灼着你的皮肉，即使浓烟令你窒息视野模糊，",

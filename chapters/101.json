@@ -1,11 +1,13 @@
 {
     "key": 101,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "A shadow falls across you. “So,” May Ledbetter says. “You know.”" },
+            { "content": "You try to get to your feet. A mob of villagers spills from behind her and surrounds you. You struggle, but you cannot resist the sheer weight of their numbers. You are quickly overpowered." }
         ],
         "zh": [
-            { "content": "忽然一片阴影笼罩了你。“那么，”梅·莱德贝特说，“你明白的。”" },
+            { "content": "忽然一片阴影笼罩了你。“那么，”梅·莱德贝特说，“你知道了。”" },
             { "content": "你试图站起身。但一大群村民从她身后蜂拥而出，瞬间围住了你。你奋力挣扎，但他们的人数占绝对优势，你无从抵抗。很快你就被制服了。" }
         ]
     },
