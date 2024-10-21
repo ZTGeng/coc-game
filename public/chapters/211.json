@@ -1,14 +1,19 @@
 {
     "key": 211,
+    "location": "woodland",
     "text": {
         "en": [
-
+            { "content": "You press yourself against the biggest trunk you can find. Two horses draw near, their riders holding up lanterns. Branches cast a maze of shifting shadows across you as they pass. You get a momentary look at the face of one rider. He looks drawn and anxious. Then they head away to the east." },
+            { "content": "Once you are sure they are out of earshot, you make your way through the woods. It seems wise to avoid the road." },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Stealth skill." }
+            ] }
         ],
         "zh": [
             { "content": "你躲到你能找到最粗的树干后面。两匹马越来越近，马车的车夫举着提灯。马车所过之处，枝干投射出游移的阴影，像迷宫一般在你面前晃动。刹那间你看到了其中一个车夫的脸。他面目憔悴，神色紧张。然后他们一直向东离开了。" },
             { "content": "当你确信再也听不到马车的声响时，就继续穿越树林赶路。看起来躲开大路要更加明智一些。" },
             { "tag": "info", "text": [
-            { "content": "你可以在「潜行」技能左边的小方框里打勾。" }
+                { "content": "你可以在「潜行」技能左边的小方框里打勾。" }
             ] }
         ]
     },

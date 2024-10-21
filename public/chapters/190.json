@@ -1,8 +1,10 @@
 {
     "key": 190,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "The door of the hall clatters open and a group of villagers flood in. They quickly surround you. An older gentleman in suit and bow tie stands behind them." },
+            { "content": "“So there you are,” he drawls. “We were wondering where you had gone.” He gives a light wave of his hand. The villagers seize you." }
         ],
         "zh": [
             { "content": "村会堂的大门哗啦一声打开，一群村民涌了进来，很快将你团团包围。一个穿西服打领带的中年绅士站在他们身后。" },

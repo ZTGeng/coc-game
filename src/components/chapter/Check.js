@@ -36,6 +36,10 @@ const opposedCheckLoseText = {
   en: "Opposed Roll Lose",
   zh: "对抗检定落败"
 };
+const pushText = {
+  en: "Pushed Roll: ",
+  zh: "孤注一掷："
+};
 
 function getRollName(key, characterSheet) {
   if (characteristicsList.includes(key) || attributesList.includes(key)) {
@@ -56,9 +60,18 @@ function getRollValue(key, chars, attributes, skills) {
 }
 
 export function calculateBonus(check, flagConditionCheck) {
-  let bonus = check.bonus || 0;
+  let bonus = 0;
+  if (check.bonus) { // Int or { flag, value }
+    if (typeof check.bonus === "number") {
+      bonus = check.bonus;
+    } else if (Object.prototype.toString.call(check.bonus) === "[object Object]") {
+      if (flagConditionCheck(check.bonus.flag)) {
+        bonus = check.bonus.value;
+      }
+    }
+  }
   if (flagConditionCheck("flag_penalty_die") && check.key !== "Luck" && check.key !== "San") {
-    bonus = bonus - 1;
+    bonus -= 1;
   }
   return bonus;
 }
@@ -174,13 +187,23 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
 
+  if (checkFlags.show && flagConditionCheck(check.show)) {
+    return null;
+  }
+
   // let [name, value] = getNameAndValueByKey(check.key, characterSheet, chars, attributes, skills, autoLang);
   const skillName = getRollName(check.key, characterSheet);
   const skillValue = getRollValue(check.key, chars, attributes, skills);
   const target = check.level === "fifth" ? Math.floor(skillValue / 5) : (check.level === "half" ? Math.floor(skillValue / 2) : skillValue);
   const bonus = calculateBonus(check, flagConditionCheck)
+  const isPushed = checkFlags.result && !checkFlags.isPushed;
 
   function onCheck() {
+    if (checkFlags.result && (!check.allowPush || checkFlags.isPushed)) {
+      console.error("Check already done, no push allowed or already pushed.");
+      return;
+    }
+    
     const diceNumber = rollCheck(bonus, skillName, onAction, autoLang);
     const isPassed = diceNumber <= target;
     setCheckFlags({
@@ -191,6 +214,7 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
       result: isPassed ? "pass" : "fail",
       resultLevel: utils.calculateLevel(diceNumber, skillValue),
       isFumble: skillValue < 50 ? diceNumber >= 96 : diceNumber === 100,
+      isPushed: isPushed,
     });
     if (isPassed && check.onpass) {
       check.onpass.forEach(action => onAction(action.action, action.param));
@@ -205,13 +229,14 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
     zh: `${autoLang(skillName)}检定 - ${checkLevelText[check.level]} ${bonus > 0 ? `- 奖励骰 x ${bonus}` : (bonus < 0 ? `- 惩罚骰 x ${-bonus}` : "")}`,
     en: `${autoLang(skillName)} Roll - ${checkLevelText[check.level]} ${bonus > 0 ? `- Bonus Die x ${bonus}` : (bonus < 0 ? `- Penalty Die x ${-bonus}` : "")}`
   });
+  const showCheckButton = !checkFlags.result || (checkFlags.result === "fail" && check.allowPush && !checkFlags.isPushed);
 
   return (
     <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
       <div className="card-header">{title}</div>
       <div className={"card-body" + (checkFlags.result ? (checkFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
-        {checkFlags.result && <strong>{ autoLang(checkFlags.result === "pass" ? checkPassText : checkFailText)}</strong>}
-        {!checkFlags.result && <CheckButton onClick={onCheck} />}
+        {checkFlags.result && <div><strong>{ autoLang(checkFlags.result === "pass" ? checkPassText : checkFailText)}</strong></div>}
+        {showCheckButton && <div>{isPushed ? <span>{ autoLang(pushText) }</span> : null}<CheckButton onClick={onCheck} /></div>}
       </div>
     </div>
   )

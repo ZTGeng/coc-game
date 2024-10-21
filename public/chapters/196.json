@@ -1,17 +1,24 @@
 {
     "key": 196,
+    "location": "church_inside",
     "text": {
         "en": [
-
+            { "content": "An immense weight pounds you to the stone floor. Your neck snaps even as your skull shatters." },
+            { "tag": "info", "text": [
+                { "content": "You have been killed by a collapsing church roof! It was a bold but risky plan. Why not try the adventure again??" }
+            ] },
+            { "tag": "h", "content": "The End." }
         ],
         "zh": [
             { "content": "庞大的重量将你猛然拍到石地板上。你的脖子啪嚓一声折断，头颅也被压得粉碎。" },
-            { "content": "你被坍塌的教堂屋顶砸死了!这计划虽然大胆，但风险太大了。" },
             { "tag": "info", "text": [
-            { "content": "为何不重新尝试这次冒险呢?" }
+                { "content": "你被坍塌的教堂屋顶砸死了!这计划虽然大胆，但风险太大了。为何不重新尝试这次冒险呢?" }
             ] },
-        "<h2>【剧终】</h2>"
+            { "tag": "h", "content": "【剧终】" }
         ]
     },
-    "options": []
+    "options": [],
+    "onload": [
+        { "action": "action_ending", "param": "collapse" }
+    ]
 }

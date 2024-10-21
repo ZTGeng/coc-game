@@ -12,9 +12,10 @@ const initCheckFlags = {
   diceNumber: "", // [number]
   rollKey: "", // key
   rollLevel: "", // "value", "half", "fifth"
-  result: "", // "pass", "fail"
+  result: "", // "pass", "fail", "draw"(for combat)
   resultLevel: "", // 0: fail, 1: value, 2: half, 3: fifth
   isFumble: false,
+  isPushed: false,
 }
 
 const interactionChapters = {
@@ -124,6 +125,7 @@ export default function Chapter({
   const { autoLang } = useContext(LanguageContext);
   const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
+  const [interactionFinished, setInteractionFinished] = useState(false);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
   console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}`);
 
@@ -162,7 +164,10 @@ export default function Chapter({
           }
         }
 
-        // reset checkFlags for new chapter
+        // reset interactionFinished and checkFlags for new chapter
+        if (interactionFinished) {
+          setInteractionFinished(false);
+        }
         if (checkFlags.result) {
           setCheckFlags(initCheckFlags);
         }
@@ -184,10 +189,12 @@ export default function Chapter({
   }, [chapterKey]);
 
   const flagFunctions = {
+    "flag_interaction_finished": () => interactionFinished,
     "flag_check_passed": () => checkFlags.result === "pass",
     "flag_check_failed": () => checkFlags.result === "fail",
     "flag_check_finished": () => checkFlags.result,
     "flag_check_fumble": () => checkFlags.isFumble,
+    "flag_check_pushed": () => checkFlags.isPushed,
     "flag_check_match": (keyLevel) => {
       const [rollKey, rollLevel] = keyLevel.split("-");
       return checkFlags.rollKey === rollKey && (!rollLevel || checkFlags.rollLevel === rollLevel);
@@ -198,12 +205,21 @@ export default function Chapter({
         .map(i => `flag_c25_option_selected_${i}`)
         .filter(flag => flagConditionCheck(flag))
         .length >= 4,
+    "flag_c120_option_disabled": (option) => (option < 4 && flagConditionCheck(`flag_c120_option_selected_${option}`))
+      || Array
+        .from({ length: 4 }, (_, i) => i)
+        .map(i => `flag_c120_option_selected_${i}`)
+        .filter(flag => flagConditionCheck(flag))
+        .length >= 3,
   };
   const chapterFlagConditionCheck = flagConditionCheckProvider({}, flagFunctions, flagConditionCheck);
 
   const actions = {
     action_c25_select_option: (option) => {
       onChapterAction("action_set_flag", { flag: `flag_c25_option_selected_${option}`, value: true });
+    },
+    action_c120_select_option: (option) => {
+      onChapterAction("action_set_flag", { flag: `flag_c120_option_selected_${option}`, value: true });
     },
     action_roll_luck_and_update_chapter: (param) => {
       setChapter(param);
@@ -216,6 +232,35 @@ export default function Chapter({
         .from({ length: 6 }, (_, i) => i)
         .map(i => `flag_c25_option_selected_${i}`)
         .forEach(flag => onChapterAction("action_set_flag", { flag, value: false }));
+    },
+    action_clear_c120_flags: () => {
+      Array
+        .from({ length: 4 }, (_, i) => i)
+        .map(i => `flag_c120_option_selected_${i}`)
+        .forEach(flag => onChapterAction("action_set_flag", { flag, value: false }));
+    },
+    action_c167_bear_attack: () => {
+      for (let i = 0; i < 2; i++) {
+        const attackCheck = utils.roll(1, 100);
+        onChapterAction(
+          "action_dice_message", 
+          { 
+            title: autoLang({ zh: "熊 爪击", en: "Bear Claw" }),
+            num: 1, dice: 100, bonus: 0,
+            results: attackCheck,
+            shouldPlaySound: false
+          }
+        );
+        const title = autoLang({ zh: "熊的爪击", en: "Bear's Claw Attack" });
+        if (attackCheck[0] <= 35) {
+          const text = autoLang({ zh: "熊的爪击命中！", en: "The bear's claw attack hits!" });
+          onChapterAction("action_message", { title: title, text: text, color: "danger" });
+          onChapterAction("action_adjust_attribute", { key: "HP", delta: "-3d6" });
+        } else {
+          const text = autoLang({ zh: "熊的爪击未命中！", en: "The bear's claw attack misses!" });
+          onChapterAction("action_message", { title: title, text: text, color: "success" });
+        }
+      }
     },
   }
 
@@ -238,6 +283,7 @@ export default function Chapter({
   }
 
   function onInteractionAction(action, param) {
+    setInteractionFinished(true);
     action in actions ? actions[action](param) : onChapterAction(action, param);
   }
 

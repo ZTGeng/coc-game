@@ -1,48 +1,27 @@
 {
     "key": 67,
+    "location": "narrow_path",
     "text": {
         "en": [
-
+            { "content": "You land at an awkward angle and feel something break. You reach beneath you. Your fingertips come back wet. Black walls smear in from the edges of your vision." },
+            { "tag": "info", "text": [
+                { "content": "You have received a major wound. Make a CON check." }
+            ] }
         ],
         "zh": [
             { "content": "你以奇怪的角度落地，身上有哪里断掉了。你摸摸身下面，手指上沾上了湿湿的东西。你视野边缘的黑幕在徐徐关闭。" },
             { "tag": "info", "text": [
-            { "content": "你受到了重伤。如果你的耐久值已经归零，选择“继续”。否则进行一次“体质”检定。" }
+                { "content": "你受到了重伤。进行一次“体质”检定。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "体质检定",
-            "action": "action_check",
-            "param": {
-                "key": "CON",
-                "isSkill": false,
-                "level": "value"
-            },
-            "show": ["!flag_hp_zero", "flag_check_unfinished", "!flag_punish_dice"]
-        },
-        {
-            "text": "体质检定-惩罚骰x1",
-            "action": "action_check",
-            "param": {
-                "key": "CON",
-                "isSkill": false,
-                "level": "value",
-                "bonus": -1
-            },
-            "show": ["!flag_hp_zero", "flag_check_unfinished", "flag_punish_dice"]
-        }
         ]
     },
+    "check": {
+        "type": "roll",
+        "key": "CON",
+        "level": "value"
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": ["!flag_hp_zero", "flag_check_passed"] },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": ["!flag_hp_zero", "flag_check_failed"] },
-        { "key": 2, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_hp_zero" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "CON", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "CON", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
     ]
 }

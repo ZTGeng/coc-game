@@ -1,12 +1,20 @@
 {
     "key": 27,
-    "texts": [
-        "<div class='row'><div class='col-4'><img src='images/mark.jpg' class='img-fluid'></div><div class='col-8'>",
-            { "content": "门吱呀一声打开，将你的思绪猛然拉回现实。门口的人握着熊熊燃烧的火把，橘黄的光芒涌进房间。两个身躯庞大的村民走进来，一把将你抓住。至少，你认为他们是村民。",
-        "他们穿着厚实的黑色长袍，脸上手上全都涂成漆黑，只有左眼的位置画着一个红三角。" },
-            { "content": "你想尽力拖延，但他们架起你的胳膊，把你从床上连根拔起。似乎整个村子都聚集到门外围观你。每个人都涂着黑脸，画着红三角装饰图案。火把噼啪作响，火星喷溅而出。" },
-            { "content": "你奋力挣扎，但明白身体抵抗徒劳无益。你被游行队伍押到中央大街，拐了个弯，直冲灯塔而去。" },
-        "</div></div>"
+    "location": "street",
+    "text": {
+        "en": [
+            { "tag": "div", "imageOn": "left", "imageSrc": "images/mark.png", "text": [
+                { "content": "The door scrapes, wrenching you back into the moment. Orange light spills into the house from blazing torches held at the threshold. Two large villagers step in and grab you. At least, you assume they are villagers. They wear heavy black cloaks, and their faces and hands are painted entirely black, save only for a red triangle centered on their left eye." },
+                { "content": "You try to drag your legs, but they reach under your arms and lift you bodily from the bed. Outside, it seems that the whole village has congregated to see you. Every single one has a blackened face with the red triangle motif. Torches sputter and spill fire." },
+                { "content": "You struggle, but you can see physical resistance is hopeless. You are marched to the central street and turned to face the Beacon." }
+            ] }
+        ],
+        "zh": [
+            { "tag": "div", "imageOn": "left", "imageSrc": "images/mark.png", "text": [
+                { "content": "门吱呀一声打开，将你的思绪猛然拉回现实。门口的人握着熊熊燃烧的火把，橘黄的光芒涌进房间。两个身躯庞大的村民走进来，一把将你抓住。至少，你认为他们是村民。他们穿着厚实的黑色长袍，脸上手上全都涂成漆黑，只有左眼的位置画着一个红三角。" },
+                { "content": "你想尽力拖延，但他们架起你的胳膊，把你从床上连根拔起。似乎整个村子都聚集到门外围观你。每个人都涂着黑脸，画着红三角装饰图案。火把噼啪作响，火星喷溅而出。" },
+                { "content": "你奋力挣扎，但明白身体抵抗徒劳无益。你被游行队伍押到中央大街，拐了个弯，直冲灯塔而去。" }
+            ] }
         ]
     },
     "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]

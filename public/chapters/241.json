@@ -1,0 +1,26 @@
+{
+    "key": 241,
+    "location": "woodland",
+    "text": {
+        "en": [
+            { "content": "You beat the first rider to the ground and turn, breathing hard, to confront his companion. Holding his lantern up, he examines his fallen friend, and reads the determined expression in your face. Then he looks back towards Emberhead, weaving his head left and right to see between the trees." },
+            { "content": "“You win,” he says. “I reckon it’s too late by now, anyway.”" },
+            { "content": "He sets down his lantern and gathers up the other rider, slinging him over the horse with a grunt. Breathing hard, you watch him ride off. The lantern light becomes fainter and fainter, and finally winks out." },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Fighting (Brawl) skill." }
+            ] }
+        ],
+        "zh": [
+            { "content": "你把第一个车夫打翻在地，气喘吁吁地转过身来面对他的同伴。另一个车夫提起提灯，检查一下倒在地上的朋友，审视着你脸上坚决的表情。然后他回头望向烬头村，左右摆着头，透过树荫观望。" },
+            { "content": "他说道：“你赢了。我估计现在也已经太晚了。”" },
+            { "content": "他放下提灯，架起他的同伴，嘿地一下把他搭到马背上。你喘着粗气看着他驾车离开。提灯的光芒越来越暗，最后隐没了。" },
+            { "tag": "info", "text": [
+                { "content": "你可以在「格斗 ( 斗殴 )」技能左边的小方框里打勾。" }
+            ] }
+        ]
+    },
+    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
+    "onload": [
+        { "action": "action_check_in_skill_box", "param": "fighting" }
+    ]
+}

@@ -1,1 +1,58 @@
-//TODO
+{
+    "key": 235,
+    "location": "woodland",
+    "text": {
+        "en": [
+            { "content": "One rider has problems dismounting. You square up to the other, an older man with desperation in his eyes." },
+            { "tag": "info", "text": [
+                { "content": "Conduct close-quarters combat using pages 12-13 of the Quick-Start Rules. You may need to refer to page 7 first to look up your damage bonus." },
+                { "content": "The combatant with the higher DEX acts first. You and the rider will take one action each combat round. You may fight back (rolling your Fighting (Brawl) or dodge (using Dodge) against each attack. Combat rolls are opposed rolls: whoever gets the best level of success wins." },
+                { "content": "The rider has a DEX of 31 and a Fighting (Brawl) skill of 30% (15% half / 6% one-fifth). He has 9 hit points. Roll 1D6 every round. On an odd number he will attack, and on an even number he will dodge your attacks. His Dodge skill is 15% (7% half / 3% one-fifth). He has a small club that does 1D6 damage." },
+                { "content": "If you have a knife or similar weapon, each successful hit you make does 1D4 plus your damage bonus. If you are unarmed, the damage is 1D3 plus your damage bonus." }
+            ] }
+        ],
+        "zh": [
+            { "content": "一个车夫下车时出了状况，你对着另一个车夫摆好架势。他是个上年纪的男人，作出以命相搏的眼神。" },
+            { "tag": "info", "text": [
+                { "content": "处理近身战斗时，使用快速开始规则的第 14 ～ 16 页（规则书第 102 ～ 111 页）。你需要先阅读第 8 页（规则书第 33 页）来查询自己的伤害加值。" },
+                { "content": "参战者中“敏捷”最高的最先行动。你和车夫每个战斗轮各可进行一个动作。车夫每向你攻击一次，你都可以选择反击（投掷「格斗 ( 斗殴 )」）或者闪避（投掷「闪避」）。战斗技能检定是对抗检定：谁的成功度高，谁得手。" },
+                { "content": "车夫的“敏捷”为 31，格斗 ( 斗殴 ) 技能值为30%（半值15%/五分之一值6%），耐久值为 9。每轮投掷一次 1D6。如果投出单数，他会攻击；如果投出双数，他会闪避你的攻击。他的「闪避」技能为 15%（半值 7%/ 五分之一值 3%）。他手持一支短棍，能造成 1D6 点伤害。" },
+                { "content": "如果你带着小刀或类似的武器，你每次攻击成功都会造成1D4点加上伤害加值点数的伤害。如果你赤手空拳，伤害是1D3点加上伤害加值点数。" }
+            ] }
+        ]
+    },
+    "check": {
+        "type": "combat",
+        "rounds": 999,
+        "opponent": {
+            "name": { "en": "Rider", "zh": "车夫" },
+            "DEX": 31,
+            "HP": 9,
+            "thresholdHP": 4,
+            "armor": 0,
+            "skills": {
+                "fighting": {
+                    "name": { "en": "Fighting (Brawl)", "zh": "格斗(斗殴)" },
+                    "value": 30,
+                    "half": 15,
+                    "fifth": 6,
+                    "damage": "1D6"
+                },
+                "dodge": {
+                    "name": { "en": "Dodge", "zh": "闪避" },
+                    "value": 15,
+                    "half": 7,
+                    "fifth": 3
+                }
+            },
+            "moves": [
+                ["fighting"]
+            ],
+            "moveDefend": ["fighting", "dodge"]
+        }
+    },
+    "options": [
+        { "key": 0, "text": { "en": "You lose the combat, continue", "zh": "战斗失败，继续" }, "show": "flag_check_failed" },
+        { "key": 1, "text": { "en": "You win the combat, continue", "zh": "战斗胜利，继续" }, "show": "flag_check_passed" }
+    ]
+}

@@ -1,21 +1,33 @@
 {
     "key": 55,
+    "location": "narrow_path",
     "text": {
         "en": [
-
+            { "content": "You lunge for a handhold. Your fingers scrabble against the wall. In a second you are dropping, dropping hard to the stony ground—" },
+            { "tag": "info", "text": [
+                { "content": "Take 2D6 damage as you hit the ground. If this is equal to or greater than half of your full hit points, you have taken a major wound." }
+            ] }
         ],
         "zh": [
             { "content": "你弓身向上扑，寻找支撑点，手指在墙壁上乱抓。还没有一秒种的工夫，你再次下坠，结结实实地摔到了岩石地面上——" },
             { "tag": "info", "text": [
-            { "content": "你撞上地面时受到 2D6 点伤害。如果这次伤害的数值大于等于你最大耐久值的一半，你就受到了重伤。" }
+                { "content": "你撞上地面时受到 2D6 点伤害。如果这次伤害的数值大于等于你最大耐久值的一半，你就受到了重伤。" }
             ] }
-    ],
-    "interactions": [
-        { "text": "投掷2D6点耐久", "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-2d6" }, "show": "!flag_hp_reduced" }
         ]
     },
+    "interactions": [
+        { 
+            "text": {
+                "en": "Endure the fall damage",
+                "zh": "承受掉落伤害"
+            }, 
+            "action": "action_adjust_attribute", 
+            "param": { "key": "HP", "delta": "-2d6" }, 
+            "disabled": "flag_interaction_finished" 
+        }
+    ],
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_major_wound" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "!flag_major_wound" }
+        { "key": 0, "text": { "en": "You have taken a major wound, continue", "zh": "你受了重伤，继续" }, "show": ["flag_interaction_finished", "flag_major_wound"] },
+        { "key": 1, "text": { "en": "You have not taken a major wound, continue", "zh": "你没有受重伤，继续" }, "show": ["flag_interaction_finished", "!flag_major_wound"] }
     ]
 }

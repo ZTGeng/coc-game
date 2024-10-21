@@ -17,6 +17,12 @@ const locations = {
   chamber: [75, 60],
   woodland: [99, 87],
   school: [49, 80],
+  southern_road: [29, 87],
+  narrow_path: [53, 80],
+  beacon_2: [58, 76],
+  prison: [22, 21],
+  beacon_center: [63, 60],
+  church_inside: [18, 67],
 };
 
 export default function MapModal({ mapLocation }) {

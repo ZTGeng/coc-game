@@ -1,41 +1,28 @@
 {
     "key": 89,
+    "location": "ledbetter",
     "text": {
         "en": [
-
+            { "content": "You go through the Ledbetters’ drawers. The only item of interest you find is a wedding photograph. May’s husband was a wiry man with a square chin. Despite the formality of the pose, you can see the affection between them. You feel a pang of guilt at your intrusion. Also, May might return at any time." },
+            { "tag": "info", "text": [
+                { "content": "If you wish to Push the Spot Hidden roll, make the roll again. If you would rather not risk it, choose “Leave”." }
+            ] }
         ],
         "zh": [
-            { "content": "你仔细搜索莱德贝特的抽屉。抽屉里只有一张结婚照还算有点意思。梅的丈夫瘦长结实，脸型方正。虽然他们的姿势很正式，但你还是能看出他们之间的爱意。",
-        "你突然对自己的闯入感到后悔。而且梅任何时候都有可能回来。" },
+            { "content": "你仔细搜索莱德贝特的抽屉。抽屉里只有一张结婚照还算有点意思。梅的丈夫瘦长结实，脸型方正。虽然他们的姿势很正式，但你还是能看出他们之间的爱意。你突然对自己的闯入感到后悔。而且梅任何时候都有可能回来。" },
             { "tag": "info", "text": [
-            { "content": "如果你希望孤注一掷，重新投掷「侦查」检定。如果你不想冒险继续，选择“离开”。" },
-            { "content": "（译注：如果你刚才的「侦查」检定掷出大失败，不能孤注一掷。）" }
+                { "content": "如果你希望孤注一掷，重新投掷「侦查」检定。如果你不想冒险继续，选择“离开”。" }
             ] }
-    ],
-    "interactions": [
-        {
-            "text": "侦查检定-孤注一掷",
-            "action": "action_check",
-            "param": { "key": "spot", "isSkill" : true, "level": "value" },
-            "show": ["flag_check_unfinished", "!flag_last_check_fumble", "!flag_punish_dice"]
-        },
-        {
-            "text": "侦查检定-孤注一掷-惩罚骰x1",
-            "action": "action_check",
-            "param": { "key": "spot", "isSkill" : true, "level": "value", "bonus": -1 },
-            "show": ["flag_check_unfinished", "!flag_last_check_fumble", "flag_punish_dice"]
-        }
         ]
     },
+    "check": { 
+        "type": "roll",
+        "key": "spot", 
+        "level": "value" 
+    },
     "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": "flag_check_failed" },
-        { "key": 2, "text": "离开", "show": "flag_check_unfinished" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "none" } }
+        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
+        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" },
+        { "key": 2, "text": { "en": "Leave", "zh": "离开" }, "show": "!flag_check_finished" }
     ]
 }

@@ -1,8 +1,13 @@
 {
     "key": 164,
+    "location": "church_inside",
     "text": {
         "en": [
-
+            { "content": "These people know their village better than you. You pick the biggest gap between them and sprint into it. They give chase. You find yourself heading for the southern road. As you approach, you see four villagers stationed in the middle of the road; clearly guards. You veer off towards the half-ruined church, already breathing hard." },
+            { "content": "You slip inside the building through a broken window and duck under the elderly boards which slash the interior, making for the door on the other side. The door is quite intact, moldy, and locked." },
+            { "content": "Two of your pursuers climb into the church through the window. The other two enter by the main door." },
+            { "content": "“Give it up.” One thumps his club into his palm. “It’ll go better for you if you don’t resist.” They close in." },
+            { "content": "You are getting low on options." }
         ],
         "zh": [
             { "content": "这些人比你更熟悉村子。你瞅准他们当中最大的空档，一头钻过去。他们紧随其后。你朝南边的路跑过去。你跑到的时候，发现四个村民正在东盘山路口中央把守，明显是守卫。你换个方向，跑向残破的教堂，不住地喘着粗气。" },
@@ -13,7 +18,7 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "放弃抵抗" },
-        { "key": 1, "text": "弄塌他们头上的一段屋顶" }
+        { "key": 0, "text": { "en": "Give yourself up", "zh": "放弃抵抗" } },
+        { "key": 1, "text": { "en": "Try to collapse a section of roof on them", "zh": "弄塌他们头上的一段屋顶" } }
     ]
 }

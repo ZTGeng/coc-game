@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { LanguageContext } from "../../App";
+import * as utils from "../../utils";
 
 export const resultLevelTexts = {
   en: ["Failure", "Regular Success", "Hard Success", "Extreme Success"],
@@ -22,6 +23,7 @@ export default function ActionCard({ role, action, skill, result, isDisabled, on
         ? `${autoLang(skill.name)} ${skill.value}${autoLang({ zh: `，奖励骰 x ${skill.bonus}`, en: `, Bonus Die x ${skill.bonus}` })}`
         : `${autoLang(skill.name)} ${skill.value}${autoLang({ zh: `，惩罚骰 x ${-skill.bonus}`, en: `, Penalty Die x ${-skill.bonus}` })}`
     : `${autoLang(skill.name)} ${skill.value}`;
+  const damageDisplay = skill.damage ? autoLang(utils.TEXTS.damage) + " " + skill.damage : "";
 
   let cardBodyContent;
   if (role.isOpponent) {
@@ -44,9 +46,12 @@ export default function ActionCard({ role, action, skill, result, isDisabled, on
   return (
     <div className={`flex-fill mx-1 ${action.isInitiating ? "" : "pt-4"}`} style={{ maxWidth: "20rem", minWidth: "12rem" }}>
       <div className={`card ${role.isOpponent ? "text-bg-dark" : "text-bg-light"} ${isDisabled ? "text-secondary" : ""} px-0`}>
-        <div className="card-header d-flex">
-          <h6>{ autoLang(role.name) }</h6>
-          <small className="ms-auto">{ skillDisplay }</small>
+        <div className="card-header d-flex align-items-center">
+          <h6 className="mb-0">{ autoLang(role.name) }</h6>
+          <div className="ms-auto">
+            <div className={damageDisplay ? "" : "my-2"} style={{ fontSize: "0.8rem" }}>{ skillDisplay }</div>
+            { damageDisplay && <div style={{ fontSize: "0.7rem" }}>{ damageDisplay }</div> }
+          </div>
         </div>
         <div className="card-body">
           <div>{ autoLang(action.name) }</div>

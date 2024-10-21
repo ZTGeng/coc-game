@@ -19,6 +19,10 @@ const combatLoseText = {
   en: "Combat Lose",
   zh: "战斗失败"
 };
+const combatEscapeText = {
+  en: "Combat Escape",
+  zh: "逃脱战斗"
+};
 const conCheckText = {
   en: "You have taken a major wound, make a CON roll",
   zh: "你受了重伤，进行「体质」检定"
@@ -31,6 +35,18 @@ const conCheckFailText = {
   en: "CON Roll Fail",
   zh: "体质检定失败"
 };
+const escapeCheckText = {
+  en: "Attempt to escape, make a hard Dodge roll",
+  zh: "尝试逃跑，进行困难难度的「闪避」检定"
+};
+const escapeCheckPassText = {
+  en: "Dodge Roll Pass",
+  zh: "闪避检定通过"
+};
+const escapeCheckFailText = {
+  en: "Dodge Roll Fail",
+  zh: "闪避检定失败"
+};
 
 // chapter 173
 export default function Combat({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
@@ -41,6 +57,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   const [opponentMoveResult, setOpponentMoveResult] = useState(initMoveResult);
   const [opponentHp, setOpponentHp] = useState(check.opponent.HP);
   const [showConCheck, setShowConCheck] = useState(false);
+  const [showEscapeCheck, setShowEscapeCheck] = useState(false);
   const loaded = useRef(false);
   
   useEffect(() => {
@@ -56,32 +73,46 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
   const isOpponentActing = turns[progress.turn] === "opponent";
 
+  const yourDamage = flagConditionCheck("flag_bought_knife") ? "1d4" : "1d3";
+  const yourDamageBonus = utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value);
+  const bonus = calculateBonus(check, flagConditionCheck);
   const dodgeSkill = {
     name: characterSheet.skills.dodge.name,
     value: skills.dodge.value,
     half: Math.floor(skills.dodge.value / 2),
     fifth: Math.floor(skills.dodge.value / 5),
-    bonus: flagConditionCheck("flag_penalty_die") ? -1 : 0,
   };
   const fightSkill = { 
     name: characterSheet.skills.fighting.name,
     value: skills.fighting.value,
     half: Math.floor(skills.fighting.value / 2),
     fifth: Math.floor(skills.fighting.value / 5),
-    bonus: flagConditionCheck("flag_penalty_die") ? -1 : 0,
+    damage: `${yourDamage}+${yourDamageBonus}`,
   };
-  const yourDamage = flagConditionCheck("flag_bought_knife") ? "1d4" : "1d3";
-  const yourDamageBonus = utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value);
-  const bonus = calculateBonus(check, flagConditionCheck);
-
-  function getOpponentCurrentMovel() {
-    const moves = opponent.moves[progress.round % opponent.moves.length];
-    return moves[progress.move];
-  }
 
   function getOpponentCurrentSkill() {
-    return opponent.skills[getOpponentCurrentMovel()];
+    if (isOpponentActing) {
+      const moves = opponent.moves[progress.round % opponent.moves.length];
+      const move = moves[progress.move];
+      return opponent.skills[move];
+    } else {
+      const moveDefend = opponent.moveDefend;
+      if (moveDefend.length ===1) {
+        return opponent.skills[moveDefend[0]];
+      }
+      const move = moveDefend[Math.floor(Math.random() * moveDefend.length)];
+      return opponent.skills[move];
+    }
   }
+
+  // function getOpponentDefendSkill() {
+  //   const moveDefend = opponent.moveDefend;
+  //   if (moveDefend.length ===1) {
+  //     return opponent.skills[moveDefend[0]];
+  //   }
+  //   const move = moveDefend[Math.floor(Math.random() * moveDefend.length)];
+  //   return opponent.skills[move];
+  // }
 
   function opponentRollResult() {
     const opponentSkill = getOpponentCurrentSkill();
@@ -105,28 +136,35 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   }
 
   function onOpponentHitYou() {
-    let hpReduce;
+    let hpReduce = 0, allDiceNumbers = [];
     if (typeof opponentMoveResult.skill.damage === "string") {
-      const [num, dice] = opponentMoveResult.skill.damage.toLowerCase().split("d").map(s => parseInt(s));
-      const diceNumbers = utils.roll(num, dice);
-      hpReduce = diceNumbers.reduce((acc, cur) => acc + cur, 0);
+      opponentMoveResult.skill.damage.toLowerCase().split("+").forEach(diceDamage => {
+        const [num, dice] = diceDamage.split("d").map(s => parseInt(s));
+        const diceNumbers = utils.roll(num, dice);
+        hpReduce += diceNumbers.reduce((acc, cur) => acc + cur, 0);
+        allDiceNumbers.push(...diceNumbers);
+      });
       onAction("action_dice_message", {
-        title: autoLang(utils.TEXTS.damage), num: num, dice: dice, bonus: 0, results: diceNumbers, shouldPlaySound: true 
+        title: autoLang(utils.TEXTS.damage), 
+        num: allDiceNumbers.length, dice: 0, bonus: 0, 
+        results: allDiceNumbers, 
+        shouldPlaySound: true, 
+        alterNumDice: opponentMoveResult.skill.damage
       });
     } else if (typeof opponentMoveResult.skill.damage === "number") {
       hpReduce = opponentMoveResult.skill.damage;
     }
+    console.log("hpReduce", hpReduce);
     if (hpReduce > 0) {
       if (hpReduce >= attributes.HP.value) {
         setCheckFlags({ result: "fail" });
-      } else if (hpReduce >= attributes.HP.maxValue / 2) {
+      } else if (hpReduce >= attributes.HP.maxValue / 2 && !flagConditionCheck("flag_major_wound")) {
         onAction("action_set_flag", { flag: "flag_major_wound", value: true });
         setShowConCheck(true);
         onAction("action_set_highlight", { key: "CON", level: "value" });
       }
 
       onAction("action_adjust_attribute", { key: "HP", delta: -hpReduce });
-      onAction("action_set_highlight", { key: "HP", level: "danger" });
     }
   }
 
@@ -150,13 +188,17 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         const diceNumbers = utils.roll(1, 4);
         hpReduce += diceNumbers.reduce((acc, cur) => acc + cur, 0);
         onAction("action_dice_message", {
-          title: autoLang(utils.TEXTS.damage), num: 1, dice: 4, bonus: 0, results: diceNumbers, shouldPlaySound: true
+          title: autoLang(utils.TEXTS.damage), 
+          num: 1, dice: 4, bonus: 0, 
+          results: diceNumbers, 
+          shouldPlaySound: true,
+          alterNumDice: `${hpReduce}+1d4`
         });
       }
       if (hpReduce > opponent.armor) {
         const opponentNewHp = opponentHp - hpReduce + opponent.armor;
         setOpponentHp(opponentNewHp);
-        if (opponentNewHp <= 0) {
+        if (opponentNewHp <= opponent.thresholdHP) {
           setCheckFlags({ result: "pass" });
         }
       }
@@ -195,7 +237,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     if (hpReduce > opponent.armor) {
       const opponentNewHp = opponentHp - hpReduce + opponent.armor;
       setOpponentHp(opponentNewHp);
-      if (opponentNewHp <= 0) {
+      if (opponentNewHp <= opponent.thresholdHP) {
         setCheckFlags({ result: "pass" });
       }
     }
@@ -231,7 +273,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   function onFight() {
     // console.log("onFight");
     const resultLevel = youRollResult(fightAction, fightSkill);
-    const isOpponentDodging = getOpponentCurrentMovel() === dodgeAction.key;
+    const isOpponentDodging = !opponentMoveResult.skill.damage;
     if (isOpponentDodging) {
       if (resultLevel <= opponentMoveResult.resultLevel) {
         // opponent dodged
@@ -282,6 +324,21 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     }
   }
 
+  function onEscapeCheck() {
+    // console.log("onEscapeCheck");
+    setShowEscapeCheck(false);
+    onAction("action_set_highlight", { key: "dodge", level: "all" });
+    const diceNumber = rollCheck(bonus, dodgeSkill.name, onAction, autoLang);
+    if (diceNumber > dodgeSkill.half) {
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(escapeCheckFailText), color: "danger" });
+      setCheckFlags({ result: "draw" }); // TODO: con check
+      onOpponentHitYou();
+    } else {
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(escapeCheckPassText), color: "success" });
+      setCheckFlags({ result: "draw" });
+    }
+  }
+
   function next() {
     const progressCopy = { ...progress };
     if (isOpponentActing) {
@@ -316,55 +373,84 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
 
   function combatOver() {
     // console.log("combat over");
-    setCheckFlags({ result: "pass" });
+    if (check.roundRunOut === "escape") {
+      setShowEscapeCheck(true);
+      onAction("action_set_highlight", { key: "dodge", level: "half" });
+    } else if (check.roundRunOut === "lose") {
+      setCheckFlags({ result: "fail" });
+    } else {
+      setCheckFlags({ result: "pass" });
+    }
   }
+
+  if (!opponentMoveResult.skill) return <div>Loading...</div>
 
   const cardTitle = `${autoLang(utils.TEXTS.combat)} ${autoLang(you.name)} vs ${autoLang(opponent.name)}`;
   const roundText = autoLang({ zh: `第 ${progress.round + 1} 轮`, en: `Round ${progress.round + 1}` });
 
   let yourCards = [], opponentCard;
   if (isOpponentActing) {
-    const opponentSkill = getOpponentCurrentSkill();
-    opponentCard = { role: opponent, action: fightAction, skill: opponentSkill, result: opponentMoveResult, isDisabled: showConCheck };
+    const opponentSkill = opponentMoveResult.skill;
+    opponentCard = { 
+      role: opponent, 
+      action: fightAction, 
+      skill: opponentSkill,
+      result: opponentMoveResult, 
+      isDisabled: showConCheck || showEscapeCheck
+    };
 
     yourCards.push({ 
       role: you, 
       action: fightBackAction, 
-      skill: fightSkill, 
+      skill: fightSkill,
       result: yourMoveResult, 
       onAction: onFightBack, 
-      isDisabled: showConCheck || (yourMoveResult.action && yourMoveResult.action.key !== fightBackAction.key) });
+      isDisabled: showConCheck || showEscapeCheck || (yourMoveResult.action && yourMoveResult.action.key !== fightBackAction.key) 
+    });
     yourCards.push({ 
       role: you, 
       action: dodgeAction, 
-      skill: dodgeSkill, 
+      skill: dodgeSkill,
       result: yourMoveResult, 
       onAction: onDodge, 
-      isDisabled: showConCheck || (yourMoveResult.action && yourMoveResult.action.key !== dodgeAction.key) });
+      isDisabled: showConCheck || showEscapeCheck || (yourMoveResult.action && yourMoveResult.action.key !== dodgeAction.key) 
+    });
   } else {
-    const opponentSkill = opponent.skills[opponent.moveDefend];
-    opponentCard = { role: opponent, action: fightBackAction, skill: opponentSkill, result: opponentMoveResult, isDisabled: showConCheck };
+    const opponentSkill = opponentMoveResult.skill;
+    opponentCard = { 
+      role: opponent, 
+      action: opponentSkill.damage ? fightBackAction : dodgeAction,
+      skill: opponentSkill,
+      result: opponentMoveResult, 
+      isDisabled: showConCheck || showEscapeCheck
+    };
 
     yourCards.push({ 
       role: you, 
       action: fightAction, 
-      skill: fightSkill, 
+      skill: fightSkill,
       result: yourMoveResult, 
       onAction: onFight, 
-      isDisabled: showConCheck });
+      isDisabled: showConCheck || showEscapeCheck 
+    });
   }
 
   return (
-    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
+    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "fail" ? " border-danger" : " border-success") : " text-bg-light")}>
       <div className="card-header d-flex">
         <h6>{ cardTitle }</h6>
         <div className="ms-auto">{ roundText }</div>
       </div>
       <div className="card-body">
         <div className="d-flex justify-content-center align-items-center">
-          { checkFlags.result && <strong className={checkFlags.result === "pass" ? " text-success" : " text-danger"}>{ autoLang(checkFlags.result === "pass" ? combatWinText : combatLoseText) }</strong> }
+          { checkFlags.result && (
+            <strong className={checkFlags.result === "fail" ? " text-danger" : " text-success"}>
+              { autoLang(checkFlags.result === "pass" ? combatWinText : (checkFlags.result === "fail" ? combatLoseText : combatEscapeText)) }
+            </strong>
+          ) }
           { !checkFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} /></div></> }
-          { !checkFlags.result && !showConCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
+          { !checkFlags.result && showEscapeCheck && <><div>{ autoLang(escapeCheckText) }</div><div className="ms-3"><CheckButton onClick={onEscapeCheck} /></div></> }
+          { !checkFlags.result && !showConCheck && !showEscapeCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
         </div>
       </div>
       <hr className="my-0" />

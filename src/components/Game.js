@@ -22,10 +22,12 @@ const initFlags = {
   flag_bought_knife: false,
   flag_found_cliff_ladder: false,
   flag_meet_arbogast: false,
-  flag_c167_bear_attack_finished: false,
   flag_involved_fighting: false,
   flag_searched_book_shelf: false,
   flag_learned_magic_arbogast: false,
+  flag_learned_magic_summon: false,
+  flag_learned_magic_order: false,
+  flag_found_poem_book: false,
   
   flag_major_wound: false,
   flag_penalty_die: false,
@@ -37,15 +39,14 @@ const initFlags = {
   flag_c25_option_selected_4: false,
   flag_c25_option_selected_5: false,
 
+  flag_c120_option_selected_0: false,
+  flag_c120_option_selected_1: false,
+  flag_c120_option_selected_2: false,
+  flag_c120_option_selected_3: false,
 
-  flag_hp_reduced: false,
-  flag_san_reduced: false,
+
+
   flag_mp_used: false,
-
-  flag_c120_tried_three_options: false,
-  flag_found_poem_book: false,
-  flag_learned_magic_summon: false,
-  flag_learned_magic_order: false
 };
 
 const initChars = {
@@ -141,7 +142,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       occupationName: occupation.name,
       info,
       mapEnabled,
-      chapterStatus: Array.from(chapterStatus),
       checkedSkills: Object.keys(skillsCopy).filter(skillKey => skillsCopy[skillKey].checked),
     };
 
@@ -193,7 +193,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     "flag_dex_greater_than_siz": () => chars.DEX.value > chars.SIZ.value,
     "flag_luck_unfinished": () => attributes.Luck.value === "",
     "flag_track_skill_box_checked": () => skills.track.checked,
-    "flag_hp_zero": () => attributes.HP.value === 0,
+    "flag_hp_zero": () => attributes.HP.value <= 0,
   };
   const flagConditionCheck = flagConditionCheckProvider(flags, flagFunctions);
 
@@ -247,7 +247,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         const results = utils.roll(parseInt(num), parseInt(dice));
         newValue = attr.value + results.reduce((a, b) => a + b, 0) * multiplier;
         const attrName = autoLang(characterSheet[param.key].name);
-        showDiceTitleToast(
+        showDiceToast(
           autoLang({ zh: `${attrName} ${param.delta}`, en: `${attrName} ${param.delta}` }), 
           parseInt(num), parseInt(dice), 0, results, false);
       } else {
@@ -262,12 +262,17 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         }
         if (newValue < attr.value) {
           playSound("hp-reduced");
+
+          if (attr.value - newValue >= attr.maxValue / 2) {
+            flagsCopy = { ...flagsCopy, flag_major_wound: true };
+            setFlags(flagsCopy);
+          }
         }
       } else if (param.key === "San") {
         if (!param.noHighlight) {
           addToHighlight("San", newValue < attr.value ? "danger" : "success");
         }
-        // playSound("san-reduced");
+        playSound("san-reduced");
       }
 
       attrCopy[param.key] = { ...attr, value: newValue };
@@ -277,8 +282,16 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       skillsCopy = { ...skillsCopy, [param.key]: { ...skillsCopy[param.key], value: skillsCopy[param.key].value + param.delta } };
       setSkills(skillsCopy);
     },
-    action_dice_message: (param) => { // param: { title, num, dice, results, shouldPlaySound, bonus, alterNumDice }
-      showDiceTitleToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
+    action_double_skill_value: (param) => { // param: key
+      skillsCopy = { ...skillsCopy, [param]: { ...skillsCopy[param], value: skillsCopy[param].value * 2 } };
+      setSkills(skillsCopy);
+    },
+    action_half_skill_value: (param) => { // param: key
+      skillsCopy = { ...skillsCopy, [param]: { ...skillsCopy[param], value: Math.floor(skillsCopy[param].value / 2) } };
+      setSkills(skillsCopy);
+    },
+    action_dice_message: (param) => { // param: { title, num, dice, bonus, results, shouldPlaySound, alterNumDice }
+      showDiceToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
     },
     action_message: (param) => { // param: { title, subtitle, text, color }
       showToast(param);
@@ -313,7 +326,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
       attrCopy = { ...attrCopy, Luck: { value: luck } };
       setAttributes(attrCopy);
-      showDiceTitleToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
+      showDiceToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
       setOccupation({ ...occupation, ...param });
@@ -323,40 +336,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action_enable_map: () => {
       setMapEnabled(true);
     },
-    action_c167_bear_attack: () => {
-      let hpDelta = 0;
-      for (let i = 0; i < 2; i++) {
-        const attackCheck = utils.roll(1, 100);
-        showDiceTitleToast(autoLang({ zh: "熊 爪击", en: "Bear Claw" }), 1, 100, 0, attackCheck, false);
-        const title = autoLang({ zh: "熊的爪击", en: "Bear's Claw Attack" });
-        if (attackCheck[0] <= 35) {
-          const text = autoLang({ zh: "熊的爪击命中！", en: "The bear's claw attack hits!" });
-          showToast({ title: title, text: text, color: "danger" });
-          const damage = utils.roll(3, 6);
-          showDiceTitleToast(autoLang(utils.TEXTS.damage), 3, 6, 0, damage, false);
-          const damageNumber = damage.reduce((a, b) => a + b, 0);
-          if (damageNumber >= attributes.HP.maxValue / 2) {
-            flagsCopy = { ...flagsCopy, flag_major_wound: true };
-          }
-          hpDelta -= damageNumber;
-        } else {
-          const text = autoLang({ zh: "熊的爪击未命中！", en: "The bear's claw attack misses!" });
-          showToast({ title: title, text: text, color: "success" });
-        }
-      }
-      if (hpDelta < 0) {
-        const newHp = Math.max(attrCopy.HP.value + hpDelta, 0);
-        attrCopy = { ...attrCopy, HP: { ...attrCopy.HP, value: newHp } };
-        setAttributes(attrCopy);
-        addToHighlight("HP", "danger");
-        playSound("hp-reduced");
-      }
-      flagsCopy = { ...flagsCopy, flag_c167_bear_attack_finished: true };
-      setFlags(flagsCopy);
-    }
   }
 
-  function showDiceTitleToast(title, num, dice, bonus, results, shouldPlaySound, alterNumDice = undefined) {
+  function showDiceToast(title, num, dice, bonus, results, shouldPlaySound, alterNumDice = undefined) {
     let subtitle = `${num}D${dice}`;
     if (bonus && bonus > 0) {
       subtitle += autoLang({ zh: `，奖励骰 x ${bonus}`, en: `, Bonus Die x ${bonus}` });
@@ -418,7 +400,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setOccupation({ name: states.occupationName });
     setInfo(states.info);
     setMapEnabled(states.mapEnabled);
-    setChapterStatus(new Uint32Array(states.chapterStatus));
 
     setIsReloading(true);
     setChapterKey(states.chapterKey);
@@ -432,6 +413,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   function save(saveKey) {
     const saveData = {
       chapterHistory,
+      chapterStatus: Array.from(chapterStatus),
       chars,
       currentStates: stateSnapshotRef.current,
     }
@@ -443,10 +425,12 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     if (saveData) {
       const {
         chapterHistory: chapterHistoryToLoad,
+        chapterStatus: chapterStatusToLoad,
         chars: charsToLoad,
         currentStates: statesToLoad
       } = JSON.parse(saveData);
       setChapterHistory(chapterHistoryToLoad);
+      setChapterStatus(new Uint32Array(chapterStatusToLoad));
       setChars(charsToLoad);
 
       let skillSnapshot = statesToLoad.skills;
@@ -461,7 +445,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setOccupation({ name: statesToLoad.occupationName });
       setInfo(statesToLoad.info);
       setMapEnabled(statesToLoad.mapEnabled);
-      setChapterStatus(new Uint32Array(statesToLoad.chapterStatus));
 
       setIsReloading(true);
       setChapterKey(statesToLoad.chapterKey);

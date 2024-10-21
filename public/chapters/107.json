@@ -1,8 +1,11 @@
 {
     "key": 107,
+    "location": "chamber",
     "text": {
         "en": [
-
+            { "content": "The cliffside staircase! You melt back into the village. Eyes follow you as you go. Eventually you head back towards the Ledbetter house with a visible yawn. Alone for a moment, you slip down an alley and thread your way around the rear of the buildings." },
+            { "content": "You find the spot and slip your feet over the side, feeling for the step and trying not to think of the twenty-foot drop beneath you. You grip the cold stone of the cliff. One step down, then another… Somebody rounds a nearby building and you pull your head out of sight." },
+            { "content": "Sixty seconds later, your feet touch solid ground. The shacks nearby are shuttered. You move with light steps to the eastern road." }
         ],
         "zh": [
             { "content": "是悬崖边的阶梯！你折回村子里。无论你走到哪儿，都有人监视着你。最后，你返回莱德贝特的房子，打了个大大的呵欠。独自呆了一会儿之后，你顺着小巷溜走，在建筑物背后寻找路径。" },

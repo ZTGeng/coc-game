@@ -17,6 +17,6 @@
         ]
     },
     "options": [
-        { "key": 0, "text": "研读德比的诗集", "show": "flag_found_poem_book" }
+        { "key": 0, "text": { "en": "Study the Derby volume", "zh": "研读德比的诗集" }, "show": "flag_found_poem_book", "secret": true }
     ]
 }

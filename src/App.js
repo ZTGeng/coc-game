@@ -7,6 +7,7 @@ import Game from './components/Game';
 
 export const LanguageContext = createContext();
 const localStorageKey = "coc-state";
+const initLanguage = window.navigator.language.startsWith("zh") ? "zh" : "en";
 
 const title = {
   en: "Alone Against the Flames",
@@ -136,7 +137,7 @@ function Footer() {
 }
 
 function App() {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(initLanguage);
   const [musicVolume, setMusicVolume] = useState(0);
   const [sfxVolume, setSfxVolume] = useState(1);
   const [gameStarted, setGameStarted] = useState(false);
@@ -163,10 +164,6 @@ function App() {
   function startGame() {
     console.log("Game started.");
     setGameStarted(true);
-    if (musicRef.current) {
-      // musicRef.current.stop();
-      // musicRef.current.play(); 
-    }
   }
 
   function onRestart() {

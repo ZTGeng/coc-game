@@ -1,8 +1,9 @@
 {
     "key": 170,
+    "location": "street",
     "text": {
         "en": [
-
+            { "content": "You turn a corner and walk straight into the formidable woman with the malevolent stare. She grabs your shoulders and bears down on you. As you struggle, the man with the club runs up with the teenager. You are quickly overcome." }
         ],
         "zh": [
             { "content": "你转过一个街角，直接朝那个眼神凶狠的难对付女人冲了过去。她揪过你的肩膀，一下就把你扳倒。少年和拿着棍子的男人一齐冲上来，你很快就被制服了。" }

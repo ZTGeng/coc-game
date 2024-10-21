@@ -1,15 +1,16 @@
 {
     "key": 153,
+    "location": "village_hall",
     "text": {
         "en": [
-
+            { "content": "You squint into the darkness behind the bookcase. It is a small alcove, big enough for one person, and has a hidden shelf on either side. You cannot make out any titles in this light" }
         ],
         "zh": [
             { "content": "你侧身挤进书架后面的暗室。这是个小小的壁龛，大小仅容一人，两边各有一个隐蔽的书架。这种亮度下你没办法看清书名。" }
         ]
     },
     "options": [
-        { "key": 0, "text": "冒险把悬崖边的窗户打开一点点" },
-        { "key": 1, "text": "抓上几本书就离开" }
+        { "key": 0, "text": { "en": "Risk opening one of the cliffside windows a little", "zh": "冒险把悬崖边的窗户打开一点点" } },
+        { "key": 1, "text": { "en": "Grab a few books and leave", "zh": "抓上几本书就离开" } }
     ]
 }

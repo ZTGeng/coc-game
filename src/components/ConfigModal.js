@@ -69,7 +69,14 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
                 { autoLang(musicVolumeSetting.label) }
               </label>
               <div className="col-sm-10 d-flex align-items-center">
-                <input type="range" className="flex-fill" min={musicVolumeSetting.min} max={musicVolumeSetting.max} step={musicVolumeSetting.step} id="musicVolumeRange" value={musicVolume} onChange={e => setMusicVolume(e.target.value)} />
+                <input type="range" 
+                       className="flex-fill"
+                       min={musicVolumeSetting.min} 
+                       max={musicVolumeSetting.max} 
+                       step={musicVolumeSetting.step} 
+                       id="musicVolumeRange" 
+                       value={musicVolume} 
+                       onChange={e => setMusicVolume(e.target.value)} />
               </div>
             </div>
 
@@ -78,12 +85,21 @@ export default function ConfigModal({ gameStarted, onRestart, musicVolume, setMu
                 { autoLang(sfxVolumeSetting.label) }
               </label>
               <div className="col-sm-10 d-flex align-items-center">
-                <input type="range" className="flex-fill" min={sfxVolumeSetting.min} max={sfxVolumeSetting.max} step={sfxVolumeSetting.step} id="sfxVolumeRange" value={sfxVolume} onChange={e => setSfxVolume(e.target.value)} />
+                <input type="range" 
+                       className="flex-fill" 
+                       min={sfxVolumeSetting.min} 
+                       max={sfxVolumeSetting.max} 
+                       step={sfxVolumeSetting.step} 
+                       id="sfxVolumeRange" 
+                       value={sfxVolume} 
+                       onChange={e => setSfxVolume(e.target.value)} />
               </div>
             </div>
 
             <div className="row mb-3">
-              <button type="button" className="btn btn-primary col-sm-5 mx-auto" data-bs-dismiss="modal" onClick={onRestart} disabled={!gameStarted} >{ autoLang(reset) }</button>
+              <button type="button" className="btn btn-primary col-sm-5 mx-auto" data-bs-dismiss="modal" onClick={onRestart} disabled={!gameStarted}>
+                { autoLang(reset) }
+              </button>
             </div>
           </div>
         </div>

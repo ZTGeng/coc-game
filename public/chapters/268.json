@@ -1,0 +1,25 @@
+{
+    "key": 268,
+    "location": "workshops",
+    "text": {
+        "en": [
+            { "content": "After a grueling exchange, you land a decisive blow and the man’s legs buckle. He slams to the floor, blood dripping down his apron. His eyes flicker." },
+            { "tag": "info", "text": [
+                { "content": "You may check-mark the small box beside the Fighting (Brawl) skill." }
+            ] }
+        ],
+        "zh": [
+            { "content": "激烈的交锋过后，你终于打出致胜一击。他下盘不稳，砰的一声摔到地板上，血从围裙上滴下来。他的眼皮颤抖着。" },
+            { "tag": "info", "text": [
+                { "content": "你可以在「格斗 ( 斗殴 )」技能左边的小方框里打勾。" }
+            ] }
+        ]
+    },
+    "options": [
+        { "key": 0, "text": { "en": "Interrogate the man about the embalmed bodies", "zh": "向他盘问防腐尸体的事" } },
+        { "key": 1, "text": { "en": "Leave him here and investigate elsewhere", "zh": "丢下他前往其他地方调查" } }
+    ],
+    "onload": [
+        { "action": "action_check_in_skill_box", "param": "fighting" }
+    ]
+}
