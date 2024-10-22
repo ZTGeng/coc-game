@@ -10,9 +10,8 @@ import HistoryModal from "./HistoryModal";
 import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
+import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
 import * as utils from "../utils/utils";
-
-export const HighlightContext = createContext();
 
 const initChars = {
   STR: { value: 80 },
@@ -57,8 +56,6 @@ const initInfo = {
 const initChapterStatus = new Uint32Array(9);
 initChapterStatus[0] = 1;
 
-const emptyHighlight = [];
-
 export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
   const { autoLang } = useContext(LanguageContext);
   const [chapterKey, setChapterKey] = useState(0);
@@ -67,7 +64,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [skills, setSkills] = useState(initSkills);
   const [occupation, setOccupation] = useState(initOccupation);
   const [info, setInfo] = useState(initInfo);
-  const [highlight, setHighlight] = useState(emptyHighlight);
   const [mapLocation, setMapLocation] = useState(null);
   const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
   const [chapterHistory, setChapterHistory] = useState([]);
@@ -90,7 +86,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   // Source of Truth of current state during chapter transitions
   const stateSnapshotRef = useRef({});
   console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
-  let highlightCopy = [...highlight];
   let attrCopy = {...attributes};
   let skillsCopy = {...skills};
 
@@ -175,12 +170,12 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action in actions && actions[action](param);
   }
 
-  const addToHighlight = (key, level) => {
-    highlightCopy = highlightCopy.filter(h => h.key !== key);
-    if (level !== "none") {
-      highlightCopy = [...highlightCopy, { key, level }];
+  const adjustHighlight = (key, level, color) => {
+    if (level === "none") {
+      dispatch(removeHighlight(key));
+    } else {
+      dispatch(addOrUpdateHighlight({ key, level, color }));
     }
-    setHighlight(highlightCopy);
   }
 
   const actions = {
@@ -191,12 +186,11 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action_show_character_sheet: (param) => { // param: true/false/undefined
       setShowCharacter(param !== false);
     },
-    action_set_highlight: (param) => { // param: { key, level } level: none/value/half/fifth/all/danger/success
-      addToHighlight(param.key, param.level);
+    action_set_highlight: (param) => { // param: { key, level, color } level: none/value/half/fifth/all, color: danger/success
+      adjustHighlight(param.key, param.level, param.color);
     },
-    action_clear_highlight: () => { // param: key
-      highlightCopy = emptyHighlight
-      setHighlight(emptyHighlight);
+    action_clear_highlight: () => {
+      dispatch(clearHighlights());
     },
     action_check_in_skill_box: (param) => { // param: key
       setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
@@ -226,7 +220,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
       if (param.key === "HP") {
         if (!param.noHighlight) {
-          addToHighlight("HP", newValue < attr.value ? "danger" : "success");
+          adjustHighlight("HP", "value", newValue < attr.value ? "danger" : "success");
         }
         if (newValue < attr.value) {
           playSound("hp-reduced");
@@ -237,7 +231,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         }
       } else if (param.key === "San") {
         if (!param.noHighlight) {
-          addToHighlight("San", newValue < attr.value ? "danger" : "success");
+          adjustHighlight("San", "value", newValue < attr.value ? "danger" : "success");
         }
         playSound("san-reduced");
       }
@@ -276,16 +270,16 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       const mp = Math.floor(chars.POW.value / 5);
       attrCopy = { ...attrCopy, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } };
       setAttributes(attrCopy);
-      addToHighlight("San", "warning");
-      addToHighlight("MP", "warning");
-      addToHighlight("POW", "value");
+      adjustHighlight("San", "value");
+      adjustHighlight("MP", "value");
+      adjustHighlight("POW", "value");
     },
     action_initial_hp_and_reset_luck: () => {
       const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
       attrCopy = { ...attrCopy, HP: { value: hp, maxValue: hp }, Luck: { value: "" } };
       setAttributes(attrCopy);
-      addToHighlight("HP", "warning");
-      addToHighlight("Luck", "warning");
+      adjustHighlight("HP", "value");
+      adjustHighlight("Luck", "value");
     },
     action_init_luck: () => {
       const results = utils.roll(3, 6);
@@ -358,8 +352,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const states = chapterHistory[historyIndex].states;
 
     const skillSnapshot = findLastSkillSnapshot(historyIndex + 1);
-    console.log(`load chrpterKey: ${states.chapterKey}, states.skillHistoryIndex: ${states.skillHistoryIndex}, initSkills: ${JSON.stringify(initSkills)}`);
-    console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
+    // console.log(`load chrpterKey: ${states.chapterKey}, states.skillHistoryIndex: ${states.skillHistoryIndex}, initSkills: ${JSON.stringify(initSkills)}`);
+    // console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
     setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
 
     // setFlags({ ...initFlags, ...states.flags });
@@ -455,7 +449,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
   return (
     <FlagCheckContext.Provider value={flagCheck}>
-        <HighlightContext.Provider value={{ highlight }}>
+        {/* <HighlightContext.Provider value={{ highlight }}> */}
           <div className="row">
             <div id="chapter" className="col px-2">
               <Chapter {...{ 
@@ -489,7 +483,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
           <MapModal {...{ mapLocation }} />
           <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
           <AchievementModal {...{ chapterStatus }} />
-        </HighlightContext.Provider>
+        {/* </HighlightContext.Provider> */}
     </FlagCheckContext.Provider>
   )
 }

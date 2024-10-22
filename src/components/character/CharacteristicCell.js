@@ -1,11 +1,12 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { LanguageContext } from '../../App';
-import { HighlightContext } from "../Game";
+import { findHighlight } from '../../store/slices/highlightSlice';
 
 export default function CharacteristicCell({ charKey, characterSheet, chars, isEditable, availableValues = [], onValueSelected = () => {} }) {
   const { autoLang } = useContext(LanguageContext);
-  const { highlight } = useContext(HighlightContext);
   // console.log(`CharacteristicCell refresh: ${charKey}, highlight: ${JSON.stringify(highlight)}`);
+  const highlightStore = useSelector(state => state.highlight);
 
   const char = chars[charKey];
   const charName = characterSheet[charKey].name;
@@ -24,8 +25,13 @@ export default function CharacteristicCell({ charKey, characterSheet, chars, isE
     <th rowSpan="2" className="border-0 py-0 ps-0" style={{ width: "3.5rem", height: "3rem" }} scope="row">{ autoLang(charName) }</th>
   );
 
-  function shouldHighlight(level) {
-    return highlight && highlight.some(h => h.key === charKey && (h.level === "all" || h.level === level));
+  function getHighlightClassName(level) {
+    const highlight = findHighlight(highlightStore, charKey);
+    if (highlight && (highlight.level === "all" || highlight.level === level)) {
+      return ` table-${highlight.color || "warning"}`;
+    } else {
+      return "";
+    }
   }
 
   if (!isEditable) {
@@ -36,16 +42,16 @@ export default function CharacteristicCell({ charKey, characterSheet, chars, isE
             { nameThTag }
             <td 
               rowSpan="2" 
-              className={"border border-end-0 p-2" + (shouldHighlight("value") ? " table-warning" : "")}>
+              className={"border border-end-0 p-2" + getHighlightClassName("value")}>
                 { char.value }
             </td>
-            <td className={"border border-bottom-0 small px-2 py-0" + (shouldHighlight("half") ? " table-warning" : "")} 
+            <td className={"border border-bottom-0 small px-2 py-0" + getHighlightClassName("half")} 
                 style={{ height: "1.5rem" }}>
                   { char.value && Math.floor(char.value / 2) }
             </td>
           </tr>
           <tr>
-            <td className={"border small px-2 py-0" + (shouldHighlight("fifth") ? " table-warning" : "")} 
+            <td className={"border small px-2 py-0" + getHighlightClassName("fifth")} 
               style={{ height: "1.5rem" }}>
                 { char.value && Math.floor(char.value / 5) }
             </td>

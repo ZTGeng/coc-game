@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { LanguageContext } from '../../App';
-import { HighlightContext } from "../Game";
+import { findHighlight } from '../../store/slices/highlightSlice';
 
 export default function SkillCell({ skillKey, characterSheet, skills, cellType, isForHobby, availableValues, onValueSelected, onCustomName }) {
   const skillUI = characterSheet.skills[skillKey];
@@ -84,12 +85,17 @@ function DisabledSkillCell({ skillUI, skill }) {
 }
 
 function PlainSkillCell({ skillKey, skillUI, skill }) {
-  const { highlight } = useContext(HighlightContext);
+  const highlightStore = useSelector(state => state.highlight);
   const isDisabled = false;
   const isEditable = false;
 
-  function shouldHighlight(level) {
-    return highlight && highlight.some(h => h.key === skillKey && (h.level === "all" || h.level === level));
+  function getHighlightClassName(level) {
+    const highlight = findHighlight(highlightStore, skillKey);
+    if (highlight && (highlight.level === "all" || highlight.level === level)) {
+      return ` table-${highlight.color || "warning"}`;
+    } else {
+      return "";
+    }
   }
 
   return (
@@ -100,11 +106,11 @@ function PlainSkillCell({ skillKey, skillUI, skill }) {
             <input type="checkbox" className={skillUI.noBox ? "invisible" : ""} disabled="disabled" checked={skill.checked} />
           </td>
             <NameThTag {...{ skillUI, skill, isDisabled, isEditable }} />
-          <td rowSpan="2" className={"border border-end-0 p-0" + (shouldHighlight("value") ? " table-warning" : "")} style={{ fontSize: "0.75rem", width: "1.2rem" }}>{skill.value}</td>
-          <td className={"border border-bottom-0 small p-0" + (shouldHighlight("half") ? " table-warning" : "")} style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 2)}</td>
+          <td rowSpan="2" className={"border border-end-0 p-0" + getHighlightClassName("value")} style={{ fontSize: "0.75rem", width: "1.2rem" }}>{skill.value}</td>
+          <td className={"border border-bottom-0 small p-0" + getHighlightClassName("half")} style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 2)}</td>
         </tr>
         <tr>
-          <td className={"border small p-0" + (shouldHighlight("fifth") ? " table-warning" : "")} style={{ fontSize: "0.6rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 5)}</td>
+          <td className={"border small p-0" + getHighlightClassName("fifth")} style={{ fontSize: "0.6rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 5)}</td>
         </tr>
       </tbody>
     </table>

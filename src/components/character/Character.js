@@ -1,12 +1,11 @@
 import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { LanguageContext } from '../../App';
-import { HighlightContext } from "../Game";
 import { useFlagCheck } from "../../store/slices/flagSlice";
+import { findHighlight } from "../../store/slices/highlightSlice";
 import Characteristics from './Characteristics';
 import Skills from './Skills';
 import * as utils from '../../utils/utils';
-
-
 
 function Info({ characterSheet, occupation, info, setInfo }) {
   const { autoLang } = useContext(LanguageContext);
@@ -51,18 +50,17 @@ function Info({ characterSheet, occupation, info, setInfo }) {
 
 function Attributes({ characterSheet, attributes }) {
   const { autoLang } = useContext(LanguageContext);
-  const { highlight } = useContext(HighlightContext);
+  const highlightStore = useSelector(state => state.highlight);
 
-  function getHighlightClassName(attr) {
-    const attrHighlight = highlight.find(h => h.key === attr);
-    if (!attrHighlight) return "";
-    switch (attrHighlight.level) {
-      case "danger":
-        return " text-bg-danger";
-      case "success":
-        return " table-success";
-      default:
-        return " table-warning";
+  function getHighlightClassName(attrKey) {
+    const highlight = findHighlight(highlightStore, attrKey);
+    if (highlight ) {
+      if (highlight.color === "danger") {
+        return ` text-bg-danger`;
+      }
+      return ` table-${highlight.color || "warning"}`;
+    } else {
+      return "";
     }
   }
 
