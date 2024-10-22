@@ -34,13 +34,18 @@ const flagSlice = createSlice({
         flag_c120_option_selected_3: false,
     },
     reducers: {
-        setFlag: (state, action) => { // action: { type: 'flag/setFlag', payload: { flag: 'flag_name', value: true/false } }
+        setFlag(state, action) { // action: { type: 'flag/setFlag', payload: { flag: 'flag_name', value: true/false } }
             state[action.payload.flag] = action.payload.value;
+        },
+        resetFlag(state, action) { // action: { type: 'flag/reset' }
+            Object.keys(state).forEach(key => {
+                state[key] = false;
+            });
         },
     },
 });
 
-export const { setFlag } = flagSlice.actions;
+export const { setFlag, resetFlag } = flagSlice.actions;
 export default flagSlice.reducer;
 
 export const FlagCheckContext = createContext(() => { throw new Error("FlagCheckContext not found"); });

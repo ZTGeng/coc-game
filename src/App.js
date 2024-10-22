@@ -1,10 +1,14 @@
 
 import { useState, useEffect, useRef, createContext, useContext } from 'react';
+import { useDispatch } from 'react-redux';
 import './App.css';
 import Cover from './components/Cover';
 import ConfigModal from './components/ConfigModal';
 import ToastMessages from './components/ToastMessage';
 import Game from './components/Game';
+import { resetCharacter } from './store/slices/characterSlice';
+import { clearHighlights } from './store/slices/highlightSlice';
+import { resetFlag } from './store/slices/flagSlice';
 import characterSheet from './utils/characterSheet';
 
 export const LanguageContext = createContext();
@@ -148,6 +152,7 @@ function App() {
   const [mapEnabled, setMapEnabled] = useState(false);
   const [saveLoad, setSaveLoad] = useState({});
   const musicRef = useRef();
+  const dispatch = useDispatch();
 
   function autoLang(texts) { // texts = { en: "English", zh: "中文" }
     return texts[language] || texts["en"];
@@ -171,7 +176,11 @@ function App() {
 
   function onRestart() {
     setGameStarted(false);
+    setShowCharacter(false);
     setMapEnabled(false);
+    dispatch(resetCharacter());
+    dispatch(clearHighlights());
+    dispatch(resetFlag());
   }
 
   function toggleShowCharacter() {

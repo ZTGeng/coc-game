@@ -53,6 +53,13 @@ const characterSlice = createSlice({
         info: initInfo,
     },
     reducers: {
+        resetCharacter(state, action) { // action: { type: 'character/reset' }
+            state.chars = initChars;
+            state.attrs = initAttrs;
+            state.skills = initSkills;
+            state.occupation = initOccupation;
+            state.info = initInfo;
+        },
         setCharacter(state, action) { // action: { type: 'character/setCharacter', payload: { chars, attrs, skills, occupation, info } }
             return action.payload;
         },
@@ -114,6 +121,7 @@ const characterSlice = createSlice({
 });
 
 export const {
+    resetCharacter,
     setCharacter,
     initChar,
     initAttr,

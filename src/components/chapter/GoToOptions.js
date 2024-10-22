@@ -19,13 +19,11 @@ export function GoToOption({ option, onOptionSelected }) {
   const flagCheck = useFlagCheck();
 
   return option.disabled && flagCheck(option.disabled) ? (
-    <div key={option.key}
-      className="text-body-tertiary h5">
+    <div className="text-body-tertiary h5">
       &nbsp;{ autoLang(option.text) }&nbsp;
     </div>
   ) : (
-    <a key={option.key}
-      className={"link link-offset-2 h5 mb-3" + (option.secret ? " link-primary": " link-dark")}
+    <a className={"link link-offset-2 h5 mb-3" + (option.secret ? " link-primary": " link-dark")}
       role="button"
       href="#"
       onClick={(e) => { e.preventDefault(); onOptionSelected(option.key, option.text); }}>
