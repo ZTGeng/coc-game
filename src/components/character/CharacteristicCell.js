@@ -1,14 +1,15 @@
 import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { LanguageContext } from '../../App';
+import { LanguageContext, CharacterSheetContext } from '../../App';
 import { findHighlight } from '../../store/slices/highlightSlice';
 
-export default function CharacteristicCell({ charKey, characterSheet, chars, isEditable, availableValues = [], onValueSelected = () => {} }) {
+export default function CharacteristicCell({ charKey, isEditable, availableValues = [], onValueSelected = () => {} }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   // console.log(`CharacteristicCell refresh: ${charKey}, highlight: ${JSON.stringify(highlight)}`);
+  const char = useSelector(state => state.character.chars[charKey]);
   const highlightStore = useSelector(state => state.highlight);
 
-  const char = chars[charKey];
   const charName = characterSheet[charKey].name;
 
   const nameThTag = charKey === "INT" ? (

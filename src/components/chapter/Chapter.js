@@ -1,13 +1,12 @@
 import { useContext, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext } from "../../App";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
-import { setFlag, FlagCheckContext, useFlagCheck, createFlagCheck } from "../../store/slices/flagSlice";
+import { FlagCheckContext, useFlagCheck, createFlagCheck } from "../../store/slices/flagSlice";
 import * as utils from "../../utils/utils";
 
-const initCheckFlags = {
+const initRollFlags = {
   // status: "", // "", "ready", "done"
   diceNumber: "", // [number]
   rollKey: "", // key
@@ -113,10 +112,6 @@ function Interactions({ interactions, onAction }) {
 
 export default function Chapter({ 
   chapterKey,
-  characterSheet,
-  chars,
-  attributes,
-  skills,
   nextChapter,
   setMapLocation,
   isReloading,
@@ -125,10 +120,8 @@ export default function Chapter({
   const { autoLang } = useContext(LanguageContext);
   const [chapter, setChapter] = useState(null);
   const [interactionFinished, setInteractionFinished] = useState(false);
-  const [checkFlags, setCheckFlags] = useState(initCheckFlags);
+  const [rollFlags, setRollFlags] = useState(initRollFlags);
   console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}`);
-  const dispatch = useDispatch();
-  const flag = useSelector(state => state.flag);
   const parentFlagCheck = useFlagCheck();
 
   useEffect(() => {
@@ -170,13 +163,11 @@ export default function Chapter({
         if (interactionFinished) {
           setInteractionFinished(false);
         }
-        if (checkFlags.result) {
-          setCheckFlags(initCheckFlags);
+        if (rollFlags.result) {
+          setRollFlags(initRollFlags);
         }
 
         setChapter(data);
-
-        // addChapterHistory({ key: chapterKey, text: getExcerpt(data.text) });
 
         if (data.location) {
           setMapLocation(data.location);
@@ -192,14 +183,14 @@ export default function Chapter({
 
   const chapterFlagFunc = {
     "flag_interaction_finished": () => interactionFinished,
-    "flag_check_passed": () => checkFlags.result === "pass",
-    "flag_check_failed": () => checkFlags.result === "fail",
-    "flag_check_finished": () => checkFlags.result,
-    "flag_check_fumble": () => checkFlags.isFumble,
-    "flag_check_pushed": () => checkFlags.isPushed,
+    "flag_check_passed": () => rollFlags.result === "pass",
+    "flag_check_failed": () => rollFlags.result === "fail",
+    "flag_check_finished": () => rollFlags.result,
+    "flag_check_fumble": () => rollFlags.isFumble,
+    "flag_check_pushed": () => rollFlags.isPushed,
     "flag_check_match": (keyLevel) => {
       const [rollKey, rollLevel] = keyLevel.split("-");
-      return checkFlags.rollKey === rollKey && (!rollLevel || checkFlags.rollLevel === rollLevel);
+      return rollFlags.rollKey === rollKey && (!rollLevel || rollFlags.rollLevel === rollLevel);
     },
     "flag_c25_option_disabled": (option) => parentFlagCheck(`flag_c25_option_selected_${option}`)
       || Array
@@ -333,13 +324,13 @@ export default function Chapter({
 
   return (
     <FlagCheckContext.Provider value={flagCheck}>
-        <ChapterContent chapterText={chapter.text} />
-        { chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteractionAction} /> }
-        { chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ characterSheet, chars, attributes, skills, checkFlags, setCheckFlags }}/> }
-        <br />
-        <div className="px-2">
-          <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
-        </div>
+      <ChapterContent chapterText={chapter.text} />
+      {chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteractionAction} />}
+      {chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ rollFlags, setRollFlags }} />}
+      <br />
+      <div className="px-2">
+        <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
+      </div>
     </FlagCheckContext.Provider>
   )
 }

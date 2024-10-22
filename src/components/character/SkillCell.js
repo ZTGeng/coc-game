@@ -1,23 +1,26 @@
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
-import { LanguageContext } from '../../App';
+import { LanguageContext, CharacterSheetContext } from '../../App';
 import { findHighlight } from '../../store/slices/highlightSlice';
 
-export default function SkillCell({ skillKey, characterSheet, skills, cellType, isForHobby, availableValues, onValueSelected, onCustomName }) {
+export default function SkillCell({ skillKey, cellType, isForHobby, availableValues, onValueSelected, onCustomName }) {
+  const characterSheet = useContext(CharacterSheetContext);
+  const skillStore = useSelector(state => state.character.skills);
+
   const skillUI = characterSheet.skills[skillKey];
   if (skillUI.group) {
     return <GroupSkillCell skillUI={skillUI} />;
   }
-
-  const skill = skills[skillKey];
+  
+  const skill = skillStore[skillKey];
   
   const isEditable = cellType[skillKey] && cellType[skillKey].isEditable;
   if (!isEditable) {
     const isDisabled = cellType[skillKey] && cellType[skillKey].isDisabled;
     if (isDisabled) {
-      return <DisabledSkillCell {...{ skillUI, skill }} />;
+      return <DisabledSkillCell {...{ skillKey }} />;
     }
-    return <PlainSkillCell {...{ skillKey, skillUI, skill }} />;
+    return <PlainSkillCell {...{ skillKey }} />;
   }
   
   const isClickable = cellType[skillKey] && cellType[skillKey].isClickable;
@@ -62,7 +65,10 @@ function NameThTag({ skillUI, skill, isDisabled, isEditable, latestCustomName, o
   );  
 }
 
-function DisabledSkillCell({ skillUI, skill }) {
+function DisabledSkillCell({ skillKey }) {
+  const skill = useSelector(state => state.character.skills[skillKey]);
+  const characterSheet = useContext(CharacterSheetContext);
+  const skillUI = characterSheet.skills[skillKey];
   const isDisabled = true;
   const isEditable = false;
   return (
@@ -84,7 +90,10 @@ function DisabledSkillCell({ skillUI, skill }) {
   );
 }
 
-function PlainSkillCell({ skillKey, skillUI, skill }) {
+function PlainSkillCell({ skillKey }) {
+  const skill = useSelector(state => state.character.skills[skillKey]);
+  const characterSheet = useContext(CharacterSheetContext);
+  const skillUI = characterSheet.skills[skillKey];
   const highlightStore = useSelector(state => state.highlight);
   const isDisabled = false;
   const isEditable = false;
@@ -117,7 +126,10 @@ function PlainSkillCell({ skillKey, skillUI, skill }) {
   );
 }
 
-function EditableSkillCell({ skillKey, skillUI, skill, isClickable, isForHobby, availableValues, onValueSelected, onCustomName }) {
+function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues, onValueSelected, onCustomName }) {
+  const skill = useSelector(state => state.character.skills[skillKey]);
+  const characterSheet = useContext(CharacterSheetContext);
+  const skillUI = characterSheet.skills[skillKey];
   const [latestCustomName, setLatestCustomName] = useState(skill.customName || "");
   const isDisabled = false;
   const isEditable = true;

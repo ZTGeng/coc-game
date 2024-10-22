@@ -1,51 +1,42 @@
-import { useState, useContext } from "react";
-import { LanguageContext } from '../../App';
+import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LanguageContext, CharacterSheetContext } from '../../App';
 import { useFlagCheck } from "../../store/slices/flagSlice";
+import { initChar } from "../../store/slices/characterSlice";
 import CharacteristicCell from './CharacteristicCell';
 
-export default function Characteristics({ characterSheet, chars, setChars }) {
+export default function Characteristics({}) {
   const flagCheck = useFlagCheck();
   const isEditable = flagCheck("flag_characteristics_editable");
 
   if (!isEditable) {
-    return <CharacteristicsTable {...{ characterSheet, chars, isEditable }} />;
+    return <CharacteristicsTable isEditable={false} />;
   }
-  return <CharacteristicsEditable {...{ characterSheet, chars, setChars }} />;
+  return <CharacteristicsEditable />;
 }
 
-function CharacteristicsEditable({ characterSheet, chars, setChars }) {
+function CharacteristicsEditable({}) {
+  const charStore = useSelector(state => state.character.chars);
+  const dispatch = useDispatch();
   const isEditable = true;
-  const initValues = [80, 70, 60, 60, 50, 50, 50, 40];
-  Object.values(chars).forEach(item => {
-    const index = initValues.indexOf(item.value);
+  const availableValues = [80, 70, 60, 60, 50, 50, 50, 40];
+  Object.values(charStore).forEach(item => {
+    const index = availableValues.indexOf(item.value);
     if (index !== -1) {
-      initValues.splice(index, 1)
+      availableValues.splice(index, 1)
     }
   });
-  const [availableValues, setAvailableValues] = useState(initValues);
 
   function onValueSelected(key, value) {
-    const characteristic = chars[key];
-    const availables = [...availableValues]
-    const index = availables.indexOf(value);
-    if (index !== -1) {
-      availables.splice(index, 1)
-    }
-    if (characteristic.value) {
-      availables.push(characteristic.value);
-      availables.sort((a, b) => b - a);
-    }
-    const half = Math.floor(value / 2);
-    const fifth = Math.floor(value / 5);
-    setChars({ ...chars, [key]: { ...characteristic, value, half, fifth } });
-    setAvailableValues(availables);
+    dispatch(initChar({ charKey: key, value }));
   }
 
-  return <CharacteristicsTable {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />;
+  return <CharacteristicsTable {...{ isEditable, availableValues, onValueSelected }} />;
 }
 
-function CharacteristicsTable({ characterSheet, chars, isEditable, availableValues = [], onValueSelected = () => { } }) {
+function CharacteristicsTable({ isEditable, availableValues = [], onValueSelected = () => { } }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
 
   return (
     <div className="card">
@@ -55,28 +46,28 @@ function CharacteristicsTable({ characterSheet, chars, isEditable, availableValu
       <div className="card-body">
         <div className="row">
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"STR"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"STR"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"DEX"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"DEX"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"INT"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"INT"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"CON"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"CON"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"APP"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"APP"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"POW"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"POW"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"SIZ"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"SIZ"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
           <div className="col-md-4 col-6 mb-1 px-1">
-            <CharacteristicCell charKey={"EDU"} {...{ characterSheet, chars, isEditable, availableValues, onValueSelected }} />
+            <CharacteristicCell charKey={"EDU"} {...{ isEditable, availableValues, onValueSelected }} />
           </div>
         </div>
       </div>

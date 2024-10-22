@@ -1,11 +1,14 @@
+
 import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import './App.css';
 import Cover from './components/Cover';
 import ConfigModal from './components/ConfigModal';
 import ToastMessages from './components/ToastMessage';
 import Game from './components/Game';
+import characterSheet from './utils/characterSheet';
 
 export const LanguageContext = createContext();
+export const CharacterSheetContext = createContext(characterSheet);
 const localStorageKey = "coc-state";
 const initLanguage = window.navigator.language.startsWith("zh") ? "zh" : "en";
 
@@ -203,16 +206,18 @@ function App() {
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, autoLang }}>
-      <div className="d-flex flex-column vh-100">
-        <Header {...{ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }} />
-        <div className="flex-grow-1">
-          {gameStarted ? <Game {...{ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }} /> : <Cover onStart={startGame} />}
+      <CharacterSheetContext.Provider value={characterSheet}>
+        <div className="d-flex flex-column vh-100">
+          <Header {...{ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }} />
+          <div className="flex-grow-1">
+            {gameStarted ? <Game {...{ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }} /> : <Cover onStart={startGame} />}
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-      <ToastMessages />
-      <ConfigModal {...{ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
-      <audio ref={musicRef} src="audio/music.mp3" type="audio/mpeg" loop volume={musicVolume} />
+        <ToastMessages />
+        <ConfigModal {...{ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
+        <audio ref={musicRef} src="audio/music.mp3" type="audio/mpeg" loop volume={musicVolume} />
+      </CharacterSheetContext.Provider>
     </LanguageContext.Provider>
   )
 }

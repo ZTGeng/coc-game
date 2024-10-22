@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { LanguageContext } from "../../App";
+import { useSelector } from "react-redux";
+import { LanguageContext, CharacterSheetContext } from "../../App";
 import { useFlagCheck } from "../../store/slices/flagSlice";
 import { calculateBonus, rollCheck } from "./Check";
 import ActionCard, { CheckButton } from "./ActionCard";
@@ -49,9 +50,13 @@ const escapeCheckFailText = {
 };
 
 // chapter 173
-export default function Combat({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
+export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   const flagCheck = useFlagCheck();
+  const charStore = useSelector(state => state.character.chars);
+  const attrStore = useSelector(state => state.character.attrs);
+  const skillStore = useSelector(state => state.character.skills);
   const [progress, setProgress] = useState({ round: 0, turn: 0, move: 0 });
   const [yourMoveResult, setYourMoveResult] = useState(initMoveResult);
   const [opponentMoveResult, setOpponentMoveResult] = useState(initMoveResult);
@@ -68,25 +73,25 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     opponentRollResult();
   }, []);
 
-  const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attributes.HP.value, DEX: chars.DEX.value };
+  const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attrStore.HP.value, DEX: charStore.DEX.value };
   const opponent = { ...check.opponent, isOpponent: true, HP: opponentHp };
   const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
   const isOpponentActing = turns[progress.turn] === "opponent";
 
   const yourDamage = flagCheck("flag_bought_knife") ? "1d4" : "1d3";
-  const yourDamageBonus = utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value);
+  const yourDamageBonus = utils.calculateDamageBonus(charStore.STR.value, charStore.SIZ.value);
   const bonus = calculateBonus(check, flagCheck);
   const dodgeSkill = {
     name: characterSheet.skills.dodge.name,
-    value: skills.dodge.value,
-    half: Math.floor(skills.dodge.value / 2),
-    fifth: Math.floor(skills.dodge.value / 5),
+    value: skillStore.dodge.value,
+    half: Math.floor(skillStore.dodge.value / 2),
+    fifth: Math.floor(skillStore.dodge.value / 5),
   };
   const fightSkill = { 
     name: characterSheet.skills.fighting.name,
-    value: skills.fighting.value,
-    half: Math.floor(skills.fighting.value / 2),
-    fifth: Math.floor(skills.fighting.value / 5),
+    value: skillStore.fighting.value,
+    half: Math.floor(skillStore.fighting.value / 2),
+    fifth: Math.floor(skillStore.fighting.value / 5),
     damage: `${yourDamage}+${yourDamageBonus}`,
   };
 
@@ -147,9 +152,9 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     }
     console.log("hpReduce", hpReduce);
     if (hpReduce > 0) {
-      if (hpReduce >= attributes.HP.value) {
-        setCheckFlags({ result: "fail" });
-      } else if (hpReduce >= attributes.HP.maxValue / 2 && !flagCheck("flag_major_wound")) {
+      if (hpReduce >= attrStore.HP.value) {
+        setRollFlags({ result: "fail" });
+      } else if (hpReduce >= attrStore.HP.maxValue / 2 && !flagCheck("flag_major_wound")) {
         onAction("action_set_flag", { flag: "flag_major_wound", value: true });
         setShowConCheck(true);
         onAction("action_set_highlight", { key: "CON", level: "value" });
@@ -190,7 +195,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
         const opponentNewHp = opponentHp - hpReduce + opponent.armor;
         setOpponentHp(opponentNewHp);
         if (opponentNewHp <= opponent.thresholdHP) {
-          setCheckFlags({ result: "pass" });
+          setRollFlags({ result: "pass" });
         }
       }
       return;
@@ -229,7 +234,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
       const opponentNewHp = opponentHp - hpReduce + opponent.armor;
       setOpponentHp(opponentNewHp);
       if (opponentNewHp <= opponent.thresholdHP) {
-        setCheckFlags({ result: "pass" });
+        setRollFlags({ result: "pass" });
       }
     }
   }
@@ -302,8 +307,8 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     setShowConCheck(false);
     onAction("action_set_highlight", { key: "CON", level: "none" });
     const diceNumber = rollCheck(bonus, characterSheet.CON.name, onAction, autoLang);
-    if (diceNumber > chars.CON.value) {
-      setCheckFlags({
+    if (diceNumber > charStore.CON.value) {
+      setRollFlags({
         // status: "done", 
         diceNumber: diceNumber,
         rollKey: "CON",
@@ -322,11 +327,11 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     const diceNumber = rollCheck(bonus, dodgeSkill.name, onAction, autoLang);
     if (diceNumber > dodgeSkill.half) {
       onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(escapeCheckFailText), color: "danger" });
-      setCheckFlags({ result: "draw" }); // TODO: con check
+      setRollFlags({ result: "draw" }); // TODO: con check
       onOpponentHitYou();
     } else {
       onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(escapeCheckPassText), color: "success" });
-      setCheckFlags({ result: "draw" });
+      setRollFlags({ result: "draw" });
     }
   }
 
@@ -368,9 +373,9 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
       setShowEscapeCheck(true);
       onAction("action_set_highlight", { key: "dodge", level: "half" });
     } else if (check.roundRunOut === "lose") {
-      setCheckFlags({ result: "fail" });
+      setRollFlags({ result: "fail" });
     } else {
-      setCheckFlags({ result: "pass" });
+      setRollFlags({ result: "pass" });
     }
   }
 
@@ -427,21 +432,21 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   }
 
   return (
-    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "fail" ? " border-danger" : " border-success") : " text-bg-light")}>
+    <div className={"card mb-3" + (rollFlags.result ? (rollFlags.result === "fail" ? " border-danger" : " border-success") : " text-bg-light")}>
       <div className="card-header d-flex">
         <h6>{ cardTitle }</h6>
         <div className="ms-auto">{ roundText }</div>
       </div>
       <div className="card-body">
         <div className="d-flex justify-content-center align-items-center">
-          { checkFlags.result && (
-            <strong className={checkFlags.result === "fail" ? " text-danger" : " text-success"}>
-              { autoLang(checkFlags.result === "pass" ? combatWinText : (checkFlags.result === "fail" ? combatLoseText : combatEscapeText)) }
+          { rollFlags.result && (
+            <strong className={rollFlags.result === "fail" ? " text-danger" : " text-success"}>
+              { autoLang(rollFlags.result === "pass" ? combatWinText : (rollFlags.result === "fail" ? combatLoseText : combatEscapeText)) }
             </strong>
           ) }
-          { !checkFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} /></div></> }
-          { !checkFlags.result && showEscapeCheck && <><div>{ autoLang(escapeCheckText) }</div><div className="ms-3"><CheckButton onClick={onEscapeCheck} /></div></> }
-          { !checkFlags.result && !showConCheck && !showEscapeCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
+          { !rollFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} /></div></> }
+          { !rollFlags.result && showEscapeCheck && <><div>{ autoLang(escapeCheckText) }</div><div className="ms-3"><CheckButton onClick={onEscapeCheck} /></div></> }
+          { !rollFlags.result && !showConCheck && !showEscapeCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
         </div>
       </div>
       <hr className="my-0" />

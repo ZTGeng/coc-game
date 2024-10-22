@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef, useContext, createContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LanguageContext } from "../App";
+import { LanguageContext, CharacterSheetContext } from "../App";
 import Character from "./character/Character";
-import characterSheet from "./character/characterSheet";
 import Chapter from "./chapter/Chapter";
 import chapterMap from "./chapter/chapterMap";
 import MapModal from "./MapModal";
@@ -11,59 +10,16 @@ import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
+import { initAttr, setAttr, initSkill, setSkill, checkSkillBox, setOccupation } from "../store/slices/characterSlice";
 import * as utils from "../utils/utils";
-
-const initChars = {
-  STR: { value: 80 },
-  CON: { value: 50 },
-  SIZ: { value: 50 },
-  DEX: { value: 50 },
-  APP: { value: 60 },
-  INT: { value: 60 },
-  POW: { value: 70 },
-  EDU: { value: 40 },
-};
-
-const initAttributes = {
-  HP: { value: "", maxValue: "" },
-  San: { value: "", maxValue: "" },
-  Luck: { value: "" },
-  MP: { value: "", maxValue: "" },
-};
-
-const initSkills = Object.entries(characterSheet.skills).reduce((acc, [key, item]) => {
-  if (!(item.group)) {
-    acc[key] = { value: item.value, baseValue: item.value, checked: false, occupation: false, hobby: false };
-  }
-  return acc;
-}, {});
-
-const initOccupation = {
-  name: { en: "", zh: "" },
-  credit: "",
-  skills: [],
-  art: 0,
-  interpersonal: 0,
-  language: 0,
-  universal: 0
-};
-
-const initInfo = {
-  name: "",
-  age: "",
-};
 
 const initChapterStatus = new Uint32Array(9);
 initChapterStatus[0] = 1;
 
 export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   const [chapterKey, setChapterKey] = useState(0);
-  const [chars, setChars] = useState(initChars);
-  const [attributes, setAttributes] = useState(initAttributes);
-  const [skills, setSkills] = useState(initSkills);
-  const [occupation, setOccupation] = useState(initOccupation);
-  const [info, setInfo] = useState(initInfo);
   const [mapLocation, setMapLocation] = useState(null);
   const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
   const [chapterHistory, setChapterHistory] = useState([]);
@@ -73,6 +29,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
   const dispatch = useDispatch();
   const flagStore = useSelector(state => state.flag);
+  const characterStore = useSelector(state => state.character);
 
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
@@ -85,70 +42,72 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
   // Source of Truth of current state during chapter transitions
   const stateSnapshotRef = useRef({});
-  console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
-  let attrCopy = {...attributes};
-  let skillsCopy = {...skills};
+  // console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
 
   function gameSnapshot(doIncludeSkillSnapshot = false) {
     const snapshot = {
       chapterKey,
       flags: flagStore,
-      attributes: { ...attrCopy },
-      occupationName: occupation.name,
-      info,
+      // attributes: { ...attrCopy },
+      // occupationName: occupation.name,
+      // info,
       mapEnabled,
-      checkedSkills: Object.keys(skillsCopy).filter(skillKey => skillsCopy[skillKey].checked),
+      // checkedSkills: Object.keys(skillsCopy).filter(skillKey => skillsCopy[skillKey].checked),
     };
 
-    const currentSkillSnapshot = Object.keys(skillsCopy)
-      .filter(skillKey => skillsCopy[skillKey].value !== initSkills[skillKey].value 
-        || skillsCopy[skillKey].customName
-        || skillsCopy[skillKey].occupation
-        || skillsCopy[skillKey].hobby)
-      .reduce((acc, skillKey) => {
-        acc[skillKey] = {};
-        skillsCopy[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skillsCopy[skillKey].value);
-        skillsCopy[skillKey].customName && (acc[skillKey].customName = skillsCopy[skillKey].customName);
-        skillsCopy[skillKey].occupation && (acc[skillKey].occupation = skillsCopy[skillKey].occupation);
-        skillsCopy[skillKey].hobby && (acc[skillKey].hobby = skillsCopy[skillKey].hobby);
-        return acc;
-      }, {});
-    const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
-    if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
-      snapshot.skills = currentSkillSnapshot;
-    }
+    // const currentSkillSnapshot = Object.keys(skillsCopy)
+    //   .filter(skillKey => skillsCopy[skillKey].value !== initSkills[skillKey].value 
+    //     || skillsCopy[skillKey].customName
+    //     || skillsCopy[skillKey].occupation
+    //     || skillsCopy[skillKey].hobby)
+    //   .reduce((acc, skillKey) => {
+    //     acc[skillKey] = {};
+    //     skillsCopy[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skillsCopy[skillKey].value);
+    //     skillsCopy[skillKey].customName && (acc[skillKey].customName = skillsCopy[skillKey].customName);
+    //     skillsCopy[skillKey].occupation && (acc[skillKey].occupation = skillsCopy[skillKey].occupation);
+    //     skillsCopy[skillKey].hobby && (acc[skillKey].hobby = skillsCopy[skillKey].hobby);
+    //     return acc;
+    //   }, {});
+    // const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
+    // if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
+    //   snapshot.skills = currentSkillSnapshot;
+    // }
 
     return snapshot;
   }
 
   function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
-    skillsCopy = Object.keys(skillSnapshot)
-      .reduce((acc, skillKey) => {
-        acc[skillKey] = { ...initSkills[skillKey] };
-        (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
-          && (acc[skillKey].value = skillSnapshot[skillKey].value);
-        skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
-        skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
-        skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
-        return acc;
-      }, { ...initSkills });
-    checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
-    setSkills(skillsCopy);
+    // skillsCopy = Object.keys(skillSnapshot)
+    //   .reduce((acc, skillKey) => {
+    //     acc[skillKey] = { ...initSkills[skillKey] };
+    //     (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
+    //       && (acc[skillKey].value = skillSnapshot[skillKey].value);
+    //     skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
+    //     skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
+    //     skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
+    //     return acc;
+    //   }, { ...initSkills });
+    // checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
+    // setSkills(skillsCopy);
   }
 
   const gameFlagFunc = {
-    "flag_characteristics_unfinished": () => Object.values(chars).some(char => char.value === ""),
+    "flag_characteristics_unfinished": () => Object.values(characterStore.chars).some(char => char.value === ""),
     "flag_skills_occupation_unfinished": () => {
-      const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
-      const occupationSkillsMaxNum = occupation.skills.length + occupation.art + occupation.interpersonal + occupation.language + occupation.universal;
+      const occupationSkillsNum = Object.keys(characterStore.skills).filter(skillKey => characterStore.skills[skillKey].occupation).length;
+      const occupationSkillsMaxNum = characterStore.occupation.skills.length
+        + characterStore.occupation.art
+        + characterStore.occupation.interpersonal
+        + characterStore.occupation.language
+        + characterStore.occupation.universal;
       return occupationSkillsNum < occupationSkillsMaxNum;
     },
-    "flag_skills_hobby_unfinished": () => Object.keys(skills).filter(skillKey => skills[skillKey].hobby).length < 4,
-    "flag_siz_greater_than_40": () => chars.SIZ.value > 40,
-    "flag_dex_greater_than_siz": () => chars.DEX.value > chars.SIZ.value,
-    "flag_luck_unfinished": () => attributes.Luck.value === "",
-    "flag_track_skill_box_checked": () => skills.track.checked,
-    "flag_hp_zero": () => attributes.HP.value <= 0,
+    "flag_skills_hobby_unfinished": () => Object.keys(characterStore.skills).filter(skillKey => characterStore.skills[skillKey].hobby).length < 4,
+    "flag_siz_greater_than_40": () => characterStore.chars.SIZ.value > 40,
+    "flag_dex_greater_than_siz": () => characterStore.chars.DEX.value > characterStore.chars.SIZ.value,
+    "flag_luck_unfinished": () => characterStore.attrs.Luck.value === "",
+    "flag_track_skill_box_checked": () => characterStore.skills.track.checked,
+    "flag_hp_zero": () => characterStore.attrs.HP.value <= 0,
   };
 
   function checkFlagInStore(flag) {
@@ -193,10 +152,10 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(clearHighlights());
     },
     action_check_in_skill_box: (param) => { // param: key
-      setSkills({ ...skills, [param]: { ...skills[param], checked: true } });
+      dispatch(checkSkillBox(param));
     },
     action_adjust_attribute: (param) => { // param: { key, delta, noHighlight }, delta: Int or String like "-1d2"
-      const attr = attrCopy[param.key];
+      const attr = characterStore.attrs[param.key];
       let newValue;
       if (typeof param.delta === "string") {
         let deltaString = param.delta;
@@ -215,7 +174,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       } else {
         newValue = attr.value + param.delta;
       }
-      newValue = Math.min(newValue, attrCopy[param.key].maxValue);
+      newValue = Math.min(newValue, attr.maxValue);
       newValue = Math.max(newValue, 0);
 
       if (param.key === "HP") {
@@ -236,20 +195,16 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         playSound("san-reduced");
       }
 
-      attrCopy[param.key] = { ...attr, value: newValue };
-      setAttributes(attrCopy);
+      setAttr({ attrKey: param.key, value: newValue });
     },
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
-      skillsCopy = { ...skillsCopy, [param.key]: { ...skillsCopy[param.key], value: skillsCopy[param.key].value + param.delta } };
-      setSkills(skillsCopy);
+      dispatch(setSkill({ skillKey: param.key, value: characterStore.skills[param.key].value + param.delta }));
     },
     action_double_skill_value: (param) => { // param: key
-      skillsCopy = { ...skillsCopy, [param]: { ...skillsCopy[param], value: skillsCopy[param].value * 2 } };
-      setSkills(skillsCopy);
+      dispatch(setSkill({ skillKey: param, value: characterStore.skills[param].value * 2 }));
     },
     action_half_skill_value: (param) => { // param: key
-      skillsCopy = { ...skillsCopy, [param]: { ...skillsCopy[param], value: Math.floor(skillsCopy[param].value / 2) } };
-      setSkills(skillsCopy);
+      dispatch(setSkill({ skillKey: param, value: Math.floor(characterStore.skills[param].value / 2) }));
     },
     action_dice_message: (param) => { // param: { title, num, dice, bonus, results, shouldPlaySound, alterNumDice }
       showDiceToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
@@ -258,41 +213,31 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       showToast(param);
     },
     action_set_char_related_values: () => {
-      skillsCopy = {
-        ...skillsCopy,
-        dodge: { ...skillsCopy.dodge, value: Math.floor(chars.DEX.value / 2), baseValue: Math.floor(chars.DEX.value / 2) },
-        lang_own: { ...skillsCopy.lang_own, value: chars.EDU.value, baseValue: chars.EDU.value }
-      }
-      setSkills(skillsCopy);
+      dispatch(initSkill({ skillKey: "dodge", value: Math.floor(characterStore.chars.DEX.value / 2) }));
+      dispatch(initSkill({ skillKey: "lang_own", value: characterStore.chars.EDU.value }));
     },
     action_initial_san_and_mp: () => {
-      const san = chars.POW.value;
-      const mp = Math.floor(chars.POW.value / 5);
-      attrCopy = { ...attrCopy, San: { value: san, maxValue: san }, MP: { value: mp, maxValue: mp } };
-      setAttributes(attrCopy);
+      dispatch(initAttr({ attrKey: "San", value: characterStore.chars.POW.value }));
+      dispatch(initAttr({ attrKey: "MP", value: Math.floor(characterStore.chars.POW.value / 5) }));
       adjustHighlight("San", "value");
       adjustHighlight("MP", "value");
       adjustHighlight("POW", "value");
     },
     action_initial_hp_and_reset_luck: () => {
-      const hp = Math.floor((chars.SIZ.value + chars.CON.value) / 10);
-      attrCopy = { ...attrCopy, HP: { value: hp, maxValue: hp }, Luck: { value: "" } };
-      setAttributes(attrCopy);
+      dispatch(initAttr({ attrKey: "HP", value: Math.floor((characterStore.chars.SIZ.value + characterStore.chars.CON.value) / 10) }));
+      dispatch(setAttr({ attrKey: "Luck", value: "" }));
       adjustHighlight("HP", "value");
       adjustHighlight("Luck", "value");
     },
     action_init_luck: () => {
       const results = utils.roll(3, 6);
       const luck = results.reduce((a, b) => a + b, 0) * 5;
-
-      attrCopy = { ...attrCopy, Luck: { value: luck } };
-      setAttributes(attrCopy);
+      dispatch(initAttr({ attrKey: "Luck", value: luck }));
       showDiceToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
-      setOccupation({ ...occupation, ...param });
-      skillsCopy = { ...skillsCopy, credit: { ...skillsCopy.credit, value: param.credit, baseValue: param.credit } }
-      setSkills(skillsCopy);
+      dispatch(setOccupation(param));
+      dispatch(initSkill({ skillKey: "credit", value: param.credit }));
     },
     action_enable_map: () => {
       setMapEnabled(true);
@@ -357,9 +302,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
 
     // setFlags({ ...initFlags, ...states.flags });
-    setAttributes(states.attributes);
-    setOccupation({ name: states.occupationName });
-    setInfo(states.info);
+    // setAttributes(states.attributes);
+    // setOccupation({ name: states.occupationName });
+    // setInfo(states.info);
     setMapEnabled(states.mapEnabled);
 
     setIsReloading(true);
@@ -375,7 +320,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const saveData = {
       chapterHistory,
       chapterStatus: Array.from(chapterStatus),
-      chars,
+      // chars,
       currentStates: stateSnapshotRef.current,
     }
     localStorage.setItem(saveKey, JSON.stringify(saveData));
@@ -392,7 +337,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       } = JSON.parse(saveData);
       setChapterHistory(chapterHistoryToLoad);
       setChapterStatus(new Uint32Array(chapterStatusToLoad));
-      setChars(charsToLoad);
+      // setChars(charsToLoad);
 
       let skillSnapshot = statesToLoad.skills;
       if (!skillSnapshot) {
@@ -402,9 +347,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
 
       // setFlags({ ...initFlags, ...statesToLoad.flags });
-      setAttributes(statesToLoad.attributes);
-      setOccupation({ name: statesToLoad.occupationName });
-      setInfo(statesToLoad.info);
+      // setAttributes(statesToLoad.attributes);
+      // setOccupation({ name: statesToLoad.occupationName });
+      // setInfo(statesToLoad.info);
       setMapEnabled(statesToLoad.mapEnabled);
 
       setIsReloading(true);
@@ -412,7 +357,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
 
-  // 标记某个章节已访问
   function markChapterVisited(chapterIndex) {
     console.log(`Game - markChapterVisited: chapterStatusCopy ${JSON.stringify(chapterStatus)} `);
     const chapterStatusCopy = new Uint32Array(chapterStatus);
@@ -425,7 +369,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
 
-  // 检查某个章节是否已访问
   function isChapterVisited(chapterIndex) {
     const arrayIndex = Math.floor(chapterIndex / 32);
     const bitPosition = chapterIndex % 32;
@@ -438,52 +381,37 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     console.log(`Game - goto: to chapter ${chapterKey}`);
     setChapterKey(chapterKey);
   }
-  window.setattr = (key, value, maxValue) => {
-    console.log(`Game - setattr: ${key} = ${value}/${maxValue}`);
-    setAttributes({ ...attributes, [key]: { value, maxValue } });
+  window.setattr = (key, value) => {
+    console.log(`Game - setattr: ${key} = ${value}/${value}`);
+    dispatch(initAttr({ attrKey: key, value }));
   }
   window.setskill = (key, value) => {
     console.log(`Game - setskill: ${key} = ${value}`);
-    setSkills({ ...skills, [key]: { ...skills[key], value } });
+    dispatch(initSkill({ skillKey: key, value }));
   }
 
   return (
     <FlagCheckContext.Provider value={flagCheck}>
-        {/* <HighlightContext.Provider value={{ highlight }}> */}
-          <div className="row">
-            <div id="chapter" className="col px-2">
-              <Chapter {...{ 
-                chapterKey,
-                characterSheet,
-                chars,
-                attributes,
-                skills,
-                nextChapter,
-                setMapLocation,
-                isReloading,
-                updateStateSnapshot,
-                onChapterAction }} />
-            </div>
-            { showCharacter && (
-              <div id="character" className="col">
-                <Character {...{ 
-                  characterSheet, 
-                  chars, 
-                  setChars, 
-                  attributes, 
-                  skills, 
-                  setSkills, 
-                  occupation, 
-                  info, 
-                  setInfo, 
-                  onCharacterAction }} />
-              </div> 
-            )}
+      <div className="row">
+        <div id="chapter" className="col px-2">
+          <Chapter {...{
+            chapterKey,
+            nextChapter,
+            setMapLocation,
+            isReloading,
+            updateStateSnapshot,
+            onChapterAction
+          }} />
+        </div>
+        {showCharacter && (
+          <div id="character" className="col">
+            <Character {...{ onCharacterAction }} />
           </div>
-          <MapModal {...{ mapLocation }} />
-          <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
-          <AchievementModal {...{ chapterStatus }} />
-        {/* </HighlightContext.Provider> */}
+        )}
+      </div>
+      <MapModal {...{ mapLocation }} />
+      <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
+      <AchievementModal {...{ chapterStatus }} />
     </FlagCheckContext.Provider>
   )
 }

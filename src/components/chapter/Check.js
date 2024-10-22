@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { LanguageContext } from "../../App";
+import { useSelector } from "react-redux";
+import { LanguageContext, CharacterSheetContext } from "../../App";
 import { useFlagCheck } from "../../store/slices/flagSlice";
 import Combat from "./Combat";
 import ActionCard, { CheckButton } from "./ActionCard";
@@ -49,11 +50,11 @@ function getRollName(key, characterSheet) {
   }
 }
 
-function getRollValue(key, chars, attributes, skills) {
+function getRollValue(key, chars, attrs, skills) {
   if (characteristicsList.includes(key)) {
     return chars[key].value;
   } else if (attributesList.includes(key)) {
-    return attributes[key].value;
+    return attrs[key].value;
   } else {
     return skills[key].value;
   }
@@ -93,10 +94,14 @@ export function rollCheck(bonus, skillName, onAction, autoLang) {
 }
 
 // chapter 155
-function OpposedCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
+function OpposedCheck({ check, onAction, rollFlags, setRollFlags }) {
   // console.log(`OpposedCheck: ${check.key} vs ${check.opponent.key}`);
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   const flagCheck = useFlagCheck();
+  const charStore = useSelector(state => state.character.chars);
+  const attrStore = useSelector(state => state.character.attrs);
+  const skillStore = useSelector(state => state.character.skills);
   const [opponentResult, setOpponentResult] = useState({ diceNumber: "", resultLevel: "" });
   const loaded = useRef(false);
 
@@ -113,7 +118,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     });
   }, []);
 
-  const yourSkillValue = getRollValue(check.key, chars, attributes, skills);
+  const yourSkillValue = getRollValue(check.key, charStore, attrStore, skillStore);
   const yourSkill = { 
     name: getRollName(check.key, characterSheet), 
     value: yourSkillValue, 
@@ -130,7 +135,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     role: { name: utils.TEXTS.yourName, isOpponent: false },
     action: { key: "opposed_roll", name: utils.TEXTS.opposedRoll, isInitiating: true },
     skill: yourSkill,
-    result: { diceNumber: checkFlags.diceNumber, resultLevel: checkFlags.resultLevel },
+    result: { diceNumber: rollFlags.diceNumber, resultLevel: rollFlags.resultLevel },
     isDisabled: false,
     onAction: onOpposedRoll,
   };
@@ -146,7 +151,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     const diceNumber = rollCheck(yourSkill.bonus, yourSkill.name, onAction, autoLang);
     const resultLevel = utils.calculateLevel(diceNumber, yourSkill.value, yourSkill.half, yourSkill.fifth);
     const isPassed = resultLevel === opponentResult.resultLevel ? yourSkill.value > opponentSkill.value : resultLevel > opponentResult.resultLevel;
-    setCheckFlags({
+    setRollFlags({
       // status: "done", 
       diceNumber: diceNumber,
       rollKey: check.key,
@@ -167,15 +172,15 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
   });
 
   return (
-    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
+    <div className={"card mb-3" + (rollFlags.result ? (rollFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
       <div className="card-header">{ title }</div>
-      <div className={"card-body" + (checkFlags.result ? (checkFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
+      <div className={"card-body" + (rollFlags.result ? (rollFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
         <div className="d-flex justify-content-center align-items-stretch">
           <ActionCard {...{ ...yourCard }} />
           <ActionCard {...{ ...opponentCard }} />
         </div>
         <div className="mt-3">
-          {checkFlags.result && <strong>{ autoLang(checkFlags.result === "pass" ? opposedCheckWinText : opposedCheckLoseText) }</strong>}
+          {rollFlags.result && <strong>{ autoLang(rollFlags.result === "pass" ? opposedCheckWinText : opposedCheckLoseText) }</strong>}
         </div>
       </div>
     </div>
@@ -183,30 +188,34 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
 }
 
 // chapter 121
-function RollCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
+function RollCheck({ check, onAction, rollFlags, setRollFlags }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   const flagCheck = useFlagCheck();
+  const charStore = useSelector(state => state.character.chars);
+  const attrStore = useSelector(state => state.character.attrs);
+  const skillStore = useSelector(state => state.character.skills);
 
-  if (checkFlags.show && !flagCheck(check.show)) {
+  if (check.show && !flagCheck(check.show)) {
     return null;
   }
 
   // let [name, value] = getNameAndValueByKey(check.key, characterSheet, chars, attributes, skills, autoLang);
   const skillName = getRollName(check.key, characterSheet);
-  const skillValue = getRollValue(check.key, chars, attributes, skills);
+  const skillValue = getRollValue(check.key, charStore, attrStore, skillStore);
   const target = check.level === "fifth" ? Math.floor(skillValue / 5) : (check.level === "half" ? Math.floor(skillValue / 2) : skillValue);
   const bonus = calculateBonus(check, flagCheck)
-  const isPushed = checkFlags.result && !checkFlags.isPushed;
+  const isPushed = rollFlags.result;
 
   function onCheck() {
-    if (checkFlags.result && (!check.allowPush || checkFlags.isPushed)) {
+    if (rollFlags.result && (!check.allowPush || rollFlags.isPushed)) {
       console.error("Check already done, no push allowed or already pushed.");
       return;
     }
     
     const diceNumber = rollCheck(bonus, skillName, onAction, autoLang);
     const isPassed = diceNumber <= target;
-    setCheckFlags({
+    setRollFlags({
       // status: "done", 
       diceNumber: diceNumber,
       rollKey: check.key,
@@ -229,13 +238,13 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
     zh: `${autoLang(skillName)}检定 - ${checkLevelText[check.level]} ${bonus > 0 ? `- 奖励骰 x ${bonus}` : (bonus < 0 ? `- 惩罚骰 x ${-bonus}` : "")}`,
     en: `${autoLang(skillName)} Roll - ${checkLevelText[check.level]} ${bonus > 0 ? `- Bonus Die x ${bonus}` : (bonus < 0 ? `- Penalty Die x ${-bonus}` : "")}`
   });
-  const showCheckButton = !checkFlags.result || (checkFlags.result === "fail" && check.allowPush && !checkFlags.isPushed);
+  const showCheckButton = !rollFlags.result || (rollFlags.result === "fail" && check.allowPush && !rollFlags.isPushed);
 
   return (
-    <div className={"card mb-3" + (checkFlags.result ? (checkFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
+    <div className={"card mb-3" + (rollFlags.result ? (rollFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
       <div className="card-header">{title}</div>
-      <div className={"card-body" + (checkFlags.result ? (checkFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
-        {checkFlags.result && <div><strong>{ autoLang(checkFlags.result === "pass" ? checkPassText : checkFailText)}</strong></div>}
+      <div className={"card-body" + (rollFlags.result ? (rollFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
+        {rollFlags.result && <div><strong>{ autoLang(rollFlags.result === "pass" ? checkPassText : checkFailText)}</strong></div>}
         {showCheckButton && <div>{isPushed ? <span>{ autoLang(pushText) }</span> : null}<CheckButton onClick={onCheck} /></div>}
       </div>
     </div>
@@ -243,38 +252,38 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
 }
 
 // chapter 144
-function RollSelectCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
+function RollSelectCheck({ check, onAction, rollFlags, setRollFlags }) {
   const initRolls = check.rolls;
   const [rolls, setRolls] = useState(initRolls);
-  function rollSelectSetCheckFlags(checkFlagsToSet) {
+  function rollSelectSetRollFlags(checkFlagsToSet) {
     if (checkFlagsToSet.result) {
       setRolls(rolls.filter(roll => roll.key === checkFlagsToSet.rollKey && roll.level === checkFlagsToSet.rollLevel));
     }
-    setCheckFlags(checkFlagsToSet);
+    setRollFlags(checkFlagsToSet);
   }
 
   return (
     <div className="card-group">
       {
         rolls
-          .filter(roll => !checkFlags.result || (checkFlags.rollKey === roll.key && checkFlags.rollLevel === roll.level))
-          .map((roll, i) => <RollCheck key={i} check={roll} setCheckFlags={rollSelectSetCheckFlags} {...{ characterSheet, chars, attributes, skills, onAction, checkFlags }} />)
+          .filter(roll => !rollFlags.result || (rollFlags.rollKey === roll.key && rollFlags.rollLevel === roll.level))
+          .map((roll, i) => <RollCheck key={i} check={roll} setRollFlags={rollSelectSetRollFlags} {...{ onAction, rollFlags }} />)
       }
     </div>
   )
 }
 
-export default function Check({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
+export default function Check({ check, onAction, rollFlags, setRollFlags }) {
 
   switch (check.type) {
     case "roll":
-      return <RollCheck {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
+      return <RollCheck {...{ check, onAction, rollFlags, setRollFlags }} />;
     case "roll_select":
-      return <RollSelectCheck {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
+      return <RollSelectCheck {...{ check, onAction, rollFlags, setRollFlags }} />;
     case "opposed_roll":
-      return <OpposedCheck {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
+      return <OpposedCheck {...{ check, onAction, rollFlags, setRollFlags }} />;
     case "combat":
-      return <Combat {...{ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }} />;
+      return <Combat {...{ check, onAction, rollFlags, setRollFlags }} />;
     default:
       return null;
   }
