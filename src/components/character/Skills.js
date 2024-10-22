@@ -111,20 +111,14 @@ function SkillsEditableForOccupation({}) {
   });
 
   function unselectSkills(skillKeys) {
-    // const skillsChanges = {};
     skillKeys.forEach(skillKey => {
       if (!skillStore[skillKey].occupation) {
         console.error(`SkillsEditableForOccupation - Skill ${skillKey} is not selected when unselecting`);
         return;
       }
 
-      // skillsChanges[skillKey] = { ...skillStore[skillKey], value: skillStore[skillKey].baseValue, occupation: false, customName: "" };
       dispatch(resetSkill(skillKey));
     });
-
-    // if (Object.keys(skillsChanges).length > 0) {
-    //   setSkills({ ...skills, ...skillsChanges });
-    // }
   }
 
   function toggleLockUnused() {
@@ -150,7 +144,6 @@ function SkillsEditableForOccupation({}) {
         console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValues} - case 1`);
       }
 
-      // setSkills({ ...skills, [key]: { ...skills[key], value: newValue, customName: customName } });
       dispatch(setSkill({ skillKey: key, value: newValue }));
       customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
       return;
@@ -168,14 +161,12 @@ function SkillsEditableForOccupation({}) {
       console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValues} - case 3`);
     }
 
-    // setSkills({ ...skills, [key]: { ...skills[key], value: newValue, occupation: true, customName: customName } });
-    dispatch(setSkillOccupation({ skillKey: key }));
+    dispatch(setSkillOccupation(key));
     dispatch(setSkill({ skillKey: key, value: newValue }));
     customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
   }
 
   function onCustomName(key, customName) {
-    // setSkills({ ...skills, [key]: { ...skills[key], customName } });
     dispatch(setSkillCustomName({ skillKey: key, customName }));
   }
 
@@ -226,7 +217,6 @@ function SkillsEditableForHobby({}) {
   const availableNum = 4;
 
   function unselectSkills(skillKeys) {
-    // const skillsChanges = {};
     skillKeys.forEach(skillKey => {
       if (skillStore[skillKey].hobby === false) {
         console.error(`SkillsEditableForHobby - Skill ${skillKey} is not selected when unselecting`);
@@ -234,12 +224,7 @@ function SkillsEditableForHobby({}) {
       }
 
       dispatch(resetSkill(skillKey));
-      // skillsChanges[skillKey] = { ...skills[skillKey], value: skills[skillKey].baseValue, hobby: false, customName: "" };
     });
-
-    // if (Object.keys(skillsChanges).length > 0) {
-    //   setSkills({ ...skills, ...skillsChanges });
-    // }
   }
 
   function toggleLockUnused() {
@@ -273,14 +258,12 @@ function SkillsEditableForHobby({}) {
     }
 
     selectedSkills.push(key);
-    // setSkills({ ...skills, [key]: { ...skills[key], value: newValue, hobby: true, customName: customName } });
     dispatch(setSkill({ skillKey: key, value: newValue }));
-    dispatch(setSkillHobby({ skillKey: key }));
+    dispatch(setSkillHobby(key));
     customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
   }
 
   function onCustomName(key, customName) {
-    // setSkills({ ...skills, [key]: { ...skills[key], customName } });
     dispatch(setSkillCustomName({ skillKey: key, customName }));
   }
 

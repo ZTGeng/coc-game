@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LanguageContext } from "../App";
+import { LanguageContext, CharacterSheetContext } from "../App";
 import * as utils from "../utils/utils";
 
 const historyTitle = {
@@ -17,8 +17,9 @@ const jumpToConfirmText = {
   zh: "跳转到以前的章节？",
 };
 
-function HistoryItem({ characterSheet, historyItem, historyIndex, onJumpToChapter }) {
+function HistoryItem({ historyItem, historyIndex, onJumpToChapter }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
 
   function jumpToChapter() {
     if (window.confirm(autoLang(jumpToConfirmText))) {
@@ -70,7 +71,7 @@ function HistoryItem({ characterSheet, historyItem, historyIndex, onJumpToChapte
   );
 }
 
-export default function HistoryModal({ characterSheet, chapterHistory, onJumpToChapter }) {
+export default function HistoryModal({ chapterHistory, onJumpToChapter }) {
   const { autoLang } = useContext(LanguageContext);
 
   return (
@@ -87,7 +88,7 @@ export default function HistoryModal({ characterSheet, chapterHistory, onJumpToC
             </svg>
             <small className="ms-2">{ autoLang(firstItem) }</small>
           </button>
-          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ characterSheet, historyItem, onJumpToChapter }} />)}
+          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ historyItem, onJumpToChapter }} />)}
         </div>
       </div>
     </div>

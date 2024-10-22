@@ -195,7 +195,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         playSound("san-reduced");
       }
 
-      setAttr({ attrKey: param.key, value: newValue });
+      dispatch(setAttr({ attrKey: param.key, value: newValue }));
     },
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
       dispatch(setSkill({ skillKey: param.key, value: characterStore.skills[param.key].value + param.delta }));
@@ -410,7 +410,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         )}
       </div>
       <MapModal {...{ mapLocation }} />
-      <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
+      <HistoryModal {...{ chapterHistory, onJumpToChapter }} />
       <AchievementModal {...{ chapterStatus }} />
     </FlagCheckContext.Provider>
   )

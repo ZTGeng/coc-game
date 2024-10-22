@@ -75,12 +75,12 @@ const characterSlice = createSlice({
             state.skills[action.payload.skillKey].baseValue = action.payload.value;
         },
         resetSkill(state, action) { // action: { type: 'character/resetSkill', payload: skillKey }
-            if (state.skills[action.payload.skillKey].value !== state.skills[action.payload.skillKey].baseValue) {
-                state.skills[action.payload.skillKey].value = state.skills[action.payload.skillKey].baseValue;
-            }
-            state.skills[action.payload.skillKey].occupation && (state.skills[action.payload.skillKey].occupation = false);
-            state.skills[action.payload.skillKey].hobby && (state.skills[action.payload.skillKey].hobby = false);
-            state.skills[action.payload.skillKey].customName && (delete state.skills[action.payload.skillKey].customName);
+            console.log(`resetSkill: ${action.payload}`);
+            const skill = state.skills[action.payload];
+            skill.value !== skill.baseValue && (skill.value = skill.baseValue);
+            skill.occupation && (skill.occupation = false);
+            skill.hobby && (skill.hobby = false);
+            skill.customName && (delete skill.customName);
         },
         setSkill(state, action) { // action: { type: 'character/setSkill', payload: { skillKey, value } }
             if (state.skills[action.payload.skillKey].value !== action.payload.value) {
@@ -88,10 +88,10 @@ const characterSlice = createSlice({
             }
         },
         setSkillOccupation(state, action) { // action: { type: 'character/setSkillOccupation', payload: skillKey }
-            state.skills[action.payload.skillKey].occupation || (state.skills[action.payload.skillKey].occupation = true);
+            state.skills[action.payload].occupation || (state.skills[action.payload].occupation = true);
         },
         setSkillHobby(state, action) { // action: { type: 'character/setSkillHobby', payload: skillKey }
-            state.skills[action.payload.skillKey].hobby || (state.skills[action.payload.skillKey].hobby = true);
+            state.skills[action.payload].hobby || (state.skills[action.payload].hobby = true);
         },
         setSkillCustomName(state, action) { // action: { type: 'character/setSkillCustomName', payload: { skillKey, customName } }
             if (state.skills[action.payload.skillKey].customName !== action.payload.customName) {
@@ -99,16 +99,16 @@ const characterSlice = createSlice({
             }
         },
         checkSkillBox(state, action) { // action: { type: 'character/checkSkillBox', payload: skillKey }
-            state.skills[action.payload.skillKey].checked || (state.skills[action.payload.skillKey].checked = true);
+            state.skills[action.payload].checked || (state.skills[action.payload].checked = true);
         },
         setOccupation(state, action) { // action: { type: 'character/setOccupation', payload: { name, credit, skills, art, interpersonal, language, universal } }
             state.occupation = action.payload;
         },
         setName(state, action) { // action: { type: 'character/setName', payload: name }
-            state.info.name = action.payload;
+            state.info.name !== action.payload && (state.info.name = action.payload);
         },
         setAge(state, action) { // action: { type: 'character/setAge', payload: age }
-            state.info.age = action.payload;
+            state.info.age !== action.payload && (state.info.age = action.payload);
         }
     },
 });
