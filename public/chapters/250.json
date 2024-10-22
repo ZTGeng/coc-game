@@ -27,7 +27,7 @@
         "type": "roll",
         "key": "San",
         "level": "value",
-        "onFail": [
+        "onfail": [
             { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" } }
         ]
     },

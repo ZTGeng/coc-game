@@ -22,7 +22,7 @@
     "options": [
         { "key": 0, "text": { "en": "Memorize Call Ye Celestial Flames", "zh": "记住“召唤天之火”" } },
         { "key": 1, "text": { "en": "Memorize Command Ye Celestial Flames", "zh": "记住“号令天之火”" } },
-        { "key": 2, "text": { "en": "you feel you have already pushed your luck enough, replace the volume and leave", "zh": "你觉得你已经够走运了，把把书放回去然后离开" } }
+        { "key": 2, "text": { "en": "you feel you have already pushed your luck enough, replace the volume and leave", "zh": "你觉得你已经够走运了，把书放回去然后离开" } }
     ],
     "onload": [
         { "action": "action_check_in_skill_box", "param": "library" }

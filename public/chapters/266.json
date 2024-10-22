@@ -25,7 +25,7 @@
     "options": [
         { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
         { "key": 1, "text": { "en": "Extinguish the powder and sleep", "zh": "扑灭炉火再睡觉" }, "show": "flag_check_failed" },
-        { "key": 1, "text": { "en": "Stay awake through the night", "zh": "彻夜不眠" }, "show": "flag_check_failed" },
-        { "key": 1, "text": { "en": "Relax and breathe the fumes out of curiosit", "zh": "放松下来，好奇地吸一口烟气" }, "show": "flag_check_failed" }
+        { "key": 2, "text": { "en": "Stay awake through the night", "zh": "彻夜不眠" }, "show": "flag_check_failed" },
+        { "key": 3, "text": { "en": "Relax and breathe the fumes out of curiosit", "zh": "放松下来，好奇地吸一口烟气" }, "show": "flag_check_failed" }
     ]
 }
