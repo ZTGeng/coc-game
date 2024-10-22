@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { LanguageContext } from "../../App";
-import * as utils from "../../utils";
+import * as utils from "../../utils/utils";
 
 export const resultLevelTexts = {
   en: ["Failure", "Regular Success", "Hard Success", "Extreme Success"],

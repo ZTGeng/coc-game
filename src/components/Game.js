@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext, createContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext } from "../App";
 import Character from "./character/Character";
 import characterSheet from "./character/characterSheet";
@@ -8,46 +9,10 @@ import MapModal from "./MapModal";
 import HistoryModal from "./HistoryModal";
 import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
-import flagConditionCheckProvider from "./flagCheck";
-import * as utils from "../utils";
+import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
+import * as utils from "../utils/utils";
 
-export const FlagsContext = createContext();
 export const HighlightContext = createContext();
-
-const initFlags = {
-  flag_characteristics_editable: false,
-  flag_occupation_skills_editable: false,
-  flag_hobby_skills_editable: false,
-
-  flag_bought_knife: false,
-  flag_found_cliff_ladder: false,
-  flag_meet_arbogast: false,
-  flag_involved_fighting: false,
-  flag_searched_book_shelf: false,
-  flag_learned_magic_arbogast: false,
-  flag_learned_magic_summon: false,
-  flag_learned_magic_order: false,
-  flag_found_poem_book: false,
-  
-  flag_major_wound: false,
-  flag_penalty_die: false,
-
-  flag_c25_option_selected_0: false,
-  flag_c25_option_selected_1: false,
-  flag_c25_option_selected_2: false,
-  flag_c25_option_selected_3: false,
-  flag_c25_option_selected_4: false,
-  flag_c25_option_selected_5: false,
-
-  flag_c120_option_selected_0: false,
-  flag_c120_option_selected_1: false,
-  flag_c120_option_selected_2: false,
-  flag_c120_option_selected_3: false,
-
-
-
-  flag_mp_used: false,
-};
 
 const initChars = {
   STR: { value: 80 },
@@ -96,7 +61,6 @@ const emptyHighlight = [];
 
 export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
   const { autoLang } = useContext(LanguageContext);
-  const [flags, setFlags] = useState(initFlags);
   const [chapterKey, setChapterKey] = useState(0);
   const [chars, setChars] = useState(initChars);
   const [attributes, setAttributes] = useState(initAttributes);
@@ -111,6 +75,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [isReloading, setIsReloading] = useState(false);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
+  const dispatch = useDispatch();
+  const flagStore = useSelector(state => state.flag);
 
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
@@ -124,7 +90,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   // Source of Truth of current state during chapter transitions
   const stateSnapshotRef = useRef({});
   console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
-  let flagsCopy = {...flags};
   let highlightCopy = [...highlight];
   let attrCopy = {...attributes};
   let skillsCopy = {...skills};
@@ -132,12 +97,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   function gameSnapshot(doIncludeSkillSnapshot = false) {
     const snapshot = {
       chapterKey,
-      flags: Object.keys(flagsCopy)
-        .filter(flag => flagsCopy[flag] !== initFlags[flag])
-        .reduce((acc, flag) => {
-          acc[flag] = flagsCopy[flag];
-          return acc;
-        }, {}),
+      flags: flagStore,
       attributes: { ...attrCopy },
       occupationName: occupation.name,
       info,
@@ -181,7 +141,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setSkills(skillsCopy);
   }
 
-  const flagFunctions = {
+  const gameFlagFunc = {
     "flag_characteristics_unfinished": () => Object.values(chars).some(char => char.value === ""),
     "flag_skills_occupation_unfinished": () => {
       const occupationSkillsNum = Object.keys(skills).filter(skillKey => skills[skillKey].occupation).length;
@@ -195,7 +155,15 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     "flag_track_skill_box_checked": () => skills.track.checked,
     "flag_hp_zero": () => attributes.HP.value <= 0,
   };
-  const flagConditionCheck = flagConditionCheckProvider(flags, flagFunctions);
+
+  function checkFlagInStore(flag) {
+    if (flag in flagStore) {
+      return flagStore[flag];
+    }
+    console.error(`Game - checkFlagInStore: flag ${flag} not found in store`);
+    return false;
+  }
+  const flagCheck = createFlagCheck(gameFlagFunc, checkFlagInStore);
 
   function onChapterAction(action, param) {
     console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
@@ -217,8 +185,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
   const actions = {
     action_set_flag: (param) => { // param: { flag, value }
-      flagsCopy = { ...flagsCopy, [param.flag]: param.value };
-      setFlags(flagsCopy);
+      console.log(`action_set_flag: ${param.flag} = ${param.value}`);
+      dispatch(setFlag({ flag: param.flag, value: param.value }));
     },
     action_show_character_sheet: (param) => { // param: true/false/undefined
       setShowCharacter(param !== false);
@@ -264,8 +232,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
           playSound("hp-reduced");
 
           if (attr.value - newValue >= attr.maxValue / 2) {
-            flagsCopy = { ...flagsCopy, flag_major_wound: true };
-            setFlags(flagsCopy);
+            dispatch(setFlag({ flag: "flag_major_wound", value: true }));
           }
         }
       } else if (param.key === "San") {
@@ -395,7 +362,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
     setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
 
-    setFlags({ ...initFlags, ...states.flags });
+    // setFlags({ ...initFlags, ...states.flags });
     setAttributes(states.attributes);
     setOccupation({ name: states.occupationName });
     setInfo(states.info);
@@ -440,7 +407,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       }
       setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
 
-      setFlags({ ...initFlags, ...statesToLoad.flags });
+      // setFlags({ ...initFlags, ...statesToLoad.flags });
       setAttributes(statesToLoad.attributes);
       setOccupation({ name: statesToLoad.occupationName });
       setInfo(statesToLoad.info);
@@ -487,42 +454,42 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   }
 
   return (
-    <FlagsContext.Provider value={{ flagConditionCheck }}>
-      <HighlightContext.Provider value={{ highlight }}>
-        <div className="row">
-          <div id="chapter" className="col px-2">
-            <Chapter {...{ 
-              chapterKey,
-              characterSheet,
-              chars,
-              attributes,
-              skills,
-              nextChapter,
-              setMapLocation,
-              isReloading,
-              updateStateSnapshot,
-              onChapterAction }} />
+    <FlagCheckContext.Provider value={flagCheck}>
+        <HighlightContext.Provider value={{ highlight }}>
+          <div className="row">
+            <div id="chapter" className="col px-2">
+              <Chapter {...{ 
+                chapterKey,
+                characterSheet,
+                chars,
+                attributes,
+                skills,
+                nextChapter,
+                setMapLocation,
+                isReloading,
+                updateStateSnapshot,
+                onChapterAction }} />
+            </div>
+            { showCharacter && (
+              <div id="character" className="col">
+                <Character {...{ 
+                  characterSheet, 
+                  chars, 
+                  setChars, 
+                  attributes, 
+                  skills, 
+                  setSkills, 
+                  occupation, 
+                  info, 
+                  setInfo, 
+                  onCharacterAction }} />
+              </div> 
+            )}
           </div>
-          { showCharacter && (
-            <div id="character" className="col">
-              <Character {...{ 
-                characterSheet, 
-                chars, 
-                setChars, 
-                attributes, 
-                skills, 
-                setSkills, 
-                occupation, 
-                info, 
-                setInfo, 
-                onCharacterAction }} />
-            </div> 
-          )}
-        </div>
-        <MapModal {...{ mapLocation }} />
-        <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
-        <AchievementModal {...{ chapterStatus }} />
-      </HighlightContext.Provider>
-    </FlagsContext.Provider>
+          <MapModal {...{ mapLocation }} />
+          <HistoryModal {...{ characterSheet, chapterHistory, onJumpToChapter }} />
+          <AchievementModal {...{ chapterStatus }} />
+        </HighlightContext.Provider>
+    </FlagCheckContext.Provider>
   )
 }

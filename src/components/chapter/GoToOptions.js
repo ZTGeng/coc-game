@@ -1,24 +1,24 @@
 import { useContext } from "react";
-import { FlagsContext } from "../Game";
 import { LanguageContext } from "../../App";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 
 export default function GoToOptions({ options, onOptionSelected }) {
-  const { flagConditionCheck } = useContext(FlagsContext);
+  const flagCheck = useFlagCheck();
 
   return (
     <div className="d-flex flex-column">
       {options
-        .filter(option => !option.show || flagConditionCheck(option.show))
+        .filter(option => !option.show || flagCheck(option.show))
         .map(option => <GoToOption key={option.key} {...{ option, onOptionSelected }} />)}
     </div>
   );
 }
 
 export function GoToOption({ option, onOptionSelected }) {
-  const { flagConditionCheck } = useContext(FlagsContext);
   const { autoLang } = useContext(LanguageContext);
+  const flagCheck = useFlagCheck();
 
-  return option.disabled && flagConditionCheck(option.disabled) ? (
+  return option.disabled && flagCheck(option.disabled) ? (
     <div key={option.key}
       className="text-body-tertiary h5">
       &nbsp;{ autoLang(option.text) }&nbsp;

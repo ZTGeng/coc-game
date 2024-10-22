@@ -1,11 +1,11 @@
 import { useContext, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext } from "../../App";
-import { FlagsContext } from "../Game";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
-import flagConditionCheckProvider from "../flagCheck";
-import * as utils from "../../utils";
+import { setFlag, FlagCheckContext, useFlagCheck, createFlagCheck } from "../../store/slices/flagSlice";
+import * as utils from "../../utils/utils";
 
 const initCheckFlags = {
   // status: "", // "", "ready", "done"
@@ -85,10 +85,10 @@ function ChapterContent({ chapterText }) {
 
 function InteractionButton({ interaction, onAction }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
+  const flagCheck = useFlagCheck();
 
   return (
-    interaction.disabled && flagConditionCheck(interaction.disabled)
+    interaction.disabled && flagCheck(interaction.disabled)
       ? <button className="btn btn-dark mx-2" disabled>{ autoLang(interaction.text) }</button>
       : (<button className="btn btn-dark mx-2" onClick={() => { onAction(interaction.action, interaction.param) }}>
         { autoLang(interaction.text) }
@@ -97,8 +97,8 @@ function InteractionButton({ interaction, onAction }) {
 }
 
 function Interactions({ interactions, onAction }) {
-  const { flagConditionCheck } = useContext(FlagsContext);
-  const interactionsToShow = interactions.filter(interaction => !interaction.show || flagConditionCheck(interaction.show));
+  const flagCheck = useFlagCheck();
+  const interactionsToShow = interactions.filter(interaction => !interaction.show || flagCheck(interaction.show));
 
   return (
     interactionsToShow.length > 0 && (
@@ -123,11 +123,13 @@ export default function Chapter({
   updateStateSnapshot,
   onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
   const [chapter, setChapter] = useState(null);
   const [interactionFinished, setInteractionFinished] = useState(false);
   const [checkFlags, setCheckFlags] = useState(initCheckFlags);
   console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}`);
+  const dispatch = useDispatch();
+  const flag = useSelector(state => state.flag);
+  const parentFlagCheck = useFlagCheck();
 
   useEffect(() => {
     console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
@@ -188,7 +190,7 @@ export default function Chapter({
       });
   }, [chapterKey]);
 
-  const flagFunctions = {
+  const chapterFlagFunc = {
     "flag_interaction_finished": () => interactionFinished,
     "flag_check_passed": () => checkFlags.result === "pass",
     "flag_check_failed": () => checkFlags.result === "fail",
@@ -199,20 +201,20 @@ export default function Chapter({
       const [rollKey, rollLevel] = keyLevel.split("-");
       return checkFlags.rollKey === rollKey && (!rollLevel || checkFlags.rollLevel === rollLevel);
     },
-    "flag_c25_option_disabled": (option) => flagConditionCheck(`flag_c25_option_selected_${option}`)
+    "flag_c25_option_disabled": (option) => parentFlagCheck(`flag_c25_option_selected_${option}`)
       || Array
         .from({ length: 6 }, (_, i) => i)
         .map(i => `flag_c25_option_selected_${i}`)
-        .filter(flag => flagConditionCheck(flag))
+        .filter(flag => parentFlagCheck(flag))
         .length >= 4,
-    "flag_c120_option_disabled": (option) => (option < 4 && flagConditionCheck(`flag_c120_option_selected_${option}`))
+    "flag_c120_option_disabled": (option) => (option < 4 && parentFlagCheck(`flag_c120_option_selected_${option}`))
       || Array
         .from({ length: 4 }, (_, i) => i)
         .map(i => `flag_c120_option_selected_${i}`)
-        .filter(flag => flagConditionCheck(flag))
+        .filter(flag => parentFlagCheck(flag))
         .length >= 3,
   };
-  const chapterFlagConditionCheck = flagConditionCheckProvider({}, flagFunctions, flagConditionCheck);
+  const flagCheck = createFlagCheck(chapterFlagFunc, parentFlagCheck);
 
   const actions = {
     action_c25_select_option: (option) => {
@@ -330,14 +332,14 @@ export default function Chapter({
   }
 
   return (
-    <FlagsContext.Provider value={{ flagConditionCheck: chapterFlagConditionCheck }}>
-      <ChapterContent chapterText={chapter.text} />
-      { chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteractionAction} /> }
-      { chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ characterSheet, chars, attributes, skills, checkFlags, setCheckFlags }}/> }
-      <br />
-      <div className="px-2">
-        <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
-      </div>
-    </FlagsContext.Provider>
+    <FlagCheckContext.Provider value={flagCheck}>
+        <ChapterContent chapterText={chapter.text} />
+        { chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteractionAction} /> }
+        { chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ characterSheet, chars, attributes, skills, checkFlags, setCheckFlags }}/> }
+        <br />
+        <div className="px-2">
+          <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
+        </div>
+    </FlagCheckContext.Provider>
   )
 }

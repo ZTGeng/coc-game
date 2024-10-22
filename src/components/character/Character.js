@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { LanguageContext } from '../../App';
 import { HighlightContext } from "../Game";
-import { FlagsContext } from "../Game";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 import Characteristics from './Characteristics';
 import Skills from './Skills';
-import * as utils from '../../utils';
+import * as utils from '../../utils/utils';
 
 
 
@@ -110,8 +110,8 @@ function Attributes({ characterSheet, attributes }) {
 
 function Weapons({ characterSheet, skills }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
-  const hasKnife = flagConditionCheck("flag_bought_knife");
+  const flagCheck = useFlagCheck();
+  const hasKnife = flagCheck("flag_bought_knife");
 
   const blankRow = (
     <tr>

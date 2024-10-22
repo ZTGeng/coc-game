@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { LanguageContext } from "../../App";
-import { FlagsContext } from "../Game";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 import { calculateBonus, rollCheck } from "./Check";
 import ActionCard, { CheckButton } from "./ActionCard";
-import * as utils from "../../utils";
+import * as utils from "../../utils/utils";
 
 const fightAction =     { key: "fight", name: { zh: "攻击", en: "Fight" }, isInitiating: true };
 const fightBackAction = { key: "fight_back", name: { zh: "反击", en: "Fight Back" }, isInitiating: false };
@@ -51,7 +51,7 @@ const escapeCheckFailText = {
 // chapter 173
 export default function Combat({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
+  const flagCheck = useFlagCheck();
   const [progress, setProgress] = useState({ round: 0, turn: 0, move: 0 });
   const [yourMoveResult, setYourMoveResult] = useState(initMoveResult);
   const [opponentMoveResult, setOpponentMoveResult] = useState(initMoveResult);
@@ -73,9 +73,9 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
   const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
   const isOpponentActing = turns[progress.turn] === "opponent";
 
-  const yourDamage = flagConditionCheck("flag_bought_knife") ? "1d4" : "1d3";
+  const yourDamage = flagCheck("flag_bought_knife") ? "1d4" : "1d3";
   const yourDamageBonus = utils.calculateDamageBonus(chars.STR.value, chars.SIZ.value);
-  const bonus = calculateBonus(check, flagConditionCheck);
+  const bonus = calculateBonus(check, flagCheck);
   const dodgeSkill = {
     name: characterSheet.skills.dodge.name,
     value: skills.dodge.value,
@@ -104,15 +104,6 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
       return opponent.skills[move];
     }
   }
-
-  // function getOpponentDefendSkill() {
-  //   const moveDefend = opponent.moveDefend;
-  //   if (moveDefend.length ===1) {
-  //     return opponent.skills[moveDefend[0]];
-  //   }
-  //   const move = moveDefend[Math.floor(Math.random() * moveDefend.length)];
-  //   return opponent.skills[move];
-  // }
 
   function opponentRollResult() {
     const opponentSkill = getOpponentCurrentSkill();
@@ -158,7 +149,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
     if (hpReduce > 0) {
       if (hpReduce >= attributes.HP.value) {
         setCheckFlags({ result: "fail" });
-      } else if (hpReduce >= attributes.HP.maxValue / 2 && !flagConditionCheck("flag_major_wound")) {
+      } else if (hpReduce >= attributes.HP.maxValue / 2 && !flagCheck("flag_major_wound")) {
         onAction("action_set_flag", { flag: "flag_major_wound", value: true });
         setShowConCheck(true);
         onAction("action_set_highlight", { key: "CON", level: "value" });
@@ -184,7 +175,7 @@ export default function Combat({ check, characterSheet, chars, attributes, skill
       } else if (typeof yourDamageBonus === "number") {
         hpReduce += yourDamageBonus;
       }
-      if (flagConditionCheck("flag_bought_knife")) {
+      if (flagCheck("flag_bought_knife")) {
         const diceNumbers = utils.roll(1, 4);
         hpReduce += diceNumbers.reduce((acc, cur) => acc + cur, 0);
         onAction("action_dice_message", {

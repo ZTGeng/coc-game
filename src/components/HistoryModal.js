@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { LanguageContext } from "../App";
-import * as utils from "../utils";
+import * as utils from "../utils/utils";
 
 const historyTitle = {
   en: "Chapter History",

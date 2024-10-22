@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { LanguageContext } from "../../App";
-import { FlagsContext } from "../Game";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 import Combat from "./Combat";
 import ActionCard, { CheckButton } from "./ActionCard";
-import * as utils from "../../utils";
+import * as utils from "../../utils/utils";
 
 const characteristicsList = ["STR", "CON", "SIZ", "DEX", "APP", "INT", "POW", "EDU"];
 const attributesList = ["HP", "San", "Luck", "MP"];
@@ -59,18 +59,18 @@ function getRollValue(key, chars, attributes, skills) {
   }
 }
 
-export function calculateBonus(check, flagConditionCheck) {
+export function calculateBonus(check, flagCheck) {
   let bonus = 0;
   if (check.bonus) { // Int or { flag, value }
     if (typeof check.bonus === "number") {
       bonus = check.bonus;
     } else if (Object.prototype.toString.call(check.bonus) === "[object Object]") {
-      if (flagConditionCheck(check.bonus.flag)) {
+      if (flagCheck(check.bonus.flag)) {
         bonus = check.bonus.value;
       }
     }
   }
-  if (flagConditionCheck("flag_penalty_die") && check.key !== "Luck" && check.key !== "San") {
+  if (flagCheck("flag_penalty_die") && check.key !== "Luck" && check.key !== "San") {
     bonus -= 1;
   }
   return bonus;
@@ -96,7 +96,7 @@ export function rollCheck(bonus, skillName, onAction, autoLang) {
 function OpposedCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
   // console.log(`OpposedCheck: ${check.key} vs ${check.opponent.key}`);
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
+  const flagCheck = useFlagCheck();
   const [opponentResult, setOpponentResult] = useState({ diceNumber: "", resultLevel: "" });
   const loaded = useRef(false);
 
@@ -119,7 +119,7 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
     value: yourSkillValue, 
     half: Math.floor(yourSkillValue / 2),
     fifth: Math.floor(yourSkillValue / 5),
-    bonus: calculateBonus(check, flagConditionCheck) };
+    bonus: calculateBonus(check, flagCheck) };
   const opponentSkill = { 
     name: getRollName(check.opponent.key, characterSheet), 
     value: check.opponent.value, 
@@ -185,9 +185,9 @@ function OpposedCheck({ check, characterSheet, chars, attributes, skills, onActi
 // chapter 121
 function RollCheck({ check, characterSheet, chars, attributes, skills, onAction, checkFlags, setCheckFlags }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
+  const flagCheck = useFlagCheck();
 
-  if (checkFlags.show && flagConditionCheck(check.show)) {
+  if (checkFlags.show && !flagCheck(check.show)) {
     return null;
   }
 
@@ -195,7 +195,7 @@ function RollCheck({ check, characterSheet, chars, attributes, skills, onAction,
   const skillName = getRollName(check.key, characterSheet);
   const skillValue = getRollValue(check.key, chars, attributes, skills);
   const target = check.level === "fifth" ? Math.floor(skillValue / 5) : (check.level === "half" ? Math.floor(skillValue / 2) : skillValue);
-  const bonus = calculateBonus(check, flagConditionCheck)
+  const bonus = calculateBonus(check, flagCheck)
   const isPushed = checkFlags.result && !checkFlags.isPushed;
 
   function onCheck() {

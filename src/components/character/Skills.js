@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { LanguageContext } from '../../App';
-import { FlagsContext } from "../Game";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 import SkillCell from "./SkillCell";
 
 export const artSkills = ["photography", "custom_art1", "custom_art2"];
@@ -15,9 +15,9 @@ const cthulhuCellType = {
 
 export default function Skills({ characterSheet, skills, setSkills, occupation }) {
   const { autoLang } = useContext(LanguageContext);
-  const { flagConditionCheck } = useContext(FlagsContext);
-  const isOccupationSkillsEditing = flagConditionCheck("flag_occupation_skills_editable");
-  const isHobbySkillsEditing = flagConditionCheck("flag_hobby_skills_editable");
+  const flagCheck = useFlagCheck();
+  const isOccupationSkillsEditing = flagCheck("flag_occupation_skills_editable");
+  const isHobbySkillsEditing = flagCheck("flag_hobby_skills_editable");
 
   return (
     <div className="row">
@@ -45,11 +45,12 @@ export default function Skills({ characterSheet, skills, setSkills, occupation }
   );
 }
 
+
 function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupation }) {
   const { autoLang } = useContext(LanguageContext);
   const isForHobby = false;
-  const initAvailableValues = [70, 60, 60, 50, 50, 50, 40, 40];
-  const initAvailableSkills = {
+  const availableValues = [70, 60, 60, 50, 50, 50, 40, 40];
+  const availableSkills = {
     ...occupation.skills.reduce((acc, skillKey) => ({ ...acc, [skillKey]: 1 }), {}),
     art: occupation.art,
     language: occupation.language,
@@ -58,106 +59,61 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
   };
   
   const selectedSkills = Object.keys(skills).filter(skillKey => skills[skillKey].occupation);
-  if (selectedSkills.length > initAvailableValues.length) {
+  if (selectedSkills.length > availableValues.length) {
     console.error(`SkillsEditableForOccupation - Selected skills number is larger than available values number. Selected: ${selectedSkills}`);
   }
   selectedSkills.forEach(skillKey => {
-    const index = initAvailableValues.indexOf(skills[skillKey].value);
+    const index = availableValues.indexOf(skills[skillKey].value);
     if (index !== -1) {
-      initAvailableValues.splice(index, 1);
+      availableValues.splice(index, 1);
     } else {
-      console.error(`SkillsEditableForOccupation - Cannot find ${skillKey} value ${skills[skillKey].value} in available values ${initAvailableValues}`);
+      console.error(`SkillsEditableForOccupation - Cannot find ${skillKey} value ${skills[skillKey].value} in available values ${availableValues}`);
     }
 
     if (occupation.skills.includes(skillKey)) {
-      initAvailableSkills[skillKey] = 0;
+      availableSkills[skillKey] = 0;
     } else if (artSkills.includes(skillKey)) {
-      if (initAvailableSkills.art > 0) {
-        initAvailableSkills.art -= 1;
+      if (availableSkills.art > 0) {
+        availableSkills.art -= 1;
       } else {
-        initAvailableSkills.universal -= 1;
+        availableSkills.universal -= 1;
       }
     } else if (languageSkills.includes(skillKey)) {
-      if (initAvailableSkills.language > 0) {
-        initAvailableSkills.language -= 1;
+      if (availableSkills.language > 0) {
+        availableSkills.language -= 1;
       } else {
-        initAvailableSkills.universal -= 1;
+        availableSkills.universal -= 1;
       }
     } else if (interpersonalSkills.includes(skillKey)) {
-      if (initAvailableSkills.interpersonal > 0) {
-        initAvailableSkills.interpersonal -= 1;
+      if (availableSkills.interpersonal > 0) {
+        availableSkills.interpersonal -= 1;
       } else {
-        initAvailableSkills.universal -= 1;
+        availableSkills.universal -= 1;
       }
     } else {
-      initAvailableSkills.universal -= 1;
+      availableSkills.universal -= 1;
     }
     
-    if (initAvailableSkills.universal < 0) {
-      console.error(`SkillsEditableForOccupation initial - Universal not enough, selectedSkills ${selectedSkills} avaliableSkills ${JSON.stringify(initAvailableSkills)}`);
+    if (availableSkills.universal < 0) {
+      console.error(`SkillsEditableForOccupation initial - Universal not enough, avaliableSkills ${JSON.stringify(availableSkills)}`);
     }
   });
 
-  const [availableValues, setAvailableValues] = useState(initAvailableValues);
-  const [availableSkills, setAvailableSkills] = useState(initAvailableSkills);
+  // const [availableValues, setAvailableValues] = useState(initAvailableValues);
   const [lockUnused, setLockUnused] = useState(false);
 
   function unselectSkills(skillKeys) {
-    const availableValuesCopy = [...availableValues];
-    const availableSkillsCopy = { ...availableSkills };
     const skillsChanges = {};
     skillKeys.forEach(skillKey => {
-      const indexInSelected = selectedSkills.indexOf(skillKey);
-      if (indexInSelected === -1) {
-        // console.log(`${skillKey} is not in selectedSkills ${selectedSkills} when unselecting`);
+      if (!skills[skillKey].occupation) {
         return;
-      }
-      if (occupation.skills.includes(skillKey)) {
-        if (availableSkillsCopy[skillKey] !== 0) {
-          console.error(`SkillsEditableForOccupation - ${skillKey} occupation skill is not 0 when unselecting`);
-        }
-        availableSkillsCopy[skillKey] = 1;
-      } else if (artSkills.includes(skillKey)) {
-        const selectedArtSkillsNum = selectedSkills.filter(key => artSkills.includes(key)).length;
-        if (selectedArtSkillsNum > occupation.art) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.art += 1;
-        }
-      } else if (languageSkills.includes(skillKey)) {
-        const selectedLangSkillsNum = selectedSkills.filter(key => languageSkills.includes(key)).length;
-        if (selectedLangSkillsNum > occupation.language) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.language += 1;
-        }
-      } else if (interpersonalSkills.includes(skillKey)) {
-        const selectedInterpersonalSkillsNum = selectedSkills.filter(key => interpersonalSkills.includes(key)).length;
-        if (selectedInterpersonalSkillsNum > occupation.interpersonal) {
-          availableSkillsCopy.universal += 1;
-        } else {
-          availableSkillsCopy.interpersonal += 1;
-        }
-      } else {
-        availableSkillsCopy.universal += 1;
-      }
-      if (availableSkillsCopy.art > occupation.art 
-        || availableSkillsCopy.language > occupation.language 
-        || availableSkillsCopy.interpersonal > occupation.interpersonal 
-        || availableSkillsCopy.universal > occupation.universal) {
-        console.error(`SkillsEditableForOccupation - ${skillKey} makes available skills point ${JSON.stringify(availableSkillsCopy)} more than in occupation ${JSON.stringify(occupation)} when unselecting`);
       }
 
       skillsChanges[skillKey] = { ...skills[skillKey], value: skills[skillKey].baseValue, occupation: false, customName: "" };
-      availableValuesCopy.push(skills[skillKey].value);
-      availableValuesCopy.sort((a, b) => b - a);
-      selectedSkills.splice(indexInSelected, 1);
     });
 
-    if (availableValuesCopy.length !== availableValues.length) {
+    if (Object.keys(skillsChanges).length > 0) {
       setSkills({ ...skills, ...skillsChanges });
-      setAvailableValues(availableValuesCopy);
-      setAvailableSkills(availableSkillsCopy);
     }
   }
 
@@ -170,7 +126,6 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
 
   function onValueSelected(key, newValue, fromBase, toBase, customName) {
     console.log(`SkillsEditableForOccupation - onValueSelected: ${key} ${newValue} fromBase: ${fromBase} toBase: ${toBase}`);
-    const curValue = skills[key].value;
 
     if (fromBase && toBase) {
       console.error(`SkillsEditableForOccupation - Skill ${key} should not trigger onValueSelevted with the same value`);
@@ -179,19 +134,13 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
 
     // Case 1, selected skill change to another value
     if (!fromBase && !toBase) {
-      const availableValuesCopy = [...availableValues];
+      // const availableValuesCopy = [...availableValues];
       // No change to availableSkills and selectedSkills, just change values
-      const index = availableValuesCopy.indexOf(newValue);
-      if (index !== -1) {
-        availableValuesCopy.splice(index, 1);
-      } else {
-        console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValuesCopy} - case 1`);
+      if (availableValues.indexOf(newValue) === -1) {
+        console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValues} - case 1`);
       }
-      availableValuesCopy.push(curValue);
-      availableValuesCopy.sort((a, b) => b - a);
 
       setSkills({ ...skills, [key]: { ...skills[key], value: newValue, customName: customName } });
-      setAvailableValues(availableValuesCopy);
       return;
     }
 
@@ -203,59 +152,11 @@ function SkillsEditableForOccupation({ characterSheet, skills, setSkills, occupa
 
     // Case 3, unselected skill change to a new value
     // fromBase === true
-    const availableValuesCopy = [...availableValues];
-    const availableSkillsCopy = { ...availableSkills };
-
-    if (occupation.skills.includes(key)) {
-      if (availableSkillsCopy[key] === 0) {
-        console.error(`SkillsEditableForOccupation - Occupation skill ${key} is 0 before select`);
-      }
-      availableSkillsCopy[key] = 0;
-    } else if (artSkills.includes(key)) {
-      if (availableSkillsCopy.art > 0) {
-        availableSkillsCopy.art -= 1;
-      } else if (availableSkillsCopy.universal > 0) {
-        availableSkillsCopy.universal -= 1;
-      } else {
-        console.log(`Cannot select this, key: ${key} availableSkillsCopy: ${JSON.stringify(availableSkillsCopy)}`);
-        return;
-      }
-    } else if (languageSkills.includes(key)) {
-      if (availableSkillsCopy.language > 0) {
-        availableSkillsCopy.language -= 1;
-      } else if (availableSkillsCopy.universal > 0) {
-        availableSkillsCopy.universal -= 1;
-      } else {
-        console.log(`Cannot select this, key: ${key} availableSkillsCopy: ${JSON.stringify(availableSkillsCopy)}`);
-        return;
-      }
-    } else if (interpersonalSkills.includes(key)) {
-      if (availableSkillsCopy.interpersonal > 0) {
-        availableSkillsCopy.interpersonal -= 1;
-      } else if (availableSkillsCopy.universal > 0) {
-        availableSkillsCopy.universal -= 1;
-      } else {
-        console.log(`Cannot select this, key: ${key} availableSkillsCopy: ${JSON.stringify(availableSkillsCopy)}`);
-        return;
-      }
-    } else if (availableSkillsCopy.universal > 0) {
-      availableSkillsCopy.universal -= 1;
-    } else {
-      console.log(`Cannot select this, key: ${key} availableSkillsCopy: ${JSON.stringify(availableSkillsCopy)}`);
-      return;
-    }
-
-    selectedSkills.push(key);
-    const index = availableValuesCopy.indexOf(newValue);
-    if (index !== -1) {
-        availableValuesCopy.splice(index, 1)
-    } else {
-      console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValuesCopy} - case 3`);
+    if (availableValues.indexOf(newValue) === -1) {
+      console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValues} - case 3`);
     }
 
     setSkills({ ...skills, [key]: { ...skills[key], value: newValue, occupation: true, customName: customName } });
-    setAvailableValues(availableValuesCopy);
-    setAvailableSkills(availableSkillsCopy);
   }
 
   function onCustomName(key, customName) {
@@ -308,14 +209,12 @@ function SkillsEditableForHobby({ characterSheet, skills, setSkills }) {
   function unselectSkills(skillKeys) {
     const skillsChanges = {};
     skillKeys.forEach(skillKey => {
-      const indexInSelected = selectedSkills.indexOf(skillKey);
-      if (indexInSelected === -1) {
-        // console.log(`${skillKey} is not in selectedSkills ${selectedSkills} when unselecting`);
+      if (selectedSkills.indexOf(skillKey) === -1) {
+        console.error(`SkillsEditableForHobby - Skill ${skillKey} is not selected when unselecting`);
         return;
       }
 
       skillsChanges[skillKey] = { ...skills[skillKey], value: skills[skillKey].baseValue, hobby: false, customName: "" };
-      selectedSkills.splice(indexInSelected, 1);
     });
 
     if (Object.keys(skillsChanges).length > 0) {

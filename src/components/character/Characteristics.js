@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { LanguageContext } from '../../App';
-import { FlagsContext } from "../Game";
+import { useFlagCheck } from "../../store/slices/flagSlice";
 import CharacteristicCell from './CharacteristicCell';
 
 export default function Characteristics({ characterSheet, chars, setChars }) {
-  const { flagConditionCheck } = useContext(FlagsContext);
-  const isEditable = flagConditionCheck("flag_characteristics_editable");
+  const flagCheck = useFlagCheck();
+  const isEditable = flagCheck("flag_characteristics_editable");
 
   if (!isEditable) {
     return <CharacteristicsTable {...{ characterSheet, chars, isEditable }} />;
