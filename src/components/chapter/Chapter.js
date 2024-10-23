@@ -3,6 +3,7 @@ import { LanguageContext } from "../../App";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
+import MapModal from "../MapModal";
 import { FlagCheckContext, useFlagCheck, createFlagCheck } from "../../store/slices/flagSlice";
 import * as utils from "../../utils/utils";
 
@@ -110,13 +111,7 @@ function Interactions({ interactions, onAction }) {
   );
 }
 
-export default function Chapter({ 
-  chapterKey,
-  nextChapter,
-  setMapLocation,
-  isReloading,
-  updateStateSnapshot,
-  onChapterAction }) {
+export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const [chapter, setChapter] = useState(null);
   const [interactionFinished, setInteractionFinished] = useState(false);
@@ -138,40 +133,31 @@ export default function Chapter({
           onLeave(chapter);
         }
 
-        updateStateSnapshot();
+        onUpdateSnapshot();
 
-        onChapterAction("action_clear_highlight", ""); // reset highlight
+        onChapterAction("action_clear_highlight", "");
         if (data.check) {
           switch (data.check.type) {
             case "roll":
-              onChapterAction("action_set_highlight", { "key": data.check.key, "level": data.check.level });
+              onChapterAction("action_set_highlight", { key: data.check.key, level: data.check.level });
               break;
             case "roll_select":
-              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { "key": roll.key, "level": roll.level }));
+              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { key: roll.key, level: roll.level }));
               break;
             case "opposed_roll":
-              onChapterAction("action_set_highlight", { "key": data.check.key, "level": "all" });
+              onChapterAction("action_set_highlight", { key: data.check.key, level: "all" });
               break;
             case "combat":
-              onChapterAction("action_set_highlight", { "key": "dodge", "level": "all" });
-              onChapterAction("action_set_highlight", { "key": "fighting", "level": "all" });
+              onChapterAction("action_set_highlight", { key: "dodge", level: "all" });
+              onChapterAction("action_set_highlight", { key: "fighting", level: "all" });
               break;
           }
         }
 
-        // reset interactionFinished and checkFlags for new chapter
-        if (interactionFinished) {
-          setInteractionFinished(false);
-        }
-        if (rollFlags.result) {
-          setRollFlags(initRollFlags);
-        }
+        setInteractionFinished(false);
+        setRollFlags(initRollFlags);
 
         setChapter(data);
-
-        if (data.location) {
-          setMapLocation(data.location);
-        }
 
         // useEffect may be triggered multiple times with the same chapterKey
         // run onLoad only for the first time
@@ -286,7 +272,7 @@ export default function Chapter({
 
   function onOptionSelected(nextKey, optionText) {
     if (interactionChapters[chapterKey]) {
-      nextChapter(nextKey, interactionChapters[chapterKey], true);
+      onNextChapter(nextKey, interactionChapters[chapterKey], true);
       return;
     }
     if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
@@ -303,19 +289,19 @@ export default function Chapter({
           historyItem.opponentName = chapter.check.opponent.name;
           break;
       }
-      nextChapter(nextKey, historyItem, true);
+      onNextChapter(nextKey, historyItem, true);
       return;
     }
     if (chapter.interactions) { // { chapterKey, optionText, type=interaction, texts }
       const texts = chapter.interactions.map(interaction => interaction.text);
-      nextChapter(nextKey, { chapterKey, optionText, type: "interaction", texts }, true);
+      onNextChapter(nextKey, { chapterKey, optionText, type: "interaction", texts }, true);
       return;
     }
-    nextChapter(nextKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
+    onNextChapter(nextKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
   }
 
   if (chapterKey === 0) {
-    return <Chapter0 onOptionSelected={nextChapter} />;
+    return <Chapter0 onOptionSelected={onNextChapter} />;
   }
 
   if (!chapter || chapter.key !== chapterKey) {
@@ -331,6 +317,7 @@ export default function Chapter({
       <div className="px-2">
         <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
       </div>
+      <MapModal mapLocation={chapter.location} />
     </FlagCheckContext.Provider>
   )
 }

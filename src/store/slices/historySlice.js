@@ -12,11 +12,11 @@ const historySlice = createSlice({
       state.items.push(action.payload);
       state.index = state.items.length - 1;
     },
-    setIndex(state, action) { // action: { type: 'history/setIndex', payload: index }
+    setHistoryIndex(state, action) { // action: { type: 'history/setIndex', payload: index }
       state.index = action.payload;
     },
   },
 });
 
-export const { addHistory, setIndex } = historySlice.actions;
+export const { addHistory, setHistoryIndex } = historySlice.actions;
 export default historySlice.reducer;

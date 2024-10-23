@@ -18,14 +18,14 @@ const jumpToConfirmText = {
   zh: "跳转到以前的章节？",
 };
 
-function HistoryItem({ historyItem, historyIndex, onJumpToChapter }) {
+function HistoryItem({ historyItem, historyIndex, onHistorySelected }) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
 
   function jumpToChapter() {
     if (window.confirm(autoLang(jumpToConfirmText))) {
       console.log(`history chapter key: ${historyItem.chapterKey}, index: ${historyIndex}`);
-      onJumpToChapter(historyIndex);
+      onHistorySelected(historyIndex);
     }
   }
 
@@ -72,7 +72,7 @@ function HistoryItem({ historyItem, historyIndex, onJumpToChapter }) {
   );
 }
 
-export default function HistoryModal({ onJumpToChapter }) {
+export default function HistoryModal({ onHistorySelected }) {
   const { autoLang } = useContext(LanguageContext);
   const historyStore = useSelector(state => state.history);
 
@@ -90,7 +90,7 @@ export default function HistoryModal({ onJumpToChapter }) {
             </svg>
             <small className="ms-2">{ autoLang(firstItem) }</small>
           </button>
-          { historyStore.items.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ historyItem, onJumpToChapter }} />)}
+          { historyStore.items.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ historyItem, onHistorySelected }} />)}
         </div>
       </div>
     </div>

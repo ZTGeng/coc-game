@@ -3,26 +3,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext, CharacterSheetContext } from "../App";
 import Character from "./character/Character";
 import Chapter from "./chapter/Chapter";
-import chapterMap from "./chapter/chapterMap";
-import MapModal from "./MapModal";
 import HistoryModal from "./HistoryModal";
 import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
 import { initAttr, setAttr, initSkill, setSkill, checkSkillBox, setOccupation } from "../store/slices/characterSlice";
-import { addHistory, setIndex } from "../store/slices/historySlice";
+import { addHistory, setHistoryIndex } from "../store/slices/historySlice";
 import * as utils from "../utils/utils";
 
-const initChapterStatus = new Uint32Array(9);
-initChapterStatus[0] = 1;
+// const initChapterStatus = new Uint32Array(9);
+// initChapterStatus[0] = 1;
+const initChapterVisits = new Array(270).fill(false);
+initChapterVisits[0] = true;
 
 export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const [chapterKey, setChapterKey] = useState(0);
-  const [mapLocation, setMapLocation] = useState(null);
-  const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
+  // const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
+  const [chapterVisits, setChapterVisits] = useState(initChapterVisits);
   // const [chapterHistory, setChapterHistory] = useState([]);
   // const [historyIndex, setHistoryIndex] = useState(-1);
   const [isReloading, setIsReloading] = useState(false);
@@ -78,7 +78,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     return snapshot;
   }
 
-  function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
+  // function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
     // skillsCopy = Object.keys(skillSnapshot)
     //   .reduce((acc, skillKey) => {
     //     acc[skillKey] = { ...initSkills[skillKey] };
@@ -91,7 +91,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     //   }, { ...initSkills });
     // checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
     // setSkills(skillsCopy);
-  }
+  // }
 
   const gameFlagFunc = {
     "flag_characteristics_unfinished": () => Object.values(characterStore.chars).some(char => char.value === ""),
@@ -131,7 +131,18 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action in actions && actions[action](param);
   }
 
-  const adjustHighlight = (key, level, color) => {
+  function onUpdateSnapshot() {
+    stateSnapshotRef.current = gameSnapshot();
+  }
+
+  function onHistorySelected(historyIndex) {
+    console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
+    loadHistoryStates(historyIndex);
+    setHistoryIndex(historyIndex);
+    // setHistoryIndex(historyIndex);
+  }
+
+  const setHighlight = (key, level, color) => {
     if (level === "none") {
       dispatch(removeHighlight(key));
     } else {
@@ -148,7 +159,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setShowCharacter(param !== false);
     },
     action_set_highlight: (param) => { // param: { key, level, color } level: none/value/half/fifth/all, color: danger/success
-      adjustHighlight(param.key, param.level, param.color);
+      setHighlight(param.key, param.level, param.color);
     },
     action_clear_highlight: () => {
       dispatch(clearHighlights());
@@ -181,7 +192,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
       if (param.key === "HP") {
         if (!param.noHighlight) {
-          adjustHighlight("HP", "value", newValue < attr.value ? "danger" : "success");
+          setHighlight("HP", "value", newValue < attr.value ? "danger" : "success");
         }
         if (newValue < attr.value) {
           playSound("hp-reduced");
@@ -192,7 +203,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         }
       } else if (param.key === "San") {
         if (!param.noHighlight) {
-          adjustHighlight("San", "value", newValue < attr.value ? "danger" : "success");
+          setHighlight("San", "value", newValue < attr.value ? "danger" : "success");
         }
         playSound("san-reduced");
       }
@@ -221,15 +232,15 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action_initial_san_and_mp: () => {
       dispatch(initAttr({ attrKey: "San", value: characterStore.chars.POW.value }));
       dispatch(initAttr({ attrKey: "MP", value: Math.floor(characterStore.chars.POW.value / 5) }));
-      adjustHighlight("San", "value");
-      adjustHighlight("MP", "value");
-      adjustHighlight("POW", "value");
+      setHighlight("San", "value");
+      setHighlight("MP", "value");
+      setHighlight("POW", "value");
     },
     action_initial_hp_and_reset_luck: () => {
       dispatch(initAttr({ attrKey: "HP", value: Math.floor((characterStore.chars.SIZ.value + characterStore.chars.CON.value) / 10) }));
       dispatch(setAttr({ attrKey: "Luck", value: "" }));
-      adjustHighlight("HP", "value");
-      adjustHighlight("Luck", "value");
+      setHighlight("HP", "value");
+      setHighlight("Luck", "value");
     },
     action_init_luck: () => {
       const results = utils.roll(3, 6);
@@ -263,9 +274,13 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
   
-  function nextChapter(nextKey, historyItem, addToHistory) {
-    console.log(`Game - nextChapter: c${chapterKey} => c${nextKey}`);
-      // if (addToHistory) {
+  function onNextChapter(nextKey, historyItem, addToHistory) {
+    console.log(`Game - nextChapter: c${chapterKey} => c${nextKey}, addToHistory: ${addToHistory}, historyItem: ${JSON.stringify(historyItem)}`);
+      if (addToHistory) {
+        const historyItem = {};
+        historyItem.chapterKey = chapterKey;
+        historyItem.states = stateSnapshotRef.current;
+        dispatch(addHistory(historyItem));
       //   historyItem.states = stateSnapshotRef.current;
       //   if (historyIndex !== -1) {
       //     setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
@@ -273,24 +288,18 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       //   } else {
       //     setChapterHistory([...chapterHistory, historyItem]);
       //   }
-      //   // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
-      // }
+      }
     setIsReloading(false);
     setChapterKey(nextKey);
-    if (!isChapterVisited(nextKey)) {
-      markChapterVisited(nextKey);
-    }
-  }
+    // if (!isChapterVisited(nextKey)) {
+    //   markChapterVisited(nextKey);
+    // }
+    const chapterVisitsCopy = [...chapterVisits];
+    chapterVisitsCopy[nextKey] = true
+    setChapterVisits(chapterVisitsCopy);
+  }  
 
-  function onJumpToChapter(historyIndex) {
-    console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
-    loadHistoryStates(historyIndex);
-    // setHistoryIndex(historyIndex);
-  }
-
-  function updateStateSnapshot() {
-    stateSnapshotRef.current = gameSnapshot();
-  }
+  
 
   function loadHistoryStates(historyIndex) {
     // const states = chapterHistory[historyIndex].states;
@@ -310,15 +319,15 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     // setChapterKey(states.chapterKey);
   }
 
-  function findLastSkillSnapshot(historyItemIndex) {
+  // function findLastSkillSnapshot(historyItemIndex) {
     // const lastItem = chapterHistory.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states && historyItem.states.skills);
     // return lastItem ? lastItem.states.skills : {};
-  }
+  // }
 
   function save(saveKey) {
     const saveData = {
       // chapterHistory,
-      chapterStatus: Array.from(chapterStatus),
+      // chapterStatus: Array.from(chapterStatus),
       // chars,
       currentStates: stateSnapshotRef.current,
     }
@@ -335,7 +344,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         currentStates: statesToLoad
       } = JSON.parse(saveData);
       // setChapterHistory(chapterHistoryToLoad);
-      setChapterStatus(new Uint32Array(chapterStatusToLoad));
+      // setChapterStatus(new Uint32Array(chapterStatusToLoad));
       // setChars(charsToLoad);
 
       let skillSnapshot = statesToLoad.skills;
@@ -343,7 +352,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         const lastItemWithSkillSnapshot = chapterHistoryToLoad.findLast((historyItem) => historyItem.states && historyItem.states.skills);
         skillSnapshot = lastItemWithSkillSnapshot ? lastItemWithSkillSnapshot.states.skills : {};
       }
-      setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
+      // setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
 
       // setFlags({ ...initFlags, ...statesToLoad.flags });
       // setAttributes(statesToLoad.attributes);
@@ -356,24 +365,24 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
 
-  function markChapterVisited(chapterIndex) {
-    console.log(`Game - markChapterVisited: chapterStatusCopy ${JSON.stringify(chapterStatus)} `);
-    const chapterStatusCopy = new Uint32Array(chapterStatus);
-    const arrayIndex = Math.floor(chapterIndex / 32);
-    const bitPosition = chapterIndex % 32;
-    chapterStatusCopy[arrayIndex] |= (1 << bitPosition);
-    setChapterStatus(chapterStatusCopy);
-    for (let i = 0; i < chapterStatusCopy.length; i++) {
-    console.log(`Game - markChapterVisited: chapterStatusCopy ${chapterStatusCopy[i]} `);
-    }
-  }
+  // function markChapterVisited(chapterIndex) {
+  //   console.log(`Game - markChapterVisited: chapterStatusCopy ${JSON.stringify(chapterStatus)} `);
+  //   const chapterStatusCopy = new Uint32Array(chapterStatus);
+  //   const arrayIndex = Math.floor(chapterIndex / 32);
+  //   const bitPosition = chapterIndex % 32;
+  //   chapterStatusCopy[arrayIndex] |= (1 << bitPosition);
+  //   setChapterStatus(chapterStatusCopy);
+  //   for (let i = 0; i < chapterStatusCopy.length; i++) {
+  //   console.log(`Game - markChapterVisited: chapterStatusCopy ${chapterStatusCopy[i]} `);
+  //   }
+  // }
 
-  function isChapterVisited(chapterIndex) {
-    const arrayIndex = Math.floor(chapterIndex / 32);
-    const bitPosition = chapterIndex % 32;
-    return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
-  }
-  window.isChapterVisited = isChapterVisited;
+  // function isChapterVisited(chapterIndex) {
+  //   const arrayIndex = Math.floor(chapterIndex / 32);
+  //   const bitPosition = chapterIndex % 32;
+  //   return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
+  // }
+  // window.isChapterVisited = isChapterVisited;
   
   // Cheating
   window.goto = (chapterKey) => {
@@ -395,10 +404,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         <div id="chapter" className="col px-2">
           <Chapter {...{
             chapterKey,
-            nextChapter,
-            setMapLocation,
             isReloading,
-            updateStateSnapshot,
+            onNextChapter,
+            onUpdateSnapshot,
             onChapterAction
           }} />
         </div>
@@ -408,9 +416,8 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
           </div>
         )}
       </div>
-      <MapModal {...{ mapLocation }} />
-      <HistoryModal {...{ onJumpToChapter }} />
-      <AchievementModal {...{ chapterStatus }} />
+      <HistoryModal {...{ onHistorySelected }} />
+      <AchievementModal {...{ chapterVisits }} />
     </FlagCheckContext.Provider>
   )
 }

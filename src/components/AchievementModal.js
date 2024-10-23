@@ -18,10 +18,10 @@ const trophyCollectionTitle = {
   zh: "奖杯收集",
 };
 
-export default function Achievement({ chapterStatus }) {
+export default function Achievement({ chapterVisits }) {
   const { autoLang } = useContext(LanguageContext);
 
-  const chapterVisits = toBooleanArray();
+  // const chapterVisits = toBooleanArray();
 
   function indexToChapterKey(index) {
     return index;
@@ -34,13 +34,13 @@ export default function Achievement({ chapterStatus }) {
 
   // 将 chapterStatus 转换为长度为 270 的布尔数组
   function toBooleanArray() {
-    const boolArray = new Array(270).fill(false);  // 创建一个初始为 false 的布尔数组
-    for (let i = 0; i < 270; i++) {
-      const arrayIndex = Math.floor(i / 32);
-      const bitPosition = i % 32;
-      boolArray[i] = (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
-    }
-    return boolArray;
+    // const boolArray = new Array(270).fill(false);  // 创建一个初始为 false 的布尔数组
+    // for (let i = 0; i < 270; i++) {
+    //   const arrayIndex = Math.floor(i / 32);
+    //   const bitPosition = i % 32;
+    //   boolArray[i] = (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
+    // }
+    // return boolArray;
   }
 
   return (
