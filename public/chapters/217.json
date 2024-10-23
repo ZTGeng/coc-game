@@ -1,25 +1,58 @@
 {
-    "key": 217,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "Faces loom at you, thick with blood and lit by inferno. Someone claws at you, tears at your flesh, flames dancing in his terrified eyes. You fall back—" },
-            { "tag": "info", "text": [
-                { "content": "Lose 1D3 Sanity points. Lose 1D2 hit points." }
-            ] }
-        ],
-        "zh": [
-            { "content": "突然有一张面孔逼近你，沾满血渍，还在熊熊燃烧。有人用利爪挠抓着你，撕扯着你的皮肉，他恐惧的眼中有火焰在跳动。你向后退缩——" },
-            { "tag": "info", "text": [
-                { "content": "失去1D3点理智值。失去1D2点耐久值。" }
-            ] }
+  "key": 217,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "Faces loom at you, thick with blood and lit by inferno. Someone claws at you, tears at your flesh, flames dancing in his terrified eyes. You fall back—"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Lose 1D3 Sanity points. Lose 1D2 hit points."
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+      }
     ],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d3" } },
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d2" } }
+    "zh": [
+      {
+        "content": "突然有一张面孔逼近你，沾满血渍，还在熊熊燃烧。有人用利爪挠抓着你，撕扯着你的皮肉，他恐惧的眼中有火焰在跳动。你向后退缩——"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "失去1D3点理智值。失去1D2点耐久值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 45
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "San",
+        "delta": "-1d3"
+      }
+    },
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": "-1d2"
+      }
+    }
+  ]
 }

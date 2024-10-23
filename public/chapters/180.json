@@ -1,27 +1,50 @@
 {
-    "key": 180,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "As the light fades you return to the Ledbetter house and eat a light supper. May is unusually taciturn. Ruth’s eyes flick to yours several times during the meal. There is an urgency there you cannot quite interpret. Afterwards, May ushers the girl into their room." },
-            { "content": "You have been in Emberhead for barely one whole day and you already feel confined by it, both geographically and socially. The evening seems to offer little." }
-        ],
-        "zh": [
-            { "content": "天色渐晚，你回到莱德贝特家，简单地吃了一顿晚饭。梅反常地沉默。吃饭时，露丝轻轻瞟了你几眼，似乎有一种你难以理解的急迫感。吃完饭，梅就拉着女儿回了屋。" },
-            { "content": "你在烬头村已经停留将近一整天了，这里从地理到社会无不给你一种闭塞的感觉。这一晚似乎没有什么事可做。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Do some stargazing", "zh": "到外面眺望星空" } },
-        { "key": 1, "text": { "en": "Attempt to speak to Ruth", "zh": "试着和露丝说说话" } },
-        {
-            "key": 2,
-            "text": {
-                "en": "Time to follow up on that appointment with Arbogast",
-                "zh": "是时候赴约去见阿博加斯特了"
-            },
-            "show": "flag_meet_arbogast",
-            "secret": true
-        }
+  "key": 180,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "As the light fades you return to the Ledbetter house and eat a light supper. May is unusually taciturn. Ruth’s eyes flick to yours several times during the meal. There is an urgency there you cannot quite interpret. Afterwards, May ushers the girl into their room."
+      },
+      {
+        "content": "You have been in Emberhead for barely one whole day and you already feel confined by it, both geographically and socially. The evening seems to offer little."
+      }
+    ],
+    "zh": [
+      {
+        "content": "天色渐晚，你回到莱德贝特家，简单地吃了一顿晚饭。梅反常地沉默。吃饭时，露丝轻轻瞟了你几眼，似乎有一种你难以理解的急迫感。吃完饭，梅就拉着女儿回了屋。"
+      },
+      {
+        "content": "你在烬头村已经停留将近一整天了，这里从地理到社会无不给你一种闭塞的感觉。这一晚似乎没有什么事可做。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Do some stargazing",
+        "zh": "到外面眺望星空"
+      },
+      "goto": 131
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Attempt to speak to Ruth",
+        "zh": "试着和露丝说说话"
+      },
+      "goto": 138
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Time to follow up on that appointment with Arbogast",
+        "zh": "是时候赴约去见阿博加斯特了"
+      },
+      "show": "flag_meet_arbogast",
+      "secret": true,
+      "goto": 200
+    }
+  ]
 }

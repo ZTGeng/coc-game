@@ -73,6 +73,8 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
     opponentRollResult();
   }, []);
 
+  if (!opponentMoveResult.skill) return null;
+
   const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attrStore.HP.value, DEX: charStore.DEX.value };
   const opponent = { ...check.opponent, isOpponent: true, HP: opponentHp };
   const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
@@ -378,8 +380,6 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
       setRollFlags({ result: "pass" });
     }
   }
-
-  if (!opponentMoveResult.skill) return <div>Loading...</div>
 
   const cardTitle = `${autoLang(utils.TEXTS.combat)} ${autoLang(you.name)} vs ${autoLang(opponent.name)}`;
   const roundText = autoLang({ zh: `第 ${progress.round + 1} 轮`, en: `Round ${progress.round + 1}` });

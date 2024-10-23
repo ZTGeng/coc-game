@@ -1,15 +1,32 @@
 {
-    "key": 105,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "“I’m afraid I have some errands to run before dark. So I must close the library for today. I do hope you will return tomorrow afternoon if you are so inclined?”" },
-            { "content": "You leave the building with Winters, waiting as he locks up. You thank him for the coffee and the access to the library. He disappears off down an alley. You hope to be away from the village before tomorrow afternoon, but it’s good to know that there is a place you can occupy yourself." }
-        ],
-        "zh": [
-            { "content": "“恐怕我天黑前有些差事要干，所以今天图书室必须关门了。如果您特别有需要的话，我希望您明天下午再来？”" },
-            { "content": "你和文特斯先生一起离开了房子，等着他锁上门。你感谢他请你喝咖啡，还有查阅藏书室的书。他走进小巷消失了。你希望明天下午之前你已经离开村子了，但知道这里有一个可以专注的地方总是一件好事。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 105,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "“I’m afraid I have some errands to run before dark. So I must close the library for today. I do hope you will return tomorrow afternoon if you are so inclined?”"
+      },
+      {
+        "content": "You leave the building with Winters, waiting as he locks up. You thank him for the coffee and the access to the library. He disappears off down an alley. You hope to be away from the village before tomorrow afternoon, but it’s good to know that there is a place you can occupy yourself."
+      }
+    ],
+    "zh": [
+      {
+        "content": "“恐怕我天黑前有些差事要干，所以今天图书室必须关门了。如果您特别有需要的话，我希望您明天下午再来？”"
+      },
+      {
+        "content": "你和文特斯先生一起离开了房子，等着他锁上门。你感谢他请你喝咖啡，还有查阅藏书室的书。他走进小巷消失了。你希望明天下午之前你已经离开村子了，但知道这里有一个可以专注的地方总是一件好事。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 180
+    }
+  ]
 }

@@ -1,43 +1,95 @@
 {
-    "key": 265,
-    "text": {
-        "en": [
-            { "content": "You explain you are joining the faculty at the renowned Miskatonic University. It’s only a junior position, with teaching and tutoring duties, but the institution is well regarded. Who knows where the appointment might lead? A symposium, a visiting lectureship, even one of its world-spanning expeditions. " },
-            { "content": "“Hmmp.” Silas wrinkles his nose. “I had enough of book learning when I was a young ‘un. Still, I suppose it’s well enough for those who likes it.”" },
-            { "tag": "info", "text": [
-                { "content": "Your Credit Rating skill is 30%" },
-                { "content": "Your Occupation Skills are: Library Use, Other Language (specify one), Own Language and Psychology. You may also pick four other skills (not Cthulhu Mythos) as relevant academic or personal specialties. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. " }
-            ] }
-        ],
-        "zh": [
-            { "content": "你解释说，你正要加入著名的密斯卡托尼克大学成为研究员。虽然这只是个初级职位，主要任务是教课和辅导，但这所学校久负盛名。谁又知道此后会发生什么呢？参与座谈会、客座演讲甚至加入遍布世界的探险行动？" },
-            { "content": "“哼。”西拉斯缩了缩鼻子。“我小时候就把书读够了。但我觉得对喜欢学习的人来说，还不错。”" },
-            { "tag": "info", "text": [
-                { "content": "你的「信用评级」技能是30%。" },
-                { "content": "你的本职技能是：「图书馆使用」，「外语」（选择一种），「母语」，「心理学」。你还可以选择除了「克苏鲁神话」以外的其他任意四项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。" }
-            ] }
+  "key": 265,
+  "text": {
+    "en": [
+      {
+        "content": "You explain you are joining the faculty at the renowned Miskatonic University. It’s only a junior position, with teaching and tutoring duties, but the institution is well regarded. Who knows where the appointment might lead? A symposium, a visiting lectureship, even one of its world-spanning expeditions. "
+      },
+      {
+        "content": "“Hmmp.” Silas wrinkles his nose. “I had enough of book learning when I was a young ‘un. Still, I suppose it’s well enough for those who likes it.”"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Your Credit Rating skill is 30%"
+          },
+          {
+            "content": "Your Occupation Skills are: Library Use, Other Language (specify one), Own Language and Psychology. You may also pick four other skills (not Cthulhu Mythos) as relevant academic or personal specialties. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. "
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills_occupation_unfinished" }
+      }
     ],
-    "onload": [
-        { "action": "action_show_character_sheet", "param": true },
-        { 
-            "action": "action_set_occupation_and_credit", 
-            "param": {
-                "name": { "en": "Professor", "zh": "教授" },
-                "credit": 30,
-                "skills": ["library", "lang_own", "psychology"],
-                "interpersonal": 0, 
-                "language": 1, 
-                "art": 0, 
-                "universal": 4 
-            }
-        },
-        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": true } }
-    ],
-    "onleave": [
-        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": false } }
+    "zh": [
+      {
+        "content": "你解释说，你正要加入著名的密斯卡托尼克大学成为研究员。虽然这只是个初级职位，主要任务是教课和辅导，但这所学校久负盛名。谁又知道此后会发生什么呢？参与座谈会、客座演讲甚至加入遍布世界的探险行动？"
+      },
+      {
+        "content": "“哼。”西拉斯缩了缩鼻子。“我小时候就把书读够了。但我觉得对喜欢学习的人来说，还不错。”"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你的「信用评级」技能是30%。"
+          },
+          {
+            "content": "你的本职技能是：「图书馆使用」，「外语」（选择一种），「母语」，「心理学」。你还可以选择除了「克苏鲁神话」以外的其他任意四项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "disabled": "flag_skills_occupation_unfinished",
+      "goto": 128
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_show_character_sheet",
+      "param": true
+    },
+    {
+      "action": "action_set_occupation_and_credit",
+      "param": {
+        "name": {
+          "en": "Professor",
+          "zh": "教授"
+        },
+        "credit": 30,
+        "skills": [
+          "library",
+          "lang_own",
+          "psychology"
+        ],
+        "interpersonal": 0,
+        "language": 1,
+        "art": 0,
+        "universal": 4
+      }
+    },
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_occupation_skills_editable",
+        "value": true
+      }
+    }
+  ],
+  "onleave": [
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_occupation_skills_editable",
+        "value": false
+      }
+    }
+  ]
 }

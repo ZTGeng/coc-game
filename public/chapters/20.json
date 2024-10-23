@@ -1,17 +1,38 @@
 {
-    "key": 20,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "The artisan sniffs, trying to clear his nose of blood. He seems to slip in and out of consciousness. You loom over him, threatening further violence unless he talks about the bodies" },
-            { "content": "“Just … villagers,” he rasps. “Died … natural. We save them for … the Festival.”" },
-            { "content": "His eyes close and his head lolls to the side. You can close him up in the workshop while you think about your next move." }
-        ],
-        "zh": [
-            { "content": "工匠抽动鼻子，想把充血的鼻腔清干净。他的意识似乎时断时续。你逼近他威胁道，除非他说出尸体的事情，否则严加拷打。" },
-            { "content": "“只是……村民，”他用刺耳的声音说道。“自然……死亡了。我们……节日要用。”" },
-            { "content": "他闭上了眼睛，头垂到一边。你可以把他关在工坊里，然后考虑下一步的目的地。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 20,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "The artisan sniffs, trying to clear his nose of blood. He seems to slip in and out of consciousness. You loom over him, threatening further violence unless he talks about the bodies"
+      },
+      {
+        "content": "“Just … villagers,” he rasps. “Died … natural. We save them for … the Festival.”"
+      },
+      {
+        "content": "His eyes close and his head lolls to the side. You can close him up in the workshop while you think about your next move."
+      }
+    ],
+    "zh": [
+      {
+        "content": "工匠抽动鼻子，想把充血的鼻腔清干净。他的意识似乎时断时续。你逼近他威胁道，除非他说出尸体的事情，否则严加拷打。"
+      },
+      {
+        "content": "“只是……村民，”他用刺耳的声音说道。“自然……死亡了。我们……节日要用。”"
+      },
+      {
+        "content": "他闭上了眼睛，头垂到一边。你可以把他关在工坊里，然后考虑下一步的目的地。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 120
+    }
+  ]
 }

@@ -1,24 +1,68 @@
 {
-    "key": 221,
-    "location": "chamber",
-    "text": {
-        "en": [
-            { "content": "Arbogast fixes you with a lopsided yet intense stare. “You seek me out, eh?” He looks up at the cave ceiling. “Which one of them told you about me? Never mind, it don’t matter. Truth is, they fear what I know. They’d never come at me direct. Don’t want to end up like old Arbogast.” He giggles. The high-pitched sound is all the more grotesque coming from those bloated lips. Then, abruptly, his gaze turns to iron." },
-            { "content": "“Emberhead died forty years ago. Shattered by flame, consumed by the stars themselves. The ancient hill was cleansed by inferno. And from the blackened ground came new life, as is the way of all things. The Abenaki knew.”" },
-            { "content": "Arbogast wipes his nose on his sleeve. “Except none of that happened. The flames were turned away. The necessary death postponed a year, and a year again. And now those up there—” He stabs a scrawny finger at the ceiling. “—think themselves saviors of the village. Think they can defy the Great Old Ones! Iä! Cthugha!” He shakes his head. “With strange aeons their lives matter less than the blink of an eye.”" },
-            { "content": "A fierce intelligence burns in his gaze. But you suspect Arbogast may be quite insane. Should his mood change, it would not be difficult for him to seize one of the loose rocks and crack your skull with it. " }
-        ],
-        "zh": [
-            { "content": "阿博加斯特用尖锐的目光睨视着你。“你来找我的，嗯？”他抬头望向洞顶。“谁跟你说的我？我不介意，没关系。其实，他们害怕我知道的东西。他们从来不敢正面接触我。可不要落得和老阿博加斯特一样的结局。”他咯咯笑起来。高亢的笑声从浮肿溃烂的嘴唇中发出，显得格外丑陋怪诞。可是他的眼神突然变得像铁一样犀利。" },
-            { "content": "“烬头村四十年以前就死了。被火焰毁灭，被星星吞噬。古老的山坡被地狱之火洗了个干净。新生命来到烧焦的土地上，一切周而复始。阿布纳基人知道。”" },
-            { "content": "阿博加斯特用衣袖抹了下鼻子。“只是没发生过这种事罢了。火焰被送走了。必须的牺牲推迟了一年，又一年。现在上面的那些家伙——”他用枯瘦的手指向上戳了戳洞顶——“觉得自己是村庄的拯救者。妄想他们可以打败旧日支配者！Iä！Cthugha！”他摇晃着脑袋。“在诡异的万古中他们的小命不过是一眨眼的事。”" },
-            { "content": "他的目光里燃烧着狂暴的智慧。但你觉得阿博加斯特可能疯得不轻。只要他情绪有一点变化，他可很容易就能抓起崖壁上松脱的岩石，用它把你的脑壳打得粉碎。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Ask Arbogast about the Abenaki", "zh": "问阿博加斯特有关阿布纳基人的事" } },
-        { "key": 1, "text": { "en": "Ask Arbogast about the Great Old Ones", "zh": "问阿博加斯特有关旧日支配者的事" } },
-        { "key": 2, "text": { "en": "Ask Arbogast about the villagers", "zh": "问阿博加斯特有关烬头村村民的事" } },
-        { "key": 3, "text": { "en": "Leave while you still can", "zh": "趁还来得及赶快离开" } }
+  "key": 221,
+  "location": "chamber",
+  "text": {
+    "en": [
+      {
+        "content": "Arbogast fixes you with a lopsided yet intense stare. “You seek me out, eh?” He looks up at the cave ceiling. “Which one of them told you about me? Never mind, it don’t matter. Truth is, they fear what I know. They’d never come at me direct. Don’t want to end up like old Arbogast.” He giggles. The high-pitched sound is all the more grotesque coming from those bloated lips. Then, abruptly, his gaze turns to iron."
+      },
+      {
+        "content": "“Emberhead died forty years ago. Shattered by flame, consumed by the stars themselves. The ancient hill was cleansed by inferno. And from the blackened ground came new life, as is the way of all things. The Abenaki knew.”"
+      },
+      {
+        "content": "Arbogast wipes his nose on his sleeve. “Except none of that happened. The flames were turned away. The necessary death postponed a year, and a year again. And now those up there—” He stabs a scrawny finger at the ceiling. “—think themselves saviors of the village. Think they can defy the Great Old Ones! Iä! Cthugha!” He shakes his head. “With strange aeons their lives matter less than the blink of an eye.”"
+      },
+      {
+        "content": "A fierce intelligence burns in his gaze. But you suspect Arbogast may be quite insane. Should his mood change, it would not be difficult for him to seize one of the loose rocks and crack your skull with it. "
+      }
+    ],
+    "zh": [
+      {
+        "content": "阿博加斯特用尖锐的目光睨视着你。“你来找我的，嗯？”他抬头望向洞顶。“谁跟你说的我？我不介意，没关系。其实，他们害怕我知道的东西。他们从来不敢正面接触我。可不要落得和老阿博加斯特一样的结局。”他咯咯笑起来。高亢的笑声从浮肿溃烂的嘴唇中发出，显得格外丑陋怪诞。可是他的眼神突然变得像铁一样犀利。"
+      },
+      {
+        "content": "“烬头村四十年以前就死了。被火焰毁灭，被星星吞噬。古老的山坡被地狱之火洗了个干净。新生命来到烧焦的土地上，一切周而复始。阿布纳基人知道。”"
+      },
+      {
+        "content": "阿博加斯特用衣袖抹了下鼻子。“只是没发生过这种事罢了。火焰被送走了。必须的牺牲推迟了一年，又一年。现在上面的那些家伙——”他用枯瘦的手指向上戳了戳洞顶——“觉得自己是村庄的拯救者。妄想他们可以打败旧日支配者！Iä！Cthugha！”他摇晃着脑袋。“在诡异的万古中他们的小命不过是一眨眼的事。”"
+      },
+      {
+        "content": "他的目光里燃烧着狂暴的智慧。但你觉得阿博加斯特可能疯得不轻。只要他情绪有一点变化，他可很容易就能抓起崖壁上松脱的岩石，用它把你的脑壳打得粉碎。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Ask Arbogast about the Abenaki",
+        "zh": "问阿博加斯特有关阿布纳基人的事"
+      },
+      "goto": 227
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Ask Arbogast about the Great Old Ones",
+        "zh": "问阿博加斯特有关旧日支配者的事"
+      },
+      "goto": 237
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Ask Arbogast about the villagers",
+        "zh": "问阿博加斯特有关烬头村村民的事"
+      },
+      "goto": 245
+    },
+    {
+      "key": 3,
+      "text": {
+        "en": "Leave while you still can",
+        "zh": "趁还来得及赶快离开"
+      },
+      "goto": 253
+    }
+  ]
 }

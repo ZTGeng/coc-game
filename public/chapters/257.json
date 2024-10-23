@@ -1,16 +1,37 @@
 {
-    "key": 257,
-    "text": {
-        "en": [
-            { "content": "You confront Silas with your suspicions. His brow darkens and he shows a mouthful of twisted teeth." },
-            { "content": "“Ain’t that just like you city types,” he spits. “Thinking the worst of a man after he’s gone out his way to attend to your comfort!” He stalks around to the back of the coach and hauls your bags from the rack, dumping them on the ground at your feet. “Take them! Otherwise I guess you’ll be accusing me of thievery in the morning!”" },
-            { "content": "He marches off into the darkness, raging. That could have gone better" }
-        ],
-        "zh": [
-            { "content": "你当面对西拉斯讲出你的怀疑。他的脸色阴沉下来，张开嘴露出一口七扭八歪的牙齿。" },
-            { "content": "“这车跟你们城里货能一样？”他啐道。“我累了一路，你倒享了一路福！想想吧，真是糟透了！”他大步趟到长途车后面，从行李架上扯下你的包裹，把它摔到你脚边的地上。“拿走！我怕你明天早上又要告我偷包！”" },
-            { "content": "他怒气难平地迈进了黑暗之中。这事本来应该解决得更好的。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 257,
+  "text": {
+    "en": [
+      {
+        "content": "You confront Silas with your suspicions. His brow darkens and he shows a mouthful of twisted teeth."
+      },
+      {
+        "content": "“Ain’t that just like you city types,” he spits. “Thinking the worst of a man after he’s gone out his way to attend to your comfort!” He stalks around to the back of the coach and hauls your bags from the rack, dumping them on the ground at your feet. “Take them! Otherwise I guess you’ll be accusing me of thievery in the morning!”"
+      },
+      {
+        "content": "He marches off into the darkness, raging. That could have gone better"
+      }
+    ],
+    "zh": [
+      {
+        "content": "你当面对西拉斯讲出你的怀疑。他的脸色阴沉下来，张开嘴露出一口七扭八歪的牙齿。"
+      },
+      {
+        "content": "“这车跟你们城里货能一样？”他啐道。“我累了一路，你倒享了一路福！想想吧，真是糟透了！”他大步趟到长途车后面，从行李架上扯下你的包裹，把它摔到你脚边的地上。“拿走！我怕你明天早上又要告我偷包！”"
+      },
+      {
+        "content": "他怒气难平地迈进了黑暗之中。这事本来应该解决得更好的。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 267
+    }
+  ]
 }

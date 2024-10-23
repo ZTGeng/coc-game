@@ -1,34 +1,95 @@
 {
-    "key": 29,
-    "location": "narrow_path",
-    "text": {
-        "en": [
-            { "content": "The northern side of the village is bustling and you are unlikely to remain hidden there for long. You head in the direction of the church, and then move up the east side, behind the houses. A drop looms on your right. One particular section of ground is quite narrow and you have to hug the building for support." },
-            { "tag": "info", "text": [
-                { "content": "You may give this approach up. To proceed, compare your SIZ to your DEX. If your DEX is higher, you may proceed directly. If your SIZ is higher or equal, make a DEX roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "村子北边十分繁忙，你在那里大概隐蔽不了多久。你向教堂的方向前进，然后沿着房子背面向村东头前进。你右边出现了一段断崖。有一部分地面非常狭窄，你必须扶住屋墙作支撑。" },
-            { "tag": "info", "text": [
-                { "content": "你可以选择放弃这条路。如果要前进，游戏将会比较你的“体型”和“敏捷”。如果你的“敏捷”较高，可以直接前进。如果你的“体型”较高或相等，则需要进行一次“敏捷”检定。" }
-            ] }
+  "key": 29,
+  "location": "narrow_path",
+  "text": {
+    "en": [
+      {
+        "content": "The northern side of the village is bustling and you are unlikely to remain hidden there for long. You head in the direction of the church, and then move up the east side, behind the houses. A drop looms on your right. One particular section of ground is quite narrow and you have to hug the building for support."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may give this approach up. To proceed, compare your SIZ to your DEX. If your DEX is higher, you may proceed directly. If your SIZ is higher or equal, make a DEX roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "DEX",
-        "level": "value",
-        "show": "!flag_dex_greater_than_siz"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Give up", "zh": "放弃" }, "show": "!flag_check_finished" },
-        { "key": 1, "text": { "en": "Proceed directly", "zh": "直接前进" }, "show": "flag_dex_greater_than_siz" },
-        { "key": 2, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": ["flag_check_passed", "!flag_dex_greater_than_siz"] },
-        { "key": 3, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": ["flag_check_failed", "!flag_dex_greater_than_siz"] }
+      }
     ],
-    "onload": [
-        { "action": "action_c120_select_option", "param": 3 },
-        { "action": "action_set_highlight", "param": { "key": "SIZ", "level": "value" } }
+    "zh": [
+      {
+        "content": "村子北边十分繁忙，你在那里大概隐蔽不了多久。你向教堂的方向前进，然后沿着房子背面向村东头前进。你右边出现了一段断崖。有一部分地面非常狭窄，你必须扶住屋墙作支撑。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以选择放弃这条路。如果要前进，游戏将会比较你的“体型”和“敏捷”。如果你的“敏捷”较高，可以直接前进。如果你的“体型”较高或相等，则需要进行一次“敏捷”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "DEX",
+    "level": "value",
+    "show": "!flag_dex_greater_than_siz"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Give up",
+        "zh": "放弃"
+      },
+      "show": "!flag_check_finished",
+      "goto": 120
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Proceed directly",
+        "zh": "直接前进"
+      },
+      "show": "flag_dex_greater_than_siz",
+      "goto": 42
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": [
+        "flag_check_passed",
+        "!flag_dex_greater_than_siz"
+      ],
+      "goto": 42
+    },
+    {
+      "key": 3,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": [
+        "flag_check_failed",
+        "!flag_dex_greater_than_siz"
+      ],
+      "goto": 36
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_c120_select_option",
+      "param": 3
+    },
+    {
+      "action": "action_set_highlight",
+      "param": {
+        "key": "SIZ",
+        "level": "value"
+      }
+    }
+  ]
 }

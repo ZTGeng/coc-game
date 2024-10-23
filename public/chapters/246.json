@@ -1,33 +1,75 @@
 {
-    "key": 246,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "In your dreams, the trees change position, lifting their roots from the ground, and shuffling to another spot before planting themselves again. This seems perfectly normal, companionable even. They start to glow, a greenish-yellow as the flames lick—" },
-            { "content": "Flames?" },
-            { "content": "The trees begin to scream. " },
-            { "content": "Tongues of flickering fire snake up the tree towards you. You scrabble at the belt which binds you to this pyre, coughing as the vapors fill your throat, choking—" },
-            { "tag": "info", "text": [
-                { "content": "Make a Sanity roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "在你的梦中，树木在挪动位置，它们的根须从地上拔起，拖着步子走到别处，又自己固定下来。这看上去完全正常，甚至算是友善。它们开始发光，是黄绿色的光，还有火舌在舔食——" },
-            { "content": "火？" },
-            { "content": "树木开始尖叫。" },
-            { "content": "闪烁的火舌蜿蜒爬上树，朝你扑来。你的腰带成了拴在火葬堆上的累赘。你拼命撕扯着腰带，咳嗽着，浓烟充斥着你的咽喉，令你窒息——" },
-            { "tag": "info", "text": [
-                { "content": "进行一次“理智”检定。" }
-            ] }
+  "key": 246,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "In your dreams, the trees change position, lifting their roots from the ground, and shuffling to another spot before planting themselves again. This seems perfectly normal, companionable even. They start to glow, a greenish-yellow as the flames lick—"
+      },
+      {
+        "content": "Flames?"
+      },
+      {
+        "content": "The trees begin to scream. "
+      },
+      {
+        "content": "Tongues of flickering fire snake up the tree towards you. You scrabble at the belt which binds you to this pyre, coughing as the vapors fill your throat, choking—"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Sanity roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "San",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "在你的梦中，树木在挪动位置，它们的根须从地上拔起，拖着步子走到别处，又自己固定下来。这看上去完全正常，甚至算是友善。它们开始发光，是黄绿色的光，还有火舌在舔食——"
+      },
+      {
+        "content": "火？"
+      },
+      {
+        "content": "树木开始尖叫。"
+      },
+      {
+        "content": "闪烁的火舌蜿蜒爬上树，朝你扑来。你的腰带成了拴在火葬堆上的累赘。你拼命撕扯着腰带，咳嗽着，浓烟充斥着你的咽喉，令你窒息——"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次“理智”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "San",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 252
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 258
+    }
+  ]
 }

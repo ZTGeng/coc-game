@@ -1,27 +1,57 @@
 {
-    "key": 232,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "You examine the workshop. It is well constructed, but the wood has been weakened by years of sun and rain. You may be able to break it open with one fierce charge. You had better make it good, though. You can’t afford to attract attention with repeated tries." },
-            { "tag": "info", "text": [
-                { "content": "Make a STR roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你检查了这间工坊。它的结构完整无缺，但多年的日晒雨淋让木材变得脆弱；你只要猛然冲击就可能把它打破。但你必须手脚利落，如果重复尝试引人注意，就得不偿失了。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次“力量”检定。" }
-            ] }
+  "key": 232,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "You examine the workshop. It is well constructed, but the wood has been weakened by years of sun and rain. You may be able to break it open with one fierce charge. You had better make it good, though. You can’t afford to attract attention with repeated tries."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a STR roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "STR",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你检查了这间工坊。它的结构完整无缺，但多年的日晒雨淋让木材变得脆弱；你只要猛然冲击就可能把它打破。但你必须手脚利落，如果重复尝试引人注意，就得不偿失了。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次“力量”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "STR",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 244
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 238
+    }
+  ]
 }

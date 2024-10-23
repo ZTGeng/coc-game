@@ -14,7 +14,7 @@ export default function Chapter0({ onOptionSelected }) {
         <p>……仔细想来，还是不要离火源太近为妙。</p>
         <br />
         <div className="px-2">
-          <GoToOption chapterKey={0} option={{ key: 0, text: { zh: "开始冒险" } }} {...{ onOptionSelected }} />
+          <GoToOption chapterKey={0} option={{ key: 0, text: { zh: "开始冒险" }, goto: 1 }} {...{ onOptionSelected }} />
         </div>
       </>
     ),
@@ -26,7 +26,7 @@ export default function Chapter0({ onOptionSelected }) {
         <p>…On second thoughts, don’t sit too close to the fire.</p>
         <br />
         <div className="px-2">
-          <GoToOption chapterKey={0} option={{ key: 0, text: { en: "Start the adventure" } }} {...{ onOptionSelected }} />
+          <GoToOption chapterKey={0} option={{ key: 0, text: { en: "Start the adventure" }, goto: 1 }} {...{ onOptionSelected }} />
         </div>
       </>
     )

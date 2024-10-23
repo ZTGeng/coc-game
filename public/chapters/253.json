@@ -1,19 +1,44 @@
 {
-    "key": 253,
-    "location": "chamber",
-    "text": {
-        "en": [
-            { "content": "You get to your feet and back away towards the daylight. Arbogast gives a savage smile as he sees you go." },
-            { "content": "“Another who will not dare to listen. Frightened of truth. I will offer you one last piece of advice.”" },
-            { "content": "Daylight burns across that scarred face, crouched in the subterranean shadow." },
-            { "content": "“Sleep not, stranger. Sleep not.”" }
-        ],
-        "zh": [
-            { "content": "你直起身来，向后退到阳光下。阿博加斯特看着你退出，狂野地微笑。" },
-            { "content": "“又是个不敢听下去的家伙。被真相吓坏了。我给你最后一条忠告吧。”" },
-            { "content": "他蹲在地下的阴影里，阳光灼到他布满伤疤的脸上。" },
-            { "content": "“不要睡觉，陌生人。不要睡觉。”" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 253,
+  "location": "chamber",
+  "text": {
+    "en": [
+      {
+        "content": "You get to your feet and back away towards the daylight. Arbogast gives a savage smile as he sees you go."
+      },
+      {
+        "content": "“Another who will not dare to listen. Frightened of truth. I will offer you one last piece of advice.”"
+      },
+      {
+        "content": "Daylight burns across that scarred face, crouched in the subterranean shadow."
+      },
+      {
+        "content": "“Sleep not, stranger. Sleep not.”"
+      }
+    ],
+    "zh": [
+      {
+        "content": "你直起身来，向后退到阳光下。阿博加斯特看着你退出，狂野地微笑。"
+      },
+      {
+        "content": "“又是个不敢听下去的家伙。被真相吓坏了。我给你最后一条忠告吧。”"
+      },
+      {
+        "content": "他蹲在地下的阴影里，阳光灼到他布满伤疤的脸上。"
+      },
+      {
+        "content": "“不要睡觉，陌生人。不要睡觉。”"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 160
+    }
+  ]
 }

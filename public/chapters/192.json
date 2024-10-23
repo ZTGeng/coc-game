@@ -1,22 +1,55 @@
 {
-    "key": 192,
-    "text": {
-        "en": [
-            { "content": "You are already tired of your heavy bags. Hopefully Silas has repaired the motor coach and you can resume your long journey. A sourpuss he might be, but the old driver seemed to understand his vehicle well enough. You pause to check your watch—still twenty minutes early—and round the final corner." },
-            { "content": "The motor coach is gone." },
-            { "content": "You put your bags down and search the area, trekking up and down slopes and around corners. At the edge of the village, you trace the long road back as it winds across the hills. Eight o’clock comes and goes. There is no coach to be seen." },
-            { "content": "A passing villager notices your bags." },
-            { "content": "“Looking for the bus? I heard him take off at first light. He’s due back in three or four days. If you need a place to stay, May Ledbetter rents a room.” The man raises his hat to you and strolls on into the village." },
-            { "content": "You curse Silas under your breath. Perhaps he went for parts. But you wonder if the old goat has stranded you here on purpose." }
-        ],
-        "zh": [
-            { "content": "你已经厌倦自己拖动沉重的行李了。希望西拉斯能修好长途车，这样你就能继续旅途。他虽然脾气够坏，但这个老司机看起来相当了解自己的车。你停下来看了看表——还早了二十分钟——然后转过了最后一个街角。" },
-            { "content": "长途车已经不见了。" },
-            { "content": "你放下行李开始四处搜索，走下坡道，又走上坡道；转过街角，又转回街角，一直不停地寻找。在村头，你也追着漫长的盘山公路找过了。八点钟到了又过去，但长途车连个影子都见不到。" },
-            { "content": "一个过路的村民看见了你的包。" },
-            { "content": "“你等公车？我听他天刚亮就走了。他应该三四天以后才回来。要是你没处去，梅·莱德贝特那里有房间可以住。”他向你抬了抬帽沿，漫步走进了村子。" },
-            { "content": "你低声诅咒着西拉斯。他也许是去找零部件了。但是你怀疑，这只老狐狸是故意把你扔在这里的。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 192,
+  "text": {
+    "en": [
+      {
+        "content": "You are already tired of your heavy bags. Hopefully Silas has repaired the motor coach and you can resume your long journey. A sourpuss he might be, but the old driver seemed to understand his vehicle well enough. You pause to check your watch—still twenty minutes early—and round the final corner."
+      },
+      {
+        "content": "The motor coach is gone."
+      },
+      {
+        "content": "You put your bags down and search the area, trekking up and down slopes and around corners. At the edge of the village, you trace the long road back as it winds across the hills. Eight o’clock comes and goes. There is no coach to be seen."
+      },
+      {
+        "content": "A passing villager notices your bags."
+      },
+      {
+        "content": "“Looking for the bus? I heard him take off at first light. He’s due back in three or four days. If you need a place to stay, May Ledbetter rents a room.” The man raises his hat to you and strolls on into the village."
+      },
+      {
+        "content": "You curse Silas under your breath. Perhaps he went for parts. But you wonder if the old goat has stranded you here on purpose."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你已经厌倦自己拖动沉重的行李了。希望西拉斯能修好长途车，这样你就能继续旅途。他虽然脾气够坏，但这个老司机看起来相当了解自己的车。你停下来看了看表——还早了二十分钟——然后转过了最后一个街角。"
+      },
+      {
+        "content": "长途车已经不见了。"
+      },
+      {
+        "content": "你放下行李开始四处搜索，走下坡道，又走上坡道；转过街角，又转回街角，一直不停地寻找。在村头，你也追着漫长的盘山公路找过了。八点钟到了又过去，但长途车连个影子都见不到。"
+      },
+      {
+        "content": "一个过路的村民看见了你的包。"
+      },
+      {
+        "content": "“你等公车？我听他天刚亮就走了。他应该三四天以后才回来。要是你没处去，梅·莱德贝特那里有房间可以住。”他向你抬了抬帽沿，漫步走进了村子。"
+      },
+      {
+        "content": "你低声诅咒着西拉斯。他也许是去找零部件了。但是你怀疑，这只老狐狸是故意把你扔在这里的。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 218
+    }
+  ]
 }

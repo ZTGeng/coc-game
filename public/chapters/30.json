@@ -1,22 +1,48 @@
 {
-    "key": 30,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "As the afternoon sun hits the floor you notice something curious. The boards under the windows are newer than the boards in the center of the floor. The frames also show signs of having been replaced in the recent past. Perhaps rain leaked in and rotted the wood." },
-            { "tag": "info", "text": [
-                { "content": "You may check-mark the small box beside the Spot Hidden skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "午后的阳光照射到地面上，你发现了一些有意思的东西。窗户下面的地板比房间中央的地板要新。窗框也有最近曾经更换过的痕迹。也许是雨水漏进来，木头被腐蚀了。" },
-            { "tag": "info", "text": [
-                { "content": "你可以在「侦查」技能左边的小方框里打勾。" }
-            ] }
+  "key": 30,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "As the afternoon sun hits the floor you notice something curious. The boards under the windows are newer than the boards in the center of the floor. The frames also show signs of having been replaced in the recent past. Perhaps rain leaked in and rotted the wood."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may check-mark the small box beside the Spot Hidden skill."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "spot" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "午后的阳光照射到地面上，你发现了一些有意思的东西。窗户下面的地板比房间中央的地板要新。窗框也有最近曾经更换过的痕迹。也许是雨水漏进来，木头被腐蚀了。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以在「侦查」技能左边的小方框里打勾。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 37
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "spot"
+    }
+  ]
 }

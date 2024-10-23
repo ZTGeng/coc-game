@@ -1,27 +1,57 @@
 {
-    "key": 187,
-    "location": "chamber",
-    "text": {
-        "en": [
-            { "content": "The hidden staircase seems the obvious explanation. The man could have scaled it to reach Emberhead, above. By studying the cliff, you work out that you passed the steps perhaps forty yards back, while he was still in full view." },
-            { "tag": "info", "text": [
-                { "content": "You may make a Hard Spot Hidden roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "隐蔽的阶梯似乎是很明了的解释。这个人可能爬上阶梯，上到烬头村去了。查看悬崖之后，你发现大约四十码之前你经过了这些阶梯，而当时那个人还在你的视野中。" },
-            { "tag": "info", "text": [
-                { "content": "你可以进行一次困难「侦查」检定。" }
-            ] }
+  "key": 187,
+  "location": "chamber",
+  "text": {
+    "en": [
+      {
+        "content": "The hidden staircase seems the obvious explanation. The man could have scaled it to reach Emberhead, above. By studying the cliff, you work out that you passed the steps perhaps forty yards back, while he was still in full view."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may make a Hard Spot Hidden roll."
+          }
         ]
-    },
-    "check": { 
-        "type": "roll",
-        "key": "spot", 
-        "level": "half" 
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "隐蔽的阶梯似乎是很明了的解释。这个人可能爬上阶梯，上到烬头村去了。查看悬崖之后，你发现大约四十码之前你经过了这些阶梯，而当时那个人还在你的视野中。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以进行一次困难「侦查」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "spot",
+    "level": "half"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 181
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 160
+    }
+  ]
 }

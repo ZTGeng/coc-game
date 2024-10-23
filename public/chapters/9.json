@@ -1,17 +1,38 @@
 {
-    "key": 9,
-    "location": "street",
-    "text": {
-        "en": [
-            { "content": "You crouch down and ask Ruth what she meant." },
-            { "content": "“It’s scary at the festival,” Ruth says. “It’s bright and hot and the flames go all over!” Her face and voice are both childlike. This abrupt shift is disturbing. You suppose all children do unfathomable things." },
-            { "content": "May rolls her eyes and tousles her daughter’s hair. Ruth looks at the ground." }
-        ],
-        "zh": [
-            { "content": "你蹲下来问露丝她说的是什么意思。" },
-            { "content": "露丝说：“节日很可怕，又亮、又热，到处都是火！”她的脸、她的声音都很幼稚。这转变过于突然，令人不安。你怀疑小孩子都是捉摸不透的生物。" },
-            { "content": "梅眼神转了转，弄乱了女儿的头发。露丝注视着地面。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 9,
+  "location": "street",
+  "text": {
+    "en": [
+      {
+        "content": "You crouch down and ask Ruth what she meant."
+      },
+      {
+        "content": "“It’s scary at the festival,” Ruth says. “It’s bright and hot and the flames go all over!” Her face and voice are both childlike. This abrupt shift is disturbing. You suppose all children do unfathomable things."
+      },
+      {
+        "content": "May rolls her eyes and tousles her daughter’s hair. Ruth looks at the ground."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你蹲下来问露丝她说的是什么意思。"
+      },
+      {
+        "content": "露丝说：“节日很可怕，又亮、又热，到处都是火！”她的脸、她的声音都很幼稚。这转变过于突然，令人不安。你怀疑小孩子都是捉摸不透的生物。"
+      },
+      {
+        "content": "梅眼神转了转，弄乱了女儿的头发。露丝注视着地面。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 22
+    }
+  ]
 }

@@ -11,6 +11,7 @@ import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
 import { initAttr, setAttr, initSkill, setSkill, checkSkillBox, setOccupation } from "../store/slices/characterSlice";
+import { addHistory, setIndex } from "../store/slices/historySlice";
 import * as utils from "../utils/utils";
 
 const initChapterStatus = new Uint32Array(9);
@@ -22,14 +23,15 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const [chapterKey, setChapterKey] = useState(0);
   const [mapLocation, setMapLocation] = useState(null);
   const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
-  const [chapterHistory, setChapterHistory] = useState([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
+  // const [chapterHistory, setChapterHistory] = useState([]);
+  // const [historyIndex, setHistoryIndex] = useState(-1);
   const [isReloading, setIsReloading] = useState(false);
   // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
   // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
   const dispatch = useDispatch();
   const flagStore = useSelector(state => state.flag);
   const characterStore = useSelector(state => state.character);
+  const historyStore = useSelector(state => state.history);
 
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
@@ -261,32 +263,29 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     }
   }
   
-  function nextChapter(optionKey, historyItem, addToHistory) {
-    const next = chapterMap[chapterKey][optionKey];
-    if (next) {
-      console.log(`Game - nextChapter: c${chapterKey} - o${optionKey} => c${next}`);
-      if (addToHistory) {
-        historyItem.states = stateSnapshotRef.current;
-        if (historyIndex !== -1) {
-          setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
-          setHistoryIndex(-1);
-        } else {
-          setChapterHistory([...chapterHistory, historyItem]);
-        }
-        // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
-      }
-      setIsReloading(false);
-      setChapterKey(next);
-      if (!isChapterVisited(next)) {
-        markChapterVisited(next);
-      }
+  function nextChapter(nextKey, historyItem, addToHistory) {
+    console.log(`Game - nextChapter: c${chapterKey} => c${nextKey}`);
+      // if (addToHistory) {
+      //   historyItem.states = stateSnapshotRef.current;
+      //   if (historyIndex !== -1) {
+      //     setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
+      //     setHistoryIndex(-1);
+      //   } else {
+      //     setChapterHistory([...chapterHistory, historyItem]);
+      //   }
+      //   // console.log(`Game - nextChapter: history updated: ${JSON.stringify(chapterHistory)}`);
+      // }
+    setIsReloading(false);
+    setChapterKey(nextKey);
+    if (!isChapterVisited(nextKey)) {
+      markChapterVisited(nextKey);
     }
   }
 
   function onJumpToChapter(historyIndex) {
     console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
     loadHistoryStates(historyIndex);
-    setHistoryIndex(historyIndex);
+    // setHistoryIndex(historyIndex);
   }
 
   function updateStateSnapshot() {
@@ -294,31 +293,31 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   }
 
   function loadHistoryStates(historyIndex) {
-    const states = chapterHistory[historyIndex].states;
+    // const states = chapterHistory[historyIndex].states;
 
-    const skillSnapshot = findLastSkillSnapshot(historyIndex + 1);
+    // const skillSnapshot = findLastSkillSnapshot(historyIndex + 1);
     // console.log(`load chrpterKey: ${states.chapterKey}, states.skillHistoryIndex: ${states.skillHistoryIndex}, initSkills: ${JSON.stringify(initSkills)}`);
     // console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
-    setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
+    // setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
 
     // setFlags({ ...initFlags, ...states.flags });
     // setAttributes(states.attributes);
     // setOccupation({ name: states.occupationName });
     // setInfo(states.info);
-    setMapEnabled(states.mapEnabled);
+    // setMapEnabled(states.mapEnabled);
 
-    setIsReloading(true);
-    setChapterKey(states.chapterKey);
+    // setIsReloading(true);
+    // setChapterKey(states.chapterKey);
   }
 
   function findLastSkillSnapshot(historyItemIndex) {
-    const lastItem = chapterHistory.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states && historyItem.states.skills);
-    return lastItem ? lastItem.states.skills : {};
+    // const lastItem = chapterHistory.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states && historyItem.states.skills);
+    // return lastItem ? lastItem.states.skills : {};
   }
 
   function save(saveKey) {
     const saveData = {
-      chapterHistory,
+      // chapterHistory,
       chapterStatus: Array.from(chapterStatus),
       // chars,
       currentStates: stateSnapshotRef.current,
@@ -335,7 +334,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         chars: charsToLoad,
         currentStates: statesToLoad
       } = JSON.parse(saveData);
-      setChapterHistory(chapterHistoryToLoad);
+      // setChapterHistory(chapterHistoryToLoad);
       setChapterStatus(new Uint32Array(chapterStatusToLoad));
       // setChars(charsToLoad);
 
@@ -410,7 +409,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         )}
       </div>
       <MapModal {...{ mapLocation }} />
-      <HistoryModal {...{ chapterHistory, onJumpToChapter }} />
+      <HistoryModal {...{ onJumpToChapter }} />
       <AchievementModal {...{ chapterStatus }} />
     </FlagCheckContext.Provider>
   )

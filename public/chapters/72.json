@@ -1,15 +1,32 @@
 {
-    "key": 72,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "You feel a sting of self-doubt at the thought of your cases back on that hill, abandoned in the care of a woman you had never met twenty-four hours ago. They contain all of your worldly possessions save what you stand up in." },
-            { "content": "Yet a piece of you delights in this foolhardy expedition, with no map and precious few supplies, striking further into the unknown as night falls. Your life has been sheltered until now. There is a certain joy in this dangerous freedom." }
-        ],
-        "zh": [
-            { "content": "你一想到自己的行李箱还丢在山上，由一个24小时之前还素不相识的女人保管着的时候，就感到一阵自我怀疑。他们手上有你一切财物，只有你孑然一身站在这里。" },
-            { "content": "但你却觉得有一点点喜悦，尽管这次莽撞探险没有地图，也没有多少补给，夜色降临之时仍在继续前往未知的地方。你的生命第一次失去了庇护。这危险的自由带给你的无疑是快乐。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 72,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "You feel a sting of self-doubt at the thought of your cases back on that hill, abandoned in the care of a woman you had never met twenty-four hours ago. They contain all of your worldly possessions save what you stand up in."
+      },
+      {
+        "content": "Yet a piece of you delights in this foolhardy expedition, with no map and precious few supplies, striking further into the unknown as night falls. Your life has been sheltered until now. There is a certain joy in this dangerous freedom."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你一想到自己的行李箱还丢在山上，由一个24小时之前还素不相识的女人保管着的时候，就感到一阵自我怀疑。他们手上有你一切财物，只有你孑然一身站在这里。"
+      },
+      {
+        "content": "但你却觉得有一点点喜悦，尽管这次莽撞探险没有地图，也没有多少补给，夜色降临之时仍在继续前往未知的地方。你的生命第一次失去了庇护。这危险的自由带给你的无疑是快乐。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 79
+    }
+  ]
 }

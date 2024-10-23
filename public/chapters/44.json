@@ -1,27 +1,57 @@
 {
-    "key": 44,
-    "location": "beacon_center",
-    "text": {
-        "en": [
-            { "content": "You’re tired, and your flesh ought to be insufficient against the dark iron of the chains. Yet you can feel them give a little. There is a weakness in one of the links." },
-            { "tag": "info", "text": [
-                { "content": "Make a Hard STR roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你已经精疲力竭，你的肉体本应无从撼动黑铁打造的锁链。但你感觉到它们松动了一点点。这铁链的其中一节有弱点。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次困难“力量”检定。" }
-            ] }
+  "key": 44,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "content": "You’re tired, and your flesh ought to be insufficient against the dark iron of the chains. Yet you can feel them give a little. There is a weakness in one of the links."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Hard STR roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "STR",
-        "level": "half"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你已经精疲力竭，你的肉体本应无从撼动黑铁打造的锁链。但你感觉到它们松动了一点点。这铁链的其中一节有弱点。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次困难“力量”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "STR",
+    "level": "half"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 53
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 40
+    }
+  ]
 }

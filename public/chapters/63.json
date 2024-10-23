@@ -1,28 +1,73 @@
 {
-    "key": 63,
-    "text": {
-        "en": [
-            { "content": "As May stands, you hear a clunk behind you. You look over your shoulder, but all you can see is a wooden door, securely closed." },
-            { "content": "May tuts. “The young lady of the house. She’ll have been listening to us. Ruth! Come and greet our guest.”" },
-            { "content": "There is a short pause, then the door creaks open. Two wide eyes peer at you from the gap, between tousled hair and a rough nightgown." },
-            { "content": "“What do you say?”" },
-            { "content": "The eyes blink. “Pleased to meet you.”" },
-            { "content": "“Now get back to bed.”" },
-            { "content": "The door closes again." },
-            { "content": "“My daughter Ruth. Ten years this summer. She’s a delight and a torment all in one. Don’t worry, she sleeps in with me. She’ll not disturb you. Good night now.”" },
-            { "content": "You retire to your room. It is a little chilly, but you are too tired to worry about lighting the fire. The sheets are clean and the bed soon warms up. The silence outside is strange after living in a town for so long, but you soon drop off." }
-        ],
-        "zh": [
-            { "content": "当梅站起身的时候，你听到身后传来撞门的声音。你扭头往回看，却只能看见关得严严实实的木门。" },
-            { "content": "梅咂了咂嘴。“是我们家的小女主人。她准是在偷听我们说话。露丝！出来和客人打个招呼。”" },
-            { "content": "一阵短暂的沉默之后，门吱嘎一声开了。门后的人披着乱蓬蓬的头发，穿着粗糙的睡衣；她的一双大眼睛透过门缝盯着你。" },
-            { "content": "“你该说什么？”" },
-            { "content": "她眨了眨眼。“很高兴见到你。”" },
-            { "content": "“现在回去睡觉。”" },
-            { "content": "门又合上了。" },
-            { "content": "“我女儿露丝。今年夏天就十岁了。她是个既快乐又痛苦的孩子。不用担心，她会和我一起睡，不会打扰你的。那么，该说晚安了。”" },
-            { "content": "你走进你的房间躺下。房间里有点冷，但你实在太疲倦了，压根没有考虑生火。床上铺着洁净的床单，躺下不久就暖和起来。你在城市里生活了那么久，感觉外面的寂静很奇怪，但很快就睡着了。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 63,
+  "text": {
+    "en": [
+      {
+        "content": "As May stands, you hear a clunk behind you. You look over your shoulder, but all you can see is a wooden door, securely closed."
+      },
+      {
+        "content": "May tuts. “The young lady of the house. She’ll have been listening to us. Ruth! Come and greet our guest.”"
+      },
+      {
+        "content": "There is a short pause, then the door creaks open. Two wide eyes peer at you from the gap, between tousled hair and a rough nightgown."
+      },
+      {
+        "content": "“What do you say?”"
+      },
+      {
+        "content": "The eyes blink. “Pleased to meet you.”"
+      },
+      {
+        "content": "“Now get back to bed.”"
+      },
+      {
+        "content": "The door closes again."
+      },
+      {
+        "content": "“My daughter Ruth. Ten years this summer. She’s a delight and a torment all in one. Don’t worry, she sleeps in with me. She’ll not disturb you. Good night now.”"
+      },
+      {
+        "content": "You retire to your room. It is a little chilly, but you are too tired to worry about lighting the fire. The sheets are clean and the bed soon warms up. The silence outside is strange after living in a town for so long, but you soon drop off."
+      }
+    ],
+    "zh": [
+      {
+        "content": "当梅站起身的时候，你听到身后传来撞门的声音。你扭头往回看，却只能看见关得严严实实的木门。"
+      },
+      {
+        "content": "梅咂了咂嘴。“是我们家的小女主人。她准是在偷听我们说话。露丝！出来和客人打个招呼。”"
+      },
+      {
+        "content": "一阵短暂的沉默之后，门吱嘎一声开了。门后的人披着乱蓬蓬的头发，穿着粗糙的睡衣；她的一双大眼睛透过门缝盯着你。"
+      },
+      {
+        "content": "“你该说什么？”"
+      },
+      {
+        "content": "她眨了眨眼。“很高兴见到你。”"
+      },
+      {
+        "content": "“现在回去睡觉。”"
+      },
+      {
+        "content": "门又合上了。"
+      },
+      {
+        "content": "“我女儿露丝。今年夏天就十岁了。她是个既快乐又痛苦的孩子。不用担心，她会和我一起睡，不会打扰你的。那么，该说晚安了。”"
+      },
+      {
+        "content": "你走进你的房间躺下。房间里有点冷，但你实在太疲倦了，压根没有考虑生火。床上铺着洁净的床单，躺下不久就暖和起来。你在城市里生活了那么久，感觉外面的寂静很奇怪，但很快就睡着了。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 154
+    }
+  ]
 }

@@ -59,7 +59,8 @@
                         "text": {
                             "en": "Pretend to pass the roll and continue",
                             "zh": "假装通过检定，继续"
-                        }
+                        },
+                        "goto": 261
                     },
                     { 
                         "key": 1, 
@@ -67,6 +68,7 @@
                             "en": "You passed the roll, continue",
                             "zh": "检定成功，继续"
                         },
+                        "goto": 261,
                         "show": "flag_check_passed"
                     },
                     { 
@@ -75,6 +77,7 @@
                             "en": "You failed the roll, continue",
                             "zh": "检定失败，继续"
                         },
+                        "goto": 59,
                         "show": "flag_check_failed"
                     }
                 ]

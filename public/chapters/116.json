@@ -1,31 +1,71 @@
 {
-    "key": 116,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "You keep your breath shallow and watch the creature. It pauses and looks around the clearing." }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "Make a Luck roll." }
-            ] }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "你屏息凝神看着这头熊。它停下来环视空地。" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "进行一次“幸运”检定。" }
-            ] }
+  "key": 116,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "You keep your breath shallow and watch the creature. It pauses and looks around the clearing."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "Luck",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Luck roll."
+          }
+        ]
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "你屏息凝神看着这头熊。它停下来环视空地。"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次“幸运”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "Luck",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 136
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 129
+    }
+  ]
 }

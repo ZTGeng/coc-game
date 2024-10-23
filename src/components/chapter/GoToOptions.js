@@ -26,7 +26,7 @@ export function GoToOption({ option, onOptionSelected }) {
     <a className={"link link-offset-2 h5 mb-3" + (option.secret ? " link-primary": " link-dark")}
       role="button"
       href="#"
-      onClick={(e) => { e.preventDefault(); onOptionSelected(option.key, option.text); }}>
+      onClick={(e) => { e.preventDefault(); onOptionSelected(option.goto, option.text); }}>
       { option.secret 
         ? (
           <span className="pe-2">

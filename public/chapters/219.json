@@ -1,22 +1,54 @@
 {
-    "key": 219,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "You approach around the back of the buildings in Emberhead’s northwestern corner. By this time in the morning, you would expect activity in the artisans’ courtyard, but the benches and anvils sit deserted. Your footsteps echo off the surrounding walls." },
-            { "content": "One of the workshops is shut up and padlocked. You peek through the joints, but you can see nothing inside." }
-        ],
-        "zh": [
-            { "content": "你靠近烬头村西北角房子的后面。早上的这个时候你预计工匠的工坊里会有人活动，但那些工作台和铁砧前都根本没有人在工作，只有周围的墙壁在反射你脚步的回声。" },
-            { "content": "有一间工坊关着门，挂着锁。你从门缝往里窥探，但什么也看不见。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Try to crack the padlock", "zh": "尝试撬开挂锁" } },
-        { "key": 1, "text": { "en": "Physically break in to the locked workshop", "zh": "暴力闯入这间上锁的工坊" } },
-        { "key": 2, "text": { "en": "Move on to another area", "zh": "移动到其他地方" } }
+  "key": 219,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "You approach around the back of the buildings in Emberhead’s northwestern corner. By this time in the morning, you would expect activity in the artisans’ courtyard, but the benches and anvils sit deserted. Your footsteps echo off the surrounding walls."
+      },
+      {
+        "content": "One of the workshops is shut up and padlocked. You peek through the joints, but you can see nothing inside."
+      }
     ],
-    "onload": [
-        { "action": "action_c120_select_option", "param": 2 }
+    "zh": [
+      {
+        "content": "你靠近烬头村西北角房子的后面。早上的这个时候你预计工匠的工坊里会有人活动，但那些工作台和铁砧前都根本没有人在工作，只有周围的墙壁在反射你脚步的回声。"
+      },
+      {
+        "content": "有一间工坊关着门，挂着锁。你从门缝往里窥探，但什么也看不见。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Try to crack the padlock",
+        "zh": "尝试撬开挂锁"
+      },
+      "goto": 225
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Physically break in to the locked workshop",
+        "zh": "暴力闯入这间上锁的工坊"
+      },
+      "goto": 232
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Move on to another area",
+        "zh": "移动到其他地方"
+      },
+      "goto": 120
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_c120_select_option",
+      "param": 2
+    }
+  ]
 }

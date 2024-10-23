@@ -1,30 +1,69 @@
 {
-    "key": 5,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The beasts fan out around you and black fear rises in your chest. One darts close, snapping and hissing. You lash out with a foot. It pulls its head back with a snarl of hatred. Their thick musk fills your nostrils as they circle, waiting for the moment to strike …" },
-            { "content": "The animals ignite around you." },
-            { "content": "You stare as they go up like candles, red and purple flames licking their fur. Those terrible eyes stare through a curtain of fire, flesh, and fat consumed by the unnatural blaze. And they howl, their hunting calls twisted into a fierce dirge of pain." },
-            { "content": "You turn away, gasping in the thick fumes, haunted by the shrieks of the beasts as you grope through the young trees. Your vision blurs, swims. Your legs are weak—" },
-            { "tag": "info", "text": [
-                { "content": "失去1D3点理智值。" }
-            ] }
-        ],
-        "zh": [
-            { "content": "这些野兽成扇形面对你排开阵势，你的胸中升起黑暗的绝望。其中一只像箭一般冲向你，做出撕咬的动作，嘶嘶地吐着气。你提腿就踹过去。它缩回头，充满仇恨地低吼。它们围成一圈，等待着突袭的时机，浓重的麝香气充斥着的你的鼻腔……" },
-            { "content": "这些动物在你身边猛烈燃烧起来。" },
-            { "content": "它们在你的注视下像蜡烛一样烧着，红紫色的火苗舔舐着它们的皮毛，反常的烈焰销蚀一切，火、肉、油交织在一起。它们骇人的目光透过这火幕死死盯着你，它们狩猎的号子在哭嚎中扭曲成痛苦的挽歌。" },
-            { "content": "这些野兽的嚎叫萦绕在你的耳畔，你转身逃跑，在漆黑的年轻树林中摸索着。浓烟让你透不过气，你的视野模糊游移。你两脚一软——" },
-            { "tag": "info", "text": [
-                { "content": "失去1D3点理智值。" }
-            ] }
+  "key": 5,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The beasts fan out around you and black fear rises in your chest. One darts close, snapping and hissing. You lash out with a foot. It pulls its head back with a snarl of hatred. Their thick musk fills your nostrils as they circle, waiting for the moment to strike …"
+      },
+      {
+        "content": "The animals ignite around you."
+      },
+      {
+        "content": "You stare as they go up like candles, red and purple flames licking their fur. Those terrible eyes stare through a curtain of fire, flesh, and fat consumed by the unnatural blaze. And they howl, their hunting calls twisted into a fierce dirge of pain."
+      },
+      {
+        "content": "You turn away, gasping in the thick fumes, haunted by the shrieks of the beasts as you grope through the young trees. Your vision blurs, swims. Your legs are weak—"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "失去1D3点理智值。"
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+      }
     ],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d3" } }
+    "zh": [
+      {
+        "content": "这些野兽成扇形面对你排开阵势，你的胸中升起黑暗的绝望。其中一只像箭一般冲向你，做出撕咬的动作，嘶嘶地吐着气。你提腿就踹过去。它缩回头，充满仇恨地低吼。它们围成一圈，等待着突袭的时机，浓重的麝香气充斥着的你的鼻腔……"
+      },
+      {
+        "content": "这些动物在你身边猛烈燃烧起来。"
+      },
+      {
+        "content": "它们在你的注视下像蜡烛一样烧着，红紫色的火苗舔舐着它们的皮毛，反常的烈焰销蚀一切，火、肉、油交织在一起。它们骇人的目光透过这火幕死死盯着你，它们狩猎的号子在哭嚎中扭曲成痛苦的挽歌。"
+      },
+      {
+        "content": "这些野兽的嚎叫萦绕在你的耳畔，你转身逃跑，在漆黑的年轻树林中摸索着。浓烟让你透不过气，你的视野模糊游移。你两脚一软——"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "失去1D3点理智值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 13
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "San",
+        "delta": "-1d3"
+      }
+    }
+  ]
 }

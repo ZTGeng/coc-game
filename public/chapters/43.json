@@ -1,20 +1,46 @@
 {
-    "key": 43,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "You step through the door marked PRIVATE. The other side of the village hall is in marked contrast to the public space. The room is compact, lined with shelves of books and file alcoves. One corner is reserved for a tiny pantry and what is presumably a water closet." },
-            { "content": "You study Mr. Winters as he fills the percolator. Although thin on top, his hair is oiled and neatly swept back. His suit is a sober affair, and well tailored even if the cut is a little oldfashioned. A lesser man working alone might have loosened his bow tie for comfort." },
-            { "content": "On the desk against the opposite wall, you notice what looks like a telegraph set." }
-        ],
-        "zh": [
-            { "content": "你走进标着“私用”的门。村会堂的这一边和公用空间形成了鲜明的对比。房间布置非常紧凑，书架和文件柜整齐地排成几排。有一个角落留作小型的食品储藏处，可能同时还兼作盥洗室。" },
-            { "content": "在文特斯先生填满咖啡壶时，你上下审视了他一番。他的头发虽然稀薄，却打了头油，仔细地梳成背头。他的外套简朴素雅，纵然样式有点过时，但做工着实精良。换作其他人独自工作的话，可能早就图个舒服解开蝴蝶领结了。" },
-            { "content": "在对面墙边的桌子上，你发现了像是电报机的装置。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Ask about the telegraph immediately", "zh": "立即询问电报的事" } },
-        { "key": 1, "text": { "en": "Make small talk with Mr. Winters first", "zh": "先和文特斯先生聊聊" } }
+  "key": 43,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "You step through the door marked PRIVATE. The other side of the village hall is in marked contrast to the public space. The room is compact, lined with shelves of books and file alcoves. One corner is reserved for a tiny pantry and what is presumably a water closet."
+      },
+      {
+        "content": "You study Mr. Winters as he fills the percolator. Although thin on top, his hair is oiled and neatly swept back. His suit is a sober affair, and well tailored even if the cut is a little oldfashioned. A lesser man working alone might have loosened his bow tie for comfort."
+      },
+      {
+        "content": "On the desk against the opposite wall, you notice what looks like a telegraph set."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你走进标着“私用”的门。村会堂的这一边和公用空间形成了鲜明的对比。房间布置非常紧凑，书架和文件柜整齐地排成几排。有一个角落留作小型的食品储藏处，可能同时还兼作盥洗室。"
+      },
+      {
+        "content": "在文特斯先生填满咖啡壶时，你上下审视了他一番。他的头发虽然稀薄，却打了头油，仔细地梳成背头。他的外套简朴素雅，纵然样式有点过时，但做工着实精良。换作其他人独自工作的话，可能早就图个舒服解开蝴蝶领结了。"
+      },
+      {
+        "content": "在对面墙边的桌子上，你发现了像是电报机的装置。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Ask about the telegraph immediately",
+        "zh": "立即询问电报的事"
+      },
+      "goto": 56
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Make small talk with Mr. Winters first",
+        "zh": "先和文特斯先生聊聊"
+      },
+      "goto": 49
+    }
+  ]
 }

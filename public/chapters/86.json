@@ -1,29 +1,39 @@
 {
-    "key": 86,
-    "text": {
-        "en": [
-            { "content": "An ink-black figure stands in the road, about twenty yards behind you. It stares at you. You form the sudden impression that it will run at you and throw you over the cliff edge. This is unsettling." },
-            { "content": "Seeing it has been spotted, the figure slips down an alley" }
-        ],
-        "zh": [
-            { "content": "一个漆黑如墨的身影站在马路中央，大约在你身后20码的位置。它正盯着你。你突然感觉，它会冲向你，然后把你从悬崖边丢下去。太令人不安了。" },
-            { "content": "黑影看自己被发现，冲进了一条小道。" }
-        ]
-    },
-    "options": [
-        {
-            "key": 0,
-            "text": {
-                "en": "Return to the safety of the Ledbetter house",
-                "zh": "返回莱德贝特的房子确保安全"
-            }
-        },
-        {
-            "key": 1,
-            "text": {
-                "en": "Confront the dark figure",
-                "zh": "直面黑影"
-            }
-        }
+  "key": 86,
+  "text": {
+    "en": [
+      {
+        "content": "An ink-black figure stands in the road, about twenty yards behind you. It stares at you. You form the sudden impression that it will run at you and throw you over the cliff edge. This is unsettling."
+      },
+      {
+        "content": "Seeing it has been spotted, the figure slips down an alley"
+      }
+    ],
+    "zh": [
+      {
+        "content": "一个漆黑如墨的身影站在马路中央，大约在你身后20码的位置。它正盯着你。你突然感觉，它会冲向你，然后把你从悬崖边丢下去。太令人不安了。"
+      },
+      {
+        "content": "黑影看自己被发现，冲进了一条小道。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Return to the safety of the Ledbetter house",
+        "zh": "返回莱德贝特的房子确保安全"
+      },
+      "goto": 100
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Confront the dark figure",
+        "zh": "直面黑影"
+      },
+      "goto": 121
+    }
+  ]
 }

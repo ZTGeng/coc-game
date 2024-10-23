@@ -1,22 +1,48 @@
 {
-    "key": 12,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "You sidestep and slip out of the workshop. As the artisan follows, you swing the door into his face. He staggers back, a hand to his nose. You take the opportunity to flee. You can investigate further if you would like. But perhaps it would be wiser to leave town." },
-            { "tag": "info", "text": [
-                { "content": "You may check-mark the small box beside the Dodge skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你一个滑步溜出工坊。工匠紧随其后，你将门板甩到他的脸上。他踉跄后退，用手捂住鼻子，你趁机逃跑了。只要你愿意，你还可以继续调查；但离开村庄可能更加明智。" },
-            { "tag": "info", "text": [
-                { "content": "你可以在「闪避」技能左边的小方框里打勾。" }
-            ] }
+  "key": 12,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "You sidestep and slip out of the workshop. As the artisan follows, you swing the door into his face. He staggers back, a hand to his nose. You take the opportunity to flee. You can investigate further if you would like. But perhaps it would be wiser to leave town."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may check-mark the small box beside the Dodge skill."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "dodge" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你一个滑步溜出工坊。工匠紧随其后，你将门板甩到他的脸上。他踉跄后退，用手捂住鼻子，你趁机逃跑了。只要你愿意，你还可以继续调查；但离开村庄可能更加明智。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以在「闪避」技能左边的小方框里打勾。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 120
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "dodge"
+    }
+  ]
 }

@@ -1,22 +1,52 @@
 {
-    "key": 56,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "“The telegraph? Mmm. Much as we value our isolation, we do need the link sometimes… you were hoping to send a message? I must apologize. The line has been down for two weeks. I reported the fault, but of course, they’re not so speedy when the problem lies in a rural area. I’m expecting a repair the day after next. I do appreciate how frustrating this must be. The coach is due, in what, three days? But I think he’s going west. Perhaps you might engage a wagon? One of the farmers might...”" },
-            { "content": "You explain that you have asked a few of the residents already, but to no avail." },
-            { "content": "“I tell you what.” Winters pours you a steaming cup of coffee. The dark liquid smells rich and strong. “When the repair crew arrive I’ll ask them to take you back with them. How would that be? They might want a dollar or two to grease the wheels...”" },
-            { "content": "The day after tomorrow? It’s less than ideal. But it’s the first real opportunity you’ve had." }
-        ],
-        "zh": [
-            { "content": "“电报？呣呣。虽然我们很珍惜自己的独立，但有时也需要联络……您想发消息吗？我得说声对不起。这条电报线已经坏了两个星期了。我已经报修了，但因为问题出在乡下，他们当然不会快到哪里去。我希望后天能有人来修。它对您造成的失望，我深表歉意。长途车应该，大概，三天以后到？但我觉得他会往西走。也许您能遇上辆马车？附近农民可能……”" },
-            { "content": "你解释说，你已经问过几个村民了，但完全没有用。" },
-            { "content": "文特斯给你倒上一杯冒着热气的咖啡。这杯深色热饮散发着醇厚的香气。“我跟您说，维修队来了以后我会叫他们把你捎走。这样行不行？他们也许会要一两美元的车马费……”" },
-            { "content": "后天？这可不太理想。不过你终于得到了一次真正的机会。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Thank Winters and leave", "zh": "谢过文特斯先生并离开" } },
-        { "key": 1, "text": { "en": "Ask about his library", "zh": "询问他的藏书室" } }
+  "key": 56,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "“The telegraph? Mmm. Much as we value our isolation, we do need the link sometimes… you were hoping to send a message? I must apologize. The line has been down for two weeks. I reported the fault, but of course, they’re not so speedy when the problem lies in a rural area. I’m expecting a repair the day after next. I do appreciate how frustrating this must be. The coach is due, in what, three days? But I think he’s going west. Perhaps you might engage a wagon? One of the farmers might...”"
+      },
+      {
+        "content": "You explain that you have asked a few of the residents already, but to no avail."
+      },
+      {
+        "content": "“I tell you what.” Winters pours you a steaming cup of coffee. The dark liquid smells rich and strong. “When the repair crew arrive I’ll ask them to take you back with them. How would that be? They might want a dollar or two to grease the wheels...”"
+      },
+      {
+        "content": "The day after tomorrow? It’s less than ideal. But it’s the first real opportunity you’ve had."
+      }
+    ],
+    "zh": [
+      {
+        "content": "“电报？呣呣。虽然我们很珍惜自己的独立，但有时也需要联络……您想发消息吗？我得说声对不起。这条电报线已经坏了两个星期了。我已经报修了，但因为问题出在乡下，他们当然不会快到哪里去。我希望后天能有人来修。它对您造成的失望，我深表歉意。长途车应该，大概，三天以后到？但我觉得他会往西走。也许您能遇上辆马车？附近农民可能……”"
+      },
+      {
+        "content": "你解释说，你已经问过几个村民了，但完全没有用。"
+      },
+      {
+        "content": "文特斯给你倒上一杯冒着热气的咖啡。这杯深色热饮散发着醇厚的香气。“我跟您说，维修队来了以后我会叫他们把你捎走。这样行不行？他们也许会要一两美元的车马费……”"
+      },
+      {
+        "content": "后天？这可不太理想。不过你终于得到了一次真正的机会。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Thank Winters and leave",
+        "zh": "谢过文特斯先生并离开"
+      },
+      "goto": 180
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Ask about his library",
+        "zh": "询问他的藏书室"
+      },
+      "goto": 62
+    }
+  ]
 }

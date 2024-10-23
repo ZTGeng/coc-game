@@ -1,19 +1,44 @@
 {
-    "key": 49,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "The pot begins to gurgle as you exchange pleasantries with Winters." },
-            { "content": "“Living here? It’s a trade-off, like so much in life.” He looks past you at a high shelf. “I could wish for access to a proper library, of course. But I know myself well enough. I’m strictly a dabbler. And the cities ...” His face wrinkles in distaste. “Too many people. Everybody rushing and shouting. We have a special place here in Emberhead. And someone must accept responsibility for keeping it so. That was my father before me. And now the duty falls to me.” He lifts his chin and straightens up. " },
-            { "content": "“This evening, as the sun sets, look out at the landscape around the village. We have peace up here, halfway to the stars. Are we not privileged? Is this not worth the hardships we must accept?”" },
-            { "content": "He looks at you speculatively. This seems a good time to ask about the telegraph." }
-        ],
-        "zh": [
-            { "content": "咖啡壶开始咕噜噜地响起来，你和文特斯先生互相说着客套话。" },
-            { "content": "“住在这里吗？这是一个权衡，和生活中的其他东西一样。”他的视线落在你身后的高架子上。“我当然也希望能拥有真正的图书馆。但是我也有自知之明。我不过是个半吊子。而城里……”他的脸嫌恶地皱了皱。“人太多了。人人都在跑，在嚷。我们烬头村这个地方得天独厚，必须有人负起责任来维护它。以前我父亲就这么做的，现在这责任落到我头上了。”他抬抬下颏，端正了坐姿。" },
-            { "content": "“今天晚上，夕阳落山时，出去看看村子四周的美景吧。我们和平地住在这片地方，正处在群星之路的中途。我们不是荣幸之至吗？这难道值不上我们要忍受的艰辛吗？”" },
-            { "content": "他若有所思地看着你。现在是个问电报的好时机。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 49,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "The pot begins to gurgle as you exchange pleasantries with Winters."
+      },
+      {
+        "content": "“Living here? It’s a trade-off, like so much in life.” He looks past you at a high shelf. “I could wish for access to a proper library, of course. But I know myself well enough. I’m strictly a dabbler. And the cities ...” His face wrinkles in distaste. “Too many people. Everybody rushing and shouting. We have a special place here in Emberhead. And someone must accept responsibility for keeping it so. That was my father before me. And now the duty falls to me.” He lifts his chin and straightens up. "
+      },
+      {
+        "content": "“This evening, as the sun sets, look out at the landscape around the village. We have peace up here, halfway to the stars. Are we not privileged? Is this not worth the hardships we must accept?”"
+      },
+      {
+        "content": "He looks at you speculatively. This seems a good time to ask about the telegraph."
+      }
+    ],
+    "zh": [
+      {
+        "content": "咖啡壶开始咕噜噜地响起来，你和文特斯先生互相说着客套话。"
+      },
+      {
+        "content": "“住在这里吗？这是一个权衡，和生活中的其他东西一样。”他的视线落在你身后的高架子上。“我当然也希望能拥有真正的图书馆。但是我也有自知之明。我不过是个半吊子。而城里……”他的脸嫌恶地皱了皱。“人太多了。人人都在跑，在嚷。我们烬头村这个地方得天独厚，必须有人负起责任来维护它。以前我父亲就这么做的，现在这责任落到我头上了。”他抬抬下颏，端正了坐姿。"
+      },
+      {
+        "content": "“今天晚上，夕阳落山时，出去看看村子四周的美景吧。我们和平地住在这片地方，正处在群星之路的中途。我们不是荣幸之至吗？这难道值不上我们要忍受的艰辛吗？”"
+      },
+      {
+        "content": "他若有所思地看着你。现在是个问电报的好时机。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 56
+    }
+  ]
 }

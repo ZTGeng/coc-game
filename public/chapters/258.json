@@ -1,25 +1,58 @@
 {
-    "key": 258,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The belt parts and you plunge into the conflagration. The ground rushes at you." },
-            { "tag": "info", "text": [
-                { "content": "Lose 1D2 Sanity points and 1D3 hit points." }
-            ] }
-        ],
-        "zh": [
-            { "content": "腰带松脱了，你跌入熊熊烈焰之中。地面瞬间撞上了你。" },
-            { "tag": "info", "text": [
-                { "content": "失去1D2点理智值和1D3点耐久值。" }
-            ] }
+  "key": 258,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The belt parts and you plunge into the conflagration. The ground rushes at you."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Lose 1D2 Sanity points and 1D3 hit points."
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+      }
     ],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" } },
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d3" } }
+    "zh": [
+      {
+        "content": "腰带松脱了，你跌入熊熊烈焰之中。地面瞬间撞上了你。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "失去1D2点理智值和1D3点耐久值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 13
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "San",
+        "delta": "-1d2"
+      }
+    },
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": "-1d3"
+      }
+    }
+  ]
 }

@@ -1,18 +1,56 @@
 {
-    "key": 40,
-    "location": "beacon_center",
-    "text": {
-        "en": [
-
-        ],
-        "zh": [
-            { "content": "火焰蜿蜒爬过薪柴，一边延烧一边升腾。烟雾开始弥漫，村民的身影已经难于辨认。你身边的三具人体也被点燃，红色的火焰里带着黑烟。浓烟钻进了你的肺，你开始咳嗽，努力压抑涌上心头的强烈恐惧。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": "尝试阿博加斯特的咒语", "show": "flag_learned_magic_arbogast", "secret": true },
-        { "key": 1, "text": "尝试“召唤天之火”", "show": "flag_learned_magic_summon", "secret": true },
-        { "key": 2, "text": "尝试“号令天之火”", "show": "flag_learned_magic_order", "secret": true },
-        { "key": 3, "text": "挣扎" }
+  "key": 40,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "content": "The flames snake across the kindling, catching and rising. Smoke rises and it becomes difficult to see the villagers. The three bodies surrounding you catch fire, blazing with sooty red flames. You begin to cough as the smoke enters your lungs, and fight down the urge to panic."
+      }
+    ],
+    "zh": [
+      {
+        "content": "火焰蜿蜒爬过薪柴，一边延烧一边升腾。烟雾开始弥漫，村民的身影已经难于辨认。你身边的三具人体也被点燃，红色的火焰里带着黑烟。浓烟钻进了你的肺，你开始咳嗽，努力压抑涌上心头的强烈恐惧。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Try Arbogast's chant",
+        "zh": "尝试阿博加斯特的咒语"
+      },
+      "show": "flag_learned_magic_arbogast",
+      "secret": true,
+      "goto": 50
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Try “Call Ye Celestial Flames”",
+        "zh": "尝试“召唤天之火”"
+      },
+      "show": "flag_learned_magic_summon",
+      "secret": true,
+      "goto": 80
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Try “Command Ye Celestial Flames”",
+        "zh": "尝试“号令天之火”"
+      },
+      "show": "flag_learned_magic_order",
+      "secret": true,
+      "goto": 90
+    },
+    {
+      "key": 3,
+      "text": {
+        "en": "Struggle",
+        "zh": "挣扎"
+      },
+      "goto": 65
+    }
+  ]
 }

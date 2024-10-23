@@ -1,30 +1,67 @@
 {
-    "key": 193,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "Your legs fold beneath you and you collapse to the ground, a few steps short of the road. Blood fills your mouth. As you roll, you catch sight of the bear’s face, blurry and doubled. It plunges towards you, teeth bared—" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "You have fallen unconscious and been torn to pieces by a bear. The odds were against you" },
-                { "content": "Why not try the adventure again?" }
-            ] },
-            { "tag": "h", "content": "The End." }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "你的膝盖一软，身体瘫倒在路边几步远的地上。鲜血充满了你的口腔。你翻身的时候，视线正撞到熊的脸，模糊而重叠。它露出利齿，向你扑来——" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "你失去了意识，被熊撕碎了。可能性并没有站在你这一边。" },
-                { "content": "为何不重新尝试这次冒险呢？" }
-            ] },
-            { "tag": "h", "content": "【剧终】" }
+  "key": 193,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "Your legs fold beneath you and you collapse to the ground, a few steps short of the road. Blood fills your mouth. As you roll, you catch sight of the bear’s face, blurry and doubled. It plunges towards you, teeth bared—"
+          }
         ]
-    },
-    "options": [],
-    "onload": [
-        { "action": "action_ending", "param": "bear" }
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have fallen unconscious and been torn to pieces by a bear. The odds were against you"
+          },
+          {
+            "content": "Why not try the adventure again?"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "你的膝盖一软，身体瘫倒在路边几步远的地上。鲜血充满了你的口腔。你翻身的时候，视线正撞到熊的脸，模糊而重叠。它露出利齿，向你扑来——"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你失去了意识，被熊撕碎了。可能性并没有站在你这一边。"
+          },
+          {
+            "content": "为何不重新尝试这次冒险呢？"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
+  },
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "bear"
+    }
+  ]
 }

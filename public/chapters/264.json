@@ -1,31 +1,69 @@
 {
-    "key": 264,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The eerie howls draw closer. They come from either side. One calls and is answered by a grim chorus, thick and hungry. They have a strange, desperate edge." },
-            { "content": "You are walking as fast as you can now. You hear your own breath, coming hard. The trees in this area are too young to support your weight. Perhaps you should just run. But how long could you run before you had to stop—" },
-            { "content": "A clump of low, dark bodies slink from the trees, blocking the road ahead. Each silhouette has high, pointed ears. Their eyes glint in the moonlight." },
-            { "tag": "info", "text": [
-                { "content": "Make a Sanity roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "诡异的嗥叫越来越近。你的前面、后面，都有这种声音。一声嗥叫必然有阴冷的齐声回应，低沉而饥饿。它们的声调奇异而绝望。" },
-            { "content": "你现在在以最快的速度赶路。你听到自己的呼吸声越来越急促。这片地区的树不够老，支撑不住你的重量。可能你需要跑起来。但你在被迫停步之前，又能跑多久呢——" },
-            { "content": "一群矮小黑暗的动物从树上溜下来，挡住了前面的路。每个黑影都竖着长长的尖耳朵。它们的双眼在月色下发着荧荧的光。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次“理智”检定。" }
-            ] }
+  "key": 264,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The eerie howls draw closer. They come from either side. One calls and is answered by a grim chorus, thick and hungry. They have a strange, desperate edge."
+      },
+      {
+        "content": "You are walking as fast as you can now. You hear your own breath, coming hard. The trees in this area are too young to support your weight. Perhaps you should just run. But how long could you run before you had to stop—"
+      },
+      {
+        "content": "A clump of low, dark bodies slink from the trees, blocking the road ahead. Each silhouette has high, pointed ears. Their eyes glint in the moonlight."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Sanity roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "San",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "诡异的嗥叫越来越近。你的前面、后面，都有这种声音。一声嗥叫必然有阴冷的齐声回应，低沉而饥饿。它们的声调奇异而绝望。"
+      },
+      {
+        "content": "你现在在以最快的速度赶路。你听到自己的呼吸声越来越急促。这片地区的树不够老，支撑不住你的重量。可能你需要跑起来。但你在被迫停步之前，又能跑多久呢——"
+      },
+      {
+        "content": "一群矮小黑暗的动物从树上溜下来，挡住了前面的路。每个黑影都竖着长长的尖耳朵。它们的双眼在月色下发着荧荧的光。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次“理智”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "San",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 269
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 5
+    }
+  ]
 }

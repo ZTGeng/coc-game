@@ -1,37 +1,83 @@
 {
-    "key": 167,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "You are less than ten paces from the road when the bear snarls, inches behind you, and its claws rip through your jacket." }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "Each claw is a separate attack. It hits you 35% of the time, and it does 3D6 worth of damage. If either claw does half, or more, of your original hit points in damage, you have taken a major wound." }
-            ] }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "就在你离道路还有差不多十步的时候，熊在你身后几寸远的地方咆哮一声，爪子撕破了你的夹克。" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "熊会用双爪攻击，每一爪都是一次单独的攻击。它每次都有35%的概率击中你，造成3D6点伤害。若任一次攻击对你造成的伤害大于等于你最大耐久值的一半，你就受到了重伤。" }
-            ] }
+  "key": 167,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "You are less than ten paces from the road when the bear snarls, inches behind you, and its claws rip through your jacket."
+          }
         ]
-    },
-    "interactions": [
-        { 
-            "text": {
-                "en": "Endure the bear's attack",
-                "zh": "承受熊爪攻击"
-            }, 
-            "action": "action_c167_bear_attack", 
-            "param": "", 
-            "disabled": "flag_interaction_finished" 
-        }
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Each claw is a separate attack. It hits you 35% of the time, and it does 3D6 worth of damage. If either claw does half, or more, of your original hit points in damage, you have taken a major wound."
+          }
+        ]
+      }
     ],
-    "options": [
-        { "key": 0, "text": { "en": "You have taken a major wound, continue", "zh": "你受了重伤，继续" }, "show": ["flag_interaction_finished", "flag_major_wound"] },
-        { "key": 1, "text": { "en": "You have not taken a major wound, continue", "zh": "你没有受重伤，继续" }, "show": ["flag_interaction_finished", "!flag_major_wound"] }
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "就在你离道路还有差不多十步的时候，熊在你身后几寸远的地方咆哮一声，爪子撕破了你的夹克。"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "熊会用双爪攻击，每一爪都是一次单独的攻击。它每次都有35%的概率击中你，造成3D6点伤害。若任一次攻击对你造成的伤害大于等于你最大耐久值的一半，你就受到了重伤。"
+          }
+        ]
+      }
     ]
+  },
+  "interactions": [
+    {
+      "text": {
+        "en": "Endure the bear's attack",
+        "zh": "承受熊爪攻击"
+      },
+      "action": "action_c167_bear_attack",
+      "param": "",
+      "disabled": "flag_interaction_finished"
+    }
+  ],
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You have taken a major wound, continue",
+        "zh": "你受了重伤，继续"
+      },
+      "show": [
+        "flag_interaction_finished",
+        "flag_major_wound"
+      ],
+      "goto": 179
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You have not taken a major wound, continue",
+        "zh": "你没有受重伤，继续"
+      },
+      "show": [
+        "flag_interaction_finished",
+        "!flag_major_wound"
+      ],
+      "goto": 186
+    }
+  ]
 }

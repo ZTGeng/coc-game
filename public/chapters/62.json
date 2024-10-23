@@ -1,22 +1,52 @@
 {
-    "key": 62,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "You make a small but flattering remark about a couple of the volumes on his shelves. Winters blushes with pleasure." },
-            { "content": "“Well, of course they’re not my personal collection. They belong to the village,” he says. “But I did select most of the recent items. This is the community’s library, you see. I put up the PRIVATE sign to stop people just wandering in from meetings in the other room. But this is really a public space.”" },
-            { "content": "You scan the shelves. There is a sparse but respectable collection on mathematics and the sciences, passable sections on history and arts, and a shelf of literature. He has a few lowbrow novels tucked away in a corner, with tatty copies of Bizarre Tales magazine." },
-            { "content": "“Quality does not always equate to popularity, I’m afraid.” Winters gives you an apologetic smile." }
-        ],
-        "zh": [
-            { "content": "你对他架子上那些书册做了简单而讨好的评论。文特斯高兴地涨红了脸。" },
-            { "content": "他说：“哎，这当然不是我私人的收藏。这是属于全村的。但最新的书的确是我精挑细选过的。我挂上‘私用’的牌子，是防止别人在集会时随便进出。但这里其实还是公用的。”" },
-            { "content": "你扫了一眼书架。书架上是零散但为数不少的数学与科学书、还说得过去的文史书，还有一架文学书。他还在角落里藏了几本通俗小说和破烂的《幻丽诡谭》杂志。" },
-            { "content": "“恐怕质量和人气并不总是相配。”文特斯带着歉意对你微笑道。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Take the time for some research in the library", "zh": "花点时间在图书馆里研究研究" } },
-        { "key": 1, "text": { "en": "Leave while it is still light outside", "zh": "趁天色还早时离开" } }
+  "key": 62,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "You make a small but flattering remark about a couple of the volumes on his shelves. Winters blushes with pleasure."
+      },
+      {
+        "content": "“Well, of course they’re not my personal collection. They belong to the village,” he says. “But I did select most of the recent items. This is the community’s library, you see. I put up the PRIVATE sign to stop people just wandering in from meetings in the other room. But this is really a public space.”"
+      },
+      {
+        "content": "You scan the shelves. There is a sparse but respectable collection on mathematics and the sciences, passable sections on history and arts, and a shelf of literature. He has a few lowbrow novels tucked away in a corner, with tatty copies of Bizarre Tales magazine."
+      },
+      {
+        "content": "“Quality does not always equate to popularity, I’m afraid.” Winters gives you an apologetic smile."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你对他架子上那些书册做了简单而讨好的评论。文特斯高兴地涨红了脸。"
+      },
+      {
+        "content": "他说：“哎，这当然不是我私人的收藏。这是属于全村的。但最新的书的确是我精挑细选过的。我挂上‘私用’的牌子，是防止别人在集会时随便进出。但这里其实还是公用的。”"
+      },
+      {
+        "content": "你扫了一眼书架。书架上是零散但为数不少的数学与科学书、还说得过去的文史书，还有一架文学书。他还在角落里藏了几本通俗小说和破烂的《幻丽诡谭》杂志。"
+      },
+      {
+        "content": "“恐怕质量和人气并不总是相配。”文特斯带着歉意对你微笑道。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Take the time for some research in the library",
+        "zh": "花点时间在图书馆里研究研究"
+      },
+      "goto": 68
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Leave while it is still light outside",
+        "zh": "趁天色还早时离开"
+      },
+      "goto": 180
+    }
+  ]
 }

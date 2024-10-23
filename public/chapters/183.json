@@ -1,13 +1,26 @@
 {
-    "key": 183,
-    "location": "church_inside",
-    "text": {
-        "en": [
-            { "content": "You beat the pillar with all your strength. The villagers draw back in alarm, then relax as they see you are having no effect whatsoever. They back you against the church wall. You swing your club for a few desperate seconds, but they overpower you and tear it from your fingers." }
-        ],
-        "zh": [
-            { "content": "你用尽全力砸向柱子。村民警觉地后退，但在发现你在做无用功以后，就放松了。他们把你逼到了教堂的墙边。你拼命地挥动棍子抵抗了几秒，但他们很快就压制住你，把铁棍从你手上夺走了。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 183,
+  "location": "church_inside",
+  "text": {
+    "en": [
+      {
+        "content": "You beat the pillar with all your strength. The villagers draw back in alarm, then relax as they see you are having no effect whatsoever. They back you against the church wall. You swing your club for a few desperate seconds, but they overpower you and tear it from your fingers."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你用尽全力砸向柱子。村民警觉地后退，但在发现你在做无用功以后，就放松了。他们把你逼到了教堂的墙边。你拼命地挥动棍子抵抗了几秒，但他们很快就压制住你，把铁棍从你手上夺走了。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 108
+    }
+  ]
 }

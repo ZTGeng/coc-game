@@ -1,26 +1,60 @@
 {
-    "key": 66,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The position of the sun bothers you. It reminds you of something from one of the journals; an article about stone circles in England, was it? You check your position with the mountains in the north, closing your eyes to visualize the layout of Emberhead from your explorations this morning. The metal structure is the key, positioned on the bluff as it is. Yes, it seems entirely possible." },
-            { "content": "You can’t be sure without taking a proper bearing and consulting the tables, of course. But if your guess is correct, the central thoroughfare in Emberhead is positioned so that during the summer solstice, the rays of the rising sun will shine through the metal structure and directly down the center of the street." },
-            { "content": "Perhaps this is just wild speculation. But something feels correct about it." },
-            { "tag": "info", "text": [
-                { "content": "You may check-mark the small box beside the Archaelogy skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "太阳的位置令你困惑。它让你想起你看过的一本杂志上的东西；一篇关于英国巨石阵的文章，貌似？你查看自己的位置、北面群山的位置，闭上眼睛，根据你早上探索的结果，在心底描绘烬头村的布局。金属建筑物如同钥匙一般，坐落在它的峭壁之上。是的，这完全有可能。" },
-            { "content": "当然，你并没有得到确切的方位，也无法查找天文表，所以不能肯定。但如果你的猜测正确的话，烬头村中央大街的位置正好能让夏至日的晨光照过金属建筑物，直接投射到大街中央。" },
-            { "content": "这也许只是大胆的猜测。但是你觉得它还有些道理。" },
-            { "tag": "info", "text": [
-                { "content": "你可以在「考古学」技能左边的小方框里打勾。" }
-            ] }
+  "key": 66,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The position of the sun bothers you. It reminds you of something from one of the journals; an article about stone circles in England, was it? You check your position with the mountains in the north, closing your eyes to visualize the layout of Emberhead from your explorations this morning. The metal structure is the key, positioned on the bluff as it is. Yes, it seems entirely possible."
+      },
+      {
+        "content": "You can’t be sure without taking a proper bearing and consulting the tables, of course. But if your guess is correct, the central thoroughfare in Emberhead is positioned so that during the summer solstice, the rays of the rising sun will shine through the metal structure and directly down the center of the street."
+      },
+      {
+        "content": "Perhaps this is just wild speculation. But something feels correct about it."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may check-mark the small box beside the Archaelogy skill."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "archaeology" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "太阳的位置令你困惑。它让你想起你看过的一本杂志上的东西；一篇关于英国巨石阵的文章，貌似？你查看自己的位置、北面群山的位置，闭上眼睛，根据你早上探索的结果，在心底描绘烬头村的布局。金属建筑物如同钥匙一般，坐落在它的峭壁之上。是的，这完全有可能。"
+      },
+      {
+        "content": "当然，你并没有得到确切的方位，也无法查找天文表，所以不能肯定。但如果你的猜测正确的话，烬头村中央大街的位置正好能让夏至日的晨光照过金属建筑物，直接投射到大街中央。"
+      },
+      {
+        "content": "这也许只是大胆的猜测。但是你觉得它还有些道理。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以在「考古学」技能左边的小方框里打勾。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 79
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "archaeology"
+    }
+  ]
 }

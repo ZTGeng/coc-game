@@ -1,56 +1,124 @@
 {
-    "key": 262,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "You struggle with the huge man. His fists come out of the darkness like hammers." },
-            { "tag": "info", "text": [
-                { "content": "Conduct close-quarters combat using pages 12-13 of the Quick-Start Rules. You may need to refer to page 7 first to look up your damage bonus." },
-                { "content": "The combatant with the higher DEX acts first. You and the artisan will take one action each combat round. You may fight back (rolling your Fighting (Brawl) or dodge (using Dodge) against each attack. Combat rolls are opposed rolls: whoever gets the best level of success wins." },
-                { "content": "The artisan has a DEX of 41 and a Fighting (Brawl) skill of 35% (17% half / 7% one-fifth). He has 12 hit points. He will attack you every combat round, and his successful hits do 1D3 + 1D4 damage." },
-                { "content": "If you have a knife or similar weapon, each successful hit you make does 1D4 plus your damage bonus. If you are unarmed, the damage is 1D3 plus your damage bonus." },
-                { "content": "After three rounds, you may attempt to circle round behind the man and escape. This requires a Hard roll, and if you do not achieve a success on the roll, he may land another blow." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你和这个巨汉开始争斗。他的拳头如铁锤一般从暗处砸来。" },
-            { "tag": "info", "text": [
-                { "content": "处理近身战斗时，使用快速开始规则的第 14 ～ 16 页（规则书第 102 ～ 111 页）。你需要先阅读第 8 页（规则书第 33 页）来查询自己的伤害加值。" },
-                { "content": "参战者中“敏捷”最高的最先行动。你和工匠每个战斗轮各可进行一个动作。工匠每向你攻击一次，你都可以选择反击（投掷「格斗(斗殴)」）或者闪避（投掷「闪避」）。战斗技能检定是对抗检定：谁的成功度高，谁得手。" },
-                { "content": "工匠的“敏捷”为 41，格斗 ( 斗殴 ) 技能值为35%（半值17%/五分之一值7%），耐久值为 12。他每轮会攻击你一次，每次攻击成功会造成 1D3+1D4 点伤害。" },
-                { "content": "如果你带着小刀或类似的武器，你每次攻击成功都会造成1D4点加上伤害加值点数的伤害。如果你赤手空拳，伤害是1D3点加上伤害加值点数。" },
-                { "content": "在第三轮结束后，你可以尝试绕过这个人逃跑。这需要进行一次困难难度的「闪避」检定，如果你没有检定成功，他会再攻击一次。" }
-            ] }
+  "key": 262,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "You struggle with the huge man. His fists come out of the darkness like hammers."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Conduct close-quarters combat using pages 12-13 of the Quick-Start Rules. You may need to refer to page 7 first to look up your damage bonus."
+          },
+          {
+            "content": "The combatant with the higher DEX acts first. You and the artisan will take one action each combat round. You may fight back (rolling your Fighting (Brawl) or dodge (using Dodge) against each attack. Combat rolls are opposed rolls: whoever gets the best level of success wins."
+          },
+          {
+            "content": "The artisan has a DEX of 41 and a Fighting (Brawl) skill of 35% (17% half / 7% one-fifth). He has 12 hit points. He will attack you every combat round, and his successful hits do 1D3 + 1D4 damage."
+          },
+          {
+            "content": "If you have a knife or similar weapon, each successful hit you make does 1D4 plus your damage bonus. If you are unarmed, the damage is 1D3 plus your damage bonus."
+          },
+          {
+            "content": "After three rounds, you may attempt to circle round behind the man and escape. This requires a Hard roll, and if you do not achieve a success on the roll, he may land another blow."
+          }
         ]
-    },
-    "check": {
-        "type": "combat",
-        "rounds": 3,
-        "roundRunOut": "escape",
-        "opponent": {
-            "name": { "en": "Artisan", "zh": "工匠" },
-            "DEX": 41,
-            "HP": 12,
-            "thresholdHP": 6,
-            "armor": 0,
-            "skills": {
-                "fighting": {
-                    "name": { "en": "Fighting (Brawl)", "zh": "格斗(斗殴)" },
-                    "value": 35,
-                    "half": 17,
-                    "fifth": 7,
-                    "damage": "1D3+1D4"
-                }
-            },
-            "moves": [
-                ["fighting"]
-            ],
-            "moveDefend": ["fighting"]
-        }
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You lose the combat, continue", "zh": "战斗失败，继续" }, "show": "flag_check_failed" },
-        { "key": 1, "text": { "en": "You win the combat, continue", "zh": "战斗胜利，继续" }, "show": "flag_check_passed" },
-        { "key": 2, "text": { "en": "You successfully escape, continue", "zh": "逃跑成功，继续" }, "show": ["flag_check_finished", "!flag_check_passed", "!flag_check_failed"] }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你和这个巨汉开始争斗。他的拳头如铁锤一般从暗处砸来。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "处理近身战斗时，使用快速开始规则的第 14 ～ 16 页（规则书第 102 ～ 111 页）。你需要先阅读第 8 页（规则书第 33 页）来查询自己的伤害加值。"
+          },
+          {
+            "content": "参战者中“敏捷”最高的最先行动。你和工匠每个战斗轮各可进行一个动作。工匠每向你攻击一次，你都可以选择反击（投掷「格斗(斗殴)」）或者闪避（投掷「闪避」）。战斗技能检定是对抗检定：谁的成功度高，谁得手。"
+          },
+          {
+            "content": "工匠的“敏捷”为 41，格斗 ( 斗殴 ) 技能值为35%（半值17%/五分之一值7%），耐久值为 12。他每轮会攻击你一次，每次攻击成功会造成 1D3+1D4 点伤害。"
+          },
+          {
+            "content": "如果你带着小刀或类似的武器，你每次攻击成功都会造成1D4点加上伤害加值点数的伤害。如果你赤手空拳，伤害是1D3点加上伤害加值点数。"
+          },
+          {
+            "content": "在第三轮结束后，你可以尝试绕过这个人逃跑。这需要进行一次困难难度的「闪避」检定，如果你没有检定成功，他会再攻击一次。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "combat",
+    "rounds": 3,
+    "roundRunOut": "escape",
+    "opponent": {
+      "name": {
+        "en": "Artisan",
+        "zh": "工匠"
+      },
+      "DEX": 41,
+      "HP": 12,
+      "thresholdHP": 6,
+      "armor": 0,
+      "skills": {
+        "fighting": {
+          "name": {
+            "en": "Fighting (Brawl)",
+            "zh": "格斗(斗殴)"
+          },
+          "value": 35,
+          "half": 17,
+          "fifth": 7,
+          "damage": "1D3+1D4"
+        }
+      },
+      "moves": [
+        [
+          "fighting"
+        ]
+      ],
+      "moveDefend": [
+        "fighting"
+      ]
+    }
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You lose the combat, continue",
+        "zh": "战斗失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 2
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You win the combat, continue",
+        "zh": "战斗胜利，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 268
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "You successfully escape, continue",
+        "zh": "逃跑成功，继续"
+      },
+      "show": [
+        "flag_check_finished",
+        "!flag_check_passed",
+        "!flag_check_failed"
+      ],
+      "goto": 12
+    }
+  ]
 }

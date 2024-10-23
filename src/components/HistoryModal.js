@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { LanguageContext, CharacterSheetContext } from "../App";
 import * as utils from "../utils/utils";
 
@@ -71,8 +72,9 @@ function HistoryItem({ historyItem, historyIndex, onJumpToChapter }) {
   );
 }
 
-export default function HistoryModal({ chapterHistory, onJumpToChapter }) {
+export default function HistoryModal({ onJumpToChapter }) {
   const { autoLang } = useContext(LanguageContext);
+  const historyStore = useSelector(state => state.history);
 
   return (
     <div className="offcanvas offcanvas-start" data-bs-scroll="true" tabIndex="-1" id="history-modal" aria-labelledby="history-modal-title">
@@ -88,7 +90,7 @@ export default function HistoryModal({ chapterHistory, onJumpToChapter }) {
             </svg>
             <small className="ms-2">{ autoLang(firstItem) }</small>
           </button>
-          { chapterHistory.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ historyItem, onJumpToChapter }} />)}
+          { historyStore.items.map((historyItem, i) => <HistoryItem key={i} historyIndex={i} {...{ historyItem, onJumpToChapter }} />)}
         </div>
       </div>
     </div>

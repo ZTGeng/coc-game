@@ -1,42 +1,101 @@
 {
-    "key": 141,
-    "text": {
-        "en": [
-            { "content": "The figure moves fast, with almost silent steps, but your instincts keep you on its tail. It slips through a dusty courtyard, veering off between iron fences. You close in as it darts around a corner." },
-            { "content": "A breeze warns that you are close to a cliff edge. The flickering light from your lantern picks out its grassy lip as you charge in pursuit. You slow your pace, watching for unexpected voids beneath you. The watcher pulls further away, but rather than darting back into the maze of streets, it makes for the cliff edge. You close in." },
-            { "content": "The dark figure swings its head to stare at you once more. You receive a brief, uneasy impression of something wrong with its face." },
-            { "content": "Then it leaps over the cliff edge." },
-            { "content": "Your mouth drops open. You approach the edge, lantern swinging in the wind. Dim light plays on the rock face beneath you. Did you frighten somebody into suicide? Your gut says not. But you cannot explain what just happened." },
-            { "tag": "info", "text": [
-                { "content": "Make a Sanity roll. If you fail, lose 1D2 Sanity points. You can roll this with an ordinary six-sided die: 1, 2 or 3 means lose 1 Sanity point, and 4, 5 or 6 means lose 2 Sanity points" }
-            ] },
-            { "content": "You find your way back to the Ledbetter house, the lantern trembling in your grasp. If May notices your unease, she says nothing. You feel weary." }
-        ],
-        "zh": [
-            { "content": "这黑影跑得很快，步伐几乎是悄无声息。但你的直觉让你对它紧追不舍。它溜进一片满是尘土的院子，猛然转向拐进了铁栅栏。你步步逼近，它急忙冲进角落里。" },
-            { "content": "一阵微风吹过，提醒你这里离悬崖边已经很近了。在你奋力追逐时，提灯上闪烁的光芒照亮了悬崖长着草的边缘。你放慢了步伐，留意脚下，以防意外踏入下方的虚空。注视者和你拉开了一点距离，但它没有冲回街巷的迷宫，而是走向了悬崖。你继续逼近。" },
-            { "content": "漆黑的身影摆了摆头，又一次盯着你。你感觉到短暂的不安，因为它的脸好像有哪里不对劲。" },
-            { "content": "然后它从悬崖边上跳了下去。" },
-            { "content": "你的下巴都要被惊掉了。你来到悬崖边，提灯在风中摇晃。昏暗的光照着你身下的崖壁。你是不是把别人吓得跳崖了？你的直觉告诉你不是。但你也没法解释刚才到底发生了什么。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次“理智”检定。如果你失败了，失去1D2点理智值。你可以使用普通六面骰来投掷：1、2、3表示失去1点理智值，4、5、6表示失去2点理智值。" }
-            ] },
-            { "content": "你沿路返回莱德贝特的房子，手里抓着的提灯不住地颤抖。当梅注意到你的不安时，她什么也没说。你疲惫至极。" }
+  "key": 141,
+  "text": {
+    "en": [
+      {
+        "content": "The figure moves fast, with almost silent steps, but your instincts keep you on its tail. It slips through a dusty courtyard, veering off between iron fences. You close in as it darts around a corner."
+      },
+      {
+        "content": "A breeze warns that you are close to a cliff edge. The flickering light from your lantern picks out its grassy lip as you charge in pursuit. You slow your pace, watching for unexpected voids beneath you. The watcher pulls further away, but rather than darting back into the maze of streets, it makes for the cliff edge. You close in."
+      },
+      {
+        "content": "The dark figure swings its head to stare at you once more. You receive a brief, uneasy impression of something wrong with its face."
+      },
+      {
+        "content": "Then it leaps over the cliff edge."
+      },
+      {
+        "content": "Your mouth drops open. You approach the edge, lantern swinging in the wind. Dim light plays on the rock face beneath you. Did you frighten somebody into suicide? Your gut says not. But you cannot explain what just happened."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Sanity roll. If you fail, lose 1D2 Sanity points. You can roll this with an ordinary six-sided die: 1, 2 or 3 means lose 1 Sanity point, and 4, 5 or 6 means lose 2 Sanity points"
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "San",
-        "level": "value",
-        "onfail": [
-            { "action": "action_adjust_attribute", "param": { "key": "San", "delta": "-1d2" } }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      },
+      {
+        "content": "You find your way back to the Ledbetter house, the lantern trembling in your grasp. If May notices your unease, she says nothing. You feel weary."
+      }
     ],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "track" }
+    "zh": [
+      {
+        "content": "这黑影跑得很快，步伐几乎是悄无声息。但你的直觉让你对它紧追不舍。它溜进一片满是尘土的院子，猛然转向拐进了铁栅栏。你步步逼近，它急忙冲进角落里。"
+      },
+      {
+        "content": "一阵微风吹过，提醒你这里离悬崖边已经很近了。在你奋力追逐时，提灯上闪烁的光芒照亮了悬崖长着草的边缘。你放慢了步伐，留意脚下，以防意外踏入下方的虚空。注视者和你拉开了一点距离，但它没有冲回街巷的迷宫，而是走向了悬崖。你继续逼近。"
+      },
+      {
+        "content": "漆黑的身影摆了摆头，又一次盯着你。你感觉到短暂的不安，因为它的脸好像有哪里不对劲。"
+      },
+      {
+        "content": "然后它从悬崖边上跳了下去。"
+      },
+      {
+        "content": "你的下巴都要被惊掉了。你来到悬崖边，提灯在风中摇晃。昏暗的光照着你身下的崖壁。你是不是把别人吓得跳崖了？你的直觉告诉你不是。但你也没法解释刚才到底发生了什么。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次“理智”检定。如果你失败了，失去1D2点理智值。你可以使用普通六面骰来投掷：1、2、3表示失去1点理智值，4、5、6表示失去2点理智值。"
+          }
+        ]
+      },
+      {
+        "content": "你沿路返回莱德贝特的房子，手里抓着的提灯不住地颤抖。当梅注意到你的不安时，她什么也没说。你疲惫至极。"
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "San",
+    "level": "value",
+    "onfail": [
+      {
+        "action": "action_adjust_attribute",
+        "param": {
+          "key": "San",
+          "delta": "-1d2"
+        }
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 63
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 63
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "track"
+    }
+  ]
 }

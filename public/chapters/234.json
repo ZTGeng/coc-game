@@ -1,16 +1,34 @@
 {
-    "key": 234,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "Another cry splits the gloom. It is the same unearthly call you heard when you entered the first patch of woodland, but this time with a grating undertone that makes you shiver. It seems closer." }
-        ],
-        "zh": [
-            { "content": "又一声嗥叫划破黑暗。它和你进入第一片树林时听到的怪异叫声相类，但这次还混入了刺耳的低音，令你直打哆嗦。它似乎在接近。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Take refuge in a tree for the night", "zh": "爬上树暂避一宿" } },
-        { "key": 1, "text": { "en": "Keep walking", "zh": "继续前行" } }
+  "key": 234,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "Another cry splits the gloom. It is the same unearthly call you heard when you entered the first patch of woodland, but this time with a grating undertone that makes you shiver. It seems closer."
+      }
+    ],
+    "zh": [
+      {
+        "content": "又一声嗥叫划破黑暗。它和你进入第一片树林时听到的怪异叫声相类，但这次还混入了刺耳的低音，令你直打哆嗦。它似乎在接近。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Take refuge in a tree for the night",
+        "zh": "爬上树暂避一宿"
+      },
+      "goto": 208
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Keep walking",
+        "zh": "继续前行"
+      },
+      "goto": 215
+    }
+  ]
 }

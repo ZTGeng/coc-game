@@ -284,9 +284,9 @@ export default function Chapter({
     action in actions ? actions[action](param) : onChapterAction(action, param);
   }
 
-  function onOptionSelected(optionKey, optionText) {
+  function onOptionSelected(nextKey, optionText) {
     if (interactionChapters[chapterKey]) {
-      nextChapter(optionKey, interactionChapters[chapterKey], true);
+      nextChapter(nextKey, interactionChapters[chapterKey], true);
       return;
     }
     if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
@@ -303,15 +303,15 @@ export default function Chapter({
           historyItem.opponentName = chapter.check.opponent.name;
           break;
       }
-      nextChapter(optionKey, historyItem, true);
+      nextChapter(nextKey, historyItem, true);
       return;
     }
     if (chapter.interactions) { // { chapterKey, optionText, type=interaction, texts }
       const texts = chapter.interactions.map(interaction => interaction.text);
-      nextChapter(optionKey, { chapterKey, optionText, type: "interaction", texts }, true);
+      nextChapter(nextKey, { chapterKey, optionText, type: "interaction", texts }, true);
       return;
     }
-    nextChapter(optionKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
+    nextChapter(nextKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
   }
 
   if (chapterKey === 0) {
