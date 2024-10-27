@@ -1,18 +1,38 @@
 {
-    "key": 126,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "Keeping away from the streets, you skirt the northern cliffs and approach the village hall from the rear. It is close to the Beacon and you will not be able to use the door unobserved. You check the windows. The one on the east side, facing the Beacon, is bricked up." },
-            { "content": "A shutter is loose on the westernmost window and you are able to ease it open and slide inside, closing the shutter behind you. You drop into the village meeting room and pad through, passing through dim shafts of light and listening to the excited chatter of the locals from outside. The door opposite reads PRIVATE. Hearing nothing from the other side, you turn the handle." }
-        ],
-        "zh": [
-            { "content": "你远远离开街道，绕过北边的崖壁，从后面接近了村会堂。它离灯塔不远，你没法在不引人注意的情况下从正门进去。你检查周围的窗户。东边面朝灯塔的窗户被砖砌死了。" },
-            { "content": "最西边的窗户有一扇百叶窗很松弛，你能打开它，潜进会堂，关上身后的窗子。你跳进村民集会室，悄声慢行；透过昏暗的光线，听着外面村民兴奋的讨论。对面的门上写着“私用”。你没听到门对面有声音，于是推动了门把手。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_c120_select_option", "param": 1 }
+  "key": 126,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "Keeping away from the streets, you skirt the northern cliffs and approach the village hall from the rear. It is close to the Beacon and you will not be able to use the door unobserved. You check the windows. The one on the east side, facing the Beacon, is bricked up."
+      },
+      {
+        "content": "A shutter is loose on the westernmost window and you are able to ease it open and slide inside, closing the shutter behind you. You drop into the village meeting room and pad through, passing through dim shafts of light and listening to the excited chatter of the locals from outside. The door opposite reads PRIVATE. Hearing nothing from the other side, you turn the handle."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你远远离开街道，绕过北边的崖壁，从后面接近了村会堂。它离灯塔不远，你没法在不引人注意的情况下从正门进去。你检查周围的窗户。东边面朝灯塔的窗户被砖砌死了。"
+      },
+      {
+        "content": "最西边的窗户有一扇百叶窗很松弛，你能打开它，潜进会堂，关上身后的窗子。你跳进村民集会室，悄声慢行；透过昏暗的光线，听着外面村民兴奋的讨论。对面的门上写着“私用”。你没听到门对面有声音，于是推动了门把手。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 133
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_c120_select_option",
+      "param": 1
+    }
+  ]
 }

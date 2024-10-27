@@ -1,31 +1,81 @@
 {
-    "key": 266,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "After another few moments, May glances round at you. Then you hear the soft scratch of a match being lit. She applies it to something in the grate and tiptoes from the room." },
-            { "content": "Once you hear her bedroom door, you creep to the grate. A small mound of black powder, no bigger than a thimble, is burning there. It gives off heady fumes." },
-            { "tag": "info", "text": [
-                { "content": "You may make a Hard Science (Botany) roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "又过了几秒钟，梅环顾四周，瞟了你几眼。然后，你听到了火柴轻轻划燃的声音。她把火柴丢到壁炉里的什么东西上，踮着脚出了房间。" },
-            { "content": "你听到她的卧室门关上以后，马上悄悄摸到壁炉前。壁炉里面点着一小堆黑色粉末，最多只有顶针大小。它散发出令人陶醉的烟气。" },
-            { "tag": "info", "text": [
-                { "content": "你可以进行一次困难难度的「科学（生物学）」检定。" }
-            ] }
+  "key": 266,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "After another few moments, May glances round at you. Then you hear the soft scratch of a match being lit. She applies it to something in the grate and tiptoes from the room."
+      },
+      {
+        "content": "Once you hear her bedroom door, you creep to the grate. A small mound of black powder, no bigger than a thimble, is burning there. It gives off heady fumes."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may make a Hard Science (Botany) roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "biology",
-        "level": "half"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "Extinguish the powder and sleep", "zh": "扑灭炉火再睡觉" }, "show": "flag_check_failed" },
-        { "key": 1, "text": { "en": "Stay awake through the night", "zh": "彻夜不眠" }, "show": "flag_check_failed" },
-        { "key": 1, "text": { "en": "Relax and breathe the fumes out of curiosit", "zh": "放松下来，好奇地吸一口烟气" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "又过了几秒钟，梅环顾四周，瞟了你几眼。然后，你听到了火柴轻轻划燃的声音。她把火柴丢到壁炉里的什么东西上，踮着脚出了房间。"
+      },
+      {
+        "content": "你听到她的卧室门关上以后，马上悄悄摸到壁炉前。壁炉里面点着一小堆黑色粉末，最多只有顶针大小。它散发出令人陶醉的烟气。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以进行一次困难难度的「科学（生物学）」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "biology",
+    "level": "half"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 76
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Extinguish the powder and sleep",
+        "zh": "扑灭炉火再睡觉"
+      },
+      "show": "flag_check_failed",
+      "goto": 58
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Stay awake through the night",
+        "zh": "彻夜不眠"
+      },
+      "show": "flag_check_failed",
+      "goto": 52
+    },
+    {
+      "key": 3,
+      "text": {
+        "en": "Relax and breathe the fumes out of curiosit",
+        "zh": "放松下来，好奇地吸一口烟气"
+      },
+      "show": "flag_check_failed",
+      "goto": 26
+    }
+  ]
 }

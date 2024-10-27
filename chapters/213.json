@@ -1,13 +1,26 @@
 {
-    "key": 213,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "With a burst of speed you dart through the hall. As you hear the door open, you throw yourself through the open window. There is no time to cover your intrusion. But you think you weren’t actually spotted.;在听到大门打开的一瞬间，跳出了打开的窗户。你没有时间掩饰侵入的迹象，但你认为你还没被发现。" }
-        ],
-        "zh": [
-            { "content": "你猛然加速，疾速跑过村会堂;在听到大门打开的一瞬间，跳出了打开的窗户。你没有时间掩饰侵入的迹象，但你认为你还没被发现。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 213,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "With a burst of speed you dart through the hall. As you hear the door open, you throw yourself through the open window. There is no time to cover your intrusion. But you think you weren’t actually spotted.;在听到大门打开的一瞬间，跳出了打开的窗户。你没有时间掩饰侵入的迹象，但你认为你还没被发现。"
+      }
+    ],
+    "zh": [
+      {
+        "content": "你猛然加速，疾速跑过村会堂;在听到大门打开的一瞬间，跳出了打开的窗户。你没有时间掩饰侵入的迹象，但你认为你还没被发现。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 120
+    }
+  ]
 }

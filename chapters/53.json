@@ -1,31 +1,69 @@
 {
-    "key": 53,
-    "location": "beacon_center",
-    "text": {
-        "en": [
-            { "content": "As tongues of fire lick towards you through the kindling, you close your eyes and heave on the chains. They give a little more, then—clack. One side of the chain drops. You wriggle in the coils, loosening the bond even as heat singes your ankles." },
-            { "content": "The man on the dais stares at your movements. Then he picks two youths from the crowd and points directly at you." },
-            { "content": "Just as you shrug the chain off and step free from the ironwork, the youths mount the blazing platform. Flames spread up their trousers. As their cloaks catch, they dive at you." },
-            { "tag": "info", "text": [
-                { "content": "Make a Hard Dodge roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "当火舌跳动着，沿着薪柴向你靠近时，你紧闭双眼，一下下拽着链子。它又松动了一点点，然后——啪嚓!铁链的一角掉了下去。即使火焰正在烧焦你的脚踝，你仍然在捆链里蠕动，挣松束缚。" },
-            { "content": "高台上的人盯着你的动作。然后他从人群中喊出两个年轻人，用手直指向你。" },
-            { "content": "你刚刚抖落铁链，从铁架上获得自由，两个年轻人就登上了炽热的平台。火焰蔓延上他们的裤子。当他们的披风开始起火时，他们一猛子扎入火中，向你扑来。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次困难“闪避”检定。" }
-            ] }
+  "key": 53,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "content": "As tongues of fire lick towards you through the kindling, you close your eyes and heave on the chains. They give a little more, then—clack. One side of the chain drops. You wriggle in the coils, loosening the bond even as heat singes your ankles."
+      },
+      {
+        "content": "The man on the dais stares at your movements. Then he picks two youths from the crowd and points directly at you."
+      },
+      {
+        "content": "Just as you shrug the chain off and step free from the ironwork, the youths mount the blazing platform. Flames spread up their trousers. As their cloaks catch, they dive at you."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Hard Dodge roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "dodge",
-        "level": "half"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "当火舌跳动着，沿着薪柴向你靠近时，你紧闭双眼，一下下拽着链子。它又松动了一点点，然后——啪嚓!铁链的一角掉了下去。即使火焰正在烧焦你的脚踝，你仍然在捆链里蠕动，挣松束缚。"
+      },
+      {
+        "content": "高台上的人盯着你的动作。然后他从人群中喊出两个年轻人，用手直指向你。"
+      },
+      {
+        "content": "你刚刚抖落铁链，从铁架上获得自由，两个年轻人就登上了炽热的平台。火焰蔓延上他们的裤子。当他们的披风开始起火时，他们一猛子扎入火中，向你扑来。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次困难“闪避”检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "dodge",
+    "level": "half"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 109
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 123
+    }
+  ]
 }

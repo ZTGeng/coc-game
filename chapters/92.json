@@ -1,26 +1,53 @@
 {
-    "key": 92,
-    "location": "narrow_path",
-    "text": {
-        "en": [
-            { "content": "The cliff seems to fold over you. Pain fades out as your consciousness slips away." },
-            { "tag": "info", "text": [
-                { "content": "You have bled to death from your wounds after falling from the cliffs at Emberhead!" },
-                { "content": "Why not try the adventure again? Different choices may change your story." }
-            ] },
-            { "tag": "h", "content": "The End." }
-        ],
-        "zh": [
-            { "content": "看来悬崖折断了你的身体。你逐渐感觉不到疼痛，意识渐渐远去。" },
-            { "tag": "info", "text": [
-                { "content": "你跌下烬头村的悬崖后，因伤出血过多而死！" },
-                { "content": "为何不重新尝试这次冒险呢？不同的选择可能会改变你的故事。" }
-            ] },
-            { "tag": "h", "content": "【剧终】" }
+  "key": 92,
+  "location": "narrow_path",
+  "text": {
+    "en": [
+      {
+        "content": "The cliff seems to fold over you. Pain fades out as your consciousness slips away."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have bled to death from your wounds after falling from the cliffs at Emberhead!"
+          },
+          {
+            "content": "Why not try the adventure again? Different choices may change your story."
+          }
         ]
-    },
-    "options": [],
-    "onload": [
-        { "action": "action_ending", "param": "cliffs" }
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
+    "zh": [
+      {
+        "content": "看来悬崖折断了你的身体。你逐渐感觉不到疼痛，意识渐渐远去。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你跌下烬头村的悬崖后，因伤出血过多而死！"
+          },
+          {
+            "content": "为何不重新尝试这次冒险呢？不同的选择可能会改变你的故事。"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
+  },
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "cliffs"
+    }
+  ]
 }

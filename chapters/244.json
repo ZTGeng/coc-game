@@ -1,16 +1,34 @@
 {
-    "key": 244,
-    "location": "workshops",
-    "text": {
-        "en": [
-            { "content": "You push aside the door and step inside the workshop. The air is cool against your face, and you see light glinting through the eaves. The center of the room features a raised slab with a slight slope. An indentation beneath it suggests something sits there. A basin perhaps? Prone shapes are racked against the far wall, covered with red cloth. They look… human…" }
-        ],
-        "zh": [
-            { "content": "你推开门，走进了工坊。你的脸上有凉风拂过，还能看到屋檐里漏出光线。屋子正中有一块垫高的石板，略带坡度。石板下面有个豁口，表明里面放着什么东西。也许是盆？还有些东西盖着红布，平躺着堆在对面的墙上。看上去……像是人……" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Investigate further", "zh": "深入调查" } },
-        { "key": 1, "text": { "en": "You have seen enough", "zh": "已经看够了" } }
+  "key": 244,
+  "location": "workshops",
+  "text": {
+    "en": [
+      {
+        "content": "You push aside the door and step inside the workshop. The air is cool against your face, and you see light glinting through the eaves. The center of the room features a raised slab with a slight slope. An indentation beneath it suggests something sits there. A basin perhaps? Prone shapes are racked against the far wall, covered with red cloth. They look… human…"
+      }
+    ],
+    "zh": [
+      {
+        "content": "你推开门，走进了工坊。你的脸上有凉风拂过，还能看到屋檐里漏出光线。屋子正中有一块垫高的石板，略带坡度。石板下面有个豁口，表明里面放着什么东西。也许是盆？还有些东西盖着红布，平躺着堆在对面的墙上。看上去……像是人……"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Investigate further",
+        "zh": "深入调查"
+      },
+      "goto": 250
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You have seen enough",
+        "zh": "已经看够了"
+      },
+      "goto": 120
+    }
+  ]
 }

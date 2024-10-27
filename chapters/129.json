@@ -1,17 +1,40 @@
 {
-    "key": 129,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "Something seems to spook the bear. It turns and shambles into the forest, away from you, its rump swinging. You wait for five minutes, but the animal does not return. Still, it was a fascinating creature to observe for the brief moments you had." }
-            ] }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/bear.png", "text": [
-                { "content": "好像有什么东西让熊受了惊。它背朝着你，甩着屁股，蹒跚走进了森林。你等了五分钟，这头熊仍没回来。但对熊这种奇妙的动物，仅仅观察这么一小会儿也是值得的。" }
-            ] }
+  "key": 129,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "Something seems to spook the bear. It turns and shambles into the forest, away from you, its rump swinging. You wait for five minutes, but the animal does not return. Still, it was a fascinating creature to observe for the brief moments you had."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/bear.png",
+        "text": [
+          {
+            "content": "好像有什么东西让熊受了惊。它背朝着你，甩着屁股，蹒跚走进了森林。你等了五分钟，这头熊仍没回来。但对熊这种奇妙的动物，仅仅观察这么一小会儿也是值得的。"
+          }
+        ]
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 79
+    }
+  ]
 }

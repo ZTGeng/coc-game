@@ -1,30 +1,63 @@
 {
-    "key": 119,
-    "location": "southern_road",
-    "text": {
-        "en": [
-            { "content": "The southern group appears less sharp than the western group. You stride up to them and explain they are needed at the Beacon. They look dubious. You offer to watch the road for them and hold out your hand for a pitchfork." },
-            { "content": "“Nah. You come with us,” says the first one. His ape-like brow bends into a frown." },
-            { "tag": "info", "text": [
-                { "content": "Make an Extreme Fast Talk roll. This is a roll equal to or less than one-fifth of the skill value (the number in the lower right box)." }
-            ] }
-        ],
-        "zh": [
-            { "content": "南边的一群似乎比西边的一群好对付一些。你大步走上前去，说灯塔那边需要他们。他们看上去十分怀疑。你提出由你替他们把守道路，伸手要去拿干草叉。" },
-            { "content": "第一个人说：“不，你和我们一起走。”他皱起了猿猴一般的眉毛。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次极难难度的「话术」检定，你需要投出结果小于等于你「话术」技能值的五分之一（技能右下角小方格里的数值）。" }
-            ] }
+  "key": 119,
+  "location": "southern_road",
+  "text": {
+    "en": [
+      {
+        "content": "The southern group appears less sharp than the western group. You stride up to them and explain they are needed at the Beacon. They look dubious. You offer to watch the road for them and hold out your hand for a pitchfork."
+      },
+      {
+        "content": "“Nah. You come with us,” says the first one. His ape-like brow bends into a frown."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make an Extreme Fast Talk roll. This is a roll equal to or less than one-fifth of the skill value (the number in the lower right box)."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "fast_talk",
-        "level": "fifth"
-    },
-    
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "南边的一群似乎比西边的一群好对付一些。你大步走上前去，说灯塔那边需要他们。他们看上去十分怀疑。你提出由你替他们把守道路，伸手要去拿干草叉。"
+      },
+      {
+        "content": "第一个人说：“不，你和我们一起走。”他皱起了猿猴一般的眉毛。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次极难难度的「话术」检定，你需要投出结果小于等于你「话术」技能值的五分之一（技能右下角小方格里的数值）。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "fast_talk",
+    "level": "fifth"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 132
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 139
+    }
+  ]
 }

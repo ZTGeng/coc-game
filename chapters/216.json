@@ -1,20 +1,46 @@
 {
-    "key": 216,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "You press yourself against the biggest trunk you can find. Two horses draw near, their riders holding up lanterns. Branches cast a maze of shifting shadows across you as they pass." },
-            { "content": "To your dismay, one rider pulls his horse up short." },
-            { "content": "“Look! There!” He stabs a finger towards you." }
-        ],
-        "zh": [
-            { "content": "你躲到你能找到最粗的树干后面。两匹马越来越近，马车的车夫举着提灯。马车所过之处，枝干投射出游移的阴影，像迷宫一般在你面前晃动。" },
-            { "content": "令你失望的是，一个车夫突然停住了他的马。" },
-            { "content": "“看！在那儿！”他用手指着你。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Try to talk your way past one of the guard groups", "zh": "逃进树林" } },
-        { "key": 1, "text": { "en": "Try to slip past in disguise", "zh": "和车夫搏斗" } }
+  "key": 216,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "You press yourself against the biggest trunk you can find. Two horses draw near, their riders holding up lanterns. Branches cast a maze of shifting shadows across you as they pass."
+      },
+      {
+        "content": "To your dismay, one rider pulls his horse up short."
+      },
+      {
+        "content": "“Look! There!” He stabs a finger towards you."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你躲到你能找到最粗的树干后面。两匹马越来越近，马车的车夫举着提灯。马车所过之处，枝干投射出游移的阴影，像迷宫一般在你面前晃动。"
+      },
+      {
+        "content": "令你失望的是，一个车夫突然停住了他的马。"
+      },
+      {
+        "content": "“看！在那儿！”他用手指着你。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Try to talk your way past one of the guard groups",
+        "zh": "逃进树林"
+      },
+      "goto": 229
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Try to slip past in disguise",
+        "zh": "和车夫搏斗"
+      },
+      "goto": 235
+    }
+  ]
 }

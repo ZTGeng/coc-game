@@ -1,15 +1,32 @@
 {
-    "key": 228,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "You ease yourself onto the widest branch you can see. It is less than comfortable, but you do at least feel safer in this elevated position." },
-            { "content": "Night settles slowly around you. The woods come alive with small noises: scratching nearby, distant bird calls, and the gentle rustle of leaves. Although resigned to a long, tedious night of wakefulness, after a few hours you find yourself yawning. You loop your belt around the branch and your clothing, to hold yourself in place as best you can. Then you close your eyes." }
-        ],
-        "zh": [
-            { "content": "你小心翼翼地能爬到见到的最宽阔的树枝上。上面不是很舒服，但在这么高的位置至少你能感觉安全一些。" },
-            { "content": "夜幕慢慢降临身边。树林发出窸窸窣窣的声响，好像活过来了一样：近处的刨抓声、远处的鸟鸣声，还有树叶轻轻摇动的沙沙声。虽然你已经听天由命，准备好过一个漫长乏味的不眠之夜，但几个小时以后你还是打起了呵欠。你解开腰带把自己的衣服和树枝系在一起，尽量固定住自己的身体，然后闭上了眼睛。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 228,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "You ease yourself onto the widest branch you can see. It is less than comfortable, but you do at least feel safer in this elevated position."
+      },
+      {
+        "content": "Night settles slowly around you. The woods come alive with small noises: scratching nearby, distant bird calls, and the gentle rustle of leaves. Although resigned to a long, tedious night of wakefulness, after a few hours you find yourself yawning. You loop your belt around the branch and your clothing, to hold yourself in place as best you can. Then you close your eyes."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你小心翼翼地能爬到见到的最宽阔的树枝上。上面不是很舒服，但在这么高的位置至少你能感觉安全一些。"
+      },
+      {
+        "content": "夜幕慢慢降临身边。树林发出窸窸窣窣的声响，好像活过来了一样：近处的刨抓声、远处的鸟鸣声，还有树叶轻轻摇动的沙沙声。虽然你已经听天由命，准备好过一个漫长乏味的不眠之夜，但几个小时以后你还是打起了呵欠。你解开腰带把自己的衣服和树枝系在一起，尽量固定住自己的身体，然后闭上了眼睛。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 246
+    }
+  ]
 }

@@ -1,30 +1,75 @@
 {
-    "key": 208,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The echoing call comes again, and this time it is answered by something closer to you. This seems a good time to get off the ground." },
-            { "content": "You select a tree with obvious footholds and a thick branch at about twice your height. You haul yourself up. You are not dressed for this." },
-            { "tag": "info", "text": [
-                { "content": "Make a Climb roll. Only if you fumble will make a difference." }
-            ] }
-        ],
-        "zh": [
-            { "content": "这带着回响的嗥叫再次响起，这次有什么离你更近的东西在呼应着嗥叫。看起来现在是个逃离地面的好机会。" },
-            { "content": "你找到一棵有明显立足点的树，选了大概两人高的一个坚实枝杈。你慢慢挪动上去，可你的衣服并不适合爬树。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「攀爬」检定。只有当你掷出大失败，才会有不同的分支。" }
-            ] }
+  "key": 208,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The echoing call comes again, and this time it is answered by something closer to you. This seems a good time to get off the ground."
+      },
+      {
+        "content": "You select a tree with obvious footholds and a thick branch at about twice your height. You haul yourself up. You are not dressed for this."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Climb roll. Only if you fumble will make a difference."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "climb",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": ["flag_check_failed", "!flag_check_fumble"] },
-        { "key": 2, "text": { "en": "You roll 96 or over, this is a Fumble, continue", "zh": "检定大失败，继续" }, "show": "flag_check_fumble" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "这带着回响的嗥叫再次响起，这次有什么离你更近的东西在呼应着嗥叫。看起来现在是个逃离地面的好机会。"
+      },
+      {
+        "content": "你找到一棵有明显立足点的树，选了大概两人高的一个坚实枝杈。你慢慢挪动上去，可你的衣服并不适合爬树。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「攀爬」检定。只有当你掷出大失败，才会有不同的分支。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "climb",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 228
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": [
+        "flag_check_failed",
+        "!flag_check_fumble"
+      ],
+      "goto": 228
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "You roll 96 or over, this is a Fumble, continue",
+        "zh": "检定大失败，继续"
+      },
+      "show": "flag_check_fumble",
+      "goto": 222
+    }
+  ]
 }

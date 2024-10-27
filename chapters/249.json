@@ -1,43 +1,98 @@
 {
-    "key": 249,
-    "text": {
-        "en": [
-            { "content": "You skirt around the details of the profession in your usual way, mentioning only that you have helped the police to clear up various problems in the past. Your heart pounds a little faster as you think of the post you have secured at the Blackwood Detective Agency. You’ve had enough of investigating marital infidelity and bank clerks on the take; it sounds like the Blackwood Agency is just the opportunity you need to cut your teeth on some real villainy." },
-            { "content": "Silas narrows his eyes, but he says nothing." },
-            { "tag": "info", "text": [
-                { "content": "Your Credit Rating skill is 20%." },
-                { "content": "Your Occupation Skills are: Art/Craft (Photography), Disguise, Law, Library Use, Psychology, Spot Hidden, and one of either Charm, Fast Talk, Intimidate, or Persuade. You may also pick any other skill except Cthulhu Mythos as a personal specialty. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. " }
-            ] }
-        ],
-        "zh": [
-            { "content": "你没有按通常的方式讲述自己的专业，而是兜了个圈子，只说自己帮助警察解决过各种各样的问题。一想到你得到了布莱克伍德侦探事务所的职位，你的心跳就会稍稍加速。你已经受够了婚姻不忠和银行职员受贿之类的调查；听上去布莱克伍德事务所恰好可以提供机会，让你积累起和真正的坏人斗争的经验。" },
-            { "content": "西拉斯眯起了眼睛，但什么话也没说。" },
-            { "tag": "info", "text": [
-                { "content": "你的「信用评级」技能是20%。" },
-                { "content": "你的本职技能是：「艺术/手艺（摄影）」，「乔装」，「法律」，「图书馆使用」，「心理学」，「侦查」，还有「魅惑」、「话术」、「恐吓」、「说服」四项中其中一项。你还可以选择除了「克苏鲁神话」以外的其他任意一项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。" }
-            ] }
+  "key": 249,
+  "text": {
+    "en": [
+      {
+        "content": "You skirt around the details of the profession in your usual way, mentioning only that you have helped the police to clear up various problems in the past. Your heart pounds a little faster as you think of the post you have secured at the Blackwood Detective Agency. You’ve had enough of investigating marital infidelity and bank clerks on the take; it sounds like the Blackwood Agency is just the opportunity you need to cut your teeth on some real villainy."
+      },
+      {
+        "content": "Silas narrows his eyes, but he says nothing."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Your Credit Rating skill is 20%."
+          },
+          {
+            "content": "Your Occupation Skills are: Art/Craft (Photography), Disguise, Law, Library Use, Psychology, Spot Hidden, and one of either Charm, Fast Talk, Intimidate, or Persuade. You may also pick any other skill except Cthulhu Mythos as a personal specialty. Allocate the following values among these Occupation Skills, writing in the large square beside each: 70%, 60%, 60%, 50%, 50%, 50%, 40%, 40%. Ignore any starting value already mentioned on the investigator sheet. "
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "disabled": "flag_skills_occupation_unfinished" }
+      }
     ],
-    "onload": [
-        { "action": "action_show_character_sheet", "param": true },
-        { 
-            "action": "action_set_occupation_and_credit", 
-            "param": {
-                "name": { "en": "Private Investigator", "zh": "私家侦探" },
-                "credit": 20,
-                "skills": ["photography", "disguise", "law", "library", "psychology", "spot"],
-                "interpersonal": 1, 
-                "language": 0, 
-                "art": 0, 
-                "universal": 1 
-            }
-        },
-        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": true } }
-    ],
-    "onleave": [
-        { "action": "action_set_flag", "param": { "flag": "flag_occupation_skills_editable", "value": false } }
+    "zh": [
+      {
+        "content": "你没有按通常的方式讲述自己的专业，而是兜了个圈子，只说自己帮助警察解决过各种各样的问题。一想到你得到了布莱克伍德侦探事务所的职位，你的心跳就会稍稍加速。你已经受够了婚姻不忠和银行职员受贿之类的调查；听上去布莱克伍德事务所恰好可以提供机会，让你积累起和真正的坏人斗争的经验。"
+      },
+      {
+        "content": "西拉斯眯起了眼睛，但什么话也没说。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你的「信用评级」技能是20%。"
+          },
+          {
+            "content": "你的本职技能是：「艺术/手艺（摄影）」，「乔装」，「法律」，「图书馆使用」，「心理学」，「侦查」，还有「魅惑」、「话术」、「恐吓」、「说服」四项中其中一项。你还可以选择除了「克苏鲁神话」以外的其他任意一项技能作为个人专长。将以下数值分配到各项本职技能当中：70%，60%，60%，50%，50%，50%，40%，40%。分配时忽略调查员角色卡上已写出的初始值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "disabled": "flag_skills_occupation_unfinished",
+      "goto": 128
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_show_character_sheet",
+      "param": true
+    },
+    {
+      "action": "action_set_occupation_and_credit",
+      "param": {
+        "name": {
+          "en": "Private Investigator",
+          "zh": "私家侦探"
+        },
+        "credit": 20,
+        "skills": [
+          "photography",
+          "disguise",
+          "law",
+          "library",
+          "psychology",
+          "spot"
+        ],
+        "interpersonal": 1,
+        "language": 0,
+        "art": 0,
+        "universal": 1
+      }
+    },
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_occupation_skills_editable",
+        "value": true
+      }
+    }
+  ],
+  "onleave": [
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_occupation_skills_editable",
+        "value": false
+      }
+    }
+  ]
 }

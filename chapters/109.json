@@ -1,36 +1,78 @@
 {
-    "key": 109,
-    "location": "beacon_center",
-    "text": {
-        "en": [
-            { "content": "You slither from the grasp of the youths. Fire pours across their shoulders and ignites their hair. Curtains of smoke shroud you. Your legs are burning. You must get off the Beacon immediately." },
-            { "tag": "info", "text": [
-                { "content": "Take 1D6 hit points of damage from the fire. If this reduces you to zero, you collapse and are burned to death!" }
-            ] }
-        ],
-        "zh": [
-            { "content": "你用滑步躲开了年轻人的抓捕。火焰顺着他们的肩膀流淌，引燃了他们的头发。你的面前笼罩着烟雾，腿上在燃烧。你必须立刻离开灯塔。" },
-            { "tag": "info", "text": [
-                { "content": "你因为火焰受到1D6点耐久值伤害。如果你的耐久值因此归零，你就会失去意识，被烈焰烧死！" } //Todo
-            ] }
+  "key": 109,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "content": "You slither from the grasp of the youths. Fire pours across their shoulders and ignites their hair. Curtains of smoke shroud you. Your legs are burning. You must get off the Beacon immediately."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Take 1D6 hit points of damage from the fire. If this reduces you to zero, you collapse and are burned to death!"
+          }
         ]
-    },
-    "interactions": [
-        { 
-            "text": {
-                "en": "Endure the fire damage",
-                "zh": "承受火焰伤害"
-            }, 
-            "action": "action_adjust_attribute", 
-            "param": { "key": "HP", "delta": "-1d6" }, 
-            "disabled": "flag_interaction_finished" 
-        }
+      }
     ],
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_hp_reduced", "flag_hp_zero"] },
-        { "key": 1, "text": { "en": "Continue", "zh": "继续" }, "show": ["flag_hp_reduced", "!flag_hp_zero"] }
-    ],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "dodge" }
+    "zh": [
+      {
+        "content": "你用滑步躲开了年轻人的抓捕。火焰顺着他们的肩膀流淌，引燃了他们的头发。你的面前笼罩着烟雾，腿上在燃烧。你必须立刻离开灯塔。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你因为火焰受到1D6点耐久值伤害。如果你的耐久值因此归零，你就会失去意识，被烈焰烧死！"
+          }
+        ]
+      }
     ]
+  },
+  "interactions": [
+    {
+      "text": {
+        "en": "Endure the fire damage",
+        "zh": "承受火焰伤害"
+      },
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": "-1d6"
+      },
+      "disabled": "flag_interaction_finished"
+    }
+  ],
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "show": [
+        "flag_hp_reduced",
+        "flag_hp_zero"
+      ],
+      "goto": 123
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "show": [
+        "flag_hp_reduced",
+        "!flag_hp_zero"
+      ],
+      "goto": 137
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "dodge"
+    }
+  ]
 }

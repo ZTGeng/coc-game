@@ -1,36 +1,67 @@
 {
-    "key": 87,
-    "location": "chamber",
-    "text": {
-        "en": [
-            { "content": "You round an outcrop to find the man has disappeared. The ridge extends much further to the west, and the outer edge leads to a dangerous drop. You have lost him." },
-            { "tag": "info", "text": [
-                { "content": "You may make a Hard Spot Hidden roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你转过一块庄稼地，发现这男人已经消失了。山脊延伸到西面的远方，边缘最外面连接着一片危险的断崖。你跟丢了他。" },
-            { "tag": "info", "text": [
-                { "content": "你可以进行一次困难「侦查」检定。" }
-            ] }
+  "key": 87,
+  "location": "chamber",
+  "text": {
+    "en": [
+      {
+        "content": "You round an outcrop to find the man has disappeared. The ridge extends much further to the west, and the outer edge leads to a dangerous drop. You have lost him."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may make a Hard Spot Hidden roll."
+          }
         ]
-    },
-    "check": { 
-        "type": "roll",
-        "key": "spot", 
-        "level": "half" 
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" },
-        { 
-            "key": 2, 
-            "text": { 
-                "en": "You think he may have escaped from the hidden stairway",
-                "zh": "你认为他可能是从隐藏的阶梯逃走了"
-            }, 
-            "show": "flag_found_cliff_ladder", 
-            "secret": true 
-        }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你转过一块庄稼地，发现这男人已经消失了。山脊延伸到西面的远方，边缘最外面连接着一片危险的断崖。你跟丢了他。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以进行一次困难「侦查」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "spot",
+    "level": "half"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 181
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 160
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "You think he may have escaped from the hidden stairway",
+        "zh": "你认为他可能是从隐藏的阶梯逃走了"
+      },
+      "show": "flag_found_cliff_ladder",
+      "secret": true,
+      "goto": 187
+    }
+  ]
 }

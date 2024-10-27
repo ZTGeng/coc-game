@@ -1,19 +1,44 @@
 {
-    "key": 182,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "Alarm flares in those eyes as you stand, and is quickly replaced by a fiery hatred. Arbogast leans close to your face." },
-            { "content": "“Go then. And when the moment comes, remember I offered you the chance to touch eternity. I will not offer it again.”" },
-            { "content": "He stalks off in the direction of the east road." },
-            { "content": "As you head back to the Ledbetter house, you think you hear a faint human cry, weak and desperate. But you cannot place its direction, and you can find nothing among the shadowed alleyways." }
-        ],
-        "zh": [
-            { "content": "你直起身来，阿博加斯特的眼中闪过警惕的神色，迅速化作炽烈的憎恨。他侧身贴近你的脸。" },
-            { "content": "“那你走吧。等到那个时候，记得我曾经给过你触碰永恒的机会。我不会再给你第二次。”" },
-            { "content": "他沿着东盘山路的方向大步离去了。" },
-            { "content": "在你返回莱德贝特的房子时，你觉得自己听到了一阵模糊的男人叫声，虚弱、绝望。但你没法断定声音的方向，而且你在阴暗的巷子里什么也看不见。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 182,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "Alarm flares in those eyes as you stand, and is quickly replaced by a fiery hatred. Arbogast leans close to your face."
+      },
+      {
+        "content": "“Go then. And when the moment comes, remember I offered you the chance to touch eternity. I will not offer it again.”"
+      },
+      {
+        "content": "He stalks off in the direction of the east road."
+      },
+      {
+        "content": "As you head back to the Ledbetter house, you think you hear a faint human cry, weak and desperate. But you cannot place its direction, and you can find nothing among the shadowed alleyways."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你直起身来，阿博加斯特的眼中闪过警惕的神色，迅速化作炽烈的憎恨。他侧身贴近你的脸。"
+      },
+      {
+        "content": "“那你走吧。等到那个时候，记得我曾经给过你触碰永恒的机会。我不会再给你第二次。”"
+      },
+      {
+        "content": "他沿着东盘山路的方向大步离去了。"
+      },
+      {
+        "content": "在你返回莱德贝特的房子时，你觉得自己听到了一阵模糊的男人叫声，虚弱、绝望。但你没法断定声音的方向，而且你在阴暗的巷子里什么也看不见。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 157
+    }
+  ]
 }

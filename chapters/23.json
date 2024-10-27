@@ -1,12 +1,25 @@
 {
-    "key": 23,
-    "text": {
-        "en": [
-            { "content": "You struggle for a few seconds before the driver comes up beside you and lends a hand, still puffing on his cigarette. “Heavy bags for a small ‘un,” he remarks. You judge it best to respond with a simple thanks." }
-        ],
-        "zh": [
-            { "content": "你折腾了几秒钟，司机走上前你给你搭了把手，嘴里还叼着烟。“小不点，包可够大的。”他说道。你觉得你最好简单地感谢一下他作为回应。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": {"en": "Continue","zh": "继续"} }]
+  "key": 23,
+  "text": {
+    "en": [
+      {
+        "content": "You struggle for a few seconds before the driver comes up beside you and lends a hand, still puffing on his cigarette. “Heavy bags for a small ‘un,” he remarks. You judge it best to respond with a simple thanks."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你折腾了几秒钟，司机走上前你给你搭了把手，嘴里还叼着烟。“小不点，包可够大的。”他说道。你觉得你最好简单地感谢一下他作为回应。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 233
+    }
+  ]
 }

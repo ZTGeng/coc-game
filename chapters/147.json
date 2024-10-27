@@ -1,23 +1,52 @@
 {
-    "key": 147,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "You’re looking along the spines when you notice how close the bookcase is to the window on the north wall. From outside, there is a solid three or four feet between the edge of the window and the wall. And the bookcase covers the wall with the bricked-up window." },
-            { "content": "Further examination reveals an ingenious arrangement of slipcases physically attached to the shelves. When you pull to the left, an entire section of the bookcase swings out." },
-            { "content": "The clatter of activity around the Beacon seems to be building, and you flinch at every conversation that gets too close to the building’s door." }
-        ],
-        "zh": [
-            { "content": "你检查书脊的时候，注意到了书架和北墙之间的距离。从外面看，窗户边缘和墙之间估计足有三四尺。书架覆盖了整面用砖砌住的窗户。" },
-            { "content": "进一步检查之下，你发现了用粘在书架上的书套制成的巧妙机关。当你向左拉机关的时候，就会有一整段书架向外敞开。" },
-            { "content": "灯塔四周活动的哐哐声似乎越来越响，每当有说话声离房门太近，你都会下意识地退缩。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Investigate behind the bookcase", "zh": "调查书架后面" } },
-        { "key": 1, "text": { "en": "Close it and make your escape while you can", "zh": "关上书架，趁着还早赶快逃离" } }
+  "key": 147,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "You’re looking along the spines when you notice how close the bookcase is to the window on the north wall. From outside, there is a solid three or four feet between the edge of the window and the wall. And the bookcase covers the wall with the bricked-up window."
+      },
+      {
+        "content": "Further examination reveals an ingenious arrangement of slipcases physically attached to the shelves. When you pull to the left, an entire section of the bookcase swings out."
+      },
+      {
+        "content": "The clatter of activity around the Beacon seems to be building, and you flinch at every conversation that gets too close to the building’s door."
+      }
     ],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "spot" }
+    "zh": [
+      {
+        "content": "你检查书脊的时候，注意到了书架和北墙之间的距离。从外面看，窗户边缘和墙之间估计足有三四尺。书架覆盖了整面用砖砌住的窗户。"
+      },
+      {
+        "content": "进一步检查之下，你发现了用粘在书架上的书套制成的巧妙机关。当你向左拉机关的时候，就会有一整段书架向外敞开。"
+      },
+      {
+        "content": "灯塔四周活动的哐哐声似乎越来越响，每当有说话声离房门太近，你都会下意识地退缩。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Investigate behind the bookcase",
+        "zh": "调查书架后面"
+      },
+      "goto": 153
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Close it and make your escape while you can",
+        "zh": "关上书架，趁着还早赶快逃离"
+      },
+      "goto": 120
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "spot"
+    }
+  ]
 }

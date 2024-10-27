@@ -1,22 +1,48 @@
 {
-    "key": 69,
-    "location": "beacon",
-    "text": {
-        "en": [
-            { "content": "As you walk away from the iron structure, you notice something strange about the construction of the village. All the wooden dwellings are concentrated in the west and southwest. To the east and northeast, closest to the Beacon, the buildings are formed from dark brick and clay. Does this mean the settlement began at the Beacon, and spread west?" },
-            { "tag": "info", "text": [
-                { "content": "You may check-mark the small box beside the Spot Hidden skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "当你从这座铁铸的建筑走开时，你注意到这村子的布局有些怪异。所有的木屋都集中在村西和村西南。而到了接近灯塔的村东和村东北，建筑则变成了深色的砖房和土房。这是不是说明村庄是从灯塔开始，逐渐向西扩张的呢？" },
-            { "tag": "info", "text": [
-                { "content": "你可以在「侦查」技能左边的小方框里打勾。" }
-            ] }
+  "key": 69,
+  "location": "beacon",
+  "text": {
+    "en": [
+      {
+        "content": "As you walk away from the iron structure, you notice something strange about the construction of the village. All the wooden dwellings are concentrated in the west and southwest. To the east and northeast, closest to the Beacon, the buildings are formed from dark brick and clay. Does this mean the settlement began at the Beacon, and spread west?"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may check-mark the small box beside the Spot Hidden skill."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "spot" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "当你从这座铁铸的建筑走开时，你注意到这村子的布局有些怪异。所有的木屋都集中在村西和村西南。而到了接近灯塔的村东和村东北，建筑则变成了深色的砖房和土房。这是不是说明村庄是从灯塔开始，逐渐向西扩张的呢？"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以在「侦查」技能左边的小方框里打勾。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 25
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "spot"
+    }
+  ]
 }

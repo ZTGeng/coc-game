@@ -1,19 +1,40 @@
 {
-    "key": 95,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "You notice scrapes on the floorboards corresponding to the legs of the bed. With effort, you slide the bed away. There is a rug spread beneath it, and beneath the rug, a trapdoor. You ease it open. The dark space beneath is some kind of cellar." }
-        ],
-        "zh": [
-            { "content": "你在地板上看见了和床腿相对应的拖痕。你费了很大劲才把床拉开。床下铺着一块地毯，地毯的下方是一扇活板门。你打开了它。门下面阴暗的空间大概是地窖。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Descend into the cellar", "zh": "下到地窖" } },
-        { "key": 1, "text": { "en": "Give up", "zh": "放弃" } }
+  "key": 95,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "You notice scrapes on the floorboards corresponding to the legs of the bed. With effort, you slide the bed away. There is a rug spread beneath it, and beneath the rug, a trapdoor. You ease it open. The dark space beneath is some kind of cellar."
+      }
     ],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "spot" }
+    "zh": [
+      {
+        "content": "你在地板上看见了和床腿相对应的拖痕。你费了很大劲才把床拉开。床下铺着一块地毯，地毯的下方是一扇活板门。你打开了它。门下面阴暗的空间大概是地窖。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Descend into the cellar",
+        "zh": "下到地窖"
+      },
+      "goto": 114
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Give up",
+        "zh": "放弃"
+      },
+      "goto": 120
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "spot"
+    }
+  ]
 }

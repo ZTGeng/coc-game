@@ -1,37 +1,44 @@
 {
-    "key": 166,
-    "text": {
-        "en": [
-            { "content": "May seems to have no running water, but has supplied some in a ceramic jug. You freshen up at the washstand and go in. She cooks a hearty breakfast and leaves you in peace to eat. At about seven-thirty, you are paid up, packed, and ready to go. You bid May goodbye and she wishes you the best for your new career in Arkham." }
-        ],
-        "zh": [
-            { "content": "梅的家里好像没有自来水，但有一个陶坛子，里面积了一些水。你在盥洗室梳洗一番，走进屋子里。梅又做了一顿丰盛的早餐，让你安心享用。差不多七点半的时候，你付了钱，打点好行李，准备继续上路。你向梅告别，她祝愿你在阿卡姆工作顺利。" }
-        ]
-    },
-    "options": [
-        {
-            "key": 0,
-            "text": {
-                "en": "You wish to investigate further the results of last night",
-                "zh": "你想进一步勘查昨晚遭遇的后果"
-            },
-            "show": "flag_track_skill_box_checked"
-        },
-        {
-            "key": 1,
-            "text": {
-                "en": "You do not wish to investigate further, continue",
-                "zh": "你不想勘察，继续"
-            },
-            "show": "flag_track_skill_box_checked"
-        },
-        {
-            "key": 2,
-            "text": {
-                "en": "Continue",
-                "zh": "继续"
-            },
-            "show": "!flag_track_skill_box_checked"
-        }
+  "key": 166,
+  "text": {
+    "en": [
+      {
+        "content": "May seems to have no running water, but has supplied some in a ceramic jug. You freshen up at the washstand and go in. She cooks a hearty breakfast and leaves you in peace to eat. At about seven-thirty, you are paid up, packed, and ready to go. You bid May goodbye and she wishes you the best for your new career in Arkham."
+      }
+    ],
+    "zh": [
+      {
+        "content": "梅的家里好像没有自来水，但有一个陶坛子，里面积了一些水。你在盥洗室梳洗一番，走进屋子里。梅又做了一顿丰盛的早餐，让你安心享用。差不多七点半的时候，你付了钱，打点好行李，准备继续上路。你向梅告别，她祝愿你在阿卡姆工作顺利。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You wish to investigate further the results of last night",
+        "zh": "你想进一步勘查昨晚遭遇的后果"
+      },
+      "show": "flag_tracked_figure",
+      "goto": 178
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You do not wish to investigate further, continue",
+        "zh": "你不想勘察，继续"
+      },
+      "show": "flag_tracked_figure",
+      "goto": 192
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "show": "!flag_tracked_figure",
+      "goto": 192
+    }
+  ]
 }

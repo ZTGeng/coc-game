@@ -1,13 +1,26 @@
 {
-    "key": 42,
-    "location": "beacon_2",
-    "text": {
-        "en": [
-            { "content": "The turf sinks beneath your feet and stones crumble from its edge. Alarmed, you grip the building and ease yourself forward. Finally you have a good spot to watch the Beacon." }
-        ],
-        "zh": [
-            { "content": "泥土随着你的踩踏下陷，石头从断崖边缘崩落。你小心翼翼地扶住墙壁，慢慢前行。最后你终于找到了一个观察灯塔的好位置。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 42,
+  "location": "beacon_2",
+  "text": {
+    "en": [
+      {
+        "content": "The turf sinks beneath your feet and stones crumble from its edge. Alarmed, you grip the building and ease yourself forward. Finally you have a good spot to watch the Beacon."
+      }
+    ],
+    "zh": [
+      {
+        "content": "泥土随着你的踩踏下陷，石头从断崖边缘崩落。你小心翼翼地扶住墙壁，慢慢前行。最后你终于找到了一个观察灯塔的好位置。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 61
+    }
+  ]
 }

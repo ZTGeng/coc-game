@@ -1,34 +1,75 @@
 {
-    "key": 83,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "Despite her hospitality, you do not trust May Ledbetter. You return to her house quite openly. Where else would you go?" },
-            { "content": "Inside, the dwelling is still empty. You rap on the bedroom door and wait. Silence. You ease it open." },
-            { "content": "The Ledbetter bedroom is in marked contrast to your own, neat space. Dirty clothes are piled about the floor. On a rough quilt lie schoolbooks and cheap novels. You notice a raggedy old doll discarded down the side of the bed." },
-            { "tag": "info", "text": [
-                { "content": "Make a Spot Hidden roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "尽管梅很热情，可你还是不能相信她。你大大方方地又折回了她的房子。难道还有其他地方能去吗？" },
-            { "content": "房间里仍然空无一人。你敲敲卧室门，等了一会儿。里面没有动静。你小心地推开了门。" },
-            { "content": "莱德贝特自己的卧室和你干净的客房形成了鲜明的对比。地板上到处都堆着脏衣服，乱烘烘的被褥上散落着课本和廉价小说。你还看到床沿下面丢着一个陈旧破烂的洋娃娃。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「侦查」检定。" }
-            ] }
+  "key": 83,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "Despite her hospitality, you do not trust May Ledbetter. You return to her house quite openly. Where else would you go?"
+      },
+      {
+        "content": "Inside, the dwelling is still empty. You rap on the bedroom door and wait. Silence. You ease it open."
+      },
+      {
+        "content": "The Ledbetter bedroom is in marked contrast to your own, neat space. Dirty clothes are piled about the floor. On a rough quilt lie schoolbooks and cheap novels. You notice a raggedy old doll discarded down the side of the bed."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Spot Hidden roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "spot",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
     ],
-    "onload": [
-        { "action": "action_c120_select_option", "param": 0 }
+    "zh": [
+      {
+        "content": "尽管梅很热情，可你还是不能相信她。你大大方方地又折回了她的房子。难道还有其他地方能去吗？"
+      },
+      {
+        "content": "房间里仍然空无一人。你敲敲卧室门，等了一会儿。里面没有动静。你小心地推开了门。"
+      },
+      {
+        "content": "莱德贝特自己的卧室和你干净的客房形成了鲜明的对比。地板上到处都堆着脏衣服，乱烘烘的被褥上散落着课本和廉价小说。你还看到床沿下面丢着一个陈旧破烂的洋娃娃。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「侦查」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "spot",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 95
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 89
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_c120_select_option",
+      "param": 0
+    }
+  ]
 }

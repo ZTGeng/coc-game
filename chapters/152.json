@@ -1,31 +1,69 @@
 {
-    "key": 152,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "The sun is low in the sky as you head east from the village, making for the safety of the woods. The Beacon breaks the horizon, imposing in silhouette. You maintain as fast a pace as you can until you reach the refuge of the tree line. Then you allow yourself to step off the road and take a breather." },
-            { "content": "Almost two hours later, the sun sets. The darkness of the woods might be frightening, but your escape from Emberhead has given you new resolve. You strike on into the night." },
-            { "content": "Not long afterwards, you hear hooves, approaching fast. Two sets. Your heart lifts—but they are coming from behind you." },
-            { "tag": "info", "text": [
-                { "content": "Make a Stealth roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "落日低垂，你向东离开村庄，前往树林中寻求庇护。灯塔戳破地平线，轮廓雄伟壮观。你用最快地速度赶路，直到头上出现了树荫，你才走到路边，稍事休息。" },
-            { "content": "差不多两小时以后太阳落山了。黑暗的森林也许很吓人，但成功逃离烬头村让你下定决心。你头也不回地走在黑夜中。" },
-            { "content": "不久之后，你听到了哒哒的马蹄声，向你飞快地接近。马一共有两匹。你激动不已——但它们是从你身后过来的。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「潜行」检定。" }
-            ] }
+  "key": 152,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "The sun is low in the sky as you head east from the village, making for the safety of the woods. The Beacon breaks the horizon, imposing in silhouette. You maintain as fast a pace as you can until you reach the refuge of the tree line. Then you allow yourself to step off the road and take a breather."
+      },
+      {
+        "content": "Almost two hours later, the sun sets. The darkness of the woods might be frightening, but your escape from Emberhead has given you new resolve. You strike on into the night."
+      },
+      {
+        "content": "Not long afterwards, you hear hooves, approaching fast. Two sets. Your heart lifts—but they are coming from behind you."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Stealth roll."
+          }
         ]
-    },
-    "check": { 
-        "type": "roll",
-        "key": "stealth", 
-        "level": "value" 
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "落日低垂，你向东离开村庄，前往树林中寻求庇护。灯塔戳破地平线，轮廓雄伟壮观。你用最快地速度赶路，直到头上出现了树荫，你才走到路边，稍事休息。"
+      },
+      {
+        "content": "差不多两小时以后太阳落山了。黑暗的森林也许很吓人，但成功逃离烬头村让你下定决心。你头也不回地走在黑夜中。"
+      },
+      {
+        "content": "不久之后，你听到了哒哒的马蹄声，向你飞快地接近。马一共有两匹。你激动不已——但它们是从你身后过来的。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「潜行」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "stealth",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 211
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 216
+    }
+  ]
 }

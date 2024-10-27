@@ -1,36 +1,86 @@
 {
-    "key": 178,
-    "text": {
-        "en": [
-            { "content": "You retrace your steps of last night. A few villagers watch with polite curiosity as you thread your way along the northern cliffs, bags in tow. In time you think you have found the spot. Heart thudding in your chest, you peer over the edge." },
-            { "content": "Nothing." },
-            { "content": "With the benefit of daylight, you see the cliff is not the bottomless drop you imagined; it leads to a shelf some twenty yards below. It could still be a lethal tumble. But you see no body, no blood. 码深的岩盘。但人若一跤跌下去，肯定会摔个半死。但你没见到尸体，也看不见血迹。" },
-            { "tag": "info", "text": [
-                { "content": "Make a Spot Hidden roll. " }
-            ] }
-        ],
-        "zh": [
-            { "content": "你循着昨晚的脚印找过去。在你拖着行李，沿路穿行在北面的悬崖上时，几个村民看着你，向你投去礼貌而好奇的目光。不久你认为你找到了那个地方。你伸出悬崖张望，心脏在胸膛里扑腾扑腾地跳。" },
-            { "content": "什么都没有。" },
-            { "content": "借着阳光帮助，你看见悬崖并没有你想象的那样深不见底；它底下是差不多20 码深的岩盘。但人若一跤跌下去，肯定会摔个半死。但你没见到尸体，也看不见血迹。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「侦查」检定。" }
-            ] }
+  "key": 178,
+  "text": {
+    "en": [
+      {
+        "content": "You retrace your steps of last night. A few villagers watch with polite curiosity as you thread your way along the northern cliffs, bags in tow. In time you think you have found the spot. Heart thudding in your chest, you peer over the edge."
+      },
+      {
+        "content": "Nothing."
+      },
+      {
+        "content": "With the benefit of daylight, you see the cliff is not the bottomless drop you imagined; it leads to a shelf some twenty yards below. It could still be a lethal tumble. But you see no body, no blood. 码深的岩盘。但人若一跤跌下去，肯定会摔个半死。但你没见到尸体，也看不见血迹。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Spot Hidden roll. "
+          }
         ]
+      }
+    ],
+    "zh": [
+      {
+        "content": "你循着昨晚的脚印找过去。在你拖着行李，沿路穿行在北面的悬崖上时，几个村民看着你，向你投去礼貌而好奇的目光。不久你认为你找到了那个地方。你伸出悬崖张望，心脏在胸膛里扑腾扑腾地跳。"
+      },
+      {
+        "content": "什么都没有。"
+      },
+      {
+        "content": "借着阳光帮助，你看见悬崖并没有你想象的那样深不见底；它底下是差不多20 码深的岩盘。但人若一跤跌下去，肯定会摔个半死。但你没见到尸体，也看不见血迹。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「侦查」检定。"
+          }
+        ]
+      }
+    ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "spot",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 112
     },
-    "check": {
-        "type": "roll",
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 192
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_set_highlight",
+      "param": {
         "key": "spot",
         "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
-    ],
-    "onload": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "value" } }
-    ],
-    "onleave": [
-        { "action": "action_set_highlight", "param": { "key": "spot", "level": "none" } }
-    ]
+      }
+    }
+  ],
+  "onleave": [
+    {
+      "action": "action_set_highlight",
+      "param": {
+        "key": "spot",
+        "level": "none"
+      }
+    }
+  ]
 }

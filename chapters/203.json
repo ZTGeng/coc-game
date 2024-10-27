@@ -1,24 +1,51 @@
 {
-    "key": 203,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "Something smashes you on the temple. You reel back. You hear Arbogast yell, and see the knife flash: one, two, three times, its shiny surface darkening with blood. Something strikes you again, and as you sink, flames leap from the ground, painting the night with infernal color. They pick out three dark figures…" },
-            { "tag": "info", "text": [
-                { "content": "Take 1D6 damage." }
-            ] }
-        ],
-        "zh": [
-            { "content": "有什么东西砸中了你的太阳穴，打得你晕头转向。你听到阿博加斯特的呼喊，看到刀刃的寒光：一刀、两刀、三刀，刀锋染上了殷红的鲜血。又有什么东西击中了你，在你倒下的时候，火焰从地上燃起，将夜空照得通亮。火光照出了三个黑影……" },
-            { "tag": "info", "text": [
-                { "content": "受到1D6点伤害。" }
-            ] }
+  "key": 203,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "Something smashes you on the temple. You reel back. You hear Arbogast yell, and see the knife flash: one, two, three times, its shiny surface darkening with blood. Something strikes you again, and as you sink, flames leap from the ground, painting the night with infernal color. They pick out three dark figures…"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Take 1D6 damage."
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Continue", "zh": "继续" } }
+      }
     ],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": "-1d6" } }
+    "zh": [
+      {
+        "content": "有什么东西砸中了你的太阳穴，打得你晕头转向。你听到阿博加斯特的呼喊，看到刀刃的寒光：一刀、两刀、三刀，刀锋染上了殷红的鲜血。又有什么东西击中了你，在你倒下的时候，火焰从地上燃起，将夜空照得通亮。火光照出了三个黑影……"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "受到1D6点伤害。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 45
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": "-1d6"
+      }
+    }
+  ]
 }

@@ -1,18 +1,40 @@
 {
-    "key": 142,
-    "location": "chamber",
-    "text": {
-        "en": [
-            { "content": "You follow the man around the outcrop. He glances up, then steps between two rocks and vanishes!" },
-            { "content": "Closer inspection reveals a narrow channel leading into the cliff. There is just enough light to see a small, natural chamber within. You will be uncomfortably close to this man if you go inside." }
-        ],
-        "zh": [
-            { "content": "你绕着庄稼地跟随这个男人。他向上看了一眼，往两块岩石之间一迈步，居然消失了！" },
-            { "content": "仔细观察就会发现，有一道狭窄的通道通往悬崖。光线很微弱，刚刚能看清悬崖下有一个自然形成的小山洞。你如果进去，会和这男人很不舒服地贴在一起。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Follow him in", "zh": "跟着他进去" } },
-        { "key": 1, "text": { "en": "Keep your distance", "zh": "保持距离" } }
+  "key": 142,
+  "location": "chamber",
+  "text": {
+    "en": [
+      {
+        "content": "You follow the man around the outcrop. He glances up, then steps between two rocks and vanishes!"
+      },
+      {
+        "content": "Closer inspection reveals a narrow channel leading into the cliff. There is just enough light to see a small, natural chamber within. You will be uncomfortably close to this man if you go inside."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你绕着庄稼地跟随这个男人。他向上看了一眼，往两块岩石之间一迈步，居然消失了！"
+      },
+      {
+        "content": "仔细观察就会发现，有一道狭窄的通道通往悬崖。光线很微弱，刚刚能看清悬崖下有一个自然形成的小山洞。你如果进去，会和这男人很不舒服地贴在一起。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Follow him in",
+        "zh": "跟着他进去"
+      },
+      "goto": 191
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Keep your distance",
+        "zh": "保持距离"
+      },
+      "goto": 160
+    }
+  ]
 }

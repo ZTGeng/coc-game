@@ -1,35 +1,72 @@
 {
-    "key": 150,
-    "location": "eastern_road",
-    "text": {
-        "en": [
-            { "content": "You break from the road and pursue the man, feeling wild grass snatch at your feet. He sprints around the ridge, attempting to elude you behind the very rocks that support the metal structure, high above." },
-            { "tag": "info", "text": [
-                { "content": "To catch the man, you must make an opposed roll, with your versus his DEX. The man has DEX 38. He scores a Hard success on a roll of 19 and under, and an Extreme success on a roll of 7 and under. Make the man’s DEX roll, then make your DEX roll." },
-                { "content": "Compare your level of success. An Extreme success beats a Hard success, which beats a Regular (normal) success, which beats a failure. If there is a draw, the higher skill value wins." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你脱离道路开始追逐这人，感受着野草抓着你的脚。他沿着山脊飞奔，试图躲进一块巨石后面；这巨石正支撑着悬崖之上那座金属建筑物。" },
-            { "tag": "info", "text": [
-                { "content": "要逮住这个男人，你必须进行一次对抗检定，用你的“敏捷”对抗他的“敏捷”。这个男人的“敏捷”是38。他掷出小于等于19点为困难成功，小于等于7点为极难成功。先进行这个男人的“敏捷”检定，再做你的“敏捷”检定。" },
-                { "content": "比较你们两人的成功等级。极难成功胜过困难成功，困难成功胜过常规（普通）成功，常规成功胜过失败。如果成功等级相同，技能值高的人胜出。" }
-            ] }
+  "key": 150,
+  "location": "eastern_road",
+  "text": {
+    "en": [
+      {
+        "content": "You break from the road and pursue the man, feeling wild grass snatch at your feet. He sprints around the ridge, attempting to elude you behind the very rocks that support the metal structure, high above."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "To catch the man, you must make an opposed roll, with your versus his DEX. The man has DEX 38. He scores a Hard success on a roll of 19 and under, and an Extreme success on a roll of 7 and under. Make the man’s DEX roll, then make your DEX roll."
+          },
+          {
+            "content": "Compare your level of success. An Extreme success beats a Hard success, which beats a Regular (normal) success, which beats a failure. If there is a draw, the higher skill value wins."
+          }
         ]
-    },
-    "check": {
-        "type": "opposed_roll",
-        "opponent": {
-            "name": { "en": "Man", "zh": "男人" },
-            "key": "DEX",
-            "value": 38,
-            "half": 19,
-            "fifth": 7
-        },
-        "key": "DEX"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You win the opposed skill roll, continue", "zh": "你在对抗检定中胜出，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You lose the opposed skill roll, continue", "zh": "你在对抗检定中落败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你脱离道路开始追逐这人，感受着野草抓着你的脚。他沿着山脊飞奔，试图躲进一块巨石后面；这巨石正支撑着悬崖之上那座金属建筑物。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "要逮住这个男人，你必须进行一次对抗检定，用你的“敏捷”对抗他的“敏捷”。这个男人的“敏捷”是38。他掷出小于等于19点为困难成功，小于等于7点为极难成功。先进行这个男人的“敏捷”检定，再做你的“敏捷”检定。"
+          },
+          {
+            "content": "比较你们两人的成功等级。极难成功胜过困难成功，困难成功胜过常规（普通）成功，常规成功胜过失败。如果成功等级相同，技能值高的人胜出。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "opposed_roll",
+    "opponent": {
+      "name": {
+        "en": "Man",
+        "zh": "男人"
+      },
+      "key": "DEX",
+      "value": 38,
+      "half": 19,
+      "fifth": 7
+    },
+    "key": "DEX"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You win the opposed skill roll, continue",
+        "zh": "你在对抗检定中胜出，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 172
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You lose the opposed skill roll, continue",
+        "zh": "你在对抗检定中落败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 87
+    }
+  ]
 }

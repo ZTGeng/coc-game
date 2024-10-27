@@ -1,18 +1,43 @@
 {
-    "key": 100,
-    "text": {
-        "en": [
-            { "content": "You flee back down the narrow street, the lantern swinging in your grasp. You reach the door and pound it urgently. May is surprised to see you so soon." },
-            { "content": "“The air up here can tire you out if you’re not used to it,” she says." },
-            { "content": "You glance back once before you close the door. The dark figure is standing against the wall at the end of the street, still staring at you. Or is it? The murk may be deceiving your eyes. You slide the heavy bolt into place." },
-            { "content": "May has settled back into her chair, but now she blinks and yawns. “I believe I’ll turn in. When would you like your breakfast?”" }
-        ],
-        "zh": [
-            { "content": "你沿着狭窄的街道往回逃，拽着油灯不住地摇晃。你回到门前，急速地咚咚敲门。梅看你这么快就回来了也很惊讶。" },
-            { "content": "她说：“你要是不适应这里的气氛，很快就会累趴的。”" },
-            { "content": "你关门之前又往回瞥了一眼。那漆黑的身影站在街道尽头的墙边，仍然紧盯着你。可是，是它吗？黑暗会欺骗你的眼睛。你把沉重的门闩插到了顶。" },
-            { "content": "梅坐回自己的椅子，但她现在眼皮开始打架，打起了呵欠。“不早了，我想我该睡觉了。你想几点钟吃早饭？”" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 100,
+  "text": {
+    "en": [
+      {
+        "content": "You flee back down the narrow street, the lantern swinging in your grasp. You reach the door and pound it urgently. May is surprised to see you so soon."
+      },
+      {
+        "content": "“The air up here can tire you out if you’re not used to it,” she says."
+      },
+      {
+        "content": "You glance back once before you close the door. The dark figure is standing against the wall at the end of the street, still staring at you. Or is it? The murk may be deceiving your eyes. You slide the heavy bolt into place."
+      },
+      {
+        "content": "May has settled back into her chair, but now she blinks and yawns. “I believe I’ll turn in. When would you like your breakfast?”"
+      }
+    ],
+    "zh": [
+      {
+        "content": "你沿着狭窄的街道往回逃，拽着油灯不住地摇晃。你回到门前，急速地咚咚敲门。梅看你这么快就回来了也很惊讶。"
+      },
+      {
+        "content": "她说：“你要是不适应这里的气氛，很快就会累趴的。”"
+      },
+      {
+        "content": "你关门之前又往回瞥了一眼。那漆黑的身影站在街道尽头的墙边，仍然紧盯着你。可是，是它吗？黑暗会欺骗你的眼睛。你把沉重的门闩插到了顶。"
+      },
+      {
+        "content": "梅坐回自己的椅子，但她现在眼皮开始打架，打起了呵欠。“不早了，我想我该睡觉了。你想几点钟吃早饭？”"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 63
+    }
+  ]
 }

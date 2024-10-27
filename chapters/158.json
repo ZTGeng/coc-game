@@ -1,30 +1,63 @@
 {
-    "key": 158,
-    "location": "street",
-    "text": {
-        "en": [
-            { "content": "You dart down an alley, turn and head in a completely different direction. Running feet sound behind you. For the first time you feel Emberhead’s cramped, chaotic streets work in your favor. You try to circle round towards the southern road." },
-            { "tag": "info", "text": [
-                { "content": "Make a Stealth roll. If you succeed, you may check-mark the small box beside the Stealth skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你像箭一样地冲进小巷，突然转弯，拐到完全不同的方向。你身后脚步声响个不停。烬头村狭窄凌乱的小巷头一次为你提供了方便。你尝试迂回奔向南边的东盘山路。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「潜行」检定。如果你成功了，你可以在「潜行」技能左边的小方框里打勾。" }
-            ] }
+  "key": 158,
+  "location": "street",
+  "text": {
+    "en": [
+      {
+        "content": "You dart down an alley, turn and head in a completely different direction. Running feet sound behind you. For the first time you feel Emberhead’s cramped, chaotic streets work in your favor. You try to circle round towards the southern road."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Stealth roll. If you succeed, you may check-mark the small box beside the Stealth skill."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "stealth",
-        "level": "value",
-        "onpass": [
-            { "action": "action_check_in_skill_box", "param": "stealth" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你像箭一样地冲进小巷，突然转弯，拐到完全不同的方向。你身后脚步声响个不停。烬头村狭窄凌乱的小巷头一次为你提供了方便。你尝试迂回奔向南边的东盘山路。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「潜行」检定。如果你成功了，你可以在「潜行」技能左边的小方框里打勾。"
+          }
         ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "stealth",
+    "level": "value",
+    "onpass": [
+      {
+        "action": "action_check_in_skill_box",
+        "param": "stealth"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 7
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 170
+    }
+  ]
 }

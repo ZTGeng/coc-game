@@ -1,33 +1,75 @@
 {
-    "key": 260,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "May jumps as you swing your legs off the bed and speak." },
-            { "content": "“I… I thought you might be cold,” she stammers. “Thought I would light the fire...”" },
-            { "content": "She sweeps something away with the hand behind her. You stare, but can see nothing in the grate." },
-            { "content": "“I shouldn’t have disturbed you. I’m sorry.” She stands to leave." },
-            { "tag": "info", "text": [
-                { "content": "You may make an Intimidate roll." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你抬起腿下了床，和梅说话。梅吃惊跳了起来。" },
-            { "content": "她磕磕绊绊地说：“我……我觉得你可能会冷，我想我需要生个火……”" },
-            { "content": "她在背后用手抹掉了什么东西。你盯着她身后看，但壁炉里什么也看不到。" },
-            { "content": "“我不该吵醒你。对不起。”她着急要走。" },
-            { "tag": "info", "text": [
-                { "content": "你可以进行一次「恐吓」检定。" }
-            ] }
+  "key": 260,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "May jumps as you swing your legs off the bed and speak."
+      },
+      {
+        "content": "“I… I thought you might be cold,” she stammers. “Thought I would light the fire...”"
+      },
+      {
+        "content": "She sweeps something away with the hand behind her. You stare, but can see nothing in the grate."
+      },
+      {
+        "content": "“I shouldn’t have disturbed you. I’m sorry.” She stands to leave."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may make an Intimidate roll."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "intimidate",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你抬起腿下了床，和梅说话。梅吃惊跳了起来。"
+      },
+      {
+        "content": "她磕磕绊绊地说：“我……我觉得你可能会冷，我想我需要生个火……”"
+      },
+      {
+        "content": "她在背后用手抹掉了什么东西。你盯着她身后看，但壁炉里什么也看不到。"
+      },
+      {
+        "content": "“我不该吵醒你。对不起。”她着急要走。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以进行一次「恐吓」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "intimidate",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 19
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 32
+    }
+  ]
 }

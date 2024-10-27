@@ -1,17 +1,38 @@
 {
-    "key": 70,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "You feel skittish as you approach the spot where you and Arbogast were attacked. Your memory of the encounter is shaky, but you remember one or two vivid images." },
-            { "content": "At first you think there is nothing to see: no discarded weapons or figures lying unconscious. But upon closer examination, you find sticky, congealed patches and blackened lines in the grass." },
-            { "content": "If the village had a police station you could go there. But something tells you events have gone beyond that." }
-        ],
-        "zh": [
-            { "content": "你如惊弓之鸟一般来到你和阿博加斯特被袭击的地方。你对战斗的记忆暧昧不明，但有几个生动的影像你记得非常清楚。" },
-            { "content": "一开始你认为这里没什么值得看的东西：没有被扔掉的武器，也没有倒在地上的人。但仔细检验之下，你还是找到了凝固发黏的斑块，还有草丛上熏黑的线条。" },
-            { "content": "若是村里有警察局，你大可以前去。但有些迹象让你意识到，事情的发展早已超过了你的判断。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 70,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "You feel skittish as you approach the spot where you and Arbogast were attacked. Your memory of the encounter is shaky, but you remember one or two vivid images."
+      },
+      {
+        "content": "At first you think there is nothing to see: no discarded weapons or figures lying unconscious. But upon closer examination, you find sticky, congealed patches and blackened lines in the grass."
+      },
+      {
+        "content": "If the village had a police station you could go there. But something tells you events have gone beyond that."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你如惊弓之鸟一般来到你和阿博加斯特被袭击的地方。你对战斗的记忆暧昧不明，但有几个生动的影像你记得非常清楚。"
+      },
+      {
+        "content": "一开始你认为这里没什么值得看的东西：没有被扔掉的武器，也没有倒在地上的人。但仔细检验之下，你还是找到了凝固发黏的斑块，还有草丛上熏黑的线条。"
+      },
+      {
+        "content": "若是村里有警察局，你大可以前去。但有些迹象让你意识到，事情的发展早已超过了你的判断。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 78
+    }
+  ]
 }

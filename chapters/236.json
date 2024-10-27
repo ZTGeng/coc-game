@@ -1,16 +1,34 @@
 {
-    "key": 236,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "The blood flow from the wounds in Arbogast’s neck has slowed to a trickle. His breath is shallow and fleeting. You can see his situation is hopeless. His eyes flutter, then close, as life departs. You mark a moment in respect. However, the attackers may come back. Who can you trust in this village?" }
-        ],
-        "zh": [
-            { "content": "阿博加斯特伤口的血流已经减缓，成了涓涓细流。他的呼吸既浅浮又短促，你明白他已经没救了。随着生命力的流逝，他的眼皮微微翕动，最终还是合上了。你向他默哀片刻。可是，攻击者还有可能回来。这村子里又有谁值得信任呢？" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Fetch May here", "zh": "带梅来这里" } },
-        { "key": 1, "text": { "en": "Return to the Ledbetter house and say nothing about the situation", "zh": "返回莱德贝特的房子，但对这件事闭口不提" } }
+  "key": 236,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "The blood flow from the wounds in Arbogast’s neck has slowed to a trickle. His breath is shallow and fleeting. You can see his situation is hopeless. His eyes flutter, then close, as life departs. You mark a moment in respect. However, the attackers may come back. Who can you trust in this village?"
+      }
+    ],
+    "zh": [
+      {
+        "content": "阿博加斯特伤口的血流已经减缓，成了涓涓细流。他的呼吸既浅浮又短促，你明白他已经没救了。随着生命力的流逝，他的眼皮微微翕动，最终还是合上了。你向他默哀片刻。可是，攻击者还有可能回来。这村子里又有谁值得信任呢？"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Fetch May here",
+        "zh": "带梅来这里"
+      },
+      "goto": 242
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Return to the Ledbetter house and say nothing about the situation",
+        "zh": "返回莱德贝特的房子，但对这件事闭口不提"
+      },
+      "goto": 157
+    }
+  ]
 }

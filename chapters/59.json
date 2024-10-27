@@ -1,25 +1,74 @@
 {
-    "key": 59,
-    "text": {
-        "en": [
-            { "content": "A desperate yell awakens you. You feel yourself slide from the seat as the driver spins the wheel and the motor coach plunges off the road. Too late, you reach for the seat in front. You fall into the aisle and your ribs crash against the edge of the seat opposite. Breath rushes out of you. The coach stops with a thump." },
-            { "content": "Your driver leaps from his seat into the road. As you sprawl, dizzy, in the aisle, you hear a string of incendiary curses." },
-            { "content": "The driver climbs back into the cab and sees you on the floor. He looks concerned and assists you back into your seat. You see what has happened now. A Fordson tractor has stopped in the road and he had to swerve to avoid this steel obstacle." },
-            { "content": "“Sorry,” he says. “All them fields and he has to pick the road to park. You all right?”" },
-            { "content": "You don’t think anything’s broken. But you’ll have a colorful bruise for the next few days. He backs the coach up a little and threads it around the tractor, glaring at the farmer." },
-            { "tag": "info", "text": [{"content": "You lost 1 hit point in the accident. You will eventually heal back up to the original value. If you drop to 0 hit points, you will fall unconscious and you might die" }] }
-        ],
-        "zh": [
-            { "content": "你被一阵绝望的叫喊惊醒了。司机猛打方向盘，长途车跌出了路沿，你感觉自己从座位上往下滑。太迟了，你撞上了前面的座位。你滚落到走道上，肋骨磕上对面座位的棱角。你大口喘着粗气。长途车发出一声闷响，停了下来。" },
-            { "content": "你的司机从座位上跳到了马路上。在你晕乎乎地趴在走道上的时候，你听见了一连串挑拨的咒骂。" },
-            { "content": "司机爬回车里，看到你趴在走道上。他看上去很担心，扶你坐回座位上。现在你才看到发生了什么事。一辆福特森拖拉机停在了路中央，你的司机刚才必须紧急转弯躲避这只铁皮拦路虎。" },
-            { "content": "“对不住，”他说，“两边都是地，他只能停路上。你没事吧？”" },
-            { "content": "你觉得自己没受什么大伤。可是，要有一块色彩斑斓的瘀伤在你身上留几天了。司机往后倒了倒车，绕开了拖拉机，对农民怒目而视。" },
-            { "tag": "info", "text": [{"content": "你在这次事件中损失了1点HP。你回复时最多可以回到初始值。如果你的耐久值归零，你就会失去意识，甚至死亡。" }] }
+  "key": 59,
+  "text": {
+    "en": [
+      {
+        "content": "A desperate yell awakens you. You feel yourself slide from the seat as the driver spins the wheel and the motor coach plunges off the road. Too late, you reach for the seat in front. You fall into the aisle and your ribs crash against the edge of the seat opposite. Breath rushes out of you. The coach stops with a thump."
+      },
+      {
+        "content": "Your driver leaps from his seat into the road. As you sprawl, dizzy, in the aisle, you hear a string of incendiary curses."
+      },
+      {
+        "content": "The driver climbs back into the cab and sees you on the floor. He looks concerned and assists you back into your seat. You see what has happened now. A Fordson tractor has stopped in the road and he had to swerve to avoid this steel obstacle."
+      },
+      {
+        "content": "“Sorry,” he says. “All them fields and he has to pick the road to park. You all right?”"
+      },
+      {
+        "content": "You don’t think anything’s broken. But you’ll have a colorful bruise for the next few days. He backs the coach up a little and threads it around the tractor, glaring at the farmer."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You lost 1 hit point in the accident. You will eventually heal back up to the original value. If you drop to 0 hit points, you will fall unconscious and you might die"
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": -1 } }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你被一阵绝望的叫喊惊醒了。司机猛打方向盘，长途车跌出了路沿，你感觉自己从座位上往下滑。太迟了，你撞上了前面的座位。你滚落到走道上，肋骨磕上对面座位的棱角。你大口喘着粗气。长途车发出一声闷响，停了下来。"
+      },
+      {
+        "content": "你的司机从座位上跳到了马路上。在你晕乎乎地趴在走道上的时候，你听见了一连串挑拨的咒骂。"
+      },
+      {
+        "content": "司机爬回车里，看到你趴在走道上。他看上去很担心，扶你坐回座位上。现在你才看到发生了什么事。一辆福特森拖拉机停在了路中央，你的司机刚才必须紧急转弯躲避这只铁皮拦路虎。"
+      },
+      {
+        "content": "“对不住，”他说，“两边都是地，他只能停路上。你没事吧？”"
+      },
+      {
+        "content": "你觉得自己没受什么大伤。可是，要有一块色彩斑斓的瘀伤在你身上留几天了。司机往后倒了倒车，绕开了拖拉机，对农民怒目而视。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在这次事件中损失了1点HP。你回复时最多可以回到初始值。如果你的耐久值归零，你就会失去意识，甚至死亡。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 71
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": -1
+      }
+    }
+  ]
 }

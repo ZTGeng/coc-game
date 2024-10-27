@@ -1,27 +1,70 @@
 {
-    "key": 154,
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/fireplace.png", "text": [
-                {"content": "You dream of fire in the grate; coruscating colors shimmering through the dancing tongues of flame. At first they are tiny, almost microscopic, but they grow, and grow, until a kaleidoscopic inferno spills from the fireplace, spreading across the floor, up the sheets…" },
-                {"content": "You wake with a start. Daylight glints through the curtains. You get up and examine the grate, blinking the sleep from your eyes. It is quite cold." }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "If you have taken any damage, you may heal 1 hit point back for your night’s sleep." }
-            ] }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "right", "imageSrc": "images/fireplace.png", "text": [
-                {"content": "你梦见了壁炉里的炉火；跳动的火舌之中，闪烁着明亮耀眼的色彩。最开始火苗很小很小，几乎要用显微镜才看得见，但它越烧越大，越烧越大，最后变成了瞬息万变的炼狱火海，它溢出壁炉，顺着地板延烧，爬上了你的床单……" },
-                {"content": "你在惊吓之中醒了过来。阳光透过窗帘照进屋里。你起床检查壁炉，眨眨眼驱赶睡意。壁炉是冷的。" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "你之前如果受过伤害，睡过这一晚之后可以回复1点耐久值。" }
-            ] }
+  "key": 154,
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/fireplace.png",
+        "text": [
+          {
+            "content": "You dream of fire in the grate; coruscating colors shimmering through the dancing tongues of flame. At first they are tiny, almost microscopic, but they grow, and grow, until a kaleidoscopic inferno spills from the fireplace, spreading across the floor, up the sheets…"
+          },
+          {
+            "content": "You wake with a start. Daylight glints through the curtains. You get up and examine the grate, blinking the sleep from your eyes. It is quite cold."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": 1 } }
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "If you have taken any damage, you may heal 1 hit point back for your night’s sleep."
+          }
+        ]
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/fireplace.png",
+        "text": [
+          {
+            "content": "你梦见了壁炉里的炉火；跳动的火舌之中，闪烁着明亮耀眼的色彩。最开始火苗很小很小，几乎要用显微镜才看得见，但它越烧越大，越烧越大，最后变成了瞬息万变的炼狱火海，它溢出壁炉，顺着地板延烧，爬上了你的床单……"
+          },
+          {
+            "content": "你在惊吓之中醒了过来。阳光透过窗帘照进屋里。你起床检查壁炉，眨眨眼驱赶睡意。壁炉是冷的。"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你之前如果受过伤害，睡过这一晚之后可以回复1点耐久值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 166
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": 1
+      }
+    }
+  ]
 }

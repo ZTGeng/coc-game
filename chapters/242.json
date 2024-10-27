@@ -1,19 +1,44 @@
 {
-    "key": 242,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "May comes to the door in a plain bed jacket. She stares as you begin your story of bloodshed and fire. Almost immediately she steps back and closes the bedroom door so Ruth does not hear." },
-            { "content": "“Arbogast?” She shakes her head. “What possessed you to listen to his ravings?” She fetches a coat and lantern, and follows you through the night-shrouded village. When you reach the spot, you can see blood and scorch marks on the grass. But no body." },
-            { "content": "May looks at you for a long moment. “We can enquire further in the morning. I can’t leave Ruth alone.” She turns away." },
-            { "content": "You seem to have little option but to follow." }
-        ],
-        "zh": [
-            { "content": "梅穿着一身朴素的睡衣开了门。你开始讲述关于鲜血和火焰的故事，她愣了一下，几乎马上就退回去，关上卧室门，不让露丝听到。" },
-            { "content": "她摇摇头：“阿博加斯特？你是着了什么魔，要听他的疯话？”她抓起外套，提上油灯，跟着你穿越夜幕下的村庄。当你们来到现场时，你只能看见草地上的血迹和焦糊印。但没有尸体。" },
-            { "content": "梅注视着你看了很长时间：“我们明早再详细地谈吧。我不能留下露丝一个人。”她转身离去。" },
-            { "content": "你没有多少选择余地，只能跟上。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 242,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "May comes to the door in a plain bed jacket. She stares as you begin your story of bloodshed and fire. Almost immediately she steps back and closes the bedroom door so Ruth does not hear."
+      },
+      {
+        "content": "“Arbogast?” She shakes her head. “What possessed you to listen to his ravings?” She fetches a coat and lantern, and follows you through the night-shrouded village. When you reach the spot, you can see blood and scorch marks on the grass. But no body."
+      },
+      {
+        "content": "May looks at you for a long moment. “We can enquire further in the morning. I can’t leave Ruth alone.” She turns away."
+      },
+      {
+        "content": "You seem to have little option but to follow."
+      }
+    ],
+    "zh": [
+      {
+        "content": "梅穿着一身朴素的睡衣开了门。你开始讲述关于鲜血和火焰的故事，她愣了一下，几乎马上就退回去，关上卧室门，不让露丝听到。"
+      },
+      {
+        "content": "她摇摇头：“阿博加斯特？你是着了什么魔，要听他的疯话？”她抓起外套，提上油灯，跟着你穿越夜幕下的村庄。当你们来到现场时，你只能看见草地上的血迹和焦糊印。但没有尸体。"
+      },
+      {
+        "content": "梅注视着你看了很长时间：“我们明早再详细地谈吧。我不能留下露丝一个人。”她转身离去。"
+      },
+      {
+        "content": "你没有多少选择余地，只能跟上。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 157
+    }
+  ]
 }

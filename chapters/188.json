@@ -1,30 +1,66 @@
 {
-    "key": 188,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "A black shape lunges from the dark. It wraps an arm around Arbogast’s throat and drags him backwards, out of the alcove. He grabs at the arm, kicking empty air. You see the gleam of a long blade in the moonlight." },
-            { "tag": "info", "text": [
-                { "content": "Make a Dodge roll" }
-            ] }
-        ],
-        "zh": [
-            { "content": "一个黑影突然从黑暗中穿出。它伸出手臂抱住阿博加斯特的咽喉，把他向后拽出了壁凹。他抓住那手臂，双脚向虚空踢去。你看见长刀在月色下闪烁的寒光。" },
-            { "tag": "info", "text": [
-                { "content": "进行一次「闪避」检定。" }
-            ] }
+  "key": 188,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "A black shape lunges from the dark. It wraps an arm around Arbogast’s throat and drags him backwards, out of the alcove. He grabs at the arm, kicking empty air. You see the gleam of a long blade in the moonlight."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Dodge roll"
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "dodge",
-        "level": "value"
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": "flag_check_failed" }
+      }
     ],
-    "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_involved_fighting", "value": true } }
+    "zh": [
+      {
+        "content": "一个黑影突然从黑暗中穿出。它伸出手臂抱住阿博加斯特的咽喉，把他向后拽出了壁凹。他抓住那手臂，双脚向虚空踢去。你看见长刀在月色下闪烁的寒光。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「闪避」检定。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "dodge",
+    "level": "value"
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 195
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": "flag_check_failed",
+      "goto": 203
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_involved_fighting",
+        "value": true
+      }
+    }
+  ]
 }

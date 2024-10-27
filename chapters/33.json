@@ -1,22 +1,52 @@
 {
-    "key": 33,
-    "location": "beacon_center",
-    "text": {
-        "en": [
-            { "content": "It seems the entire village is gathered around the Beacon to watch you burn. Behind the face paint, you recognize May Ledbetter, and—yes, that is Silas the coach driver standing at her side. The audacity and scale of the deception staggers you." },
-            { "content": "A man steps up on a dais and raises his hands with quiet authority. The frame of his spectacles obscures the red triangle on his face." },
-            { "content": "“So we draw here together again on this night, as we do each year, and we give thanks to the one who will preserve the village against the fire of the void. You will be taken by the Ones From Above in our stead. Your death will bring life to our streets and bounty to our fields. It will safeguard our children and our elders alike for another year. We salute you.” He bows his head." },
-            { "content": "All around the Beacon, bearers step forward and lift their torches to the edge of the raised platform. A ring of tiny flames flicker up around the perimeter. As they wink, the singing of the villagers drops into an unearthly rhythm." }
-        ],
-        "zh": [
-            { "content": "看来整个村子的人都围到了灯塔前，看你怎么烧死。你能隔着脸上的颜料认出梅·莱德贝特，还有——对，那个巴士司机西拉斯，就站在她旁边。这场骗局竟如此庞大无耻，令你心惊胆寒。" },
-            { "content": "一个男人登上高台，在全场寂静之下扬起手臂。他的眼镜遮挡着脸上的红三角。" },
-            { "content": "“现在，我们像往年一样，在今夜再度聚集到这里。我们要感谢将村庄从虚空之火中拯救的人。您将代替我们，被从天而降者带走。您的牺牲将给我们的街道带来生机，为我们的田野送去丰收。它将保佑我们的孩子和老人度过安稳的一年。我们向您致敬。”他俯首示意。" },
-            { "content": "举火者从灯塔四周迈进，将手中的火把举到高台的边缘上。一圈小小的火苗开始沿着高台四周闪烁起来。火光明灭之中，村民们的歌唱逐渐变得低沉，化作超脱尘世的韵律。" }
-        ]
-    },
-    "options": [
-        { "key": 0, "text": { "en": "Throw all your remaining strength against the bonds", "zh": "用尽剩余的气力挣脱锁链" } },
-        { "key": 1, "text": { "en": "Wait and see what happens", "zh": "静观其变" } }
+  "key": 33,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "content": "It seems the entire village is gathered around the Beacon to watch you burn. Behind the face paint, you recognize May Ledbetter, and—yes, that is Silas the coach driver standing at her side. The audacity and scale of the deception staggers you."
+      },
+      {
+        "content": "A man steps up on a dais and raises his hands with quiet authority. The frame of his spectacles obscures the red triangle on his face."
+      },
+      {
+        "content": "“So we draw here together again on this night, as we do each year, and we give thanks to the one who will preserve the village against the fire of the void. You will be taken by the Ones From Above in our stead. Your death will bring life to our streets and bounty to our fields. It will safeguard our children and our elders alike for another year. We salute you.” He bows his head."
+      },
+      {
+        "content": "All around the Beacon, bearers step forward and lift their torches to the edge of the raised platform. A ring of tiny flames flicker up around the perimeter. As they wink, the singing of the villagers drops into an unearthly rhythm."
+      }
+    ],
+    "zh": [
+      {
+        "content": "看来整个村子的人都围到了灯塔前，看你怎么烧死。你能隔着脸上的颜料认出梅·莱德贝特，还有——对，那个巴士司机西拉斯，就站在她旁边。这场骗局竟如此庞大无耻，令你心惊胆寒。"
+      },
+      {
+        "content": "一个男人登上高台，在全场寂静之下扬起手臂。他的眼镜遮挡着脸上的红三角。"
+      },
+      {
+        "content": "“现在，我们像往年一样，在今夜再度聚集到这里。我们要感谢将村庄从虚空之火中拯救的人。您将代替我们，被从天而降者带走。您的牺牲将给我们的街道带来生机，为我们的田野送去丰收。它将保佑我们的孩子和老人度过安稳的一年。我们向您致敬。”他俯首示意。"
+      },
+      {
+        "content": "举火者从灯塔四周迈进，将手中的火把举到高台的边缘上。一圈小小的火苗开始沿着高台四周闪烁起来。火光明灭之中，村民们的歌唱逐渐变得低沉，化作超脱尘世的韵律。"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Throw all your remaining strength against the bonds",
+        "zh": "用尽剩余的气力挣脱锁链"
+      },
+      "goto": 44
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "Wait and see what happens",
+        "zh": "静观其变"
+      },
+      "goto": 40
+    }
+  ]
 }

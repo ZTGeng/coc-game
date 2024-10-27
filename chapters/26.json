@@ -1,24 +1,57 @@
 {
-    "key": 26,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "You drift awake in the morning light. The sun is already high but you do not feel well rested. You find yourself preoccupied with little details of the room: the wood grain of the doorjamb, or a chipped handle on the wardrobe." },
-            { "content": "As you swing out of bed, your stomach gives a lurch and you lean too far over, nearly tumbling to the floor. You blink for a moment. Perhaps you have an illness coming on. You get carefully to your feet. The air in the room is heavy and fragrant. You stare out of the window until you feel steady enough to leave." },
-            { "tag": "info", "text": [
-                { "content": "Your skill rolls today suffer a penalty. Roll the “tens” percentage die twice and take the higher result. This does not apply to Luck, Sanity or damage rolls." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你在晨光中浑浑噩噩地醒了过来。太阳已经升得很高，但你感到自己一点也没有休息好。你发现自己的思绪被房间里的各种细节占据了：门框上的木材纹路，还有衣橱上一个有缺口的把手。" },
-            { "content": "当你翻身下床时，腹部却一阵绞痛，脚下不稳，差点扑倒在地。可能你是生了什么病？你眨眨眼，小心翼翼地直起腰来。房间里的空气芳香馥郁。你凝视窗外，直到你感觉自己已经稳住，可以离开了。" },
-            { "tag": "info", "text": [
-                { "content": "今天你的技能检定受到一颗惩罚骰。额外投一颗十位骰，分别计算结果后取最高值。这不影响幸运、理智和伤害检定。" }
-            ] }
+  "key": 26,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "You drift awake in the morning light. The sun is already high but you do not feel well rested. You find yourself preoccupied with little details of the room: the wood grain of the doorjamb, or a chipped handle on the wardrobe."
+      },
+      {
+        "content": "As you swing out of bed, your stomach gives a lurch and you lean too far over, nearly tumbling to the floor. You blink for a moment. Perhaps you have an illness coming on. You get carefully to your feet. The air in the room is heavy and fragrant. You stare out of the window until you feel steady enough to leave."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Your skill rolls today suffer a penalty. Roll the “tens” percentage die twice and take the higher result. This does not apply to Luck, Sanity or damage rolls."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_penalty_die", "value": true } }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你在晨光中浑浑噩噩地醒了过来。太阳已经升得很高，但你感到自己一点也没有休息好。你发现自己的思绪被房间里的各种细节占据了：门框上的木材纹路，还有衣橱上一个有缺口的把手。"
+      },
+      {
+        "content": "当你翻身下床时，腹部却一阵绞痛，脚下不稳，差点扑倒在地。可能你是生了什么病？你眨眨眼，小心翼翼地直起腰来。房间里的空气芳香馥郁。你凝视窗外，直到你感觉自己已经稳住，可以离开了。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "今天你的技能检定受到一颗惩罚骰。额外投一颗十位骰，分别计算结果后取最高值。这不影响幸运、理智和伤害检定。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 64
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_penalty_die",
+        "value": true
+      }
+    }
+  ]
 }

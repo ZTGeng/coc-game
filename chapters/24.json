@@ -1,17 +1,38 @@
 {
-    "key": 24,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "You raise your hand to knock on the door, but it opens before you can complete the movement. The middle-aged gentleman behind it takes an involuntary step back, adjusting his spectacles. You hasten to apologize and introduce yourself. He steadies himself and peers at you." },
-            { "content": "“I see. I’m Clyde Winters. Just visiting, you say? And you’ve come to see me? Hm! Care for some coffee? I usually take a cup around this time of the afternoon.”" },
-            { "content": "His invitation seems genuine enough and a good opportunity to ask any questions that are on your mind." }
-        ],
-        "zh": [
-            { "content": "你抬手敲门，但还没敲响，门就打开了。门后的中年绅士下意识地后退了一步，扶正他的眼镜。你连忙道歉，并做了自我介绍。他镇定下来，注视着你。" },
-            { "content": "“我知道了。我是克莱德·文特斯。您说您是来做客？然后就来找我了？嗯！要不要来点儿咖啡？我下午这个时间一般会喝一杯。”" },
-            { "content": "他的邀请相当真诚，这是个好机会，你可以把脑海里积攒的问题都问出来。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 24,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "You raise your hand to knock on the door, but it opens before you can complete the movement. The middle-aged gentleman behind it takes an involuntary step back, adjusting his spectacles. You hasten to apologize and introduce yourself. He steadies himself and peers at you."
+      },
+      {
+        "content": "“I see. I’m Clyde Winters. Just visiting, you say? And you’ve come to see me? Hm! Care for some coffee? I usually take a cup around this time of the afternoon.”"
+      },
+      {
+        "content": "His invitation seems genuine enough and a good opportunity to ask any questions that are on your mind."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你抬手敲门，但还没敲响，门就打开了。门后的中年绅士下意识地后退了一步，扶正他的眼镜。你连忙道歉，并做了自我介绍。他镇定下来，注视着你。"
+      },
+      {
+        "content": "“我知道了。我是克莱德·文特斯。您说您是来做客？然后就来找我了？嗯！要不要来点儿咖啡？我下午这个时间一般会喝一杯。”"
+      },
+      {
+        "content": "他的邀请相当真诚，这是个好机会，你可以把脑海里积攒的问题都问出来。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 43
+    }
+  ]
 }

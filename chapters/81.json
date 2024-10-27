@@ -1,19 +1,44 @@
 {
-    "key": 81,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "You are not surprised to find there is no published work on Emberhead’s festival. Winters pokes around and finds a cased monograph, handwritten on yellowing paper by a Dr. Aniolowski. “An acquaintance of my father’s, I believe,” Winters says." },
-            { "content": "The manuscript is somewhat difficult to read and you make slow progress. Aniolowski speculates that the festival has its origin in Pagan rites brought over by Celtic settlers, which celebrate the ancient festivals of Beltane, Samhuinn, Imbolc, and Lughnasadh. There is some discussion of the struggle between the seasons and a couple of oblique references to “the alignment” in Emberhead. Aniolowski suggests that the meaning of the festival slowly changed around the turn of the century." },
-            { "content": "The monograph terminates mid-sentence at the end of page 28, just as it begins to discuss the modern practices. You ask Winters if he has the remaining pages." },
-            { "content": "“No. I’m afraid those have been misplaced,” he says. “Perhaps they are still in the library somewhere, but ...” He shrugs. “I must make the time for a thorough stock take.”" }
-        ],
-        "zh": [
-            { "content": "没有出版资料论述烬头村的节日，你并不觉得奇怪。文特斯到处拨找，找到了一盒专题文章，这些文章手写在泛黄的纸上，署名是阿尼奥洛夫斯基博士（Dr. Aniolowski）。“我认为这是我父亲的熟人，”文特斯说。" },
-            { "content": "这篇手稿读起来有些吃力，你读得很慢。阿尼奥洛夫斯基推测，这个节日来源于凯尔特移民带来的原始宗教仪式，这些人还在庆祝古老的五朔节、萨温节、圣布里吉德节和秋收节（Lughnasadah）。还有一些讨论是关于季节的辩论，和一些与烬头村的“校准”有关的间接引文。" },
-            { "content": "文章正要开始讨论现代的仪式时，在第28页末尾戛然而止，句子都断开了。你问文特斯还有没有后面的页数。" },
-            { "content": "他说：“没有。后面的可能放错了。也许还在这间藏书室里，但……”他耸耸肩，“我必须花时间做一次彻底的盘点。”" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 81,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "You are not surprised to find there is no published work on Emberhead’s festival. Winters pokes around and finds a cased monograph, handwritten on yellowing paper by a Dr. Aniolowski. “An acquaintance of my father’s, I believe,” Winters says."
+      },
+      {
+        "content": "The manuscript is somewhat difficult to read and you make slow progress. Aniolowski speculates that the festival has its origin in Pagan rites brought over by Celtic settlers, which celebrate the ancient festivals of Beltane, Samhuinn, Imbolc, and Lughnasadh. There is some discussion of the struggle between the seasons and a couple of oblique references to “the alignment” in Emberhead. Aniolowski suggests that the meaning of the festival slowly changed around the turn of the century."
+      },
+      {
+        "content": "The monograph terminates mid-sentence at the end of page 28, just as it begins to discuss the modern practices. You ask Winters if he has the remaining pages."
+      },
+      {
+        "content": "“No. I’m afraid those have been misplaced,” he says. “Perhaps they are still in the library somewhere, but ...” He shrugs. “I must make the time for a thorough stock take.”"
+      }
+    ],
+    "zh": [
+      {
+        "content": "没有出版资料论述烬头村的节日，你并不觉得奇怪。文特斯到处拨找，找到了一盒专题文章，这些文章手写在泛黄的纸上，署名是阿尼奥洛夫斯基博士（Dr. Aniolowski）。“我认为这是我父亲的熟人，”文特斯说。"
+      },
+      {
+        "content": "这篇手稿读起来有些吃力，你读得很慢。阿尼奥洛夫斯基推测，这个节日来源于凯尔特移民带来的原始宗教仪式，这些人还在庆祝古老的五朔节、萨温节、圣布里吉德节和秋收节（Lughnasadah）。还有一些讨论是关于季节的辩论，和一些与烬头村的“校准”有关的间接引文。"
+      },
+      {
+        "content": "文章正要开始讨论现代的仪式时，在第28页末尾戛然而止，句子都断开了。你问文特斯还有没有后面的页数。"
+      },
+      {
+        "content": "他说：“没有。后面的可能放错了。也许还在这间藏书室里，但……”他耸耸肩，“我必须花时间做一次彻底的盘点。”"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 99
+    }
+  ]
 }

@@ -1,33 +1,87 @@
 {
-    "key": 165,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "tag": "div", "imageOn": "left", "imageSrc": "images/book.png", "text": [
-                {"content": "Enough light spills into the room for you to make out titles. The contents of the alcove are quite different from the wider library; the books are much older, some are handwritten, and many are in strange scripts you do not recognize. You could spend a week in here just browsing through the bizarre volumes." }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "Make a Library Use roll. If you do fail, you may Push the roll by attempting it again." }
-            ] }
-        ],
-        "zh": [
-            { "tag": "div", "imageOn": "left", "imageSrc": "images/book.png", "text": [
-                {"content": "光线照射到房间里，你可以辨认书名了。壁龛里的书和图书室的书有很大区别：这里的书要旧得多，很多都是手写的，更有不少用奇特的文字写成，你根本不认识。仅仅浏览这些奇异的书卷，就足够你在这里花去一星期的时间。" }
-            ] },
-            { "tag": "info", "text": [
-                { "content": "进行一次「图书馆使用」检定。如果你失败了，可以孤注一掷，重新尝试掷骰。" }
-            ] }
+  "key": 165,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "left",
+        "imageSrc": "images/book.png",
+        "text": [
+          {
+            "content": "Enough light spills into the room for you to make out titles. The contents of the alcove are quite different from the wider library; the books are much older, some are handwritten, and many are in strange scripts you do not recognize. You could spend a week in here just browsing through the bizarre volumes."
+          }
         ]
-    },
-    "check": {
-        "type": "roll",
-        "key": "library",
-        "level": "value",
-        "allowPush": true
-    },
-    "options": [
-        { "key": 0, "text": { "en": "You passed the roll, continue", "zh": "检定成功，继续" }, "show": "flag_check_passed" },
-        { "key": 1, "text": { "en": "You failed the roll, continue", "zh": "检定失败，继续" }, "show": ["flag_check_failed", "!flag_check_pushed"] },
-        { "key": 2, "text": { "en": "You failed the Pushed roll, continue", "zh": "孤注一掷检定失败，继续" }, "show": ["flag_check_failed", "flag_check_pushed"] }
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Make a Library Use roll. If you do fail, you may Push the roll by attempting it again."
+          }
+        ]
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "left",
+        "imageSrc": "images/book.png",
+        "text": [
+          {
+            "content": "光线照射到房间里，你可以辨认书名了。壁龛里的书和图书室的书有很大区别：这里的书要旧得多，很多都是手写的，更有不少用奇特的文字写成，你根本不认识。仅仅浏览这些奇异的书卷，就足够你在这里花去一星期的时间。"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "进行一次「图书馆使用」检定。如果你失败了，可以孤注一掷，重新尝试掷骰。"
+          }
+        ]
+      }
     ]
+  },
+  "check": {
+    "type": "roll",
+    "key": "library",
+    "level": "value",
+    "allowPush": true
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
+      },
+      "show": "flag_check_passed",
+      "goto": 177
+    },
+    {
+      "key": 1,
+      "text": {
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
+      },
+      "show": [
+        "flag_check_failed",
+        "!flag_check_pushed"
+      ],
+      "goto": 184
+    },
+    {
+      "key": 2,
+      "text": {
+        "en": "You failed the Pushed roll, continue",
+        "zh": "孤注一掷检定失败，继续"
+      },
+      "show": [
+        "flag_check_failed",
+        "flag_check_pushed"
+      ],
+      "goto": 190
+    }
+  ]
 }

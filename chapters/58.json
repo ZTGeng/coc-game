@@ -1,22 +1,51 @@
 {
-    "key": 58,
-    "location": "ledbetter",
-    "text": {
-        "en": [
-            { "content": "You awaken to the sound of feet in the street outside. Your night’s rest has brought a new determination. Today, you will meet Emberhead on your own terms." },
-            { "tag": "info", "text": [
-                { "content": "You may restore 1 hit point if you have been wounded." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你被房外街道上的脚步声吵醒了。一晚上的休息为你带来了新的目标。今天，你要凭借自己的努力面对烬头村。" },
-            { "tag": "info", "text": [
-                { "content": "如果你受过伤，你可以回复1点耐久值。" }
-            ] }
+  "key": 58,
+  "location": "ledbetter",
+  "text": {
+    "en": [
+      {
+        "content": "You awaken to the sound of feet in the street outside. Your night’s rest has brought a new determination. Today, you will meet Emberhead on your own terms."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may restore 1 hit point if you have been wounded."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_adjust_attribute", "param": { "key": "HP", "delta": 1 } }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你被房外街道上的脚步声吵醒了。一晚上的休息为你带来了新的目标。今天，你要凭借自己的努力面对烬头村。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "如果你受过伤，你可以回复1点耐久值。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 64
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_adjust_attribute",
+      "param": {
+        "key": "HP",
+        "delta": 1
+      }
+    }
+  ]
 }

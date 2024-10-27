@@ -1,30 +1,75 @@
 {
-    "key": 175,
-    "location": "school",
-    "text": {
-        "en": [
-            { "content": "You feel very dislocated from reality, as you sit on a cliff top behind a school at night, learning a chant by rote from a madman. Arbogast is careful to teach you it in sections." },
-            { "content": "He glances into the sky. “Won’t work right now. Cloud covering the star.” But he still takes care not to pronounce the whole thing at once. It has a rhythmic beginning and various elaborations, but the core passage is repeated three times:" },
-            { "content": "Ph’nglui mglw’nafh Cthugha Fomalhaut n’gha-ghaa naf ’l thagn! Iä! Cthugha!" },
-            { "content": "In time, Arbogast listens to your recital and nods. “Remember every sound. But never speak it if you have plans left on this Earth.”" },
-            { "tag": "info", "text": [
-                { "content": "You have discovered a secret. If your situation ever becomes desperate enough to try Arbogast’s ritual, the text will offer you a special option to chant." }
-            ] },
-            { "content": "Arbogast leans back. “It will make you one with the Living—”" }
-        ],
-        "zh": [
-            { "content": "天色已晚，你坐在学校后面的悬崖顶上，跟着一个疯子学他背下来的咒语，颇有脱离现实之感。阿博加斯特小心翼翼地一段一段教你。" },
-            { "content": "他望了一眼天空。“现在没有用。云挡住了星星。”但他仍然特别留心，不会一次说出整句咒语。它的开头很有韵律，还有各种精巧的设计，但最核心的是重复三次的段落：" },
-            { "content": "Ph’nglui mglw’nafh Cthugha Fomalhaut n’ghaghaa naf ’l thagn! Iä! Cthugha!" },
-            { "content": "最后，阿博加斯特听了你的背诵，点点头。“每个字都要记住。但只要你在这地上还有活路，就千万不要念出它。”" },
-            { "tag": "info", "text": [
-                { "content": "你发现了一个秘密。如果有朝一日你的状况绝望到需要用到阿博加斯特的仪式，这段文字可以提供你施法的机会。" }
-            ] },
-            { "content": "阿博加斯特侧回身。“它会让你变成和活——”" }
+  "key": 175,
+  "location": "school",
+  "text": {
+    "en": [
+      {
+        "content": "You feel very dislocated from reality, as you sit on a cliff top behind a school at night, learning a chant by rote from a madman. Arbogast is careful to teach you it in sections."
+      },
+      {
+        "content": "He glances into the sky. “Won’t work right now. Cloud covering the star.” But he still takes care not to pronounce the whole thing at once. It has a rhythmic beginning and various elaborations, but the core passage is repeated three times:"
+      },
+      {
+        "content": "Ph’nglui mglw’nafh Cthugha Fomalhaut n’gha-ghaa naf ’l thagn! Iä! Cthugha!"
+      },
+      {
+        "content": "In time, Arbogast listens to your recital and nods. “Remember every sound. But never speak it if you have plans left on this Earth.”"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have discovered a secret. If your situation ever becomes desperate enough to try Arbogast’s ritual, the text will offer you a special option to chant."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_set_flag", "param": { "flag": "flag_learned_magic_arbogast", "value": true } }
+      },
+      {
+        "content": "Arbogast leans back. “It will make you one with the Living—”"
+      }
+    ],
+    "zh": [
+      {
+        "content": "天色已晚，你坐在学校后面的悬崖顶上，跟着一个疯子学他背下来的咒语，颇有脱离现实之感。阿博加斯特小心翼翼地一段一段教你。"
+      },
+      {
+        "content": "他望了一眼天空。“现在没有用。云挡住了星星。”但他仍然特别留心，不会一次说出整句咒语。它的开头很有韵律，还有各种精巧的设计，但最核心的是重复三次的段落："
+      },
+      {
+        "content": "Ph’nglui mglw’nafh Cthugha Fomalhaut n’ghaghaa naf ’l thagn! Iä! Cthugha!"
+      },
+      {
+        "content": "最后，阿博加斯特听了你的背诵，点点头。“每个字都要记住。但只要你在这地上还有活路，就千万不要念出它。”"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你发现了一个秘密。如果有朝一日你的状况绝望到需要用到阿博加斯特的仪式，这段文字可以提供你施法的机会。"
+          }
+        ]
+      },
+      {
+        "content": "阿博加斯特侧回身。“它会让你变成和活——”"
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 188
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_set_flag",
+      "param": {
+        "flag": "flag_learned_magic_arbogast",
+        "value": true
+      }
+    }
+  ]
 }

@@ -1,15 +1,32 @@
 {
-    "key": 140,
-    "location": "village_hall",
-    "text": {
-        "en": [
-            { "content": "Tucked between two books, you find a detailed map of the area around Emberhead (see page 27). It shows woodland, contours, and the two roads, east and west. Although no other settlements are marked, this may prove useful if you do decide to leave today." },
-            { "content": "The clatter of activity around the Beacon seems to be building and you flinch at every conversation that gets too close to the building’s door. It feels the right time to retrace your steps, slipping away through the window." }
-        ],
-        "zh": [
-            { "content": "你发现，在两册书中间，夹着一张烬头村周边的详尽地图。它画出了森林、等高线、东西两条盘山路。虽然地图上没有画出其他村庄，但如果你今天决意离开，它可能也会有用处。" },
-            { "content": "灯塔四周活动的哐哐声似乎越来越响，每当有说话声离房门太近，你都会下意识地退缩。差不多是原路返回，沿着窗户溜走的时候了。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 140,
+  "location": "village_hall",
+  "text": {
+    "en": [
+      {
+        "content": "Tucked between two books, you find a detailed map of the area around Emberhead (see page 27). It shows woodland, contours, and the two roads, east and west. Although no other settlements are marked, this may prove useful if you do decide to leave today."
+      },
+      {
+        "content": "The clatter of activity around the Beacon seems to be building and you flinch at every conversation that gets too close to the building’s door. It feels the right time to retrace your steps, slipping away through the window."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你发现，在两册书中间，夹着一张烬头村周边的详尽地图。它画出了森林、等高线、东西两条盘山路。虽然地图上没有画出其他村庄，但如果你今天决意离开，它可能也会有用处。"
+      },
+      {
+        "content": "灯塔四周活动的哐哐声似乎越来越响，每当有说话声离房门太近，你都会下意识地退缩。差不多是原路返回，沿着窗户溜走的时候了。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 120
+    }
+  ]
 }

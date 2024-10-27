@@ -1,22 +1,48 @@
 {
-    "key": 240,
-    "location": "woodland",
-    "text": {
-        "en": [
-            { "content": "You hear something from the road behind you. It is a dull clunk—perhaps a dead branch falling. You pause, but the sound does not repeat. You retrace a few paces and look down the road. There is nothing to see." },
-            { "tag": "info", "text": [
-                { "content": "You may check-mark the small box beside the Listen skill." }
-            ] }
-        ],
-        "zh": [
-            { "content": "你听到身后的路上传来什么声音。是沉闷的喀嚓声——可能是枯枝坠落的声音。你停下脚步，但声音并没有再次响起。你往回走了几步，沿路望去，但什么也看不到。" },
-            { "tag": "info", "text": [
-                { "content": "你可以在「聆听」技能左边的小方框里打勾。" }
-            ] }
+  "key": 240,
+  "location": "woodland",
+  "text": {
+    "en": [
+      {
+        "content": "You hear something from the road behind you. It is a dull clunk—perhaps a dead branch falling. You pause, but the sound does not repeat. You retrace a few paces and look down the road. There is nothing to see."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You may check-mark the small box beside the Listen skill."
+          }
         ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }],
-    "onload": [
-        { "action": "action_check_in_skill_box", "param": "listen" }
+      }
+    ],
+    "zh": [
+      {
+        "content": "你听到身后的路上传来什么声音。是沉闷的喀嚓声——可能是枯枝坠落的声音。你停下脚步，但声音并没有再次响起。你往回走了几步，沿路望去，但什么也看不到。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你可以在「聆听」技能左边的小方框里打勾。"
+          }
+        ]
+      }
     ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 234
+    }
+  ],
+  "onload": [
+    {
+      "action": "action_check_in_skill_box",
+      "param": "listen"
+    }
+  ]
 }
