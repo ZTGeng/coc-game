@@ -32,7 +32,7 @@ import {
 import { addHistory, setHistoryIndex, restoreHistory } from "../store/slices/historySlice";
 import * as utils from "../utils/utils";
 
-const initChapterVisits = new Array(270).fill(false);
+const initChapterVisits = new Array(271).fill(false);
 initChapterVisits[0] = true;
 
 export default function Game({ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }) {
@@ -328,7 +328,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(setCheckedSkills(characterToLoad.checkedSkills));
       dispatch(restoreSkillCustomNames(characterToLoad.skillCustomNames));
       dispatch(restoreHistory(historyToLoad));
-      setChapterVisits(utils.int32ToBooleanArray(chapterVisitsToLoad));
+      setChapterVisits(utils.int32ToBooleanArray(chapterVisitsToLoad, 271));
       setMapEnabled(mapEnabledToLoad);
 
       setIsReloading(true);
