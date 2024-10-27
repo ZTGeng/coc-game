@@ -19,8 +19,12 @@ const historySlice = createSlice({
       state.items = [];
       state.index = 0;
     },
+    restoreHistory(state, action) { // action: { type: 'history/restore', payload: { items, index } }
+      state.items = action.payload.items;
+      state.index = action.payload.index
+    }
   },
 });
 
-export const { addHistory, setHistoryIndex, clearHistory } = historySlice.actions;
+export const { addHistory, setHistoryIndex, clearHistory, restoreHistory } = historySlice.actions;
 export default historySlice.reducer;

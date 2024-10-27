@@ -100,7 +100,7 @@
     {
       "action": "action_set_flag",
       "param": {
-        "key": "flag_tracked_figure",
+        "flag": "flag_tracked_figure",
         "value": true
       }
     }

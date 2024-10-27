@@ -60,12 +60,16 @@ const characterSlice = createSlice({
       state.skills = initSkills;
       state.occupation = initOccupation;
       state.info = initInfo;
-    },
-    setCharacter(state, action) { // action: { type: 'character/setCharacter', payload: { chars, attrs, skills, occupation, info } }
-      return action.payload;
+      state.checkedSkills = [];
+      state.skillCustomNames = {};
     },
     initChar(state, action) { // action: { type: 'character/initChar', payload: { charKey, value } }
       state.chars[action.payload.charKey].value = action.payload.value;
+    },
+    setCharsWithSnapshot(state, action) { // action: { type: 'character/setCharsWithSnapshot', payload: { STR: 10, ... } }
+      Object.keys(action.payload).forEach(charKey => {
+        state.chars[charKey].value = action.payload[charKey];
+      });
     },
     initAttr(state, action) { // action: { type: 'character/initAttr', payload: { attrKey, value } }
       state.attrs[action.payload.attrKey].value = action.payload.value;
@@ -95,6 +99,18 @@ const characterSlice = createSlice({
       skill.value !== skill.baseValue && (skill.value = skill.baseValue);
       skill.occupation && (skill.occupation = false);
       skill.hobby && (skill.hobby = false);
+    },
+    setSkillWithSnapshot(state, action) { // action: { type: 'character/setSkillWithSnapshot', payload: { skillKey: { value, ... } } }
+      Object.keys(state.skills).forEach(skillKey => {
+        const skill = state.skills[skillKey];
+        if (action.payload[skillKey]) {
+          skill.value !== action.payload[skillKey].value && (skill.value = action.payload[skillKey].value);
+          skill.occupation !== action.payload[skillKey].occupation && (skill.occupation = action.payload[skillKey].occupation);
+          skill.hobby !== action.payload[skillKey].hobby && (skill.hobby = action.payload[skillKey].hobby);
+        } else {
+          state.skills[skillKey] = { ...initSkills[skillKey] };
+        }
+      });
     },
     setSkillValue(state, action) { // action: { type: 'character/setSkillValue', payload: { skillKey, value } }
       if (state.skills[action.payload.skillKey].value !== action.payload.value) {
@@ -126,24 +142,15 @@ const characterSlice = createSlice({
         delete state.skillCustomNames[action.payload.skillKey];
       }
     },
-    setSkillWithSnapshot(state, action) { // action: { type: 'character/setSkillWithSnapshot', payload: { skillKey: { value, ... } } }
-      Object.keys(state.skills).forEach(skillKey => {
-        const skill = state.skills[skillKey];
-        if (action.payload[skillKey]) {
-          skill.value !== action.payload[skillKey].value && (skill.value = action.payload[skillKey].value);
-          skill.occupation !== action.payload[skillKey].occupation && (skill.occupation = action.payload[skillKey].occupation);
-          skill.hobby !== action.payload[skillKey].hobby && (skill.hobby = action.payload[skillKey].hobby);
-        } else {
-          state.skills[skillKey] = { ...initSkills[skillKey] };
-        }
-      });
+    restoreSkillCustomNames(state, action) { // action: { type: 'character/restoreSkillCustomNames', payload: { skillKey: customName, ... } }
+      state.skillCustomNames = action.payload;
     },
     checkSkillBox(state, action) { // action: { type: 'character/checkSkillBox', payload: skillKey }
       if (!state.checkedSkills.includes(action.payload)) {
         state.checkedSkills.push(action.payload);
       }
     },
-    checkSkillBoxWithSnapshot(state, action) { // action: { type: 'character/checkSkillBoxWithSnapshot', payload: [skillKey] }
+    setCheckedSkills(state, action) { // action: { type: 'character/checkSkillBoxWithSnapshot', payload: [skillKey] }
       state.checkedSkills = action.payload;
     },
     setOccupation(state, action) { // action: { type: 'character/setOccupation', payload: { name, credit, skills, art, interpersonal, language, universal } }
@@ -163,13 +170,14 @@ const characterSlice = createSlice({
 
 export const {
   resetCharacter,
-  setCharacter,
   initChar,
+  setCharsWithSnapshot,
   initAttr,
   setAttr,
   setAttrWithSnapshot,
   initSkill,
   resetSkill,
+  setSkillWithSnapshot,
   setSkillValue,
   setSkillValueByDelta,
   doubleSkillValue,
@@ -177,9 +185,9 @@ export const {
   setSkillOccupation,
   setSkillHobby,
   setSkillCustomName,
-  setSkillWithSnapshot,
+  restoreSkillCustomNames,
   checkSkillBox,
-  checkSkillBoxWithSnapshot,
+  setCheckedSkills,
   setOccupation,
   setOccupationName,
   setName,
@@ -187,6 +195,12 @@ export const {
 } = characterSlice.actions;
 export default characterSlice.reducer;
 
+export const snapshotChars = (state) =>
+  Object.keys(state.chars)
+    .reduce((acc, charKey) => {
+      acc[charKey] = state.chars[charKey].value;
+      return acc;
+    }, {});
 export const snapshotAttrs = (state) =>
   Object.keys(state.attrs)
     .reduce((acc, attrKey) => {
@@ -206,3 +220,12 @@ export const snapshotUpdatedSkills = (state) =>
       skill.hobby && (acc[skillKey].hobby = skill.hobby);
       return acc;
     }, {});
+export const snapshotCharacter = (state) => ({
+  charsSnapshot: snapshotChars(state),
+  attrsSnapshot: snapshotAttrs(state),
+  skillsSnapshot: snapshotUpdatedSkills(state),
+  occupation: state.occupation,
+  info: state.info,
+  checkedSkills: state.checkedSkills,
+  skillCustomNames: state.skillCustomNames
+});

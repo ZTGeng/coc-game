@@ -176,13 +176,14 @@ function App() {
   }
 
   function onRestart() {
+    setSaveLoad({});
     setGameStarted(false);
     setShowCharacter(false);
     setMapEnabled(false);
-    dispatch(resetCharacter());
-    dispatch(clearHighlights());
     dispatch(resetFlag());
+    dispatch(resetCharacter());
     dispatch(clearHistory());
+    dispatch(clearHighlights());
   }
 
   function toggleShowCharacter() {

@@ -41,7 +41,30 @@ export function calculateLevel(diceNumber, value, half, fifth) { // 0: fail, 1: 
     if (!half && half !== 0) half = Math.floor(value / 2);
     if (!fifth && fifth !== 0) fifth = Math.floor(value / 5);
     return diceNumber <= fifth ? 3 : diceNumber <= half ? 2 : diceNumber <= value ? 1 : 0;
-  }
+}
+
+export function int32ToBooleanArray(int32Array, total) {
+    const boolArray = new Array(total).fill(false);
+    for (let i = 0; i < total; i++) {
+      const arrayIndex = Math.floor(i / 32);
+      const bitPosition = i % 32;
+      boolArray[i] = (int32Array[arrayIndex] & (1 << bitPosition)) !== 0;
+    }
+    return boolArray;
+}
+
+export function booleanToInt32Array(boolArray) {
+    const total = boolArray.length;
+    const int32Array = new Uint32Array(Math.ceil(total / 32)).fill(0);
+    for (let i = 0; i < total; i++) {
+      const arrayIndex = Math.floor(i / 32);
+      const bitPosition = i % 32;
+      if (boolArray[i]) {
+        int32Array[arrayIndex] |= 1 << bitPosition;
+      }
+    }
+    return int32Array;
+}
   
 
 export const TEXTS = {

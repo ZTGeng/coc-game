@@ -9,6 +9,7 @@ import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck, snapshotFlag, setFlagWithSnapshot } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
 import {
+  snapshotCharacter,
   initAttr,
   setAttr,
   setAttrWithSnapshot,
@@ -20,15 +21,17 @@ import {
   setSkillWithSnapshot,
   snapshotUpdatedSkills,
   checkSkillBox,
-  checkSkillBoxWithSnapshot,
+  setCheckedSkills,
+  restoreSkillCustomNames,
   setOccupation,
-  setOccupationName
+  setOccupationName,
+  setCharsWithSnapshot,
+  setName,
+  setAge
 } from "../store/slices/characterSlice";
-import { addHistory, setHistoryIndex } from "../store/slices/historySlice";
+import { addHistory, setHistoryIndex, restoreHistory } from "../store/slices/historySlice";
 import * as utils from "../utils/utils";
 
-// const initChapterStatus = new Uint32Array(9);
-// initChapterStatus[0] = 1;
 const initChapterVisits = new Array(270).fill(false);
 initChapterVisits[0] = true;
 
@@ -50,7 +53,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
     if (saveLoad.action === "save") {
-      save(saveLoad.saveKey);
+      dispatch(saveThunk(saveLoad.saveKey));
     } else if (saveLoad.action === "load") {
       load(saveLoad.saveKey);
     }
@@ -252,32 +255,14 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setChapterVisits(chapterVisitsCopy);
   }
 
-  const createSnapshotThunk = () => (dispatch, getState) => {
-    const state = getState();
-    stateSnapshotRef.current = {
-      flags: snapshotFlag(state.flag),
-      attrs: snapshotAttrs(state.character),
-      occupationName: state.character.occupation.name,
-      checkedSkills: [...state.character.checkedSkills],
-      // showCharacter,
-      mapEnabled,
-    };
-
-    const skillSnapshot = snapshotUpdatedSkills(state.character);
-    const lastSkillSnapshot = latestSkillSnapshot(state.history.index);
-    if (JSON.stringify(skillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
-      stateSnapshotRef.current.skills = skillSnapshot;
-    }
-  }
-
   function loadHistoryStates(historyIndex) {
     const historyItem = historyStore.items[historyIndex];
     dispatch(setFlagWithSnapshot(historyItem.states.flags));
     dispatch(setAttrWithSnapshot(historyItem.states.attrs));
     dispatch(setOccupationName(historyItem.states.occupationName));
-    dispatch(checkSkillBoxWithSnapshot(historyItem.states.checkedSkills));
+    dispatch(setCheckedSkills(historyItem.states.checkedSkills));
 
-    const skillSnapshot = latestSkillSnapshot(historyIndex + 1);
+    const skillSnapshot = latestSkillSnapshot(historyStore.items, historyIndex + 1);
     dispatch(setSkillWithSnapshot(skillSnapshot));
 
     setMapEnabled(historyItem.states.mapEnabled);
@@ -286,17 +271,37 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     setChapterKey(historyItem.chapterKey);
   }
 
-  function latestSkillSnapshot(historyItemIndex) {
-    const lastItem = historyStore.items.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states.skills);
+  function latestSkillSnapshot(historyItems, historyIndex) {
+    const lastItem = historyItems.slice(0, historyIndex).findLast((historyItem) => historyItem.states.skills);
     return lastItem ? lastItem.states.skills : {};
   }
 
-  function save(saveKey) {
+  const createSnapshotThunk = () => (dispatch, getState) => {
+    const state = getState();
+    stateSnapshotRef.current = {
+      flags: snapshotFlag(state.flag),
+      attrs: snapshotAttrs(state.character),
+      occupationName: state.character.occupation.name,
+      checkedSkills: [...state.character.checkedSkills],
+      mapEnabled,
+    };
+
+    const skillSnapshot = snapshotUpdatedSkills(state.character);
+    const lastSkillSnapshot = latestSkillSnapshot(state.history.items, state.history.index);
+    if (JSON.stringify(skillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
+      stateSnapshotRef.current.skills = skillSnapshot;
+    }
+  }
+
+  const saveThunk = (saveKey) => (dispatch, getState) => {
+    const state = getState();
     const saveData = {
-      // chapterHistory,
-      // chapterStatus: Array.from(chapterStatus),
-      // chars,
-      currentStates: stateSnapshotRef.current,
+      chapterKey,
+      flag: snapshotFlag(state.flag),
+      character: snapshotCharacter(state.character),
+      history: state.history,
+      chapterVisits: utils.booleanToInt32Array(chapterVisits),
+      mapEnabled,
     }
     localStorage.setItem(saveKey, JSON.stringify(saveData));
   }
@@ -305,51 +310,31 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const saveData = localStorage.getItem(saveKey);
     if (saveData) {
       const {
-        chapterHistory: chapterHistoryToLoad,
-        chapterStatus: chapterStatusToLoad,
-        chars: charsToLoad,
-        currentStates: statesToLoad
+        chapterKey: chapterKeyToLoad,
+        flag: flagToLoad,
+        character: characterToLoad,
+        history: historyToLoad,
+        chapterVisits: chapterVisitsToLoad,
+        mapEnabled: mapEnabledToLoad,
       } = JSON.parse(saveData);
-      // setChapterHistory(chapterHistoryToLoad);
-      // setChapterStatus(new Uint32Array(chapterStatusToLoad));
-      // setChars(charsToLoad);
 
-      let skillSnapshot = statesToLoad.skills;
-      if (!skillSnapshot) {
-        const lastItemWithSkillSnapshot = chapterHistoryToLoad.findLast((historyItem) => historyItem.states && historyItem.states.skills);
-        skillSnapshot = lastItemWithSkillSnapshot ? lastItemWithSkillSnapshot.states.skills : {};
-      }
-      // setSkillsWithSnapshot(skillSnapshot, statesToLoad.checkedSkills);
-
-      // setFlags({ ...initFlags, ...statesToLoad.flags });
-      // setAttributes(statesToLoad.attributes);
-      // setOccupation({ name: statesToLoad.occupationName });
-      // setInfo(statesToLoad.info);
-      setMapEnabled(statesToLoad.mapEnabled);
+      dispatch(setFlagWithSnapshot(flagToLoad));
+      dispatch(setCharsWithSnapshot(characterToLoad.charsSnapshot));
+      dispatch(setAttrWithSnapshot(characterToLoad.attrsSnapshot));
+      dispatch(setSkillWithSnapshot(characterToLoad.skillsSnapshot));
+      dispatch(setOccupation(characterToLoad.occupation));
+      dispatch(setName(characterToLoad.info.name));
+      dispatch(setAge(characterToLoad.info.age));
+      dispatch(setCheckedSkills(characterToLoad.checkedSkills));
+      dispatch(restoreSkillCustomNames(characterToLoad.skillCustomNames));
+      dispatch(restoreHistory(historyToLoad));
+      setChapterVisits(utils.int32ToBooleanArray(chapterVisitsToLoad));
+      setMapEnabled(mapEnabledToLoad);
 
       setIsReloading(true);
-      setChapterKey(statesToLoad.chapterKey);
+      setChapterKey(chapterKeyToLoad);
     }
   }
-
-  // function markChapterVisited(chapterIndex) {
-  //   console.log(`Game - markChapterVisited: chapterStatusCopy ${JSON.stringify(chapterStatus)} `);
-  //   const chapterStatusCopy = new Uint32Array(chapterStatus);
-  //   const arrayIndex = Math.floor(chapterIndex / 32);
-  //   const bitPosition = chapterIndex % 32;
-  //   chapterStatusCopy[arrayIndex] |= (1 << bitPosition);
-  //   setChapterStatus(chapterStatusCopy);
-  //   for (let i = 0; i < chapterStatusCopy.length; i++) {
-  //   console.log(`Game - markChapterVisited: chapterStatusCopy ${chapterStatusCopy[i]} `);
-  //   }
-  // }
-
-  // function isChapterVisited(chapterIndex) {
-  //   const arrayIndex = Math.floor(chapterIndex / 32);
-  //   const bitPosition = chapterIndex % 32;
-  //   return (chapterStatus[arrayIndex] & (1 << bitPosition)) !== 0;
-  // }
-  // window.isChapterVisited = isChapterVisited;
   
   // Cheating
   window.goto = (chapterKey) => {
