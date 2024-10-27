@@ -9,6 +9,7 @@ import Game from './components/Game';
 import { resetCharacter } from './store/slices/characterSlice';
 import { clearHighlights } from './store/slices/highlightSlice';
 import { resetFlag } from './store/slices/flagSlice';
+import { clearHistory } from './store/slices/historySlice';
 import characterSheet from './utils/characterSheet';
 
 export const LanguageContext = createContext();
@@ -181,6 +182,7 @@ function App() {
     dispatch(resetCharacter());
     dispatch(clearHighlights());
     dispatch(resetFlag());
+    dispatch(clearHistory());
   }
 
   function toggleShowCharacter() {

@@ -22,7 +22,6 @@ const initSkills = Object.entries(characterSheet.skills).reduce((acc, [key, item
     acc[key] = {
       value: item.value,
       baseValue: item.value,
-      checked: false,
       occupation: false,
       hobby: false
     };
@@ -51,6 +50,8 @@ const characterSlice = createSlice({
     skills: initSkills,
     occupation: initOccupation,
     info: initInfo,
+    checkedSkills: [],
+    skillCustomNames: {},
   },
   reducers: {
     resetCharacter(state, action) { // action: { type: 'character/reset' }
@@ -77,6 +78,13 @@ const characterSlice = createSlice({
         state.attrs[action.payload.attrKey].value = action.payload.value;
       }
     },
+    setAttrWithSnapshot(state, action) { // action: { type: 'character/setAttrWithSnapshot', payload: { HP: "10/10", ... } }
+      Object.keys(action.payload).forEach(attrKey => {
+        const [value, maxValue] = action.payload[attrKey].split("/").map(v => v && parseInt(v));
+        state.attrs[attrKey].value = value;
+        attrKey !== "Luck" && (state.attrs[attrKey].maxValue = maxValue);
+      });
+    },
     initSkill(state, action) { // action: { type: 'character/initSkill', payload: { skillKey, value } }
       state.skills[action.payload.skillKey].value = action.payload.value;
       state.skills[action.payload.skillKey].baseValue = action.payload.value;
@@ -87,12 +95,23 @@ const characterSlice = createSlice({
       skill.value !== skill.baseValue && (skill.value = skill.baseValue);
       skill.occupation && (skill.occupation = false);
       skill.hobby && (skill.hobby = false);
-      skill.customName && (delete skill.customName);
     },
-    setSkill(state, action) { // action: { type: 'character/setSkill', payload: { skillKey, value } }
+    setSkillValue(state, action) { // action: { type: 'character/setSkillValue', payload: { skillKey, value } }
       if (state.skills[action.payload.skillKey].value !== action.payload.value) {
         state.skills[action.payload.skillKey].value = action.payload.value;
       }
+    },
+    setSkillValueByDelta(state, action) { // action: { type: 'character/setSkillValueByDelta', payload: { skillKey, delta } }
+      const skill = state.skills[action.payload.skillKey];
+      skill.value += action.payload.delta;
+    },
+    doubleSkillValue(state, action) { // action: { type: 'character/doubleSkillValue', payload: skillKey }
+      const skill = state.skills[action.payload];
+      skill.value *= 2;
+    },
+    halfSkillValue(state, action) { // action: { type: 'character/halfSkillValue', payload: skillKey }
+      const skill = state.skills[action.payload];
+      skill.value = Math.floor(skill.value / 2);
     },
     setSkillOccupation(state, action) { // action: { type: 'character/setSkillOccupation', payload: skillKey }
       state.skills[action.payload].occupation || (state.skills[action.payload].occupation = true);
@@ -101,15 +120,37 @@ const characterSlice = createSlice({
       state.skills[action.payload].hobby || (state.skills[action.payload].hobby = true);
     },
     setSkillCustomName(state, action) { // action: { type: 'character/setSkillCustomName', payload: { skillKey, customName } }
-      if (state.skills[action.payload.skillKey].customName !== action.payload.customName) {
-        state.skills[action.payload.skillKey].customName = action.payload.customName;
+      if (action.payload.customName) {
+        state.skillCustomNames[action.payload.skillKey] = action.payload.customName;
+      } else {
+        delete state.skillCustomNames[action.payload.skillKey];
       }
     },
+    setSkillWithSnapshot(state, action) { // action: { type: 'character/setSkillWithSnapshot', payload: { skillKey: { value, ... } } }
+      Object.keys(state.skills).forEach(skillKey => {
+        const skill = state.skills[skillKey];
+        if (action.payload[skillKey]) {
+          skill.value !== action.payload[skillKey].value && (skill.value = action.payload[skillKey].value);
+          skill.occupation !== action.payload[skillKey].occupation && (skill.occupation = action.payload[skillKey].occupation);
+          skill.hobby !== action.payload[skillKey].hobby && (skill.hobby = action.payload[skillKey].hobby);
+        } else {
+          state.skills[skillKey] = { ...initSkills[skillKey] };
+        }
+      });
+    },
     checkSkillBox(state, action) { // action: { type: 'character/checkSkillBox', payload: skillKey }
-      state.skills[action.payload].checked || (state.skills[action.payload].checked = true);
+      if (!state.checkedSkills.includes(action.payload)) {
+        state.checkedSkills.push(action.payload);
+      }
+    },
+    checkSkillBoxWithSnapshot(state, action) { // action: { type: 'character/checkSkillBoxWithSnapshot', payload: [skillKey] }
+      state.checkedSkills = action.payload;
     },
     setOccupation(state, action) { // action: { type: 'character/setOccupation', payload: { name, credit, skills, art, interpersonal, language, universal } }
       state.occupation = action.payload;
+    },
+    setOccupationName(state, action) { // action: { type: 'character/setOccupationName', payload: { en, zh } }
+      state.occupation.name = action.payload;
     },
     setName(state, action) { // action: { type: 'character/setName', payload: name }
       state.info.name !== action.payload && (state.info.name = action.payload);
@@ -126,15 +167,42 @@ export const {
   initChar,
   initAttr,
   setAttr,
+  setAttrWithSnapshot,
   initSkill,
   resetSkill,
-  setSkill,
+  setSkillValue,
+  setSkillValueByDelta,
+  doubleSkillValue,
+  halfSkillValue,
   setSkillOccupation,
   setSkillHobby,
   setSkillCustomName,
+  setSkillWithSnapshot,
   checkSkillBox,
+  checkSkillBoxWithSnapshot,
   setOccupation,
+  setOccupationName,
   setName,
   setAge
 } = characterSlice.actions;
 export default characterSlice.reducer;
+
+export const snapshotAttrs = (state) =>
+  Object.keys(state.attrs)
+    .reduce((acc, attrKey) => {
+      acc[attrKey] = `${state.attrs[attrKey].value}${attrKey === "Luck" ? "" : `/${state.attrs[attrKey].maxValue}`}`;
+      return acc;
+    }, {});
+export const snapshotUpdatedSkills = (state) =>
+  Object.keys(state.skills)
+    .filter(skillKey => state.skills[skillKey].value !== initSkills[skillKey].value
+      || state.skills[skillKey].occupation
+      || state.skills[skillKey].hobby)
+    .reduce((acc, skillKey) => {
+      const skill = state.skills[skillKey];
+      acc[skillKey] = {};
+      skill.value !== initSkills[skillKey].value && (acc[skillKey].value = skill.value);
+      skill.occupation && (acc[skillKey].occupation = skill.occupation);
+      skill.hobby && (acc[skillKey].hobby = skill.hobby);
+      return acc;
+    }, {});

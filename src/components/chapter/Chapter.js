@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { LanguageContext } from "../../App";
+import { LanguageContext, CharacterSheetContext } from "../../App";
 import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
@@ -18,7 +18,7 @@ const initRollFlags = {
   isPushed: false,
 }
 
-const interactionChapters = {
+const historyItemTexts = {
   134: {
     chapterKey: 134,
     optionText: utils.TEXTS.rollLuck,
@@ -113,6 +113,7 @@ function Interactions({ interactions, onAction }) {
 
 export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
+  const characterSheet = useContext(CharacterSheetContext);
   const [chapter, setChapter] = useState(null);
   const [interactionFinished, setInteractionFinished] = useState(false);
   const [rollFlags, setRollFlags] = useState(initRollFlags);
@@ -271,37 +272,57 @@ export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpda
   }
 
   function onOptionSelected(nextKey, optionText) {
-    if (interactionChapters[chapterKey]) {
-      onNextChapter(nextKey, interactionChapters[chapterKey], true);
+    // { chapterKey, optionText，contentTexts }
+    if (historyItemTexts[chapterKey]) {
+      onNextChapter(nextKey, historyItemTexts[chapterKey]);
       return;
     }
-    if (chapter.check) { // { chapterKey, optionText，type=roll/roll_select, keys } or { chapterKey, optionText, type=opposed_roll/combat, opponentName }
-      const historyItem = { chapterKey, optionText, type: chapter.check.type };
+    const historyItem = { chapterKey, optionText };
+    const contentTexts = [];
+    if (chapter.check) {
       switch (chapter.check.type) {
         case "roll":
-          historyItem.keys = [chapter.check.key];
+          const checkTarget = characterSheet[chapter.check.key] || characterSheet.skills[chapter.check.key];
+          contentTexts.push(checkTarget.name);
+          contentTexts.push(utils.TEXTS.rollSuffix);
           break;
         case "roll_select":
-          historyItem.keys = chapter.check.rolls.map(roll => roll.key);
+          chapter.check.rolls
+            .map(roll => roll.key)
+            .map(key => characterSheet[key] || characterSheet.skills[key])
+            .forEach(target => {
+              contentTexts.push(target.name);
+              contentTexts.push(utils.TEXTS.or);
+            });
+          contentTexts.pop();
+          contentTexts.push(utils.TEXTS.rollSuffix);
           break;
         case "opposed_roll":
+          contentTexts.push(utils.TEXTS.opposedRoll);
+          contentTexts.push(utils.TEXTS.vs);
+          contentTexts.push(chapter.check.opponent.name);
+          break;
         case "combat":
-          historyItem.opponentName = chapter.check.opponent.name;
+          contentTexts.push(utils.TEXTS.combat);
+          contentTexts.push(utils.TEXTS.vs);
+          contentTexts.push(chapter.check.opponent.name);
           break;
       }
-      onNextChapter(nextKey, historyItem, true);
+      historyItem.contentTexts = contentTexts;
+      onNextChapter(nextKey, historyItem);
       return;
     }
-    if (chapter.interactions) { // { chapterKey, optionText, type=interaction, texts }
-      const texts = chapter.interactions.map(interaction => interaction.text);
-      onNextChapter(nextKey, { chapterKey, optionText, type: "interaction", texts }, true);
+    if (chapter.interactions) {
+      chapter.interactions.map(interaction => interaction.text).forEach(text => contentTexts.push(text));
+      historyItem.contentTexts = contentTexts;
+      onNextChapter(nextKey, historyItem);
       return;
     }
-    onNextChapter(nextKey, { chapterKey, optionText }, chapter.options.filter(option => !option.show).length > 1);
+    onNextChapter(nextKey, chapter.options.filter(option => !option.show).length > 1 ? historyItem : null);
   }
 
   if (chapterKey === 0) {
-    return <Chapter0 onOptionSelected={onNextChapter} />;
+    return <Chapter0 onOptionSelected={(next, _) => onNextChapter(next)} />;
   }
 
   if (!chapter || chapter.key !== chapterKey) {

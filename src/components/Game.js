@@ -6,9 +6,24 @@ import Chapter from "./chapter/Chapter";
 import HistoryModal from "./HistoryModal";
 import AchievementModal from "./AchievementModal";
 import { showToast } from "./ToastMessage";
-import { setFlag, FlagCheckContext, createFlagCheck } from "../store/slices/flagSlice";
+import { setFlag, FlagCheckContext, createFlagCheck, snapshotFlag, setFlagWithSnapshot } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
-import { initAttr, setAttr, initSkill, setSkill, checkSkillBox, setOccupation } from "../store/slices/characterSlice";
+import {
+  initAttr,
+  setAttr,
+  setAttrWithSnapshot,
+  snapshotAttrs,
+  initSkill,
+  setSkillValueByDelta,
+  doubleSkillValue,
+  halfSkillValue,
+  setSkillWithSnapshot,
+  snapshotUpdatedSkills,
+  checkSkillBox,
+  checkSkillBoxWithSnapshot,
+  setOccupation,
+  setOccupationName
+} from "../store/slices/characterSlice";
 import { addHistory, setHistoryIndex } from "../store/slices/historySlice";
 import * as utils from "../utils/utils";
 
@@ -21,17 +36,16 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const [chapterKey, setChapterKey] = useState(0);
-  // const [chapterStatus, setChapterStatus] = useState(initChapterStatus);
   const [chapterVisits, setChapterVisits] = useState(initChapterVisits);
-  // const [chapterHistory, setChapterHistory] = useState([]);
-  // const [historyIndex, setHistoryIndex] = useState(-1);
   const [isReloading, setIsReloading] = useState(false);
-  // console.log(`on Game refresh: chapterFlags: ${JSON.stringify(flags)}`);
-  // console.log(`Game refresh, chapterKey: ${chapterKey}, skills: ${JSON.stringify(skills)}`);
-  const dispatch = useDispatch();
   const flagStore = useSelector(state => state.flag);
-  const characterStore = useSelector(state => state.character);
+  const charsStore = useSelector(state => state.character.chars);
+  const attrsStore = useSelector(state => state.character.attrs);
+  const skillsStore = useSelector(state => state.character.skills);
+  const occupationStore = useSelector(state => state.character.occupation);
   const historyStore = useSelector(state => state.history);
+  const dispatch = useDispatch();
+  console.log(`Game refresh, chapterKey: ${chapterKey}`);
 
   useEffect(() => {
     console.log(`Game - useEffect: chapterKey: ${chapterKey}， saveLoad: ${saveLoad.action}`);
@@ -46,70 +60,22 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const stateSnapshotRef = useRef({});
   // console.log(`Game refresh - stateSnapshotRef: ${JSON.stringify(stateSnapshotRef.current)}`);
 
-  function gameSnapshot(doIncludeSkillSnapshot = false) {
-    const snapshot = {
-      chapterKey,
-      flags: flagStore,
-      // attributes: { ...attrCopy },
-      // occupationName: occupation.name,
-      // info,
-      mapEnabled,
-      // checkedSkills: Object.keys(skillsCopy).filter(skillKey => skillsCopy[skillKey].checked),
-    };
-
-    // const currentSkillSnapshot = Object.keys(skillsCopy)
-    //   .filter(skillKey => skillsCopy[skillKey].value !== initSkills[skillKey].value 
-    //     || skillsCopy[skillKey].customName
-    //     || skillsCopy[skillKey].occupation
-    //     || skillsCopy[skillKey].hobby)
-    //   .reduce((acc, skillKey) => {
-    //     acc[skillKey] = {};
-    //     skillsCopy[skillKey].value !== initSkills[skillKey].value && (acc[skillKey].value = skillsCopy[skillKey].value);
-    //     skillsCopy[skillKey].customName && (acc[skillKey].customName = skillsCopy[skillKey].customName);
-    //     skillsCopy[skillKey].occupation && (acc[skillKey].occupation = skillsCopy[skillKey].occupation);
-    //     skillsCopy[skillKey].hobby && (acc[skillKey].hobby = skillsCopy[skillKey].hobby);
-    //     return acc;
-    //   }, {});
-    // const lastSkillSnapshot = findLastSkillSnapshot(historyIndex);
-    // if (doIncludeSkillSnapshot || JSON.stringify(currentSkillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
-    //   snapshot.skills = currentSkillSnapshot;
-    // }
-
-    return snapshot;
-  }
-
-  // function setSkillsWithSnapshot(skillSnapshot, checkedSkills) {
-    // skillsCopy = Object.keys(skillSnapshot)
-    //   .reduce((acc, skillKey) => {
-    //     acc[skillKey] = { ...initSkills[skillKey] };
-    //     (skillSnapshot[skillKey].value || skillSnapshot[skillKey].value === 0)
-    //       && (acc[skillKey].value = skillSnapshot[skillKey].value);
-    //     skillSnapshot[skillKey].customName && (acc[skillKey].customName = skillSnapshot[skillKey].customName);
-    //     skillSnapshot[skillKey].occupation && (acc[skillKey].occupation = skillSnapshot[skillKey].occupation);
-    //     skillSnapshot[skillKey].hobby && (acc[skillKey].hobby = skillSnapshot[skillKey].hobby);
-    //     return acc;
-    //   }, { ...initSkills });
-    // checkedSkills.forEach(skillKey => skillsCopy[skillKey].checked = true);
-    // setSkills(skillsCopy);
-  // }
-
   const gameFlagFunc = {
-    "flag_characteristics_unfinished": () => Object.values(characterStore.chars).some(char => char.value === ""),
+    "flag_characteristics_unfinished": () => Object.values(charsStore).some(char => char.value === ""),
     "flag_skills_occupation_unfinished": () => {
-      const occupationSkillsNum = Object.keys(characterStore.skills).filter(skillKey => characterStore.skills[skillKey].occupation).length;
-      const occupationSkillsMaxNum = characterStore.occupation.skills.length
-        + characterStore.occupation.art
-        + characterStore.occupation.interpersonal
-        + characterStore.occupation.language
-        + characterStore.occupation.universal;
+      const occupationSkillsNum = Object.keys(skillsStore).filter(skillKey => skillsStore[skillKey].occupation).length;
+      const occupationSkillsMaxNum = occupationStore.skills.length
+        + occupationStore.art
+        + occupationStore.interpersonal
+        + occupationStore.language
+        + occupationStore.universal;
       return occupationSkillsNum < occupationSkillsMaxNum;
     },
-    "flag_skills_hobby_unfinished": () => Object.keys(characterStore.skills).filter(skillKey => characterStore.skills[skillKey].hobby).length < 4,
-    "flag_siz_greater_than_40": () => characterStore.chars.SIZ.value > 40,
-    "flag_dex_greater_than_siz": () => characterStore.chars.DEX.value > characterStore.chars.SIZ.value,
-    "flag_luck_unfinished": () => characterStore.attrs.Luck.value === "",
-    "flag_track_skill_box_checked": () => characterStore.skills.track.checked,
-    "flag_hp_zero": () => characterStore.attrs.HP.value <= 0,
+    "flag_skills_hobby_unfinished": () => Object.keys(skillsStore).filter(skillKey => skillsStore[skillKey].hobby).length < 4,
+    "flag_siz_greater_than_40": () => charsStore.SIZ.value > 40,
+    "flag_dex_greater_than_siz": () => charsStore.DEX.value > charsStore.SIZ.value,
+    "flag_luck_unfinished": () => attrsStore.Luck.value === "",
+    "flag_hp_zero": () => attrsStore.HP.value <= 0,
   };
 
   function checkFlagInStore(flag) {
@@ -120,35 +86,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     return false;
   }
   const flagCheck = createFlagCheck(gameFlagFunc, checkFlagInStore);
-
-  function onChapterAction(action, param) {
-    console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
-    action in actions && actions[action](param);
-  }
-
-  function onCharacterAction(action, param) {
-    console.log(`Game - onCharacterAction: ${action} with params: ${JSON.stringify(param)}`);
-    action in actions && actions[action](param);
-  }
-
-  function onUpdateSnapshot() {
-    stateSnapshotRef.current = gameSnapshot();
-  }
-
-  function onHistorySelected(historyIndex) {
-    console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
-    loadHistoryStates(historyIndex);
-    setHistoryIndex(historyIndex);
-    // setHistoryIndex(historyIndex);
-  }
-
-  const setHighlight = (key, level, color) => {
-    if (level === "none") {
-      dispatch(removeHighlight(key));
-    } else {
-      dispatch(addOrUpdateHighlight({ key, level, color }));
-    }
-  }
 
   const actions = {
     action_set_flag: (param) => { // param: { flag, value }
@@ -168,7 +105,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(checkSkillBox(param));
     },
     action_adjust_attribute: (param) => { // param: { key, delta, noHighlight }, delta: Int or String like "-1d2"
-      const attr = characterStore.attrs[param.key];
+      const attr = attrsStore[param.key];
       let newValue;
       if (typeof param.delta === "string") {
         let deltaString = param.delta;
@@ -211,13 +148,13 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(setAttr({ attrKey: param.key, value: newValue }));
     },
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
-      dispatch(setSkill({ skillKey: param.key, value: characterStore.skills[param.key].value + param.delta }));
+      dispatch(setSkillValueByDelta({ skillKey: param.key, delta: param.delta }));
     },
     action_double_skill_value: (param) => { // param: key
-      dispatch(setSkill({ skillKey: param, value: characterStore.skills[param].value * 2 }));
+      dispatch(doubleSkillValue(param));
     },
     action_half_skill_value: (param) => { // param: key
-      dispatch(setSkill({ skillKey: param, value: Math.floor(characterStore.skills[param].value / 2) }));
+      dispatch(halfSkillValue(param));
     },
     action_dice_message: (param) => { // param: { title, num, dice, bonus, results, shouldPlaySound, alterNumDice }
       showDiceToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
@@ -226,18 +163,18 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       showToast(param);
     },
     action_set_char_related_values: () => {
-      dispatch(initSkill({ skillKey: "dodge", value: Math.floor(characterStore.chars.DEX.value / 2) }));
-      dispatch(initSkill({ skillKey: "lang_own", value: characterStore.chars.EDU.value }));
+      dispatch(initSkill({ skillKey: "dodge", value: Math.floor(charsStore.DEX.value / 2) }));
+      dispatch(initSkill({ skillKey: "lang_own", value: charsStore.EDU.value }));
     },
     action_initial_san_and_mp: () => {
-      dispatch(initAttr({ attrKey: "San", value: characterStore.chars.POW.value }));
-      dispatch(initAttr({ attrKey: "MP", value: Math.floor(characterStore.chars.POW.value / 5) }));
+      dispatch(initAttr({ attrKey: "San", value: charsStore.POW.value }));
+      dispatch(initAttr({ attrKey: "MP", value: Math.floor(charsStore.POW.value / 5) }));
       setHighlight("San", "value");
       setHighlight("MP", "value");
       setHighlight("POW", "value");
     },
     action_initial_hp_and_reset_luck: () => {
-      dispatch(initAttr({ attrKey: "HP", value: Math.floor((characterStore.chars.SIZ.value + characterStore.chars.CON.value) / 10) }));
+      dispatch(initAttr({ attrKey: "HP", value: Math.floor((charsStore.SIZ.value + charsStore.CON.value) / 10) }));
       dispatch(setAttr({ attrKey: "Luck", value: "" }));
       setHighlight("HP", "value");
       setHighlight("Luck", "value");
@@ -257,6 +194,14 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     },
   }
 
+  const setHighlight = (key, level, color) => {
+    if (level === "none") {
+      dispatch(removeHighlight(key));
+    } else {
+      dispatch(addOrUpdateHighlight({ key, level, color }));
+    }
+  }
+
   function showDiceToast(title, num, dice, bonus, results, shouldPlaySound, alterNumDice = undefined) {
     let subtitle = `${num}D${dice}`;
     if (bonus && bonus > 0) {
@@ -273,56 +218,78 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       num > 1 || dice === 100 ? playSound("dice") : playSound("one-die");
     }
   }
-  
-  function onNextChapter(nextKey, historyItem, addToHistory) {
-    console.log(`Game - nextChapter: c${chapterKey} => c${nextKey}, addToHistory: ${addToHistory}, historyItem: ${JSON.stringify(historyItem)}`);
-      if (addToHistory) {
-        const historyItem = {};
-        historyItem.chapterKey = chapterKey;
-        historyItem.states = stateSnapshotRef.current;
-        dispatch(addHistory(historyItem));
-      //   historyItem.states = stateSnapshotRef.current;
-      //   if (historyIndex !== -1) {
-      //     setChapterHistory([...chapterHistory.slice(0, historyIndex), historyItem]);
-      //     setHistoryIndex(-1);
-      //   } else {
-      //     setChapterHistory([...chapterHistory, historyItem]);
-      //   }
-      }
+
+  function onChapterAction(action, param) {
+    console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
+    action in actions && actions[action](param);
+  }
+
+  function onCharacterAction(action, param) {
+    console.log(`Game - onCharacterAction: ${action} with params: ${JSON.stringify(param)}`);
+    action in actions && actions[action](param);
+  }
+
+  function onUpdateSnapshot() {
+    dispatch(createSnapshotThunk());
+  }
+
+  function onHistorySelected(historyIndex) {
+    console.log(`Game - onJumpToChapter: historyIndex: ${historyIndex}`);
+    loadHistoryStates(historyIndex);
+    dispatch(setHistoryIndex(historyIndex));
+  }
+
+  function onNextChapter(nextKey, historyItem) {
+    console.log(`Game - nextChapter: c${chapterKey} => c${nextKey}, historyItem: ${JSON.stringify(historyItem)}`);
+    if (historyItem) {
+      dispatch(addHistory({ ...historyItem, states: stateSnapshotRef.current }));
+    }
     setIsReloading(false);
     setChapterKey(nextKey);
-    // if (!isChapterVisited(nextKey)) {
-    //   markChapterVisited(nextKey);
-    // }
+
     const chapterVisitsCopy = [...chapterVisits];
     chapterVisitsCopy[nextKey] = true
     setChapterVisits(chapterVisitsCopy);
-  }  
-
-  
-
-  function loadHistoryStates(historyIndex) {
-    // const states = chapterHistory[historyIndex].states;
-
-    // const skillSnapshot = findLastSkillSnapshot(historyIndex + 1);
-    // console.log(`load chrpterKey: ${states.chapterKey}, states.skillHistoryIndex: ${states.skillHistoryIndex}, initSkills: ${JSON.stringify(initSkills)}`);
-    // console.log(`load skillSnapshot: ${JSON.stringify(skillSnapshot)}`);
-    // setSkillsWithSnapshot(skillSnapshot, states.checkedSkills);
-
-    // setFlags({ ...initFlags, ...states.flags });
-    // setAttributes(states.attributes);
-    // setOccupation({ name: states.occupationName });
-    // setInfo(states.info);
-    // setMapEnabled(states.mapEnabled);
-
-    // setIsReloading(true);
-    // setChapterKey(states.chapterKey);
   }
 
-  // function findLastSkillSnapshot(historyItemIndex) {
-    // const lastItem = chapterHistory.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states && historyItem.states.skills);
-    // return lastItem ? lastItem.states.skills : {};
-  // }
+  const createSnapshotThunk = () => (dispatch, getState) => {
+    const state = getState();
+    stateSnapshotRef.current = {
+      flags: snapshotFlag(state.flag),
+      attrs: snapshotAttrs(state.character),
+      occupationName: state.character.occupation.name,
+      checkedSkills: [...state.character.checkedSkills],
+      // showCharacter,
+      mapEnabled,
+    };
+
+    const skillSnapshot = snapshotUpdatedSkills(state.character);
+    const lastSkillSnapshot = latestSkillSnapshot(state.history.index);
+    if (JSON.stringify(skillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
+      stateSnapshotRef.current.skills = skillSnapshot;
+    }
+  }
+
+  function loadHistoryStates(historyIndex) {
+    const historyItem = historyStore.items[historyIndex];
+    dispatch(setFlagWithSnapshot(historyItem.states.flags));
+    dispatch(setAttrWithSnapshot(historyItem.states.attrs));
+    dispatch(setOccupationName(historyItem.states.occupationName));
+    dispatch(checkSkillBoxWithSnapshot(historyItem.states.checkedSkills));
+
+    const skillSnapshot = latestSkillSnapshot(historyIndex + 1);
+    dispatch(setSkillWithSnapshot(skillSnapshot));
+
+    setMapEnabled(historyItem.states.mapEnabled);
+
+    setIsReloading(true);
+    setChapterKey(historyItem.chapterKey);
+  }
+
+  function latestSkillSnapshot(historyItemIndex) {
+    const lastItem = historyStore.items.slice(0, historyItemIndex).findLast((historyItem) => historyItem.states.skills);
+    return lastItem ? lastItem.states.skills : {};
+  }
 
   function save(saveKey) {
     const saveData = {

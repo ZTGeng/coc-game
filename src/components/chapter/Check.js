@@ -233,11 +233,19 @@ function RollCheck({ check, onAction, rollFlags, setRollFlags }) {
     }
   }
 
-  const checkLevelText = autoLang(checkLevelTexts);
-  const title = autoLang({
-    zh: `${autoLang(skillName)}检定 - ${checkLevelText[check.level]} ${bonus > 0 ? `- 奖励骰 x ${bonus}` : (bonus < 0 ? `- 惩罚骰 x ${-bonus}` : "")}`,
-    en: `${autoLang(skillName)} Roll - ${checkLevelText[check.level]} ${bonus > 0 ? `- Bonus Die x ${bonus}` : (bonus < 0 ? `- Penalty Die x ${-bonus}` : "")}`
-  });
+  const title = `${
+    autoLang(skillName)
+  }${
+    autoLang(utils.TEXTS.rollSuffix)
+  } - ${
+    autoLang(checkLevelTexts)[check.level]
+  }${
+    bonus === 0
+      ? ""
+      : (bonus > 0
+        ? ` - ${autoLang(utils.TEXTS.bonusDie)} x ${bonus}`
+        : ` - ${autoLang(utils.TEXTS.penaltyDie)} x ${-bonus}`)
+  }`;
   const showCheckButton = !rollFlags.result || (rollFlags.result === "fail" && check.allowPush && !rollFlags.isPushed);
 
   return (

@@ -96,6 +96,13 @@
     {
       "action": "action_check_in_skill_box",
       "param": "track"
+    },
+    {
+      "action": "action_set_flag",
+      "param": {
+        "key": "flag_tracked_figure",
+        "value": true
+      }
     }
   ]
 }

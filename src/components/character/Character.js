@@ -116,7 +116,7 @@ function Attributes({}) {
 function Weapons({}) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
-  const skillStore = useSelector(state => state.character.skills);
+  const fightingValue = useSelector(state => state.character.skills.fighting.value);
   const flagCheck = useFlagCheck();
   const hasKnife = flagCheck("flag_bought_knife");
 
@@ -133,9 +133,9 @@ function Weapons({}) {
   const knifeRow = (
     <tr className="table-active">
       <td className="pb-0">{ autoLang(characterSheet.weapons.knife.name) }</td>
-      <td className="pb-0">{ skillStore.fighting.value }</td>
-      <td className="pb-0">{ Math.floor(skillStore.fighting.value / 2) }</td>
-      <td className="pb-0">{ Math.floor(skillStore.fighting.value / 5) }</td>
+      <td className="pb-0">{ fightingValue }</td>
+      <td className="pb-0">{ Math.floor(fightingValue / 2) }</td>
+      <td className="pb-0">{ Math.floor(fightingValue / 5) }</td>
       <td className="pb-0">{ autoLang(characterSheet.weapons.knife.damage) }</td>
     </tr>
   );
@@ -159,9 +159,9 @@ function Weapons({}) {
           <tbody>
             <tr className={ hasKnife ? "" : "table-active"}>
               <td className="pb-0">{ autoLang(characterSheet.weapons.unarmed.name) }</td>
-              <td className="pb-0">{ skillStore.fighting.value }</td>
-              <td className="pb-0">{ Math.floor(skillStore.fighting.value / 2) }</td>
-              <td className="pb-0">{ Math.floor(skillStore.fighting.value / 5) }</td>
+              <td className="pb-0">{ fightingValue }</td>
+              <td className="pb-0">{ Math.floor(fightingValue / 2) }</td>
+              <td className="pb-0">{ Math.floor(fightingValue / 5) }</td>
               <td className="pb-0">{ autoLang(characterSheet.weapons.unarmed.damage) }</td>
             </tr>
             { hasKnife ? knifeRow : blankRow }
@@ -178,7 +178,7 @@ function CombatData({}) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const charStore = useSelector(state => state.character.chars);
-  const skillStore = useSelector(state => state.character.skills);
+  const dodgeValue = useSelector(state => state.character.skills.dodge.value);
   const [damageBonus, build] = !charStore.SIZ.value || !charStore.STR.value
     ? ["", ""]
     : [
@@ -224,15 +224,15 @@ function CombatData({}) {
                   { autoLang(characterSheet.skills.dodge.name) }
                 </th>
                 <td rowSpan="2" className="border border-end-0 p-2" style={{ width: "2rem" }}>
-                  { skillStore.dodge.value }
+                  { dodgeValue }
                 </td>
                 <td className="border border-bottom-0 small px-2 py-0" style={{ width: "2rem", height: "1.2rem" }}>
-                  { skillStore.dodge.value && Math.floor(skillStore.dodge.value / 2) }
+                  { dodgeValue && Math.floor(dodgeValue / 2) }
                 </td>
               </tr>
               <tr>
                 <td className="border small px-2 py-0" style={{ width: "2rem", height: "1.2rem" }}>
-                  { skillStore.dodge.value && Math.floor(skillStore.dodge.value / 5) }
+                  { dodgeValue && Math.floor(dodgeValue / 5) }
                 </td>
               </tr>
             </tbody>

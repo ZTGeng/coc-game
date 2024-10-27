@@ -4,19 +4,23 @@ const historySlice = createSlice({
   name: 'history',
   initialState: {
     items: [],
-    index: -1,
+    index: 0,
   },
   reducers: {
     addHistory(state, action) { // action: { type: 'history/addHistory', payload: { chapterKey, flags, attrs, skills, showCharacter, mapEnabled } }
-      state.items = state.items.slice(0, state.index + 1);
+      state.items = state.items.slice(0, state.index);
       state.items.push(action.payload);
-      state.index = state.items.length - 1;
+      state.index = state.items.length;
     },
     setHistoryIndex(state, action) { // action: { type: 'history/setIndex', payload: index }
       state.index = action.payload;
     },
+    clearHistory(state) { // action: { type: 'history/clear' }
+      state.items = [];
+      state.index = 0;
+    },
   },
 });
 
-export const { addHistory, setHistoryIndex } = historySlice.actions;
+export const { addHistory, setHistoryIndex, clearHistory } = historySlice.actions;
 export default historySlice.reducer;

@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext, CharacterSheetContext } from '../../App';
 import { useFlagCheck } from "../../store/slices/flagSlice";
-import { resetSkill, setSkill, setSkillOccupation, setSkillHobby, setSkillCustomName } from "../../store/slices/characterSlice";
+import { resetSkill, setSkillValue, setSkillOccupation, setSkillHobby } from "../../store/slices/characterSlice";
 import SkillCell from "./SkillCell";
 
 export const artSkills = ["photography", "custom_art1", "custom_art2"];
@@ -51,7 +51,7 @@ export default function Skills({}) {
 }
 
 
-function SkillsEditableForOccupation({}) {
+function SkillsEditableForOccupation() {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const skillStore = useSelector(state => state.character.skills);
@@ -128,7 +128,7 @@ function SkillsEditableForOccupation({}) {
     setLockUnused(!lockUnused);
   }
 
-  function onValueSelected(key, newValue, fromBase, toBase, customName) {
+  function onValueSelected(key, newValue, fromBase, toBase) {
     console.log(`SkillsEditableForOccupation - onValueSelected: ${key} ${newValue} fromBase: ${fromBase} toBase: ${toBase}`);
 
     if (fromBase && toBase) {
@@ -144,8 +144,8 @@ function SkillsEditableForOccupation({}) {
         console.error(`SkillsEditableForOccupation - ${key} desired value ${newValue} is not a valid value in availableValues ${availableValues} - case 1`);
       }
 
-      dispatch(setSkill({ skillKey: key, value: newValue }));
-      customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
+      dispatch(setSkillValue({ skillKey: key, value: newValue }));
+      // customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
       return;
     }
 
@@ -162,12 +162,7 @@ function SkillsEditableForOccupation({}) {
     }
 
     dispatch(setSkillOccupation(key));
-    dispatch(setSkill({ skillKey: key, value: newValue }));
-    customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
-  }
-
-  function onCustomName(key, customName) {
-    dispatch(setSkillCustomName({ skillKey: key, customName }));
+    dispatch(setSkillValue({ skillKey: key, value: newValue }));
   }
 
   const cellType = Object.keys(skillStore).reduce((acc, key) => {
@@ -198,12 +193,12 @@ function SkillsEditableForOccupation({}) {
           </button>
         </div>
       </div>
-      <SkillsTable {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+      <SkillsTable {...{ cellType, isForHobby, availableValues, onValueSelected }} />
     </>
   );
 }
 
-function SkillsEditableForHobby({}) {
+function SkillsEditableForHobby() {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const skillStore = useSelector(state => state.character.skills);
@@ -234,7 +229,7 @@ function SkillsEditableForHobby({}) {
     setLockUnused(!lockUnused);
   }
 
-  function onValueSelected(key, newValue, fromBase, toBase, customName) {
+  function onValueSelected(key, newValue, fromBase, toBase) {
     if (fromBase && toBase) {
       console.error(`SkillsEditableForHobby - Skill ${key} should not trigger onValueSelevted with the same value`);
       return;
@@ -258,14 +253,10 @@ function SkillsEditableForHobby({}) {
     }
 
     selectedSkills.push(key);
-    dispatch(setSkill({ skillKey: key, value: newValue }));
+    dispatch(setSkillValue({ skillKey: key, value: newValue }));
     dispatch(setSkillHobby(key));
-    customName && dispatch(setSkillCustomName({ skillKey: key, customName }));
   }
 
-  function onCustomName(key, customName) {
-    dispatch(setSkillCustomName({ skillKey: key, customName }));
-  }
 
   const cellType = Object.keys(skillStore).reduce((acc, key) => {
     // On editable page when lockUnused is true, the unused skills are not editable
@@ -287,7 +278,7 @@ function SkillsEditableForHobby({}) {
           </button>
         </div>
       </div>
-      <SkillsTable {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+      <SkillsTable {...{ cellType, isForHobby, availableValues, onValueSelected }} />
     </>
   );
 }
@@ -347,7 +338,7 @@ function OccupationSkill({ skillKey, availableSkills }) {
   return <div className={ "ms-3" + (selected ? " text-body-tertiary" : "") }>{ autoLang(text) }</div>;
 }
 
-function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected, onCustomName }) {
+function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected }) {
   return (
     <div className="card-body">
       <div className="row">
@@ -358,8 +349,8 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected, o
           <SkillCell skillKey={ "archaeology" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_art" } />
           <SkillCell skillKey={ "photography" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_art1" }      {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_art2" }      {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_art1" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_art2" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "charm" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "climb" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "credit" }           {...{ cellType, isForHobby, availableValues, onValueSelected }} />
@@ -372,21 +363,21 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected, o
         <div className="col-xl-3 col-6 order-3 order-xl-2 vstack gap-1 px-1">
           <SkillCell skillKey={ "fast_talk" }        {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "fighting" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_fight1" }    {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_fight2" }    {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_fight1" }    {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_fight2" }    {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "firearms_handgun" } {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "firearms_rifle" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_firearms" }  {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_firearms" }  {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "first_aid" }        {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "history" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "intimidate" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "jump" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_lang" } />
           <SkillCell skillKey={ "latin" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_lang1" }     {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_lang2" }     {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_lang1" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_lang2" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_lang_own" } />
-          <SkillCell skillKey={ "lang_own" }         {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "lang_own" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
         </div>
         <div className="col-xl-3 col-6 order-2 order-xl-3 vstack gap-1 px-1">
           <SkillCell skillKey={ "law" }              {...{ cellType, isForHobby, availableValues, onValueSelected }} />
@@ -401,7 +392,7 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected, o
           <SkillCell skillKey={ "op_machine" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "persuade" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_pilot" } />
-          <SkillCell skillKey={ "custom_pilot" }     {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_pilot" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "psychology" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "psychoanalysis" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "ride" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
@@ -410,20 +401,20 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected, o
           <SkillCell skillKey={ "group_sci" } />
           <SkillCell skillKey={ "biology" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "pharmacy" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_sci" }       {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_sci" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "sleight" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "spot" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "stealth" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_survival" } />
-          <SkillCell skillKey={ "custom_survival" }  {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_survival" }  {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "swim" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "throw" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "track" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_unused1" }   {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_unused2" }   {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_unused3" }   {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_unused4" }   {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
-          <SkillCell skillKey={ "custom_unused5" }   {...{ cellType, isForHobby, availableValues, onValueSelected, onCustomName }} />
+          <SkillCell skillKey={ "custom_unused1" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_unused2" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_unused3" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_unused4" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_unused5" }   {...{ cellType, isForHobby, availableValues, onValueSelected }} />
         </div>
       </div>
     </div>

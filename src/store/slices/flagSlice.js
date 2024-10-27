@@ -1,51 +1,56 @@
 import { createContext, useContext } from 'react';
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  flag_characteristics_editable: false,
+  flag_occupation_skills_editable: false,
+  flag_hobby_skills_editable: false,
+
+  flag_bought_knife: false,
+  flag_tracked_figure: false,
+  flag_found_cliff_ladder: false,
+  flag_meet_arbogast: false,
+  flag_involved_fighting: false,
+  flag_searched_book_shelf: false,
+  flag_learned_magic_arbogast: false,
+  flag_learned_magic_summon: false,
+  flag_learned_magic_order: false,
+  flag_found_poem_book: false,
+
+  flag_major_wound: false,
+  flag_penalty_die: false,
+
+  flag_c25_option_selected_0: false,
+  flag_c25_option_selected_1: false,
+  flag_c25_option_selected_2: false,
+  flag_c25_option_selected_3: false,
+  flag_c25_option_selected_4: false,
+  flag_c25_option_selected_5: false,
+
+  flag_c120_option_selected_0: false,
+  flag_c120_option_selected_1: false,
+  flag_c120_option_selected_2: false,
+  flag_c120_option_selected_3: false,
+};
+
 const flagSlice = createSlice({
   name: 'flag',
-  initialState: {
-    flag_characteristics_editable: false,
-    flag_occupation_skills_editable: false,
-    flag_hobby_skills_editable: false,
-
-    flag_bought_knife: false,
-    flag_found_cliff_ladder: false,
-    flag_meet_arbogast: false,
-    flag_involved_fighting: false,
-    flag_searched_book_shelf: false,
-    flag_learned_magic_arbogast: false,
-    flag_learned_magic_summon: false,
-    flag_learned_magic_order: false,
-    flag_found_poem_book: false,
-
-    flag_major_wound: false,
-    flag_penalty_die: false,
-
-    flag_c25_option_selected_0: false,
-    flag_c25_option_selected_1: false,
-    flag_c25_option_selected_2: false,
-    flag_c25_option_selected_3: false,
-    flag_c25_option_selected_4: false,
-    flag_c25_option_selected_5: false,
-
-    flag_c120_option_selected_0: false,
-    flag_c120_option_selected_1: false,
-    flag_c120_option_selected_2: false,
-    flag_c120_option_selected_3: false,
-  },
+  initialState,
   reducers: {
     setFlag(state, action) { // action: { type: 'flag/setFlag', payload: { flag: 'flag_name', value: true/false } }
       state[action.payload.flag] = action.payload.value;
     },
     resetFlag(state, action) { // action: { type: 'flag/reset' }
-      Object.keys(state).forEach(key => {
-        state[key] = false;
-      });
+      Object.keys(state).forEach(flag => state[flag] = initialState[flag]);
     },
+    setFlagWithSnapshot(state, action) { // action: { type: 'flag/setFlagWithSnapshot', payload: { 'flag_name1': true/false, ...] }
+      Object.keys(state).forEach(flag => state[flag] = initialState[flag]);
+      Object.keys(action.payload).forEach(flag => state[flag] = action.payload[flag]);
+    }
   },
 });
 
-export const { setFlag, resetFlag } = flagSlice.actions;
+export const { setFlag, resetFlag, setFlagWithSnapshot } = flagSlice.actions;
 export default flagSlice.reducer;
 
 export const FlagCheckContext = createContext(() => { throw new Error("FlagCheckContext not found"); });
@@ -82,3 +87,10 @@ export const createFlagCheck = (localFlagFunc, parentCheckFlag) => {
   }
   return checkFlagImpl;
 };
+
+export const snapshotFlag = (state) => {
+  return Object.keys(state).filter(flag => state[flag] !== initialState[flag]).reduce((acc, flag) => {
+    acc[flag] = state[flag];
+    return acc;
+  }, {});
+}

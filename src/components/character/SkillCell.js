@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
-import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext, CharacterSheetContext } from '../../App';
+import { setSkillCustomName } from "../../store/slices/characterSlice";
 import { findHighlight } from '../../store/slices/highlightSlice';
 
-export default function SkillCell({ skillKey, cellType, isForHobby, availableValues, onValueSelected, onCustomName }) {
+export default function SkillCell({ skillKey, cellType, isForHobby, availableValues, onValueSelected }) {
   const characterSheet = useContext(CharacterSheetContext);
   const skillStore = useSelector(state => state.character.skills);
 
@@ -24,7 +25,7 @@ export default function SkillCell({ skillKey, cellType, isForHobby, availableVal
   }
   
   const isClickable = cellType[skillKey] && cellType[skillKey].isClickable;
-  return <EditableSkillCell {...{ skillKey, skillUI, skill, isClickable, isForHobby, availableValues, onValueSelected, onCustomName }} />;
+  return <EditableSkillCell {...{ skillKey, skillUI, skill, isClickable, isForHobby, availableValues, onValueSelected }} />;
 }
 
 function GroupSkillCell({ skillUI }) {
@@ -37,15 +38,20 @@ function GroupSkillCell({ skillUI }) {
   );
 }
 
-function NameThTag({ skillUI, skill, isDisabled, isEditable, latestCustomName, onCustomNameChange }) {
+function NameThTag({ skillKey, isDisabled, isEditable }) {
   const { autoLang } = useContext(LanguageContext);
+  const skillUI = useContext(CharacterSheetContext).skills[skillKey];
+  const customName = useSelector(state => state.character.skillCustomNames[skillKey]);
+  const dispatch = useDispatch();
+
   const nameString = skillUI.name ? autoLang(skillUI.name) : "";
+  const className = "text-start border-0 lh-1 px-1 py-0" + (isDisabled ? " text-body-tertiary" : "") + (skillUI.line ? " fw-normal" : "");
   if (nameString) {
     const nameWidth = Math.max(...nameString.split(" ").map(word => word.length)); // Length of the longest word
     return (
       <th rowSpan="2" 
           scope="row"
-          className={"text-start border-0 lh-1 px-1 py-0" + (isDisabled ? " text-body-tertiary" : "") + (skillUI.line ? " fw-normal" : "")}
+          className={className}
           style={{ fontSize: nameWidth > 14 ? "0.6rem" : (nameWidth > 10 ? "0.65rem" : "0.75rem"), width: "5rem", height: "2rem" }}>
         { nameString }
         { skillUI.line ? <hr className="m-0 mt-1" /> : null }
@@ -55,18 +61,21 @@ function NameThTag({ skillUI, skill, isDisabled, isEditable, latestCustomName, o
   return (
     <th rowSpan="2" 
         scope="row"
-        className={"text-start border-0 lh-1 px-1 py-0" + (isDisabled ? " text-body-tertiary" : "") + (skillUI.line ? " fw-normal" : "")}
+        className={className}
         style={{ fontSize: "0.75rem", width: "5rem", height: "2rem" }}>
       { isEditable 
-        ? <input type="text" className="border-0 p-0" style={{ width: "95%" }} value={latestCustomName} onChange={e => onCustomNameChange(e.target.value)} /> 
-        : skill.customName || <span>&nbsp;</span> }
+        ? <input type="text"
+                 className="border-0 p-0"
+                 style={{ width: "95%" }}
+                 value={customName}
+                 onChange={e => dispatch(setSkillCustomName({ skillKey, customName: e.target.value}))} /> 
+        : customName || <span>&nbsp;</span> }
       { skillUI.line ? <hr className="m-0 mt-1" /> : null }
     </th>
   );  
 }
 
 function DisabledSkillCell({ skillKey }) {
-  const skill = useSelector(state => state.character.skills[skillKey]);
   const characterSheet = useContext(CharacterSheetContext);
   const skillUI = characterSheet.skills[skillKey];
   const isDisabled = true;
@@ -78,7 +87,7 @@ function DisabledSkillCell({ skillKey }) {
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
             <input type="checkbox" className={ skillUI.noBox ? "invisible" : "" } disabled="disabled"/>
           </td> 
-            <NameThTag {...{ skillUI, skill, isDisabled, isEditable }} />
+            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
           <td rowSpan="2" className="table-light border border-end-0 p-0" style={{ width: "1.2rem" }}></td>
           <td className="table-light border border-bottom-0 small p-0" style={{ width: "1.2rem", height: "1rem" }}></td>
         </tr>
@@ -92,6 +101,7 @@ function DisabledSkillCell({ skillKey }) {
 
 function PlainSkillCell({ skillKey }) {
   const skill = useSelector(state => state.character.skills[skillKey]);
+  const isChecked = useSelector(state => state.character.checkedSkills.includes(skillKey));
   const characterSheet = useContext(CharacterSheetContext);
   const skillUI = characterSheet.skills[skillKey];
   const highlightStore = useSelector(state => state.highlight);
@@ -112,9 +122,9 @@ function PlainSkillCell({ skillKey }) {
       <tbody>
         <tr>
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
-            <input type="checkbox" className={skillUI.noBox ? "invisible" : ""} disabled="disabled" checked={skill.checked} />
+            <input type="checkbox" className={skillUI.noBox ? "invisible" : ""} disabled="disabled" checked={isChecked} />
           </td>
-            <NameThTag {...{ skillUI, skill, isDisabled, isEditable }} />
+            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
           <td rowSpan="2" className={"border border-end-0 p-0" + getHighlightClassName("value")} style={{ fontSize: "0.75rem", width: "1.2rem" }}>{skill.value}</td>
           <td className={"border border-bottom-0 small p-0" + getHighlightClassName("half")} style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 2)}</td>
         </tr>
@@ -126,11 +136,11 @@ function PlainSkillCell({ skillKey }) {
   );
 }
 
-function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues, onValueSelected, onCustomName }) {
+function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues, onValueSelected }) {
   const skill = useSelector(state => state.character.skills[skillKey]);
+  const isChecked = useSelector(state => state.character.checkedSkills.includes(skillKey));
   const characterSheet = useContext(CharacterSheetContext);
   const skillUI = characterSheet.skills[skillKey];
-  const [latestCustomName, setLatestCustomName] = useState(skill.customName || "");
   const isDisabled = false;
   const isEditable = true;
   const isSelectedValue = skill.occupation || skill.hobby;
@@ -154,14 +164,7 @@ function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues,
     if (!fromBase && !toBase && skill.value === newValue) {
       return;
     }
-    onValueSelected(skillKey, newValue, fromBase, toBase, latestCustomName);
-  }
-
-  function onCustomNameChange(customName) {
-    setLatestCustomName(customName);
-    if (onCustomName && (skill.occupation || skill.hobby)) {
-      onCustomName(skillKey, customName);
-    }
+    onValueSelected(skillKey, newValue, fromBase, toBase);
   }
 
   return (
@@ -169,9 +172,9 @@ function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues,
       <tbody>
         <tr>
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
-            <input type="checkbox" className={ skillUI.noBox ? "invisible" : "" } disabled="disabled" checked={ skill.checked }/>
+            <input type="checkbox" className={ skillUI.noBox ? "invisible" : "" } disabled="disabled" checked={isChecked}/>
           </td>
-            <NameThTag {...{ skillUI, skill, isDisabled, isEditable, latestCustomName, onCustomNameChange }} />
+            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
           <td rowSpan="2" className={"border p-0" + (isSelectedValue ? " bg-warning" : "")} style={{ fontSize: "0.75rem", width: "2.35rem" }}>
             <select className={"border-0" + (isSelectedValue ? " bg-warning" : "")} value={skill.value} onChange={onSelectChange} disabled={!isClickable}>
               { values.map((v, i) => <option className="bg-light" key={i} value={v}>{ v }</option>) }

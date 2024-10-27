@@ -19,7 +19,7 @@
         "en": "You wish to investigate further the results of last night",
         "zh": "你想进一步勘查昨晚遭遇的后果"
       },
-      "show": "flag_track_skill_box_checked",
+      "show": "flag_tracked_figure",
       "goto": 178
     },
     {
@@ -28,7 +28,7 @@
         "en": "You do not wish to investigate further, continue",
         "zh": "你不想勘察，继续"
       },
-      "show": "flag_track_skill_box_checked",
+      "show": "flag_tracked_figure",
       "goto": 192
     },
     {
@@ -37,7 +37,7 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "!flag_track_skill_box_checked",
+      "show": "!flag_tracked_figure",
       "goto": 192
     }
   ]
