@@ -39,6 +39,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const [chapterKey, setChapterKey] = useState(0);
+  const [committedMP, setCommittedMP] = useState(0);
   const [chapterVisits, setChapterVisits] = useState(initChapterVisits);
   const [endings, setEndings] = useState([]);
   const [isReloading, setIsReloading] = useState(false);
@@ -76,11 +77,66 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       return occupationSkillsNum < occupationSkillsMaxNum;
     },
     "flag_skills_hobby_unfinished": () => Object.keys(skillsStore).filter(skillKey => skillsStore[skillKey].hobby).length < 4,
-    "flag_siz_greater_than_40": () => charsStore.SIZ.value > 40,
-    "flag_dex_greater_than_siz": () => charsStore.DEX.value > charsStore.SIZ.value,
-    "flag_luck_unfinished": () => attrsStore.Luck.value === "",
-    "flag_hp_zero": () => attrsStore.HP.value <= 0,
+    // "flag_hp_zero": () => attrsStore.HP.value <= 0,
+    "flag_key_less_than_value": (param) => {
+      const key = param.key;
+      const value = param.value;
+      if (key === "committedMP") return committedMP < value;
+      const item = findItem(key);
+      if (item) return item.value < value;
+      console.error(`Game - flag_key_less_than_value: key ${key} not found`);
+      return false;
+    },
+    "flag_key_greater_than_value": (param) => {
+      const key = param.key;
+      const value = param.value;
+      if (key === "committedMP") return committedMP > value;
+      const item = findItem(key);
+      if (item) return item.value > value;
+      console.error(`Game - flag_key_greater_than_value: key ${key} not found`);
+      return false;
+    },
+    "flag_key_equal_to_value": (param) => {
+      const key = param.key;
+      const value = param.value;
+      if (key === "committedMP") return committedMP === value;
+      const item = findItem(key);
+      if (item) return item.value === value;
+      console.error(`Game - flag_key_less_than_value: key ${key} not found`);
+      return false;
+    },
+    "flag_key1_greater_than_key2": (param) => {
+      const key1 = param.key1;
+      const key2 = param.key2;
+      let value1, value2;
+      if (key1 === "committedMP") {
+        value1 = committedMP;
+      } else {
+        const item1 = findItem(key1);
+        if (item1) value1 = item1.value;
+        else console.error(`Game - flag_key1_greater_than_key2: key ${key1} not found`);
+      }
+      if (key2 === "committedMP") {
+        value2 = committedMP;
+      } else {
+        const item2 = findItem(key2);
+        if (item2) value2 = item2.value;
+        else console.error(`Game - flag_key1_greater_than_key2: key ${key2} not found`);
+      }
+      return value1 > value2;
+    },
   };
+
+  function findItem(key) {
+    if (charsStore[key]) {
+      return charsStore[key];
+    } else if (attrsStore[key]) {
+      return attrsStore[key];
+    } else if (skillsStore[key]) {
+      return skillsStore[key];
+    }
+    return null;
+  }
 
   function checkFlagInStore(flag) {
     if (flag in flagStore) {
@@ -199,6 +255,26 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action_enable_map: () => {
       setMapEnabled(true);
     },
+    action_commit_mp: (param) => { // param: Int
+      if (attrsStore.MP.value >= param) {
+        dispatch(setAttr({ attrKey: "MP", value: attrsStore.MP.value - param }));
+        setHighlight("MP", "value");
+      } else {
+        const hpToUse = param - attrsStore.MP.value;
+        if (attrsStore.HP.value < hpToUse) {
+          console.error(`Game - action_commit_mp: HP not enough to commit ${param} MP`);
+          param = attrsStore.HP.value;
+        }
+        dispatch(setAttr({ attrKey: "MP", value: 0 }));
+        dispatch(setAttr({ attrKey: "HP", value: attrsStore.HP.value - hpToUse }));
+        setHighlight("MP", "value");
+        setHighlight("HP", "value", "danger");
+      }
+      setCommittedMP(committedMP + param);
+    },
+    action_clear_committed_mp: () => {
+      setCommittedMP(0);
+    }
   }
 
   const setHighlight = (key, level, color) => {
@@ -269,6 +345,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const skillSnapshot = latestSkillSnapshot(historyStore.items, historyIndex + 1);
     dispatch(setSkillWithSnapshot(skillSnapshot));
 
+    setCommittedMP(historyItem.states.committedMP);
     setMapEnabled(historyItem.states.mapEnabled);
 
     setIsReloading(true);
@@ -287,6 +364,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       attrs: snapshotAttrs(state.character),
       occupationName: state.character.occupation.name,
       checkedSkills: [...state.character.checkedSkills],
+      committedMP,
       mapEnabled,
     };
 
@@ -306,6 +384,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       history: state.history,
       chapterVisits: utils.booleanToInt32Array(chapterVisits),
       endings: [...endings],
+      committedMP,
       mapEnabled,
     }
     localStorage.setItem(saveKey, JSON.stringify(saveData));
@@ -321,6 +400,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         history: historyToLoad,
         chapterVisits: chapterVisitsToLoad,
         endings: endingsToLoad,
+        committedMP: committedMPToLoad,
         mapEnabled: mapEnabledToLoad,
       } = JSON.parse(saveData);
 
@@ -336,6 +416,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(restoreHistory(historyToLoad));
       setChapterVisits(utils.int32ToBooleanArray(chapterVisitsToLoad, 271));
       setEndings(endingsToLoad);
+      setCommittedMP(committedMPToLoad);
       setMapEnabled(mapEnabledToLoad);
 
       setIsReloading(true);
@@ -363,6 +444,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         <div id="chapter" className="col px-2">
           <Chapter {...{
             chapterKey,
+            committedMP,
             isReloading,
             onNextChapter,
             onUpdateSnapshot,

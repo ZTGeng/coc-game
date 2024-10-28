@@ -1,24 +1,53 @@
 {
   "key": 255,
+  "location": "beacon_center",
   "text": {
-    "en": [],
-    "zh": [
+    "en": [
       {
-        "content": "你的命令阻止了群星下落的步伐，它们停滞不前，在村庄上空光芒流转，然后次第开始飘升。你听到村民喘息、倒抽气的声音，突然间一股深深的悲伤袭上你心头。然而，火势丝毫不减，火焰吞噬了你的身体。"
-      },
-      {
-        "content": "你在灯塔上被烧死了。"
+        "content": "Your word arrests the stars in their descent and holds them, scintillating, above the village. Then, one by one, they lift and rise. You hear a gasp from the villagers, a communal intake of breath, and for a moment, a deep sadness descends upon you. Then the unrelenting flames cover your body."
       },
       {
         "tag": "info",
         "text": [
           {
+            "content": "You have burned to death in the Beacon!"
+          },
+          {
+            "content": "However, you did briefly reach beyond this Earth. Would you like to try again?"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你的命令阻止了群星下落的步伐，它们停滞不前，在村庄上空光芒流转，然后次第开始飘升。你听到村民喘息、倒抽气的声音，突然间一股深深的悲伤袭上你心头。然而，火势丝毫不减，火焰吞噬了你的身体。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在灯塔上被烧死了。"
+          },
+          {
             "content": "但是，你确实已经短暂触碰到了超越地球的力量。为何不重新尝试呢？"
           }
         ]
       },
-      "<h2>【剧终】</h2>"
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
   },
-  "options": []
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "burn"
+    }
+  ]
 }

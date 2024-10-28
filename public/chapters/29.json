@@ -33,7 +33,14 @@
     "type": "roll",
     "key": "DEX",
     "level": "value",
-    "show": "!flag_dex_greater_than_siz"
+    "show": {
+      "type": "not",
+      "flag": "flag_key1_greater_than_key2",
+      "param": {
+        "key1": "DEX",
+        "key2": "SIZ"
+      }
+    }
   },
   "options": [
     {
@@ -51,7 +58,13 @@
         "en": "Proceed directly",
         "zh": "直接前进"
       },
-      "show": "flag_dex_greater_than_siz",
+      "show": {
+        "flag": "flag_key1_greater_than_key2",
+        "param": {
+          "key1": "DEX",
+          "key2": "SIZ"
+        }
+      },
       "goto": 42
     },
     {
@@ -62,7 +75,14 @@
       },
       "show": [
         "flag_check_passed",
-        "!flag_dex_greater_than_siz"
+        {
+          "type": "not",
+          "flag": "flag_key1_greater_than_key2",
+          "param": {
+            "key1": "DEX",
+            "key2": "SIZ"
+          }
+        }
       ],
       "goto": 42
     },
@@ -74,7 +94,14 @@
       },
       "show": [
         "flag_check_failed",
-        "!flag_dex_greater_than_siz"
+        {
+          "type": "not",
+          "flag": "flag_key1_greater_than_key2",
+          "param": {
+            "key1": "DEX",
+            "key2": "SIZ"
+          }
+        }
       ],
       "goto": 36
     }

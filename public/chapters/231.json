@@ -1,7 +1,33 @@
 {
   "key": 231,
+  "location": "beacon_center",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "The smoke shifts for a moment and you see the villagers staring up at your immolation, cloaked and daubed with their ridiculous face paint. These people lured, tricked and murdered you. You send the stars to bring your wrath."
+      },
+      {
+        "content": "Suddenly there are among them a thousand points of light, illuminating them with celestial radiance, sparkling with the brilliance of distant suns. Their faces open in wonder, in delight, raising a hand to touch the lights—but everything the tiny lights touch, burns."
+      },
+      {
+        "content": "Horror sweeps through the crowd. They run, screaming, as their flesh is singed and stripped from their bones, carving trails of ash into the ground with their dying steps. Every last one of them burns. The pitiless stars move amongst them and leave none alive."
+      },
+      {
+        "content": "You shriek in pain as the fire consumes you. But you take one small satisfaction to the grave: Emberhead will never claim another victim."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have burned to death in the Beacon. But you took the entire village with you!"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
     "zh": [
       {
         "content": "烟雾飘动了一下，你看到村民们披着披风，脸上涂着荒诞的彩绘，眼睁睁看着你被牺牲。这是些诱骗你、玩弄你、谋杀你的小人。你命令群星送去你的愤怒。"
@@ -16,10 +42,24 @@
         "content": "火焰侵蚀着你的身体，你痛苦地颤抖。但你死之前至少做了件欣慰的小事：烬头村永远也不会烧死更多的受害者了。"
       },
       {
-        "content": "你在灯塔上被烧死了。但你用整个村子的人为你做了陪葬！"
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在灯塔上被烧死了。但你用整个村子的人为你做了陪葬！"
+          }
+        ]
       },
-      "<h2>【剧终】</h2>"
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
   },
-  "options": []
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "burn"
+    }
+  ]
 }

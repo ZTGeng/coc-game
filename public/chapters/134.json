@@ -25,7 +25,7 @@
                 "zh": "投掷3D6"
             }, 
             "action": "action_roll_luck_and_update_chapter", 
-            "show": "flag_luck_unfinished" ,
+            "show": { "flag": "flag_key_equal_to_value", "param": { "key": "Luck", "value": "" } },
             "param": {
                 "key": 134,
                 "text": {

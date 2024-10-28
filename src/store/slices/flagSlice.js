@@ -62,6 +62,8 @@ export const createFlagCheck = (localFlagFunc, parentCheckFlag) => {
         return condition.flags.every(flag => checkFlagImpl(flag));
       } else if (condition.type === "or") {
         return condition.flags.some(flag => checkFlagImpl(flag));
+      } else if (condition.type === "not") {
+        return !checkFlagImpl({ ...condition, type: undefined });
       } else if (condition.flag) {
         if (localFlagFunc && localFlagFunc[condition.flag]) {
           return localFlagFunc[condition.flag](condition.param);

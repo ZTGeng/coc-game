@@ -96,22 +96,42 @@ function InteractionButton({ interaction, onAction }) {
   )
 }
 
-function Interactions({ interactions, onAction }) {
+function CommittedMPButton({ interaction, committedMP, onAction }) {
+  const { autoLang } = useContext(LanguageContext);
+  const flagCheck = useFlagCheck();
+
+  return (
+    interaction.disabled && flagCheck(interaction.disabled)
+      ? <button className="btn btn-dark mx-2" disabled>{ autoLang(interaction.text) }<span className="badge text-bg-light ms-2">{ committedMP }</span></button>
+      : (<button className="btn btn-dark mx-2" onClick={() => { onAction(interaction.action, interaction.param) }}>
+        { autoLang(interaction.text) }
+        <span className="badge text-bg-light ms-2">{ committedMP }</span>
+      </button>)
+  )
+}
+
+function Interactions({ interactions, committedMP, onAction }) {
   const flagCheck = useFlagCheck();
   const interactionsToShow = interactions.filter(interaction => !interaction.show || flagCheck(interaction.show));
 
   return (
     interactionsToShow.length > 0 && (
       <div className="alert alert-dark">
-        <div className="d-flexr">
-          { interactionsToShow.map((interaction, i) => <InteractionButton key={i} {...{interaction, onAction}} />) }
+        <div className="d-flex">
+          {
+            interactionsToShow.map(
+              (interaction, i) => interaction.type === "magic"
+                ? <CommittedMPButton key={i} {...{interaction, committedMP, onAction}} />
+                : <InteractionButton key={i} {...{interaction, onAction}} />
+            )
+          }
         </div>
       </div>
     )
   );
 }
 
-export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction }) {
+export default function Chapter({ chapterKey, committedMP, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction }) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const [chapter, setChapter] = useState(null);
@@ -242,6 +262,35 @@ export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpda
         }
       }
     },
+    action_c198_spell_cast: (param) => {
+      const spellCheck = utils.roll(1, 100);
+      onChapterAction(
+        "action_dice_message", 
+        { 
+          title: `${Math.min(committedMP * 10, 95)}%${autoLang(utils.TEXTS.rollSuffix)}`,
+          num: 1, dice: 100, bonus: 0,
+          results: spellCheck,
+          shouldPlaySound: true
+        }
+      );
+      if (spellCheck[0] <= Math.min(committedMP * 10, 95)) {
+        const title = autoLang({ zh: "魔法施法", en: "Spell Casting" });
+        const text = autoLang({ zh: "魔法施法成功！", en: "Spell casting succeeds!" });
+        onChapterAction("action_message", { title: title, text: text, color: "success" });
+        setRollFlags({
+          diceNumber: spellCheck,
+          result: "pass",
+        });
+      } else {
+        const title = autoLang({ zh: "魔法施法", en: "Spell Casting" });
+        const text = autoLang({ zh: "魔法施法失败！", en: "Spell casting fails!" });
+        onChapterAction("action_message", { title: title, text: text, color: "danger" });
+        setRollFlags({
+          diceNumber: spellCheck,
+          result: "fail",
+        });
+      }
+    },
   }
 
   function onLeave(chapterJson) {
@@ -332,7 +381,7 @@ export default function Chapter({ chapterKey, isReloading, onNextChapter, onUpda
   return (
     <FlagCheckContext.Provider value={flagCheck}>
       <ChapterContent chapterText={chapter.text} />
-      {chapter.interactions && <Interactions interactions={chapter.interactions} onAction={onInteractionAction} />}
+      {chapter.interactions && <Interactions interactions={chapter.interactions} committedMP={committedMP} onAction={onInteractionAction} />}
       {chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ rollFlags, setRollFlags }} />}
       <br />
       <div className="px-2">

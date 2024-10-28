@@ -35,7 +35,7 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "!flag_siz_greater_than_40",
+      "show": { "type": "not", "flag": "flag_key_greater_than_value", "param": { "key": "SIZ", "value": 40 } },
       "goto": 23
     },
     {
@@ -44,7 +44,7 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "flag_siz_greater_than_40",
+      "show": { "flag": "flag_key_greater_than_value", "param": { "key": "SIZ", "value": 40 } },
       "goto": 38
     }
   ],

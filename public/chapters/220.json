@@ -1,24 +1,53 @@
 {
   "key": 220,
+  "location": "beacon_center",
   "text": {
-    "en": [],
-    "zh": [
+    "en": [
       {
-        "content": "你终于彻悟，你在地球上的存在只不过是个假象，因为你从来都是一颗星星；你隐藏身形行走在人群之中，收敛着自己的光和热，怕把他们统统烧焦。你微笑着直视天空。"
-      },
-      {
-        "content": "你在灯塔上被烧死了。"
+        "content": "You finally understand that your existence on Earth was a sham and you have been a star all along; hidden to walk among humans, holding back your radiance for fear of scorching them all where they stand. You smile and look to the sky."
       },
       {
         "tag": "info",
         "text": [
           {
+            "content": "You have burned to death in the Beacon!"
+          },
+          {
+            "content": "Why not try again? By making different choices you may be able to escape or outwit the people of Emberhead."
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你终于彻悟，你在地球上的存在只不过是个假象，因为你从来都是一颗星星；你隐藏身形行走在人群之中，收敛着自己的光和热，怕把他们统统烧焦。你微笑着直视天空。"
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在灯塔上被烧死了。"
+          },
+          {
             "content": "为何不重新尝试呢？选择不同的选项，你也许就能逃脱甚至智胜烬头村的村民了。"
           }
         ]
       },
-      "<h2>【剧终】</h2>"
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
   },
-  "options": []
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "burn"
+    }
+  ]
 }
