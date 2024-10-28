@@ -40,6 +40,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const characterSheet = useContext(CharacterSheetContext);
   const [chapterKey, setChapterKey] = useState(0);
   const [chapterVisits, setChapterVisits] = useState(initChapterVisits);
+  const [endings, setEndings] = useState([]);
   const [isReloading, setIsReloading] = useState(false);
   const flagStore = useSelector(state => state.flag);
   const charsStore = useSelector(state => state.character.chars);
@@ -94,6 +95,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     action_set_flag: (param) => { // param: { flag, value }
       console.log(`action_set_flag: ${param.flag} = ${param.value}`);
       dispatch(setFlag({ flag: param.flag, value: param.value }));
+    },
+    action_ending: (param) => { // param: endingKey
+      setEndings([...endings, param]);
     },
     action_show_character_sheet: (param) => { // param: true/false/undefined
       setShowCharacter(param !== false);
@@ -301,6 +305,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       character: snapshotCharacter(state.character),
       history: state.history,
       chapterVisits: utils.booleanToInt32Array(chapterVisits),
+      endings: [...endings],
       mapEnabled,
     }
     localStorage.setItem(saveKey, JSON.stringify(saveData));
@@ -315,6 +320,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         character: characterToLoad,
         history: historyToLoad,
         chapterVisits: chapterVisitsToLoad,
+        endings: endingsToLoad,
         mapEnabled: mapEnabledToLoad,
       } = JSON.parse(saveData);
 
@@ -329,6 +335,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       dispatch(restoreSkillCustomNames(characterToLoad.skillCustomNames));
       dispatch(restoreHistory(historyToLoad));
       setChapterVisits(utils.int32ToBooleanArray(chapterVisitsToLoad, 271));
+      setEndings(endingsToLoad);
       setMapEnabled(mapEnabledToLoad);
 
       setIsReloading(true);
@@ -369,7 +376,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         )}
       </div>
       <HistoryModal {...{ onHistorySelected }} />
-      <AchievementModal {...{ chapterVisits }} />
+      <AchievementModal {...{ chapterVisits, endings }} />
     </FlagCheckContext.Provider>
   )
 }

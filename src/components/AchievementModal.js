@@ -17,6 +17,68 @@ const trophyCollectionTitle = {
   en: "Trophy Collection",
   zh: "奖杯收集",
 };
+const endingItems = [
+  {
+    endingKey: "bear",
+    descText: {
+      en: "You were killed by a bear",
+      zh: "你被熊杀死了",
+    },
+    activeSrc: "images/ending-bear-active.png",
+    inactiveSrc: "images/ending-bear-inactive.png",
+  },
+  {
+    endingKey: "cliff",
+    descText: {
+      en: "You fell from the cliff and died",
+      zh: "你掉下悬崖摔死了",
+    },
+    activeSrc: "images/ending-cliff-active.png",
+    inactiveSrc: "images/ending-cliff-inactive.png",
+  },
+  {
+    endingKey: "collapse",
+    descText: {
+      en: "You were killed by a collapsing church roof",
+      zh: "你被坍塌的教堂屋顶砸死了",
+    },
+    activeSrc: "images/ending-collapse-active.png",
+    inactiveSrc: "images/ending-collapse-inactive.png",
+  },
+  {
+    endingKey: "burn",
+    descText: {
+      en: "You have burned to death in the Beacon",
+      zh: "你被烧在灯塔上",
+    },
+    activeSrc: "images/ending-burn-active.png",
+    inactiveSrc: "images/ending-burn-inactive.png",
+  },
+  {
+    endingKey: "escaped",
+    descText: {
+      en: "You have escaped the village",
+      zh: "你逃出了村子",
+    },
+    activeSrc: "images/ending-escaped-active.png",
+    inactiveSrc: "images/ending-escaped-inactive.png",
+  },
+  {
+    endingKey: "cthulhu",
+    descText: {
+      en: "You have escaped the village",
+      zh: "你逃出了村子",
+    },
+    activeSrc: "images/ending-cthulhu-active.png",
+    inactiveSrc: "images/ending-cthulhu-inactive.png",
+    hidden: true,
+  },
+];
+const endingText = {
+  en: "Ending ",
+  zh: "结局 ",
+};
+
 const indexToChapterMapping = [
   0, 1, 263, 8, 23, 38, 233, 134, 59, 261, 71, 102, 226, 239, 249, 265, 128, 144, 162, 174, 194, 251, 257, 267, 4, 14, 21, 31, 39, 51,
   75, 86, 100, 121, 130, 141, 63, 154, 166, 178, 112, 212, 192, 218, 6, 25, 16, 84, 57, 69, 34, 46, 96, 106, 115, 127, 142, 191, 199,
@@ -30,7 +92,28 @@ const indexToChapterMapping = [
   243, 231, 65, 77, 93, 137, 156, 168, 185, 171
 ];
 
-export default function Achievement({ chapterVisits }) {
+function EndingImage({ index, endingItem, endings }) {
+  const { autoLang } = useContext(LanguageContext);
+  const { endingKey } = endingItem;
+
+  function imageSrc() {
+    return endings.includes(endingKey) ? endingItem.activeSrc : endingItem.inactiveSrc;
+  }
+
+  function imageDescription() {
+    return endings.includes(endingKey)
+      ? autoLang(endingItem.descText)
+      : autoLang(endingText) + `${endingItem.hidden ? "?" : (index + 1)}`;
+  }
+
+  return (
+    <div className="col">
+      <img src={imageSrc()} alt={imageDescription()} title={imageDescription()} className="img-fluid" />
+    </div>
+  );
+}
+
+export default function Achievement({ chapterVisits, endings }) {
   const { autoLang } = useContext(LanguageContext);
 
   function indexToChapterKey(index) {
@@ -69,7 +152,8 @@ export default function Achievement({ chapterVisits }) {
 
             <div className="mb-3">
               <h5>{ autoLang(endingCollectionTitle) }</h5>
-              <div className="d-flex">
+              <div className="row row-cols-6">
+                { endingItems.map((endingItem, index) => <EndingImage key={index} {...{index, endingItem, endings}} />) }
               </div>
             </div>
             

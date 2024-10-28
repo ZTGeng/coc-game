@@ -47,7 +47,7 @@
   "onload": [
     {
       "action": "action_ending",
-      "param": "cliffs"
+      "param": "cliff"
     }
   ]
 }
