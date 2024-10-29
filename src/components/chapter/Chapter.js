@@ -8,7 +8,6 @@ import { FlagCheckContext, useFlagCheck, createFlagCheck } from "../../store/sli
 import * as utils from "../../utils/utils";
 
 const initRollFlags = {
-  // status: "", // "", "ready", "done"
   diceNumber: "", // [number]
   rollKey: "", // key
   rollLevel: "", // "value", "half", "fifth"
@@ -221,7 +220,7 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
     action_c120_select_option: (option) => {
       onChapterAction("action_set_flag", { flag: `flag_c120_option_selected_${option}`, value: true });
     },
-    action_roll_luck_and_update_chapter: (param) => {
+    action_c134_roll_luck: (param) => {
       setChapter(param);
       onChapterAction("action_clear_highlight", "");
       onChapterAction("action_set_highlight", { "key": "DEX", "level": "value" });
@@ -262,7 +261,7 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
         }
       }
     },
-    action_c198_spell_cast: (param) => {
+    action_c198_spell_cast: () => {
       const spellCheck = utils.roll(1, 100);
       onChapterAction(
         "action_dice_message", 
@@ -291,6 +290,13 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
         });
       }
     },
+    action_c65_c93_c109_fire_damage: (param) => {
+      const { newValue } = onChapterAction("action_adjust_attribute", { key: "HP", delta: "-1d6" });
+      if (newValue <= 0) {
+        setChapter(param);
+        onChapterAction("action_ending", "burn");
+      }
+    }
   }
 
   function onLeave(chapterJson) {

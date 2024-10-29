@@ -15,9 +15,7 @@ import {
   setAttrWithSnapshot,
   snapshotAttrs,
   initSkill,
-  setSkillValueByDelta,
-  doubleSkillValue,
-  halfSkillValue,
+  setSkillValue,
   setSkillWithSnapshot,
   snapshotUpdatedSkills,
   checkSkillBox,
@@ -149,26 +147,41 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
   const actions = {
     action_set_flag: (param) => { // param: { flag, value }
-      console.log(`action_set_flag: ${param.flag} = ${param.value}`);
+      // console.log(`action_set_flag: ${param.flag} = ${param.value}`);
+      const oldValue = flagStore[param.flag];
       dispatch(setFlag({ flag: param.flag, value: param.value }));
+      return { oldValue, newValue: param.value };
     },
     action_ending: (param) => { // param: endingKey
-      setEndings([...endings, param]);
+      const alreadyCollected = endings.includes(param);
+      if (!alreadyCollected) {
+        setEndings([...endings, param]);
+      }
+      return { alreadyCollected };
     },
     action_show_character_sheet: (param) => { // param: true/false/undefined
+      const oldValue = showCharacter;
       setShowCharacter(param !== false);
+      return { oldValue, newValue: param !== false };
     },
     action_set_highlight: (param) => { // param: { key, level, color } level: none/value/half/fifth/all, color: danger/success
       setHighlight(param.key, param.level, param.color);
+      return {};
     },
     action_clear_highlight: () => {
       dispatch(clearHighlights());
+      return {};
     },
     action_check_in_skill_box: (param) => { // param: key
-      dispatch(checkSkillBox(param));
+      const alreadyChecked = skillsStore[param].checked;
+      if (!alreadyChecked) {
+        dispatch(checkSkillBox(param));
+      }
+      return { alreadyChecked };
     },
     action_adjust_attribute: (param) => { // param: { key, delta, noHighlight }, delta: Int or String like "-1d2"
       const attr = attrsStore[param.key];
+      const oldValue = attr.value;
       let newValue;
       if (typeof param.delta === "string") {
         let deltaString = param.delta;
@@ -209,25 +222,38 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       }
 
       dispatch(setAttr({ attrKey: param.key, value: newValue }));
+      return { oldValue, newValue };
     },
     action_adjust_skill: (param) => { // param: { key, delta }, delta: Int
-      dispatch(setSkillValueByDelta({ skillKey: param.key, delta: param.delta }));
+      const oldValue = skillsStore[param.key].value;
+      const newValue = oldValue + param.delta;
+      dispatch(setSkillValue({ skillKey: param.key, value: newValue }));
+      return { oldValue, newValue };
     },
     action_double_skill_value: (param) => { // param: key
-      dispatch(doubleSkillValue(param));
+      const oldValue = skillsStore[param].value;
+      const newValue = oldValue * 2;
+      dispatch(setSkillValue({ skillKey: param, value: newValue }));
+      return { oldValue, newValue };
     },
     action_half_skill_value: (param) => { // param: key
-      dispatch(halfSkillValue(param));
+      const oldValue = skillsStore[param].value;
+      const newValue = Math.floor(oldValue / 2);
+      dispatch(setSkillValue({ skillKey: param, value: newValue }));
+      return { oldValue, newValue };
     },
     action_dice_message: (param) => { // param: { title, num, dice, bonus, results, shouldPlaySound, alterNumDice }
       showDiceToast(param.title, param.num, param.dice, param.bonus, param.results, param.shouldPlaySound, param.alterNumDice);
+      return {};
     },
     action_message: (param) => { // param: { title, subtitle, text, color }
       showToast(param);
+      return {};
     },
     action_set_char_related_values: () => {
       dispatch(initSkill({ skillKey: "dodge", value: Math.floor(charsStore.DEX.value / 2) }));
       dispatch(initSkill({ skillKey: "lang_own", value: charsStore.EDU.value }));
+      return {};
     },
     action_initial_san_and_mp: () => {
       dispatch(initAttr({ attrKey: "San", value: charsStore.POW.value }));
@@ -235,27 +261,39 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setHighlight("San", "value");
       setHighlight("MP", "value");
       setHighlight("POW", "value");
+      return {};
     },
-    action_initial_hp_and_reset_luck: () => {
-      dispatch(initAttr({ attrKey: "HP", value: Math.floor((charsStore.SIZ.value + charsStore.CON.value) / 10) }));
+    action_reset_luck: () => {
       dispatch(setAttr({ attrKey: "Luck", value: "" }));
+      return {};
+    },
+    action_initial_hp: () => {
+      const newValue = Math.floor((charsStore.SIZ.value + charsStore.CON.value) / 10);
+      dispatch(initAttr({ attrKey: "HP", value: newValue }));
+      // dispatch(setAttr({ attrKey: "Luck", value: "" }));
       setHighlight("HP", "value");
-      setHighlight("Luck", "value");
+      // setHighlight("Luck", "value");
+      return { newValue };
     },
     action_init_luck: () => {
       const results = utils.roll(3, 6);
-      const luck = results.reduce((a, b) => a + b, 0) * 5;
-      dispatch(initAttr({ attrKey: "Luck", value: luck }));
+      const newValue = results.reduce((a, b) => a + b, 0) * 5;
+      dispatch(initAttr({ attrKey: "Luck", value: newValue }));
       showDiceToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
+      return { newValue };
     },
     action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
       dispatch(setOccupation(param));
       dispatch(initSkill({ skillKey: "credit", value: param.credit }));
+      return {};
     },
     action_enable_map: () => {
+      const alreadyEnabled = mapEnabled;
       setMapEnabled(true);
+      return { alreadyEnabled };
     },
     action_commit_mp: (param) => { // param: Int
+      const oldValue = committedMP;
       if (attrsStore.MP.value >= param) {
         dispatch(setAttr({ attrKey: "MP", value: attrsStore.MP.value - param }));
         setHighlight("MP", "value");
@@ -271,10 +309,13 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
         setHighlight("HP", "value", "danger");
       }
       setCommittedMP(committedMP + param);
+      return { oldValue, newValue: oldValue + param };
     },
     action_clear_committed_mp: () => {
+      const oldValue = committedMP;
       setCommittedMP(0);
-    }
+      return { oldValue, newValue: 0 };
+    },
   }
 
   const setHighlight = (key, level, color) => {
@@ -304,12 +345,20 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
 
   function onChapterAction(action, param) {
     console.log(`Game - onChapterAction: ${action} with params: ${JSON.stringify(param)}`);
-    action in actions && actions[action](param);
+    if (action in actions) {
+      return actions[action](param);
+    } else {
+      return { error: `Chapter Action ${action} not found` };
+    }
   }
 
   function onCharacterAction(action, param) {
     console.log(`Game - onCharacterAction: ${action} with params: ${JSON.stringify(param)}`);
-    action in actions && actions[action](param);
+    if (action in actions) {
+      return actions[action](param);
+    } else {
+      return { error: `Character Action ${action} not found` };
+    }
   }
 
   function onUpdateSnapshot() {
@@ -345,7 +394,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const skillSnapshot = latestSkillSnapshot(historyStore.items, historyIndex + 1);
     dispatch(setSkillWithSnapshot(skillSnapshot));
 
-    setCommittedMP(historyItem.states.committedMP);
+    setCommittedMP(historyItem.states.committedMP || 0);
     setMapEnabled(historyItem.states.mapEnabled);
 
     setIsReloading(true);

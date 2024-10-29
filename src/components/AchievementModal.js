@@ -49,7 +49,7 @@ const endingItems = [
     endingKey: "burn",
     descText: {
       en: "You have burned to death in the Beacon",
-      zh: "你被烧在灯塔上",
+      zh: "你被烧死在灯塔上",
     },
     activeSrc: "images/ending-burn-active.png",
     inactiveSrc: "images/ending-burn-inactive.png",
@@ -66,8 +66,8 @@ const endingItems = [
   {
     endingKey: "cthulhu",
     descText: {
-      en: "You have escaped the village",
-      zh: "你逃出了村子",
+      en: "You have glimpsed the truth of the universe",
+      zh: "你窥见了宇宙的真相",
     },
     activeSrc: "images/ending-cthulhu-active.png",
     inactiveSrc: "images/ending-cthulhu-inactive.png",

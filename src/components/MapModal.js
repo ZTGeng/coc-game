@@ -21,7 +21,7 @@ const locations = {
   narrow_path: [53, 80],
   beacon_2: [58, 76],
   prison: [22, 21],
-  beacon_center: [63, 60],
+  beacon_center: [68, 60],
   church_inside: [18, 67],
 };
 

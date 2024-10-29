@@ -11,43 +11,26 @@ const fightBackAction = { key: "fight_back", name: { zh: "反击", en: "Fight Ba
 const dodgeAction =     { key: "dodge", name: { zh: "闪避", en: "Dodge" }, isInitiating: false };
 
 const initMoveResult = { diceNumber: "", resultLevel: "", skill: "", action: "" };
+
 const nextButtonText = { en: "Next", zh: "下一步" };
-const combatWinText = {
-  en: "Combat Win",
-  zh: "战斗胜利"
-};
-const combatLoseText = {
-  en: "Combat Lose",
-  zh: "战斗失败"
-};
-const combatEscapeText = {
-  en: "Combat Escape",
-  zh: "逃脱战斗"
-};
-const conCheckText = {
-  en: "You have taken a major wound, make a CON roll",
-  zh: "你受了重伤，进行「体质」检定"
-};
-const conCheckPassText = {
-  en: "CON Roll Pass",
-  zh: "体质检定通过"
-};
-const conCheckFailText = {
-  en: "CON Roll Fail",
-  zh: "体质检定失败"
-};
-const escapeCheckText = {
-  en: "Attempt to escape, make a hard Dodge roll",
-  zh: "尝试逃跑，进行困难难度的「闪避」检定"
-};
-const escapeCheckPassText = {
-  en: "Dodge Roll Pass",
-  zh: "闪避检定通过"
-};
-const escapeCheckFailText = {
-  en: "Dodge Roll Fail",
-  zh: "闪避检定失败"
-};
+const combatWinText = { en: "Combat Win", zh: "战斗胜利" };
+const combatLoseText = { en: "Combat Lose", zh: "战斗失败" };
+const combatEscapeText = { en: "Combat Escape", zh: "逃脱战斗" };
+const conCheckText = { en: "You have taken a major wound, make a CON roll", zh: "你受了重伤，进行「体质」检定" };
+const conCheckPassText = { en: "CON Roll Pass", zh: "体质检定通过" };
+const conCheckFailText = { en: "CON Roll Fail", zh: "体质检定失败" };
+const escapeCheckText = { en: "Attempt to escape, make a hard Dodge roll", zh: "尝试逃跑，进行困难难度的「闪避」检定" };
+const escapeCheckPassText = { en: "Dodge Roll Pass", zh: "闪避检定通过" };
+const escapeCheckFailText = { en: "Dodge Roll Fail", zh: "闪避检定失败" };
+const dodgeSuccessText = { zh: "闪避成功", en: "Dodge succeeded" };
+const dodgeFailText = { zh: "闪避失败", en: "Dodge failed" };
+const fightBackSuccessText = { zh: "反击成功", en: "Fight back succeeded" };
+const fightBackFailText = { zh: "反击失败", en: "Fight back failed" };
+const bothMissText = { zh: "双方未命中", en: "Both missed" };
+const opponentDodgeSuccessText = { zh: "攻击被闪避", en: "Your attack was dodged" };
+const opponentFightBackSuccessText = { zh: "被对手反击", en: "You were fought back" };
+const regularDamageText = { zh: "攻击命中", en: "You hit" };
+const extremeDamageText = { zh: "攻击命中，造成极限伤害", en: "You hit and dealt extreme damage" };
 
 // chapter 173
 export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
@@ -64,6 +47,11 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
   const [showConCheck, setShowConCheck] = useState(false);
   const [showEscapeCheck, setShowEscapeCheck] = useState(false);
   const loaded = useRef(false);
+
+  const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attrStore.HP.value, DEX: charStore.DEX.value };
+  const opponent = { ...check.opponent, isOpponent: true, HP: opponentHp };
+  const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
+  const isOpponentActing = turns[progress.turn] === "opponent";
   
   useEffect(() => {
     if (loaded.current) return;
@@ -74,11 +62,6 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
   }, []);
 
   if (!opponentMoveResult.skill) return null;
-
-  const you = { name: utils.TEXTS.yourName, isOpponent: false, HP: attrStore.HP.value, DEX: charStore.DEX.value };
-  const opponent = { ...check.opponent, isOpponent: true, HP: opponentHp };
-  const turns = you.DEX >= opponent.DEX ? ["you", "opponent"] : ["opponent", "you"];
-  const isOpponentActing = turns[progress.turn] === "opponent";
 
   const yourDamage = flagCheck("flag_bought_knife") ? "1d4" : "1d3";
   const yourDamageBonus = utils.calculateDamageBonus(charStore.STR.value, charStore.SIZ.value);
@@ -246,24 +229,27 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
     const resultLevel = youRollResult(dodgeAction, dodgeSkill);
     if (resultLevel < opponentMoveResult.resultLevel) {
       // dodge failed
-      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "闪避失败", en: "Dodge failed" }), color: "danger" });
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(dodgeFailText), color: "danger" });
       onOpponentHitYou();
     } else {
       // dodge success
-      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "闪避成功", en: "Dodge succeeded" }), color: "success" });
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(dodgeSuccessText), color: "success" });
     }
   }
 
   function onFightBack() {
     // console.log("onFightBack");
     const resultLevel = youRollResult(fightBackAction, fightSkill);
-    if (resultLevel <= opponentMoveResult.resultLevel) {
+    if (resultLevel === 0 && opponentMoveResult.resultLevel === 0) {
+      // both failed
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(bothMissText), color: "secondary" });
+    } else if (resultLevel <= opponentMoveResult.resultLevel) {
       // opponent hit you
-      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "反击失败", en: "Fight back failed" }), color: "danger" });
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(fightBackFailText), color: "danger" });
       onOpponentHitYou();
     } else {
       // you hit opponent
-      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "反击成功", en: "Fight back succeeded" }), color: "success" });
+      onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(fightBackSuccessText), color: "success" });
       onYouHitOpponent(resultLevel, true);
     }
   }
@@ -275,29 +261,32 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
     if (isOpponentDodging) {
       if (resultLevel <= opponentMoveResult.resultLevel) {
         // opponent dodged
-        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "攻击被闪避", en: "Your attack was dodged" }), color: "danger" }); 
+        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(opponentDodgeSuccessText), color: "danger" }); 
       } else {
         // opponent failed to dodge
         onAction("action_message", { 
           title: autoLang(utils.TEXTS.combat), 
           text: resultLevel === 3 
-            ? autoLang({ zh: "攻击命中，造成极限伤害", en: "You hit and dealt extreme damage" }) 
-            : autoLang({ zh: "攻击命中", en: "You hit" }), 
+            ? autoLang(extremeDamageText) 
+            : autoLang(regularDamageText), 
           color: "success" });
         onYouHitOpponent(resultLevel, false);
       }
     } else {
-      if (resultLevel < opponentMoveResult.resultLevel) {
+      if (resultLevel === 0 && opponentMoveResult.resultLevel === 0) {
+        // both missed
+        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(bothMissText), color: "secondary" });
+      } else if (resultLevel < opponentMoveResult.resultLevel) {
         // opponent hit you
-        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang({ zh: "被对手反击", en: "You were fought back" }), color: "danger" });
+        onAction("action_message", { title: autoLang(utils.TEXTS.combat), text: autoLang(opponentFightBackSuccessText), color: "danger" });
         onOpponentHitYou();
       } else {
         // you hit opponent
         onAction("action_message", { 
           title: autoLang(utils.TEXTS.combat), 
           text: resultLevel === 3 
-            ? autoLang({ zh: "攻击命中，造成极限伤害", en: "You hit and dealt extreme damage" }) 
-            : autoLang({ zh: "攻击命中", en: "You hit" }), 
+            ? autoLang(extremeDamageText) 
+            : autoLang(regularDamageText), 
           color: "success" });
         onYouHitOpponent(resultLevel, false);
       }
@@ -444,8 +433,8 @@ export default function Combat({ check, onAction, rollFlags, setRollFlags }) {
               { autoLang(rollFlags.result === "pass" ? combatWinText : (rollFlags.result === "fail" ? combatLoseText : combatEscapeText)) }
             </strong>
           ) }
-          { !rollFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} /></div></> }
-          { !rollFlags.result && showEscapeCheck && <><div>{ autoLang(escapeCheckText) }</div><div className="ms-3"><CheckButton onClick={onEscapeCheck} /></div></> }
+          { !rollFlags.result && showConCheck && <><div>{ autoLang(conCheckText) }</div><div className="ms-3"><CheckButton onClick={onConCheck} isDisabled={false} /></div></> }
+          { !rollFlags.result && showEscapeCheck && <><div>{ autoLang(escapeCheckText) }</div><div className="ms-3"><CheckButton onClick={onEscapeCheck} isDisabled={false} /></div></> }
           { !rollFlags.result && !showConCheck && !showEscapeCheck && <button className="btn btn-sm btn-dark" onClick={next} disabled={yourMoveResult.resultLevel === ""}>{ autoLang(nextButtonText) }</button> }
         </div>
       </div>

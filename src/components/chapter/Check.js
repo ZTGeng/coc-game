@@ -21,26 +21,11 @@ const checkLevelTexts = {
     "fifth": "极难"
   }
 };
-const checkPassText = {
-  en: "Roll Pass",
-  zh: "检定成功"
-};
-const checkFailText = {
-  en: "Roll Fail",
-  zh: "检定失败"
-};
-const opposedCheckWinText = {
-  en: "Opposed Roll Win",
-  zh: "对抗检定胜出"
-};
-const opposedCheckLoseText = {
-  en: "Opposed Roll Lose",
-  zh: "对抗检定落败"
-};
-const pushText = {
-  en: "Pushed Roll: ",
-  zh: "孤注一掷："
-};
+const checkPassText = { en: "Roll Pass", zh: "检定成功" };
+const checkFailText = { en: "Roll Fail", zh: "检定失败" };
+const opposedCheckWinText = { en: "Opposed Roll Win", zh: "对抗检定胜出" };
+const opposedCheckLoseText = { en: "Opposed Roll Lose", zh: "对抗检定落败" };
+const pushText = { en: "Pushed Roll: ", zh: "孤注一掷：" };
 
 function getRollName(key, characterSheet) {
   if (characteristicsList.includes(key) || attributesList.includes(key)) {
@@ -247,13 +232,14 @@ function RollCheck({ check, onAction, rollFlags, setRollFlags }) {
         : ` - ${autoLang(utils.TEXTS.penaltyDie)} x ${-bonus}`)
   }`;
   const showCheckButton = !rollFlags.result || (rollFlags.result === "fail" && check.allowPush && !rollFlags.isPushed);
+  const isDisabled = check.disabled && flagCheck(check.disabled);
 
   return (
     <div className={"card mb-3" + (rollFlags.result ? (rollFlags.result === "pass" ? " border-success" : " border-danger") : " text-bg-light")}>
       <div className="card-header">{title}</div>
       <div className={"card-body" + (rollFlags.result ? (rollFlags.result === "pass" ? " text-success" : " text-danger") : "")}>
         {rollFlags.result && <div><strong>{ autoLang(rollFlags.result === "pass" ? checkPassText : checkFailText)}</strong></div>}
-        {showCheckButton && <div>{isPushed ? <span>{ autoLang(pushText) }</span> : null}<CheckButton onClick={onCheck} /></div>}
+        {showCheckButton && <div>{isPushed ? <span>{ autoLang(pushText) }</span> : null}<CheckButton onClick={onCheck} isDisabled={isDisabled} /></div>}
       </div>
     </div>
   )

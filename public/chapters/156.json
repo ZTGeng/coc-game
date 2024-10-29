@@ -1,7 +1,18 @@
 {
   "key": 156,
+  "location": "general_store",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "With the villagers assembled at the Beacon, the streets are empty and you are able to pad away from the blaze. You must get out of town before they finish."
+      },
+      {
+        "content": "The chanting seems to accelerate as you round the corner of the southern road. Here, parked against the side of the general store, you have your first piece of luck since reaching Emberhead. A bicycle! You learned to ride one of these in Providence."
+      },
+      {
+        "content": "You settle into the saddle. Your burned flesh protests at the contact."
+      }
+    ],
     "zh": [
       {
         "content": "所有村民都聚集在灯塔边，马路空荡无人，你可以轻声慢步地远离火场。他们结束之前，你必须离开村子。"
@@ -17,12 +28,18 @@
   "options": [
     {
       "key": 0,
-      "text": "等等看灯塔会发生什么",
+      "text": {
+        "en": "Wait and observe goings on at the Beacon",
+        "zh": "等等看灯塔会发生什么"
+      },
       "goto": 168
     },
     {
       "key": 1,
-      "text": "立即骑车出村",
+      "text": {
+        "en": "Ride out of town immediately",
+        "zh": "立即骑车出村"
+      },
       "goto": 185
     }
   ]

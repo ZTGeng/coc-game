@@ -7,9 +7,9 @@ export const resultLevelTexts = {
   zh: ["失败", "普通成功", "困难成功", "极难成功"],
 };
 
-export function CheckButton({ onClick }) {
+export function CheckButton({ onClick, isDisabled }) {
   const { autoLang } = useContext(LanguageContext);
-  return <button className="btn btn-sm btn-dark" onClick={onClick}>{ autoLang({ en: "Roll 1D100", zh: "掷骰1D100" }) }</button>
+  return <button className="btn btn-sm btn-dark" onClick={onClick} disabled={isDisabled}>{ autoLang({ en: "Roll 1D100", zh: "掷骰1D100" }) }</button>
 }
 
 // role: { name, isOpponent }, action: { key, name, isInitiating }, skill: { name, value, half, fifth, bonus }, result: { diceNumber, resultLevel, action }
@@ -29,7 +29,7 @@ export default function ActionCard({ role, action, skill, result, isDisabled, on
   if (role.isOpponent) {
     cardBodyContent = <div className="mb-3 text-end"><div className="h5 fw-light">{ `${result.diceNumber} - ${resultLevelText[result.resultLevel || 0]}` }</div></div>;
   } else if (result.resultLevel === "") {
-    cardBodyContent = <div className="mb-2 text-end"><CheckButton onClick={onAction} /></div>;
+    cardBodyContent = <div className="mb-2 text-end"><CheckButton onClick={onAction} isDisabled={false} /></div>;
   } else if (isUnusedCard) {
     cardBodyContent = <div className="mb-3 text-end"><div className="h5 fw-light">&nbsp;</div></div>;
   } else {

@@ -1,7 +1,20 @@
 {
   "key": 93,
+  "location": "beacon_center",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "Desperation lends you strength and you yank at what you guess to be the weak point in the chain. It breaks! You throw the chain off, stumbling across one of the red-shrouded corpses, heading away from the watching villagers. You cough. Your hair and eyebrows smolder."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Take 1D6 hit points of damage from the fire."
+          }
+        ]
+      }
+    ],
     "zh": [
       {
         "content": "绝望赐予你力量，你猛力拉扯着你觉得铁链上最薄弱的环节。它断了！你丢下铁链，跌跌撞撞地走过一具红布覆盖的尸体，离开围观的村民。你咳嗽不止，头发和眉毛在冒烟。"
@@ -10,23 +23,63 @@
         "tag": "info",
         "text": [
           {
-            "content": "你因为火焰受到1D6点耐久值伤害。如果你的耐久值因此归零，你就会失去意识，被烈焰烧死！"
+            "content": "你因为火焰受到1D6点耐久值伤害。"
           }
         ]
       }
-    ],
-    "interactions": [
-      {
-        "text": "投掷1D6点耐久",
-        "action": "action_adjust_attribute",
-        "param": {
-          "key": "HP",
-          "delta": "-1d6"
-        },
-        "show": "!flag_hp_reduced"
-      }
     ]
   },
+  "interactions": [
+    {
+      "text": {
+        "en": "Endure the fire damage",
+        "zh": "承受火焰伤害"
+      },
+      "action": "action_c65_c93_c109_fire_damage",
+      "param": {
+        "key": 93,
+        "location": "beacon_center",
+        "text": {
+          "en": [
+            {
+              "content": "Desperation lends you strength and you yank at what you guess to be the weak point in the chain. It breaks! You throw the chain off, stumbling across one of the red-shrouded corpses, heading away from the watching villagers. You cough. Your hair and eyebrows smolder."
+            },
+            {
+              "tag": "info",
+              "text": [
+                {
+                  "content": "You collapse and are burned to death!"
+                }
+              ]
+            },
+            {
+              "tag": "h",
+              "content": "The End."
+            }
+          ],
+          "zh": [
+            {
+              "content": "绝望赐予你力量，你猛力拉扯着你觉得铁链上最薄弱的环节。它断了！你丢下铁链，跌跌撞撞地走过一具红布覆盖的尸体，离开围观的村民。你咳嗽不止，头发和眉毛在冒烟。"
+            },
+            {
+              "tag": "info",
+              "text": [
+                {
+                  "content": "你失去意识，被烈焰烧死！"
+                }
+              ]
+            },
+            {
+              "tag": "h",
+              "content": "【剧终】"
+            }
+          ]
+        },
+        "options": []
+      },
+      "disabled": "flag_interaction_finished"
+    }
+  ],
   "options": [
     {
       "key": 0,
@@ -35,20 +88,7 @@
         "zh": "继续"
       },
       "show": [
-        "flag_hp_reduced",
-        "flag_hp_zero"
-      ],
-      "goto": 77
-    },
-    {
-      "key": 1,
-      "text": {
-        "en": "Continue",
-        "zh": "继续"
-      },
-      "show": [
-        "flag_hp_reduced",
-        "!flag_hp_zero"
+        "flag_interaction_finished"
       ],
       "goto": 137
     }

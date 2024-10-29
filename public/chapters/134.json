@@ -24,8 +24,7 @@
                 "en": "Roll 3D6",
                 "zh": "投掷3D6"
             }, 
-            "action": "action_roll_luck_and_update_chapter", 
-            "show": { "flag": "flag_key_equal_to_value", "param": { "key": "Luck", "value": "" } },
+            "action": "action_c134_roll_luck",
             "param": {
                 "key": 134,
                 "text": {
@@ -87,6 +86,8 @@
     "options": [],
     "onload": [
         { "action": "action_show_character_sheet", "param": true },
-        { "action": "action_initial_hp_and_reset_luck" }
+        { "action": "action_initial_hp" },
+        { "action": "action_reset_luck" },
+        { "action": "action_set_highlight", "param": { "key": "Luck", "level": "value" } }
     ]
 }

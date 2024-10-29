@@ -117,18 +117,6 @@ const characterSlice = createSlice({
         state.skills[action.payload.skillKey].value = action.payload.value;
       }
     },
-    setSkillValueByDelta(state, action) { // action: { type: 'character/setSkillValueByDelta', payload: { skillKey, delta } }
-      const skill = state.skills[action.payload.skillKey];
-      skill.value += action.payload.delta;
-    },
-    doubleSkillValue(state, action) { // action: { type: 'character/doubleSkillValue', payload: skillKey }
-      const skill = state.skills[action.payload];
-      skill.value *= 2;
-    },
-    halfSkillValue(state, action) { // action: { type: 'character/halfSkillValue', payload: skillKey }
-      const skill = state.skills[action.payload];
-      skill.value = Math.floor(skill.value / 2);
-    },
     setSkillOccupation(state, action) { // action: { type: 'character/setSkillOccupation', payload: skillKey }
       state.skills[action.payload].occupation || (state.skills[action.payload].occupation = true);
     },
@@ -179,9 +167,6 @@ export const {
   resetSkill,
   setSkillWithSnapshot,
   setSkillValue,
-  setSkillValueByDelta,
-  doubleSkillValue,
-  halfSkillValue,
   setSkillOccupation,
   setSkillHobby,
   setSkillCustomName,

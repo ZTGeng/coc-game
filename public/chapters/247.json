@@ -82,7 +82,7 @@
   "onload": [
     {
       "action": "action_ending",
-      "param": "excape"
+      "param": "escaped"
     }
   ]
 }
