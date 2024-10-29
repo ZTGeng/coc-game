@@ -1,16 +1,47 @@
 {
   "key": 243,
+  "location": "beacon_center",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "The stars respond to your command, dropping and converging on the Beacon. You feel a moment of transcendent glory as your body is annihilated in white heat and light."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have burned to death in an otherworldly inferno! Would you like to try again?"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
     "zh": [
       {
         "content": "群星回应了你的号令，降落汇聚在灯塔上。你感到超脱尘世的光荣，你的身体在白炽的光和热中湮灭无存。"
       },
       {
-        "content": "你在世间罕有的炼狱之火中被烧死了！你想再尝试一次吗？"
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在世间罕有的炼狱之火中被烧死了！你想再尝试一次吗？"
+          }
+        ]
       },
-      "<h2>【剧终】</h2>"
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
     ]
   },
-  "options": []
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "burn"
+    }
+  ]
 }

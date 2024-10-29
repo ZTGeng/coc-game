@@ -1,7 +1,23 @@
 {
   "key": 90,
+  "location": "beacon_center",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "You clear your throat and begin the ritual you found in the strange book, pronouncing the strange syllables as best you can. You know the fire is slipping ever closer by the touch of heat on your face, yet you put your panic aside and concentrate on completing the chant."
+      },
+      {
+        "content": "As you speak the weird words, you become aware that the song of the villagers has shifted and they, too, are chanting. An eerie tingling builds in your palms and temples."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You are casting a spell. You may commit up to 10 magic points to this spell. If you have less than 10 magic points, you may spend hit points on top of the magic points—but not so many that you are reduced to 0 hit points. Decide how many points to commit, then select “Continue”."
+          }
+        ]
+      }
+    ],
     "zh": [
       {
         "content": "你清清嗓子，开始吟诵你在奇怪书本上找到的仪式，尽力将怪异的音节念得正确。你的脸上翻腾着热浪，明白火焰越来越逼近，但你放下自己的恐慌，集中精力完成吟唱。"
@@ -17,130 +33,53 @@
           }
         ]
       }
-    ],
-    "interactions": [
-      {
-        "text": "1",
-        "action": "action_use_mp",
-        "param": 1,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 1
-          }
-        ]
+    ]
+  },
+  "interactions": [
+    {
+      "type": "magic",
+      "text": {
+        "en": "Commit MP +1",
+        "zh": "消耗魔法值 +1"
       },
-      {
-        "text": "2",
-        "action": "action_use_mp",
-        "param": 2,
-        "show": [
-          "!flag_mp_used",
+      "action": "action_commit_mp",
+      "param": 1,
+      "disabled": {
+        "type": "or",
+        "flags": [
           {
-            "match": "match_mp_enough",
-            "param": 2
-          }
-        ]
-      },
-      {
-        "text": "3",
-        "action": "action_use_mp",
-        "param": 3,
-        "show": [
-          "!flag_mp_used",
+            "type": "not",
+            "flag": "flag_key_less_than_value",
+            "param": {
+              "key": "committedMP",
+              "value": 10
+            }
+          },
           {
-            "match": "match_mp_enough",
-            "param": 3
-          }
-        ]
-      },
-      {
-        "text": "4",
-        "action": "action_use_mp",
-        "param": 4,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 4
-          }
-        ]
-      },
-      {
-        "text": "5",
-        "action": "action_use_mp",
-        "param": 5,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 5
-          }
-        ]
-      },
-      {
-        "text": "6",
-        "action": "action_use_mp",
-        "param": 6,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 6
-          }
-        ]
-      },
-      {
-        "text": "7",
-        "action": "action_use_mp",
-        "param": 7,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 7
-          }
-        ]
-      },
-      {
-        "text": "8",
-        "action": "action_use_mp",
-        "param": 8,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 8
-          }
-        ]
-      },
-      {
-        "text": "9",
-        "action": "action_use_mp",
-        "param": 9,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 9
-          }
-        ]
-      },
-      {
-        "text": "10",
-        "action": "action_use_mp",
-        "param": 10,
-        "show": [
-          "!flag_mp_used",
-          {
-            "match": "match_mp_enough",
-            "param": 10
+            "type": "and",
+            "flags": [
+              {
+                "type": "not",
+                "flag": "flag_key_greater_than_value",
+                "param": {
+                  "key": "MP",
+                  "value": 0
+                }
+              },
+              {
+                "type": "not",
+                "flag": "flag_key_greater_than_value",
+                "param": {
+                  "key": "HP",
+                  "value": 1
+                }
+              }
+            ]
           }
         ]
       }
-    ]
-  },
+    }
+  ],
   "options": [
     {
       "key": 0,
@@ -148,7 +87,6 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "flag_mp_used",
       "goto": 198
     }
   ]

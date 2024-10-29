@@ -1,17 +1,67 @@
 {
-    "key": 123,
-    "location": "beacon_center",
-    "texts": [
-        "<div class='row'><div class='col-8'>",
-            { "content": "他们把你推回了火堆。狂热和恐惧蒙蔽了他们的双眼。即使火焰在他们身上蔓延、在你的衣服上肆虐，即使热度越来越强烧灼着你的皮肉，即使浓烟令你窒息视野模糊，",
-        "他们仍然在火焰中紧紧压着你。你的尖叫和他们的混合在一起，直到火焰完成自己的使命。" },
-            { "content": "你在和两个年轻人的僵持之中被烧死了。" },
-            { "tag": "info", "text": [
-            { "content": "为何不重新尝试呢？选择不同的选项，你也许就能逃脱甚至智胜烬头村的村民了。" }
-            ] },
-        "<h2>【剧终】</h2>",
-        "</div><div class='col-4'><img src='images/fire1.jpg' class='img-fluid'></div></div>"
+  "key": 123,
+  "location": "beacon_center",
+  "text": {
+    "en": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/fire.png",
+        "text": [
+          {
+            "content": "They bear you back into the center of the pyre. Their eyes are flecked with fervor and terror. Even as the flames spread over them and across your clothes, even as the heat builds and sears your flesh, even as smoke chokes you and your vision blurs, they hold you down in the flames. Your screams mingle with theirs as the fire does its work."
+          }
         ]
-    },
-    "options": []
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "You have burned to death whilst grappling two teenagers."
+          },
+          {
+            "content": "Why not try again? By making different choices you may be able to escape or outwit the people of Emberhead."
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "The End."
+      }
+    ],
+    "zh": [
+      {
+        "tag": "div",
+        "imageOn": "right",
+        "imageSrc": "images/fire.png",
+        "text": [
+          {
+            "content": "他们把你推回了火堆。狂热和恐惧蒙蔽了他们的双眼。即使火焰在他们身上蔓延、在你的衣服上肆虐，即使热度越来越强烧灼着你的皮肉，即使浓烟令你窒息视野模糊，他们仍然在火焰中紧紧压着你。你的尖叫和他们的混合在一起，直到火焰完成自己的使命。"
+          }
+        ]
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "你在和两个年轻人的僵持之中被烧死了。"
+          },
+          {
+            "content": "为何不重新尝试呢？选择不同的选项，你也许就能逃脱甚至智胜烬头村的村民了。"
+          }
+        ]
+      },
+      {
+        "tag": "h",
+        "content": "【剧终】"
+      }
+    ]
+  },
+  "options": [],
+  "onload": [
+    {
+      "action": "action_ending",
+      "param": "burn"
+    }
+  ]
 }

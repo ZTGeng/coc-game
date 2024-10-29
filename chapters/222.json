@@ -36,7 +36,7 @@
         "en": "Lose consciousness",
         "zh": "失去意识"
       },
-      "show": "flag_hp_zero",
+      "show": { "type": "not", "flag": "flag_key_greater_than_value", "param": {"key": "HP", "value": 0} },
       "goto": 13
     },
     {
@@ -45,7 +45,7 @@
         "en": "Make the climb with one eye on the weak branch",
         "zh": "一边留意脆弱的树枝一边继续攀爬"
       },
-      "show": "!flag_hp_zero",
+      "show": { "flag": "flag_key_greater_than_value", "param": {"key": "HP", "value": 0} },
       "goto": 228
     }
   ],

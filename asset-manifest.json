@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/coc-game/static/css/main.1c76cf87.css",
-    "main.js": "/coc-game/static/js/main.e4c6b52d.js",
+    "main.js": "/coc-game/static/js/main.4cdf2168.js",
     "index.html": "/coc-game/index.html",
     "main.1c76cf87.css.map": "/coc-game/static/css/main.1c76cf87.css.map",
-    "main.e4c6b52d.js.map": "/coc-game/static/js/main.e4c6b52d.js.map"
+    "main.4cdf2168.js.map": "/coc-game/static/js/main.4cdf2168.js.map"
   },
   "entrypoints": [
     "static/css/main.1c76cf87.css",
-    "static/js/main.e4c6b52d.js"
+    "static/js/main.4cdf2168.js"
   ]
 }

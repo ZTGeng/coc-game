@@ -20,7 +20,7 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "flag_hp_zero",
+      "show": { "type": "not", "flag": "flag_key_greater_than_value", "param": {"key": "HP", "value": 0} },
       "goto": 92
     },
     {
@@ -29,7 +29,7 @@
         "en": "Continue",
         "zh": "继续"
       },
-      "show": "!flag_hp_zero",
+      "show": { "flag": "flag_key_greater_than_value", "param": {"key": "HP", "value": 0} },
       "goto": 82
     }
   ]

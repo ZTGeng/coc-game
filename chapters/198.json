@@ -1,7 +1,20 @@
 {
   "key": 198,
+  "location": "beacon_center",
   "text": {
-    "en": [],
+    "en": [
+      {
+        "content": "You sense, rather than see, stars descend from the sky above you. From your flaming tether, you reach out to command the stars."
+      },
+      {
+        "tag": "info",
+        "text": [
+          {
+            "content": "Every magic point you committed gives you a 10% chance to succeed. So if you committed 6 magic points, you must make a 60% roll. Any roll of 96-00 is always a fail."
+          }
+        ]
+      }
+    ],
     "zh": [
       {
         "content": "你感到，而不是看到，星辰从你头上的天顶坠落。你虽然被绑在燃烧的铁链上，却能号令群星。"
@@ -14,21 +27,26 @@
           }
         ]
       }
-    ],
-    "interactions": [
-      {
-        "text": "施放“号令天之火”",
-        "action": "action_use_magic",
-        "show": "flag_check_unfinished"
-      }
     ]
   },
+  "interactions": [
+    {
+      "type": "magic",
+      "text": {
+        "en": "Command the stars",
+        "zh": "号令群星"
+      },
+      "action": "action_c198_spell_cast",
+      "param": 1,
+      "disabled": "flag_interaction_finished"
+    }
+  ],
   "options": [
     {
       "key": 0,
       "text": {
-        "en": "Continue",
-        "zh": "继续"
+        "en": "You passed the roll, continue",
+        "zh": "检定成功，继续"
       },
       "show": "flag_check_passed",
       "goto": 209
@@ -36,11 +54,16 @@
     {
       "key": 1,
       "text": {
-        "en": "Continue",
-        "zh": "继续"
+        "en": "You failed the roll, continue",
+        "zh": "检定失败，继续"
       },
       "show": "flag_check_failed",
       "goto": 65
+    }
+  ],
+  "onleave": [
+    {
+      "action": "action_clear_committed_mp"
     }
   ]
 }

@@ -1,14 +1,32 @@
 {
-    "key": 137,
-    "text": {
-        "en": [
-
-        ],
-        "zh": [
-            { "content": "你从灯塔另一边的大火中一跃而下。你看见下方陡峭的断崖时心脏瞬间开始狂跳，但你在离悬崖几寸远的地方安全降落了。",
-        "你打着滚，扑灭了燃烧的衣服。你的肺像已经烧焦了一样，全身没有一处不在灼痛。村民们还在高声歌唱。你端详一下灯塔周围，汹涌的浓烟之中，他们似乎并没注意到你已经不在了。大多数人都在仰望天空。" },
-            { "content": "你以最快的速度匍匐离开，躲到最近的房子后面寻求掩护。" }
-        ]
-    },
-    "options": [{ "key": 0, "text": { "en": "Continue", "zh": "继续" } }]
+  "key": 137,
+  "location": "beacon_2",
+  "text": {
+    "en": [
+      {
+        "content": "You leap from the conflagration on the far side of the Beacon. Your heart lurches momentarily at the sight of the sheer drop beneath you, but you land a few inches short of the edge. You roll to extinguish your burning clothes. Your lungs feel singed. Everything hurts. The chant of the villagers gathers in intensity. You peer around the Beacon. They don’t seem to have noticed your absence amidst the billowing smoke. Most of them are staring into the sky."
+      },
+      {
+        "content": "You crawl as rapidly as you can for the cover of the nearest building."
+      }
+    ],
+    "zh": [
+      {
+        "content": "你从灯塔另一边的大火中一跃而下。你看见下方陡峭的断崖时心脏瞬间开始狂跳，但你在离悬崖几寸远的地方安全降落了。你打着滚，扑灭了燃烧的衣服。你的肺像已经烧焦了一样，全身没有一处不在灼痛。村民们还在高声歌唱。你端详一下灯塔周围，汹涌的浓烟之中，他们似乎并没注意到你已经不在了。大多数人都在仰望天空。"
+      },
+      {
+        "content": "你以最快的速度匍匐离开，躲到最近的房子后面寻求掩护。"
+      }
+    ]
+  },
+  "options": [
+    {
+      "key": 0,
+      "text": {
+        "en": "Continue",
+        "zh": "继续"
+      },
+      "goto": 156
+    }
+  ]
 }
