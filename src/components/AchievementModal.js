@@ -17,9 +17,8 @@ const trophyCollectionTitle = {
   en: "Trophy Collection",
   zh: "奖杯收集",
 };
-const endingItems = [
-  {
-    endingKey: "bear",
+export const endingItems = {
+  bear: {
     descText: {
       en: "You were killed by a bear",
       zh: "你被熊杀死了",
@@ -27,8 +26,7 @@ const endingItems = [
     activeSrc: "images/ending-bear-active.png",
     inactiveSrc: "images/ending-bear-inactive.png",
   },
-  {
-    endingKey: "cliff",
+  cliff: {
     descText: {
       en: "You fell from the cliff and died",
       zh: "你掉下悬崖摔死了",
@@ -36,8 +34,7 @@ const endingItems = [
     activeSrc: "images/ending-cliff-active.png",
     inactiveSrc: "images/ending-cliff-inactive.png",
   },
-  {
-    endingKey: "collapse",
+  collapse: {
     descText: {
       en: "You were killed by a collapsing church roof",
       zh: "你被坍塌的教堂屋顶砸死了",
@@ -45,8 +42,7 @@ const endingItems = [
     activeSrc: "images/ending-collapse-active.png",
     inactiveSrc: "images/ending-collapse-inactive.png",
   },
-  {
-    endingKey: "burn",
+  burn: {
     descText: {
       en: "You have burned to death in the Beacon",
       zh: "你被烧死在灯塔上",
@@ -54,8 +50,7 @@ const endingItems = [
     activeSrc: "images/ending-burn-active.png",
     inactiveSrc: "images/ending-burn-inactive.png",
   },
-  {
-    endingKey: "escaped",
+  escaped: {
     descText: {
       en: "You have escaped the village",
       zh: "你逃出了村子",
@@ -63,8 +58,7 @@ const endingItems = [
     activeSrc: "images/ending-escaped-active.png",
     inactiveSrc: "images/ending-escaped-inactive.png",
   },
-  {
-    endingKey: "cthulhu",
+  cthulhu: {
     descText: {
       en: "You have glimpsed the truth of the universe",
       zh: "你窥见了宇宙的真相",
@@ -73,7 +67,7 @@ const endingItems = [
     inactiveSrc: "images/ending-cthulhu-inactive.png",
     hidden: true,
   },
-];
+};
 const endingText = {
   en: "Ending ",
   zh: "结局 ",
@@ -92,9 +86,8 @@ const indexToChapterMapping = [
   243, 231, 65, 77, 93, 137, 156, 168, 185, 171
 ];
 
-function EndingImage({ index, endingItem, endings }) {
+function EndingImage({ index, endingKey, endingItem, endings }) {
   const { autoLang } = useContext(LanguageContext);
-  const { endingKey } = endingItem;
 
   function imageSrc() {
     return endings.includes(endingKey) ? endingItem.activeSrc : endingItem.inactiveSrc;
@@ -153,7 +146,7 @@ export default function Achievement({ chapterVisits, endings }) {
             <div className="mb-3">
               <h5>{ autoLang(endingCollectionTitle) }</h5>
               <div className="row row-cols-6">
-                { endingItems.map((endingItem, index) => <EndingImage key={index} {...{index, endingItem, endings}} />) }
+                { Object.entries(endingItems).map(([endingKey, endingItem], index) => <EndingImage key={index} {...{index, endingKey, endingItem, endings}} />) }
               </div>
             </div>
             

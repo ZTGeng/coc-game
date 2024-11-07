@@ -4,7 +4,7 @@ import { LanguageContext, CharacterSheetContext } from "../App";
 import Character from "./character/Character";
 import Chapter from "./chapter/Chapter";
 import HistoryModal from "./HistoryModal";
-import AchievementModal from "./AchievementModal";
+import AchievementModal, { endingItems } from "./AchievementModal";
 import { showToast } from "./ToastMessage";
 import { setFlag, FlagCheckContext, createFlagCheck, snapshotFlag, setFlagWithSnapshot } from "../store/slices/flagSlice";
 import { addOrUpdateHighlight, removeHighlight, clearHighlights } from "../store/slices/highlightSlice";
@@ -155,6 +155,14 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       const alreadyCollected = endings.includes(param);
       if (!alreadyCollected) {
         setEndings([...endings, param]);
+        const endingItem = endingItems[param];
+        console.log(`Game - action_ending: ${param}, ${JSON.stringify(endingItem)}`);
+        const endingText = endingItem.hidden ? { zh: "隐藏结局", en: "Hidden Ending" } : { zh: "新结局", en: "New Ending" };
+        showToast({
+          title: autoLang(endingText),
+          text: autoLang(endingItem.descText),
+          color: "success",
+        });
       }
       return { alreadyCollected };
     },
