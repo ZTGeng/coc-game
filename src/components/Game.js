@@ -75,7 +75,6 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       return occupationSkillsNum < occupationSkillsMaxNum;
     },
     "flag_skills_hobby_unfinished": () => Object.keys(skillsStore).filter(skillKey => skillsStore[skillKey].hobby).length < 4,
-    // "flag_hp_zero": () => attrsStore.HP.value <= 0,
     "flag_key_less_than_value": (param) => {
       const key = param.key;
       const value = param.value;

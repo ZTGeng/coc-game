@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import './App.css';
 import Cover from './components/Cover';
 import ConfigModal from './components/ConfigModal';
+import SaveLoad from './components/SaveLoad';
 import ToastMessages from './components/ToastMessage';
 import Game from './components/Game';
 import { resetCharacter } from './store/slices/characterSlice';
@@ -14,7 +15,7 @@ import characterSheet from './utils/characterSheet';
 
 export const LanguageContext = createContext();
 export const CharacterSheetContext = createContext(characterSheet);
-const localStorageKey = "coc-state";
+// const localStorageKey = "coc-state";
 const initLanguage = window.navigator.language.startsWith("zh") ? "zh" : "en";
 
 const title = {
@@ -49,20 +50,8 @@ const configTooltip = {
   en: "Configuration",
   zh: "设置",
 };
-const saveConfirmText = {
-  en: "Save progress?",
-  zh: "保存进度？",
-};
-const overwriteConfirmText = {
-  zh: "覆盖之前的存档？",
-  en: "Overwrite the previous save?"
-};
-const loadConfirmText = {
-  zh: "舍弃未保存的进度？",
-  en: "Discard unsaved progress?"
-};
 
-function Header({ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }) {
+function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
   const { autoLang } = useContext(LanguageContext);
 
   return (
@@ -105,7 +94,7 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLo
         </div>
 
         <div title={ autoLang(saveTooltip) }>
-          <button className="btn btn-outline-light" onClick={onSaveGame} disabled={!gameStarted}>
+          <button className="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#save-modal" disabled={!gameStarted}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path d="M4.75 0A2.75 2.75 0 0 0 2 2.75v16.5A2.75 2.75 0 0 0 4.75 22h11a.75.75 0 0 0 0-1.5h-11c-.69 0-1.25-.56-1.25-1.25V18A1.5 1.5 0 0 1 5 16.5h7.25a.75.75 0 0 0 0-1.5H5c-.546 0-1.059.146-1.5.401V2.75c0-.69.56-1.25 1.25-1.25H18.5v7a.75.75 0 0 0 1.5 0V.75a.75.75 0 0 0-.75-.75H4.75Z"></path>
               <path d="m20 13.903 2.202 2.359a.75.75 0 0 0 1.096-1.024l-3.5-3.75a.75.75 0 0 0-1.096 0l-3.5 3.75a.75.75 0 1 0 1.096 1.024l2.202-2.36v9.348a.75.75 0 0 0 1.5 0v-9.347Z"></path>
@@ -114,7 +103,7 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLo
         </div>
 
         <div title={ autoLang(loadTooltip) }>
-          <button className="btn btn-outline-light" onClick={onLoadGame} disabled={!(localStorageKey in localStorage)}>
+          <button className="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#load-modal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path d="M1.875 2.875a2.5 2.5 0 0 1 2.5-2.5h14a.75.75 0 0 1 .75.75v9.125a.75.75 0 0 1-1.5 0V1.875H4.375a1 1 0 0 0-1 1v11.208a2.486 2.486 0 0 1 1-.208h5.937a.75.75 0 1 1 0 1.5H4.375a1 1 0 0 0-1 1v1.75a1 1 0 0 0 1 1h6a.75.75 0 0 1 0 1.5h-6a2.5 2.5 0 0 1-2.5-2.5V2.875Z"></path>
               <path d="M18.643 20.484a.749.749 0 1 0 1.061 1.06l3.757-3.757a.75.75 0 0 0 0-1.06l-3.757-3.757a.75.75 0 0 0-1.061 1.06l2.476 2.477H13a.75.75 0 0 0 0 1.5h8.12l-2.477 2.477Z"></path>
@@ -190,20 +179,13 @@ function App() {
     setShowCharacter(!showCharacter);
   }
 
-  function onSaveGame() {
-    if (window.confirm(autoLang(saveConfirmText))) {
-      setSaveLoad({ action: "save", saveKey: localStorageKey });
-    }
+  function onSaveGame(localStorageKey) {
+    setSaveLoad({ action: "save", saveKey: localStorageKey });
   }
 
-  function onLoadGame() {
-    console.log("Load game.");
-    if (localStorageKey in localStorage) {
-      if (window.confirm(autoLang(loadConfirmText))) {
-        setGameStarted(true);
-        setSaveLoad({ action: "load", saveKey: localStorageKey });
-      }
-    }
+  function onLoadGame(localStorageKey) {
+    setGameStarted(true);
+    setSaveLoad({ action: "load", saveKey: localStorageKey });
   }
 
   function playSound(sound) {
@@ -228,6 +210,7 @@ function App() {
         </div>
         <ToastMessages />
         <ConfigModal {...{ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
+        <SaveLoad {...{ onSaveGame, onLoadGame }} />
         <audio ref={musicRef} src="audio/music.mp3" type="audio/mpeg" loop volume={musicVolume} />
       </CharacterSheetContext.Provider>
     </LanguageContext.Provider>

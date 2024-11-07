@@ -1,39 +1,20 @@
 import { Toast } from 'bootstrap';
 
-function createToast( title, subtitle, text, color ) {
-  const toast = document.createElement("div");
-  toast.classList.add("toast", `text-bg-${color || "dark"}`);
-  toast.setAttribute("role", "alert");
-  toast.setAttribute("aria-live", "assertive");
-  toast.setAttribute("aria-atomic", "true");
+function createToast(title, subtitle, text, color) {
+  const template = `
+    <div class="toast text-bg-${color || "dark"}" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">${title || ""}</strong>
+        <small>${subtitle || ""}</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">${text || ""}</div>
+    </div>
+  `;
 
-  const toastHeader = document.createElement("div");
-  toastHeader.classList.add("toast-header");
-
-  const toastTitle = document.createElement("strong");
-  toastTitle.classList.add("me-auto");
-  toastTitle.innerText = title || "";
-  toastHeader.appendChild(toastTitle);
-
-  const toastSubtitle = document.createElement("small");
-  toastSubtitle.innerText = subtitle || "";
-  toastHeader.appendChild(toastSubtitle);
-
-  const toastCloseButton = document.createElement("button");
-  toastCloseButton.setAttribute("type", "button");
-  toastCloseButton.classList.add("btn-close");
-  toastCloseButton.setAttribute("data-bs-dismiss", "toast");
-  toastCloseButton.setAttribute("aria-label", "Close");
-  toastHeader.appendChild(toastCloseButton);
-
-  toast.appendChild(toastHeader);
-  
-  const toastBody = document.createElement("div");
-  toastBody.classList.add("toast-body");
-  toastBody.innerText = text || "";
-  toast.appendChild(toastBody);
-
-  return toast;
+  const templateElement = document.createElement("div");
+  templateElement.innerHTML = template.trim();
+  return templateElement.firstChild;
 }
 
 export default function ToastMessages() {
