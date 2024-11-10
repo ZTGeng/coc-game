@@ -55,7 +55,7 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
   const { autoLang } = useContext(LanguageContext);
 
   return (
-    <nav className="navbar bg-body-tertiary shadow-sm mb-2">
+    <nav className="navbar fixed-top bg-body-tertiary shadow-sm px-3 pt-1" style={{ height: "3rem" }}>
       <div className="container-fluid">
         <span className="navbar-brand mb-0 h1">{ autoLang(title) }</span>
         
@@ -126,9 +126,9 @@ function Header({ gameStarted, toggleShowCharacter, mapEnabled }) {
 
 function Footer() {
   return (
-    <footer className="pb-3">
-      <hr className="mb-0" />
-      <span className="text-secondary">Game content belongs to the original creators. © 2024 by @ztgeng for the software.</span>
+    <footer className="fixed-bottom bg-body-tertiary shadow small"  style={{ height: "1.5rem" }}>
+      <hr className="m-0" />
+      <span className="px-3">Game content belongs to the original creators. © 2024 by @ztgeng for the software.</span>
     </footer>
   )
 }
@@ -201,13 +201,9 @@ function App() {
   return (
     <LanguageContext.Provider value={{ language, setLanguage, autoLang }}>
       <CharacterSheetContext.Provider value={characterSheet}>
-        <div className="d-flex flex-column vh-100">
-          <Header {...{ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }} />
-          <div className="flex-grow-1">
-            {gameStarted ? <Game {...{ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }} /> : <Cover onStart={startGame} />}
-          </div>
-          <Footer />
-        </div>
+        {gameStarted ? <Game {...{ showCharacter, setShowCharacter, mapEnabled, setMapEnabled, saveLoad, playSound }} /> : <Cover onStart={startGame} />}
+        <Header {...{ gameStarted, toggleShowCharacter, mapEnabled, onSaveGame, onLoadGame }} />
+        <Footer />
         <ToastMessages />
         <ConfigModal {...{ gameStarted, onRestart, musicVolume, setMusicVolume, sfxVolume, setSfxVolume }} />
         <SaveLoad {...{ onSaveGame, onLoadGame }} />

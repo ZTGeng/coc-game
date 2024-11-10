@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect } from "react";
 import { LanguageContext, CharacterSheetContext } from "../../App";
-import Chapter0 from "./Chapter0";
 import GoToOptions from "./GoToOptions";
 import Check from "./Check";
 import MapModal from "../MapModal";
@@ -32,10 +31,6 @@ const historyItemTexts = {
 
 };
 
-function Loading({ autoLang }) {
-  return autoLang({ zh: <p>"加载中..."</p>, en: <p>"Loading..."</p> });
-}
-
 function getExcerpt(text) {
   return Object.keys(text)
     .map(lang => {
@@ -46,40 +41,90 @@ function getExcerpt(text) {
     .reduce((acc, cur) => ({ ...acc, ...cur }), {});
 }
 
-function ChapterContent({ chapterText }) {
-  const { autoLang } = useContext(LanguageContext);
+function Background({ imageFilename }) {
 
-  return autoLang(chapterText).map((item, index) => {
-    if (item.tag === "div") {
-      return item.imageOn === "left" ? (
-        <div key={index} className="row">
-          <div className="col-md-4"><img src={item.imageSrc} className="img-fluid" /></div>
-          <div className="col-md-8">{ item.text.map((line, i) => <p key={i}>{ line.content }</p>) }</div>
-        </div>
-      ) : (
-        <div key={index} className="row">
-          <div className="col-md-8">{ item.text.map((line, i) => <p key={i}>{ line.content }</p>) }</div>
-          <div className="col-md-4"><img src={item.imageSrc} className="img-fluid" /></div>
-        </div>
-      );
-    }
-    if (item.tag === "info") {
-      return (
-        <div key={index} className="card border-secondary mb-3">
-          <div className="card-body text-secondary">
-            { item.text.map((line, i) => <p key={i} className="card-text">{ line.content }</p>) }
+  return (
+    <div className="position-fixed top-0 start-0 w-100 h-100 z-n1 pt-5 pb-4">
+      {imageFilename && <img 
+        src={`images/${imageFilename}`}
+        className="w-100 h-100"
+        onError={(e) => { e.target.style.display = 'none'; }}
+        onLoad={(e) => { e.target.style.display = 'block'; }}
+        style={{ display: 'none' }} />}
+    </div>
+  );
+}
+
+function CursorButton({ onCursorClick }) {
+  const [isHover, setIsHover] = useState(false);
+
+  return (
+    <button className="btn btn-outline-dark"
+            onClick={(e) => { e.stopPropagation(); onCursorClick(); }}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <path d="M5.22 8.22a.749.749 0 0 0 0 1.06l6.25 6.25a.749.749 0 0 0 1.06 0l6.25-6.25a.749.749 0 1 0-1.06-1.06L12 13.939 6.28 8.22a.749.749 0 0 0-1.06 0Z"></path>
+        <animate attributeName="opacity" values="1;0;1" dur={isHover ? "0.5s" : "1s"} repeatCount="indefinite" />
+      </svg>
+    </button>
+  );
+}
+
+function ChapterContent({ chapterText, showCursor, onCursorClick }) {
+
+  return chapterText.map((item, index) => {
+    switch (item.tag) {
+      case "div":
+        return item.imageOn === "left" ? (
+          <div key={index} className="row">
+            <div className="col-md-4"><img src={item.imageSrc} className="img-fluid" /></div>
+            <div className="col-md-8">
+              {item.text.map((line, i) => <p key={i} className="bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>{line.content}</p>)}
+            </div>
           </div>
-        </div>
-      )
+        ) : (
+          <div key={index} className="row">
+            <div className="col-md-8">
+              {item.text.map((line, i) => <p key={i} className="bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>{line.content}</p>)}
+            </div>
+            <div className="col-md-4"><img src={item.imageSrc} className="img-fluid" /></div>
+          </div>
+        );
+      case "info":
+        return (
+          <div key={index} className="card border-secondary my-3">
+            <div className="card-body text-secondary">
+              {item.text.map((line, i) => <p key={i} className="card-text">{line.content}</p>)}
+            </div>
+          </div>
+        );
+      case "img":
+        return <img key={index} src={item.imageSrc} className="img-fluid" />;
+      case "h":
+        return <h2 key={index} className="text-center bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>{item.content}</h2>;
+      case "a":
+        const aOpenIndex = item.content.indexOf("<a>");
+        const aCloseIndex = item.content.indexOf("</a>");
+        return aOpenIndex < 0 || aCloseIndex < 0 ? (
+          <p key={index} className="bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>
+            {item.content}
+          </p>
+        ) : (
+          <p key={index} className="bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>
+            {item.content.slice(0, aOpenIndex)}
+            <a href={item.href} target="_blank">{item.content.slice(aOpenIndex + 3, aCloseIndex)}</a>
+            {item.content.slice(aCloseIndex + 4)}
+          </p>
+        );
+      default:
+        return <p key={index} className="bg-white p-2 mb-0" style={{ "--bs-bg-opacity": .8 }}>{item.content}</p>;
     }
-    if (item.tag === "img") {
-      return <img key={index} src={item.imageSrc} className="img-fluid" />
-    }
-    if (item.tag === "h") {
-      return <h2 key={index}>{ item.content }</h2>
-    }
-    return <p key={index}>{ item.content }</p>
-  });
+  }).concat(showCursor ? (
+    <div className="text-end text-primary me-3">
+      <CursorButton {...{ onCursorClick }} />
+    </div>
+  ) : null);
 }
 
 function InteractionButton({ interaction, onAction }) {
@@ -130,19 +175,20 @@ function Interactions({ interactions, committedMP, onAction }) {
   );
 }
 
-export default function Chapter({ chapterKey, committedMP, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction }) {
+export default function Chapter({ chapterKey, committedMP, isReloading, onNextChapter, onUpdateSnapshot, onChapterAction, scrollChapterToBottom }) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
   const [chapter, setChapter] = useState(null);
   const [interactionFinished, setInteractionFinished] = useState(false);
   const [rollFlags, setRollFlags] = useState(initRollFlags);
-  console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}`);
+  const [showLineNum, setShowLineNum] = useState(1);
+  const [showActions, setShowActions] = useState(false);
+  // const contentRef = useRef();
   const parentFlagCheck = useFlagCheck();
+  console.log(`Chapter refresh: ${chapter?.key ?? "start"} => ${chapterKey}, isReloading: ${isReloading}, showLineNum: ${showLineNum}, showActions: ${showActions}`);
 
   useEffect(() => {
     console.log(`Chapter - useEffect: chapterKey: ${chapterKey}, chapter(state): ${chapter && chapter.key}`);
-
-    if (chapterKey === 0) return;
 
     fetch(`./chapters/${chapterKey}.json`)
       .then(response => response.json())
@@ -156,26 +202,10 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
         onUpdateSnapshot();
 
         onChapterAction("action_clear_highlight", "");
-        if (data.check) {
-          switch (data.check.type) {
-            case "roll":
-              onChapterAction("action_set_highlight", { key: data.check.key, level: data.check.level });
-              break;
-            case "roll_select":
-              data.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { key: roll.key, level: roll.level }));
-              break;
-            case "opposed_roll":
-              onChapterAction("action_set_highlight", { key: data.check.key, level: "all" });
-              break;
-            case "combat":
-              onChapterAction("action_set_highlight", { key: "dodge", level: "all" });
-              onChapterAction("action_set_highlight", { key: "fighting", level: "all" });
-              break;
-          }
-        }
-
         setInteractionFinished(false);
         setRollFlags(initRollFlags);
+        setShowLineNum(1);
+        setShowActions(false);
 
         setChapter(data);
 
@@ -186,6 +216,13 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
         }
       });
   }, [chapterKey]);
+
+  useEffect(() => {
+    // console.log(`Scroll!: showLineNum: ${showLineNum}, showActions: ${showActions}`);
+    setTimeout(() => {
+    scrollChapterToBottom();
+    }, 100);
+  }, [showLineNum, showActions]);
 
   const chapterFlagFunc = {
     "flag_interaction_finished": () => interactionFinished,
@@ -376,23 +413,60 @@ export default function Chapter({ chapterKey, committedMP, isReloading, onNextCh
     onNextChapter(nextKey, chapter.options.filter(option => !option.show).length > 1 ? historyItem : null);
   }
 
-  if (chapterKey === 0) {
-    return <Chapter0 onOptionSelected={(next, _) => onNextChapter(next)} />;
+  function setActionHighlights() {
+    if (chapter.check) {
+      switch (chapter.check.type) {
+        case "roll":
+          onChapterAction("action_set_highlight", { key: chapter.check.key, level: chapter.check.level });
+          break;
+        case "roll_select":
+          chapter.check.rolls.forEach(roll => onChapterAction("action_set_highlight", { key: roll.key, level: roll.level }));
+          break;
+        case "opposed_roll":
+          onChapterAction("action_set_highlight", { key: chapter.check.key, level: "all" });
+          break;
+        case "combat":
+          onChapterAction("action_set_highlight", { key: "dodge", level: "all" });
+          onChapterAction("action_set_highlight", { key: "fighting", level: "all" });
+          break;
+      }
+    }
+  }
+
+  function showNextContentItem() {
+    if (showLineNum < autoLang(chapter.text).length) {
+      setShowLineNum(showLineNum + 1);
+    } else if (!showActions) {
+      setActionHighlights();
+      setShowActions(true);
+    }
+  }
+
+  function showAllContentItems() {
+    const lineNumTotal = autoLang(chapter.text).length;
+    if (showLineNum < lineNumTotal) {
+      setShowLineNum(lineNumTotal);
+    }
+    if (!showActions) {
+      setActionHighlights();
+      setShowActions(true);
+    }
   }
 
   if (!chapter || chapter.key !== chapterKey) {
-    return <Loading {...{ autoLang }} />;
+    return <p>{autoLang({ zh: "加载中...", en: "Loading..." })}</p>;
   }
 
   return (
     <FlagCheckContext.Provider value={flagCheck}>
-      <ChapterContent chapterText={chapter.text} />
-      {chapter.interactions && <Interactions interactions={chapter.interactions} committedMP={committedMP} onAction={onInteractionAction} />}
-      {chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ rollFlags, setRollFlags }} />}
-      <br />
-      <div className="px-2">
-        <GoToOptions options={chapter.options} {...{ onOptionSelected }} />
+      <Background background={chapter.background} />
+      <div className="pb-5" style={{ minHeight: "100%" }} onClick={showNextContentItem}>
+        <ChapterContent chapterText={autoLang(chapter.text).slice(0, showLineNum)} showCursor={!showActions} onCursorClick={showAllContentItems} />
+        {showActions && chapter.interactions && <Interactions interactions={chapter.interactions} committedMP={committedMP} onAction={onInteractionAction} />}
+        {showActions && chapter.check && <Check check={chapter.check} onAction={onCheckAction} {...{ rollFlags, setRollFlags }} />}
+        {showActions && chapter.options && chapter.options.length > 0 && <GoToOptions options={chapter.options} {...{ onOptionSelected }} />}
       </div>
+      
       <MapModal mapLocation={chapter.location} />
     </FlagCheckContext.Provider>
   )

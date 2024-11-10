@@ -72,16 +72,30 @@
         "credit": 30,
         "skills": [
           "first_aid",
-          "latin",
+          "custom_lang1",
           "medicine",
           "psychology",
-          "biology",
-          "pharmacy"
+          "custom_sci1",
+          "custom_sci2"
         ],
         "interpersonal": 0,
         "language": 0,
         "art": 0,
-        "universal": 2
+        "universal": 2,
+        "customNames": {
+          "custom_lang1": {
+            "en": "Latin",
+            "zh": "拉丁语"
+          },
+          "custom_sci1": {
+            "en": "Biology",
+            "zh": "生物学"
+          },
+          "custom_sci2": {
+            "en": "Pharmacy",
+            "zh": "药学"
+          }
+        }
       }
     },
     {

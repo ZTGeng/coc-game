@@ -13,10 +13,12 @@ export default function Cover({ onStart }) {
   }
   
   return (
-    <div className="d-flex flex-column align-items-center mt-2">
-      <img src="images/cover.jpg" alt="Cover" style={{ height: "40vh" }} />
-      <button className="btn btn-outline-secondary px-5 mt-2" onClick={onStart}>{ autoLang(start) }</button>
-      <button className="btn btn-outline-secondary px-5 mt-2" data-bs-toggle="modal" data-bs-target="#config-modal">{ autoLang(config) }</button>
+    <div className="d-flex justify-content-center vh-100 pt-5 pb-4">
+      <img src="images/cover.jpg" alt="Cover" className="h-100 z-n1" />
+      <div className="position-absolute w-25 align-self-center d-grid gap-2" >
+        <button className="btn btn-light shadow-lg px-5" onClick={onStart}>{ autoLang(start) }</button>
+        <button className="btn btn-light shadow-lg px-5" data-bs-toggle="modal" data-bs-target="#config-modal">{ autoLang(config) }</button>
+      </div>
     </div>
   )
 }

@@ -19,9 +19,9 @@ const characterSheet = {
         appraise:         { key: "appraise",         value: 5, name: { zh: "估价", en: "Appraise" }, description: { en: "Can estimate the value of a particular item, including the quality, material used, and workmanship." } },
         archaeology:      { key: "archaeology",      value: 1, name: { zh: "考古学", en: "Archaeology" }, description: { en: "Allows dating and identification of artifacts from past cultures, and the detection of fakes." } },
         group_art:        { key: "group_art",        name: { zh: "艺术/手艺", en: "Art/Craft" }, description: { en: "An ability with this skill enables the creation, making, or repair of an item, which could be artistic (like painting or singing) or craft (like woodwork or cookery). Choose a suitable specialization and write this in the space provided on the sheet." }, group: true },
-        photography:      { key: "photography",      value: 5, name: { zh: "摄影", en: "Photography" }, line: true },
-        custom_art1:      { key: "custom_art1",      value: 5, unused: true, line: true, custom: true },
+        custom_art1:      { key: "custom_art1",      value: 5, line: true, custom: true },
         custom_art2:      { key: "custom_art2",      value: 5, unused: true, line: true, custom: true },
+        custom_art3:      { key: "custom_art3",      value: 5, unused: true, line: true, custom: true },
         charm:            { key: "charm",            value: 15, name: { zh: "魅惑", en: "Charm" }, description: { en: "Charm takes many forms, including physical attraction, seduction, flattery, or simply warmth of personality. Charm may be used to compel someone to act in a certain way, but not in a manner completely contrary to that person’s normal behavior. This skill can be opposed by Charm or Psychology." } },
         climb:            { key: "climb",            value: 20, name: { zh: "攀爬", en: "Climb" }, description: { en: "Can climb trees, walls, and other vertical surfaces with or without ropes and climbing gear." } },
         credit:           { key: "credit",           value: "", name: { zh: "信用评级", en: "Credit Rating" }, description: {}, noBox: true },
@@ -43,9 +43,9 @@ const characterSheet = {
         intimidate:       { key: "intimidate",       value: 15, name: { zh: "恐吓", en: "Intimidate" }, description: { en: "The use of threats (physical or psychological) to compel someone to act or reveal information. This skill can be opposed by Intimidate or Psychology." } },
         jump:             { key: "jump",             value: 20, name: { zh: "跳跃", en: "Jump" }, unused: true },
         group_lang:       { key: "group_lang",       name: { zh: "外语", en: "Language (Other)" }, description: { en: "When choosing this skill, the exact language must be specified and written next to the skill. An individual can know any number of languages, but each must be paid for in skill points. The skill represents the investigator’s chance to understand, speak, read, and write in a language other than their own." }, group: true },
-        latin:            { key: "latin",            value: 1, name: { zh: "拉丁语", en: "Latin" }, line: true },
-        custom_lang1:     { key: "custom_lang1",     value: 1, unused: true, line: true, custom: true },
+        custom_lang1:     { key: "custom_lang1",     value: 1, line: true, custom: true },
         custom_lang2:     { key: "custom_lang2",     value: 1, unused: true, line: true, custom: true },
+        custom_lang3:     { key: "custom_lang3",     value: 1, unused: true, line: true, custom: true },
         group_lang_own:   { key: "group_lang_own",   name: { zh: "母语", en: "Language (Own)" }, description: { en: "A character’s Mother Tongue. Choose the language best known to your investigator, such as English. The starting value is equal to the character’s Regular EDU score." }, group: true },
         lang_own:         { key: "lang_own",         value: "", line: true },
 
@@ -67,9 +67,9 @@ const characterSheet = {
         ride:             { key: "ride",             value: 5, name: { zh: "骑术", en: "Ride" }, description: { en: "Applies to saddle horses, donkeys, and mules, granting knowledge of basic care of the riding animal, riding gear, and how to handle the steed at a gallop or on difficult terrain. Should a steed unexpectedly rear or stumble, the rider’s chance of remaining mounted equals their Ride skill." } },
 
         group_sci:        { key: "group_sci",        name: { zh: "科学", en: "Science" }, description: { en: "Practical and theoretical ability with a science specialty gained from some degree of formalized education and training, although a well-read amateur scientist may also be a possibility. Understanding and scope is limited by the era of play. Spend skill points to purchase any skill Specialization, for example: Astronomy, Biology, Botany, Chemistry, Cryptography, Geology, Pharmacy, Physics, Zoology, etc. When a character does not have the obvious discipline specialty, they may roll against an allied specialty with the level of difficulty increased (or a penalty die) at the Keeper’s discretion." }, group: true },
-        biology:          { key: "biology",          value: 1, name: { zh: "生物学", en: "Biology" }, line: true },
-        pharmacy:         { key: "pharmacy",         value: 1, name: { zh: "药学", en: "Pharmacy" }, line: true },
-        custom_sci:       { key: "custom_sci",       value: 1, unused: true, line: true, custom: true },
+        custom_sci1:      { key: "custom_sci1",      value: 1, line: true, custom: true },
+        custom_sci2:      { key: "custom_sci2",      value: 1, line: true, custom: true },
+        custom_sci3:      { key: "custom_sci3",      value: 1, unused: true, line: true, custom: true },
         sleight:          { key: "sleight",          value: 10, name: { zh: "巧手", en: "Sleight of Hand" }, description: { en: "Allows the visual covering-up, secreting, or masking of an object or objects, perhaps with debris, cloth, or other illusion-promoting materials. Also, fine dexterity and manipulation of objects." }, unused: true },
         spot:             { key: "spot",             value: 25, name: { zh: "侦查", en: "Spot Hidden" }, description: { en: "Find a secret door or compartment, notice a hidden intruder, see an inconspicuous clue, recognize a repainted automobile, become aware of ambushers, notice a bulging pocket, etc.—an important skill in the armory of an investigator. When an investigator is searching for a character who is hiding, the opponent’s Stealth skill is used to set the difficulty level for the roll." } },
         stealth:          { key: "stealth",          value: 20, name: { zh: "潜行", en: "Stealth" }, description: { en: "When attempting to avoid detection, moving quietly, and hiding without alerting those who might hear or see." } },
@@ -90,9 +90,16 @@ const characterSheet = {
     occupationTitie: { zh: "职业", en: "Occupation" },
     characteristicsTitle: { zh: "属性", en: "CHARACTERISTICS" },
     skillsTitle: { zh: "调查员技能", en: "INVESTIGATOR SKILLS" },
+    interpersonalSkillsName: { zh: "魅惑、话术、恐吓、说服其中一项", en: "One of either Charm, Fast Talk, Intimidate, or Persuade" },
+    universalSkillName: { zh: "任意", en: "Any" },
+    hobbySkillsTitle: { zh: "兴趣技能：", en: "Personal Interest Skills: " },
     lockUnusedButtonText: { zh: "锁定用不到的技能", en: "Lock Those You Won't Use" },
     weaponsTitie: { zh: "武器", en: "WEAPONS" },
     combatTitle: { zh: "战斗", en: "COMBAT" },
+
+    majorWound: { zh: "重伤", en: "Major Wound" },
+    dying: { zh: "濒死", en: "Dying" },
+    unconscious: { zh: "昏迷", en: "Unconscious" },
 
     weapons: {
         tableHeader: {

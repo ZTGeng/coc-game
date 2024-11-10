@@ -25,27 +25,23 @@ export default function Skills({}) {
   const isHobbySkillsEditing = flagCheck("flag_hobby_skills_editable");
 
   return (
-    <div className="row">
-      <div className="col px-0">
-        <div className="card">
-          <h6 className="card-header">
-            { autoLang(characterSheet.skillsTitle) }
-          </h6>
-          {isOccupationSkillsEditing
-            ? <SkillsEditableForOccupation />
-            : isHobbySkillsEditing
-              ? <SkillsEditableForHobby />
-              : <SkillsTable cellType={
-                Object.keys(skillStore)
-                  .reduce((acc, key) => {
-                    // On non-editable page, the unselected custom skills are disabled
-                    const isDisabled = characterSheet.skills[key].custom && !skillStore[key].occupation && !skillStore[key].hobby;
-                    acc[key] = { isDisabled, isEditable: false, isClickable: false };
-                    return acc;
-                  }, {})
-              } />}
-        </div>
-      </div>
+    <div className="card">
+      <h6 className="card-header">
+        {autoLang(characterSheet.skillsTitle)}
+      </h6>
+      {isOccupationSkillsEditing
+        ? <SkillsEditableForOccupation />
+        : isHobbySkillsEditing
+          ? <SkillsEditableForHobby />
+          : <SkillsTable cellType={
+            Object.keys(skillStore)
+              .reduce((acc, key) => {
+                // On non-editable page, the unselected custom skills are disabled
+                const isDisabled = characterSheet.skills[key].custom && !skillStore[key].occupation && !skillStore[key].hobby;
+                acc[key] = { isDisabled, isEditable: false, isClickable: false };
+                return acc;
+              }, {})
+          } />}
     </div>
   );
 }
@@ -272,7 +268,7 @@ function SkillsEditableForHobby() {
     <>
       <div className="card-header">
         <div className="d-flex flex-wrap">
-          <div className="ms-3">兴趣技能点：<span className="badge text-bg-light">{ availableNum - selectedSkills.length }</span></div>
+          <div className="ms-3">{autoLang(characterSheet.hobbySkillsTitle)}<span className="badge text-bg-light">{ availableNum - selectedSkills.length }</span></div>
           <button className={"btn btn-sm ms-auto" + (lockUnused ? " btn-outline-secondary" : " btn-outline-dark")} onClick={toggleLockUnused}>
             { autoLang(characterSheet.lockUnusedButtonText) }
           </button>
@@ -286,6 +282,8 @@ function SkillsEditableForHobby() {
 function OccupationSkill({ skillKey, availableSkills }) {
   const { autoLang } = useContext(LanguageContext);
   const characterSheet = useContext(CharacterSheetContext);
+  const customName = useSelector(state => state.character.skillCustomNames[skillKey]);
+
   let text, points;
   switch (skillKey) {
     case "art":
@@ -297,21 +295,11 @@ function OccupationSkill({ skillKey, availableSkills }) {
       points = availableSkills.language;
       break;
     case "interpersonal":
-      text = {
-        zh: `${interpersonalSkills.map(skillKey => characterSheet.skills[skillKey].name.zh).join("、")}其中一项`,
-        en: `One of either ${
-          interpersonalSkills
-            .slice(0, -1)
-            .map(skillKey => characterSheet.skills[skillKey].name.en)
-            .join(", ")
-            .concat(", or ")
-            .concat(characterSheet.skills[interpersonalSkills[interpersonalSkills.length - 1]].name.en)
-        }`,
-      };
+      text = characterSheet.interpersonalSkillsName;
       points = availableSkills.interpersonal;
       break;
     case "universal":
-      text = { zh: "任意", en: "Any", };
+      text = characterSheet.universalSkillName;
       points = availableSkills.universal;
       break;
     case "lang_own":
@@ -322,7 +310,7 @@ function OccupationSkill({ skillKey, availableSkills }) {
       if (!characterSheet.skills[skillKey]) {
         console.error(`Cannot find skill ${skillKey} in characterSheet.skills`);
       }
-      text = characterSheet.skills[skillKey].name;
+      text = characterSheet.skills[skillKey].name || customName;
       points = availableSkills[skillKey];
   };
 
@@ -348,9 +336,9 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected })
           <SkillCell skillKey={ "appraise" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "archaeology" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_art" } />
-          <SkillCell skillKey={ "photography" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "custom_art1" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "custom_art2" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_art3" }      {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "charm" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "climb" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "credit" }           {...{ cellType, isForHobby, availableValues, onValueSelected }} />
@@ -373,9 +361,9 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected })
           <SkillCell skillKey={ "intimidate" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "jump" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_lang" } />
-          <SkillCell skillKey={ "latin" }            {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "custom_lang1" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "custom_lang2" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_lang3" }     {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "group_lang_own" } />
           <SkillCell skillKey={ "lang_own" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
         </div>
@@ -399,9 +387,9 @@ function SkillsTable({ cellType, isForHobby, availableValues, onValueSelected })
         </div>
         <div className="col-xl-3 col-6 order-4 vstack gap-1 px-1">
           <SkillCell skillKey={ "group_sci" } />
-          <SkillCell skillKey={ "biology" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "pharmacy" }         {...{ cellType, isForHobby, availableValues, onValueSelected }} />
-          <SkillCell skillKey={ "custom_sci" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_sci1" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_sci2" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
+          <SkillCell skillKey={ "custom_sci3" }       {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "sleight" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "spot" }             {...{ cellType, isForHobby, availableValues, onValueSelected }} />
           <SkillCell skillKey={ "stealth" }          {...{ cellType, isForHobby, availableValues, onValueSelected }} />

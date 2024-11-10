@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LanguageContext, CharacterSheetContext } from '../../App';
 import { useFlagCheck } from "../../store/slices/flagSlice";
-import { findHighlight } from "../../store/slices/highlightSlice";
 import { setName, setAge } from "../../store/slices/characterSlice";
 import Characteristics from './Characteristics';
+import Attributes from "./Attributes";
 import Skills from './Skills';
 import * as utils from '../../utils/utils';
 
@@ -17,8 +17,8 @@ function Info({}) {
   const occupationName = autoLang(occupationStore.name);
 
   return (
-    <div className="row mt-4">
-      <div className="col-xl-12 col-md-4 col-8 form-floating mb-2">
+    <div className="row">
+      <div className="col-xl-12 col-md-4 col-sm-12 form-floating mb-3">
         <input type="text" 
                className="form-control focus-ring focus-ring-light border-0 px-0" 
                id="nameInput" 
@@ -28,7 +28,7 @@ function Info({}) {
         <label htmlFor="nameInput" className="small form-label">{ autoLang(characterSheet.nameTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
-      <div className="col-xl-12 col-md-2 col-4 form-floating mb-2">
+      <div className="col-xl-12 col-md-2 col-sm-12 form-floating mb-3">
         <input type="number"
                className="form-control focus-ring focus-ring-light border-0 px-0" 
                id="ageInput" 
@@ -38,7 +38,7 @@ function Info({}) {
         <label htmlFor="ageInput" className="small form-label">{ autoLang(characterSheet.ageTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
       </div>
-      <div className="col-xl-12 col-md-6 col-12 form-floating mb-2">
+      <div className="col-xl-12 col-md-6 col-sm-12 form-floating mb-3">
         <input type="text" 
                className="form-control focus-ring focus-ring-light border-0 px-0" 
                style={{ fontSize: occupationName.length > 12 ? "0.8rem" : "1rem" }}
@@ -48,66 +48,6 @@ function Info({}) {
                value={ occupationName } />
         <label htmlFor="occupationInput" className="small form-label">{ autoLang(characterSheet.occupationTitie) }</label>
         <hr className="" style={{ marginBottom: "0px", marginTop: "-10px"}} />
-      </div>
-    </div>
-  )
-}
-
-function Attributes({}) {
-  const { autoLang } = useContext(LanguageContext);
-  const characterSheet = useContext(CharacterSheetContext);
-  const attrStore = useSelector(state => state.character.attrs);
-  const highlightStore = useSelector(state => state.highlight);
-
-  function getHighlightClassName(attrKey) {
-    const highlight = findHighlight(highlightStore, attrKey);
-    if (highlight ) {
-      if (highlight.color === "danger") {
-        return ` text-bg-danger`;
-      }
-      return ` table-${highlight.color || "warning"}`;
-    } else {
-      return "";
-    }
-  }
-
-  return (
-    <div className="row">
-      <div className="col-xl-6 col-12 d-flex">
-        <table className="table table-borderless text-center align-middle">
-          <tbody>
-              <tr>
-                <th>{ autoLang(characterSheet.HP.name) }</th>
-                <td className={"border" + getHighlightClassName("HP")}>{ attrStore.HP.value }/{ attrStore.HP.maxValue }</td>
-              </tr>
-          </tbody>
-        </table>
-        <table className="table table-borderless text-center align-middle">
-          <tbody>
-              <tr>
-                <th>{ autoLang(characterSheet.San.name) }</th>
-                <td className={"border" + getHighlightClassName("San")}>{ attrStore.San.value }/{ attrStore.San.maxValue }</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="col-xl-6 col-12 d-flex">
-        <table className="table table-borderless text-center align-middle">
-          <tbody>
-              <tr>
-                <th>{ autoLang(characterSheet.Luck.name) }</th>
-                <td className={"border" + getHighlightClassName("Luck")}>{ attrStore.Luck.value }</td>
-              </tr>
-          </tbody>
-        </table>
-        <table className="table table-borderless text-center align-middle">
-          <tbody>
-              <tr>
-                <th>{ autoLang(characterSheet.MP.name) }</th>
-                <td className={"border" + getHighlightClassName("MP")}>{ attrStore.MP.value }/{ attrStore.MP.maxValue }</td>
-              </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   )
@@ -248,22 +188,22 @@ export default function Character({ onCharacterAction }) {
   console.log(`Character refresh`);
 
   return (
-    <div className="d-flex flex-column ms-2">
-      <div className="row">
-        <div className="col-xl-3">
+    <div className="d-flex flex-column bg-white p-2" style={{ "--bs-bg-opacity": .8 }}>
+      <div className="row gx-2">
+        <div className="col-xl-3 col-md-12 col-sm-3">
           <Info />
         </div>
-        <div className="col mb-3 px-0">
+        <div className="col mb-3">
           <Characteristics />
         </div>
       </div>
       <Attributes />
       <Skills />
-      <div className="row mt-1">
-        <div className="col-8 px-0">
+      <div className="row gx-2 mt-1">
+        <div className="col-8">
           <Weapons />
         </div>
-        <div className="col-4 pe-0 ps-1">
+        <div className="col-4 ps-1">
           <CombatData />
         </div>
       </div>

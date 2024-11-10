@@ -65,7 +65,7 @@
         },
         "credit": 20,
         "skills": [
-          "photography",
+          "custom_art1",
           "history",
           "library",
           "lang_own",
@@ -74,7 +74,13 @@
         "interpersonal": 1,
         "language": 0,
         "art": 0,
-        "universal": 2
+        "universal": 2,
+        "customNames": {
+          "custom_art1": {
+            "zh": "摄影",
+            "en": "Photography"
+          }
+        }
       }
     },
     {

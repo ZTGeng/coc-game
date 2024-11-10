@@ -65,7 +65,7 @@
         },
         "credit": 20,
         "skills": [
-          "photography",
+          "custom_art1",
           "disguise",
           "law",
           "library",
@@ -75,7 +75,13 @@
         "interpersonal": 1,
         "language": 0,
         "art": 0,
-        "universal": 1
+        "universal": 1,
+        "customNames": {
+          "custom_art1": {
+            "zh": "摄影",
+            "en": "Photography"
+          }
+        }
       }
     },
     {

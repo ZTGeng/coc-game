@@ -38,7 +38,7 @@ function GroupSkillCell({ skillUI }) {
   );
 }
 
-function NameThTag({ skillKey, isDisabled, isEditable }) {
+function NameThTag({ skillKey, isDisabled }) {
   const { autoLang } = useContext(LanguageContext);
   const skillUI = useContext(CharacterSheetContext).skills[skillKey];
   const customName = useSelector(state => state.character.skillCustomNames[skillKey]);
@@ -58,18 +58,23 @@ function NameThTag({ skillKey, isDisabled, isEditable }) {
       </th>
     );
   }
+
+  const isMultilingualCustomName = Object.prototype.toString.call(customName) === "[object Object]";
   return (
     <th rowSpan="2" 
         scope="row"
         className={className}
         style={{ fontSize: "0.75rem", width: "5rem", height: "2rem" }}>
-      { isEditable 
-        ? <input type="text"
-                 className="border-0 p-0"
-                 style={{ width: "95%" }}
-                 value={customName}
-                 onChange={e => dispatch(setSkillCustomName({ skillKey, customName: e.target.value}))} /> 
-        : customName || <span>&nbsp;</span> }
+      {
+        isMultilingualCustomName // Multilingual custom names are from the occupation, hence not editable
+          ? autoLang(customName)
+          : <input
+              type="text"
+              className="border-0 p-0"
+              style={{ width: "95%" }}
+              value={customName || ""}
+              onChange={e => dispatch(setSkillCustomName({ skillKey, customName: e.target.value}))} />
+      }
       { skillUI.line ? <hr className="m-0 mt-1" /> : null }
     </th>
   );  
@@ -79,7 +84,6 @@ function DisabledSkillCell({ skillKey }) {
   const characterSheet = useContext(CharacterSheetContext);
   const skillUI = characterSheet.skills[skillKey];
   const isDisabled = true;
-  const isEditable = false;
   return (
     <table className="table text-center align-middle cell m-0">
       <tbody>
@@ -87,7 +91,7 @@ function DisabledSkillCell({ skillKey }) {
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
             <input type="checkbox" className={ skillUI.noBox ? "invisible" : "" } disabled="disabled"/>
           </td> 
-            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
+            <NameThTag {...{ skillKey, isDisabled }} />
           <td rowSpan="2" className="table-light border border-end-0 p-0" style={{ width: "1.2rem" }}></td>
           <td className="table-light border border-bottom-0 small p-0" style={{ width: "1.2rem", height: "1rem" }}></td>
         </tr>
@@ -106,7 +110,6 @@ function PlainSkillCell({ skillKey }) {
   const skillUI = characterSheet.skills[skillKey];
   const highlightStore = useSelector(state => state.highlight);
   const isDisabled = false;
-  const isEditable = false;
 
   function getHighlightClassName(level) {
     const highlight = findHighlight(highlightStore, skillKey);
@@ -124,7 +127,7 @@ function PlainSkillCell({ skillKey }) {
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
             <input type="checkbox" className={skillUI.noBox ? "invisible" : ""} disabled="disabled" checked={isChecked} />
           </td>
-            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
+            <NameThTag {...{ skillKey, isDisabled }} />
           <td rowSpan="2" className={"border border-end-0 p-0" + getHighlightClassName("value")} style={{ fontSize: "0.75rem", width: "1.2rem" }}>{skill.value}</td>
           <td className={"border border-bottom-0 small p-0" + getHighlightClassName("half")} style={{ fontSize: "0.6rem", width: "1.2rem", height: "1rem" }}>{skill.value && Math.floor(skill.value / 2)}</td>
         </tr>
@@ -142,7 +145,6 @@ function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues,
   const characterSheet = useContext(CharacterSheetContext);
   const skillUI = characterSheet.skills[skillKey];
   const isDisabled = false;
-  const isEditable = true;
   const isSelectedValue = skill.occupation || skill.hobby;
 
   const values = [...availableValues];
@@ -174,7 +176,7 @@ function EditableSkillCell({ skillKey, isClickable, isForHobby, availableValues,
           <td rowSpan="2" className="border-0 p-0" style={{ width: "1rem" }}>
             <input type="checkbox" className={ skillUI.noBox ? "invisible" : "" } disabled="disabled" checked={isChecked}/>
           </td>
-            <NameThTag {...{ skillKey, isDisabled, isEditable }} />
+            <NameThTag {...{ skillKey, isDisabled }} />
           <td rowSpan="2" className={"border p-0" + (isSelectedValue ? " bg-warning" : "")} style={{ fontSize: "0.75rem", width: "2.35rem" }}>
             <select className={"border-0" + (isSelectedValue ? " bg-warning" : "")} value={skill.value} onChange={onSelectChange} disabled={!isClickable}>
               { values.map((v, i) => <option className="bg-light" key={i} value={v}>{ v }</option>) }

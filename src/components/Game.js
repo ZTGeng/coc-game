@@ -20,6 +20,7 @@ import {
   snapshotUpdatedSkills,
   checkSkillBox,
   setCheckedSkills,
+  setSkillCustomName,
   restoreSkillCustomNames,
   setOccupation,
   setOccupationName,
@@ -48,6 +49,7 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   const occupationStore = useSelector(state => state.character.occupation);
   const historyStore = useSelector(state => state.history);
   const dispatch = useDispatch();
+  const chapterRef = useRef();
   console.log(`Game refresh, chapterKey: ${chapterKey}`);
 
   useEffect(() => {
@@ -289,9 +291,14 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       showDiceToast(autoLang(utils.TEXTS.rollLuck), 3, 6, 0, results, true);
       return { newValue };
     },
-    action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal }
+    action_set_occupation_and_credit: (param) => { // param: { name, credit, skills, art, interpersonal, language, universal, customNames }
       dispatch(setOccupation(param));
       dispatch(initSkill({ skillKey: "credit", value: param.credit }));
+      if (param.customNames) {
+        Object.entries(param.customNames).forEach(([key, value]) => {
+          dispatch(setSkillCustomName({ skillKey: key, customName: value }));
+        });
+      }
       return {};
     },
     action_enable_map: () => {
@@ -401,6 +408,9 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const skillSnapshot = latestSkillSnapshot(historyStore.items, historyIndex + 1);
     dispatch(setSkillWithSnapshot(skillSnapshot));
 
+    const customNamesSnapshot = latestCustomNamesSnapshot(historyStore.items, historyIndex + 1);
+    dispatch(restoreSkillCustomNames(customNamesSnapshot));
+
     setCommittedMP(historyItem.states.committedMP || 0);
     setMapEnabled(historyItem.states.mapEnabled);
 
@@ -411,6 +421,11 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   function latestSkillSnapshot(historyItems, historyIndex) {
     const lastItem = historyItems.slice(0, historyIndex).findLast((historyItem) => historyItem.states.skills);
     return lastItem ? lastItem.states.skills : {};
+  }
+
+  function latestCustomNamesSnapshot(historyItems, historyIndex) {
+    const lastItem = historyItems.slice(0, historyIndex).findLast((historyItem) => historyItem.states.skillCustomNames);
+    return lastItem ? lastItem.states.skillCustomNames : {};
   }
 
   const createSnapshotThunk = () => (dispatch, getState) => {
@@ -428,6 +443,12 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
     const lastSkillSnapshot = latestSkillSnapshot(state.history.items, state.history.index);
     if (JSON.stringify(skillSnapshot) !== JSON.stringify(lastSkillSnapshot)) {
       stateSnapshotRef.current.skills = skillSnapshot;
+    }
+
+    const currentCustomNames = state.character.skillCustomNames;
+    const customNamesSnapshot = latestCustomNamesSnapshot(state.history.items, state.history.index);
+    if (JSON.stringify(currentCustomNames) !== JSON.stringify(customNamesSnapshot)) {
+      stateSnapshotRef.current.skillCustomNames = currentCustomNames;
     }
   }
 
@@ -479,6 +500,33 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
       setChapterKey(chapterKeyToLoad);
     }
   }
+
+  function scrollChapterToBottom() {
+    const targetScrollTop = chapterRef.current.scrollHeight - chapterRef.current.clientHeight;
+    const startScrollTop = chapterRef.current.scrollTop;
+    const distance = targetScrollTop - startScrollTop;
+    const duration = 500; // 滚动持续时间（毫秒）
+    let startTime = null;
+
+    const scrollStep = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const elapsedTime = currentTime - startTime;
+
+      // 使用 easeInOutQuad 函数来实现平滑过渡
+      const easeInOutQuad = (t) =>
+        t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
+      const progress = Math.min(elapsedTime / duration, 1);
+      chapterRef.current.scrollTop = startScrollTop + distance * easeInOutQuad(progress);
+
+      if (elapsedTime < duration) {
+        requestAnimationFrame(scrollStep);
+      }
+    };
+
+    requestAnimationFrame(scrollStep);
+    // chapterRef.current.scrollTop = chapterRef.current.scrollHeight;
+  }
   
   // Cheating
   window.goto = (chapterKey) => {
@@ -497,18 +545,19 @@ export default function Game({ showCharacter, setShowCharacter, mapEnabled, setM
   return (
     <FlagCheckContext.Provider value={flagCheck}>
       <div className="row">
-        <div id="chapter" className="col px-2">
+        <div id="chapter" className="col vh-100 overflow-y-auto pt-5 pb-4" ref={chapterRef}>
           <Chapter {...{
             chapterKey,
             committedMP,
             isReloading,
             onNextChapter,
             onUpdateSnapshot,
-            onChapterAction
+            onChapterAction,
+            scrollChapterToBottom
           }} />
         </div>
         {showCharacter && (
-          <div id="character" className="col">
+          <div id="character" className="col-12 col-md-6 vh-100 overflow-y-auto pt-5 pb-4">
             <Character {...{ onCharacterAction }} />
           </div>
         )}
